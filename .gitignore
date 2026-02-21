@@ -1,7 +1,4 @@
 node_modules/
 dist/
 .DS_Store
-happypizza-*.png
-happypizza-*.txt
-happypizza-*.md
 .vercel

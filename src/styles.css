@@ -2449,7 +2449,8 @@ main {
   .hero-split { grid-template-columns: 1fr; gap: 32px; }
   .hero-left { text-align: center; }
   .hero-subline { margin-left: auto; margin-right: auto; }
-  .hero-right { display: none; }
+  .hero-right { justify-content: center; }
+  .bookshelf { transform: scale(0.85); transform-origin: center; }
   .hero-ticker { flex-direction: column; gap: 16px; padding: 24px 0; }
   .ascii-rose { transform: translate(-50%, -50%) scale(0.7); }
   .ascii-rose pre { font-size: 6px; }
