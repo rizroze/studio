@@ -48,7 +48,7 @@ export function ProjectCard({ project, onViewProject }: ProjectCardProps) {
         tabIndex={0}
         onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') handleClick() }}
       >
-        <div className="project-card-thumb">
+        <div className="project-card-thumb" style={{ backgroundColor: project.color }}>
           <img src={project.thumbnail} alt={project.title} />
         </div>
         <div className="project-card-info">

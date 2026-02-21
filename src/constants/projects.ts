@@ -4,6 +4,7 @@ export interface CaseStudyData {
   client: string
   tags: string[]
   thumbnail: string
+  color: string
   gallery: string[]
   category: 'brand' | 'web' | 'motion' | 'mobile'
   description: string
@@ -22,6 +23,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     client: 'RadiantsDAO',
     tags: ['Creative Direction', 'Design System', 'Motion', 'Brand Identity'],
     thumbnail: '/content/logos/radiants-pixel.svg',
+    color: '#FCE184',
     gallery: ['/content/logos/radiant-logo.webp', '/content/logos/rad-BLACK.webp'],
     category: 'brand',
     description: '3 years as creative director. Hundreds of content pieces, NFTs, pitchdecks, infographics. Ran content management for 2 Solana Mobile hackathons. Kept it rad. Still keeping it.',
@@ -30,7 +32,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     solution: 'Built the DNA Design System from scratch. Created hundreds of content pieces, NFT art, pitch decks, infographics, and brand motion videos. Ran content management for 2 Solana Mobile hackathons. 3 years in and still the creative director.',
     stack: ['Figma', 'Remotion', 'React', 'CSS', 'After Effects', 'Midjourney'],
     result: 'A brand that stays consistent across every touchpoint — from Twitter posts to hackathon booths to product UI.',
-    resultMetric: '3-year partnership. Hundreds of deliverables.'
+    resultMetric: '3 years as Creative Director. Hundreds of deliverables.'
   },
   {
     slug: 'wayy',
@@ -38,6 +40,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     client: 'RadiantsDAO',
     tags: ['Product Design', 'Solana', 'Prediction Market', 'Full Stack'],
     thumbnail: '/content/logos/wayy-logomark.png',
+    color: '#F5B731',
     gallery: ['/content/logos/wayy-logo-black.png', '/content/logos/wayy-logomark.png'],
     category: 'web',
     description: 'Built the first prototype with 2 devs. After a long pause, revamped the entire product into an art prediction market — redesigned and rebuilt in 1 week. Co-founder.',
@@ -54,6 +57,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     client: 'Hydex',
     tags: ['Brand Identity', 'Pitch Deck', 'Presentation Design'],
     thumbnail: '/content/hydex-logo-white.png',
+    color: '#34A853',
     gallery: ['/content/pitchdeck-2.webp', '/content/pitchdeck-3.webp', '/content/pitchdeck-6.webp', '/content/pitchdeck-8.webp'],
     category: 'brand',
     description: 'Brand identity and investor pitch deck for a DeFi protocol. Custom slides with data visualization, branded typography, and motion elements.',
@@ -70,6 +74,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     client: 'Monolith Hackathon',
     tags: ['Mobile App', 'React Native', 'Solana', 'Portfolio Tracker'],
     thumbnail: '/content/logos/fullport-briefcase.svg',
+    color: '#1a1a2e',
     gallery: ['/content/logos/fullport-logo.svg'],
     category: 'mobile',
     description: 'Solana portfolio tracker built for the Seeker mobile device. Shipped as an APK for the Monolith 2026 hackathon.',
