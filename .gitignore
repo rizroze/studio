@@ -4,3 +4,4 @@ dist/
 happypizza-*.png
 happypizza-*.txt
 happypizza-*.md
+.vercel

@@ -45,9 +45,6 @@ export function Footer() {
         </div>
 
         <div className="footer-right">
-          <div className="footer-ipod-wrap">
-            <IpodPlayer />
-          </div>
           <div className="footer-links-grid">
             <div className="footer-col">
               <h4 className="footer-heading">Sections</h4>
@@ -64,6 +61,12 @@ export function Footer() {
               <a href="https://github.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
               <a href="https://rizzy.today" target="_blank" rel="noopener noreferrer" className="footer-link">rizzy.today ↗</a>
             </div>
+          </div>
+          <div className="footer-ipod-wrap">
+            <IpodPlayer />
+            <svg className="ipod-cable" viewBox="0 0 800 400">
+              <path d="M60 0 C60 30, 60 60, 80 90 C110 140, 180 160, 260 170 C380 185, 500 165, 580 185 C640 200, 660 240, 640 280 C620 320, 570 340, 580 380 C590 410, 630 420, 680 400 C730 380, 780 400, 820 420" stroke="#fff" strokeWidth="3" fill="none" strokeLinecap="round" />
+            </svg>
           </div>
         </div>
       </div>
