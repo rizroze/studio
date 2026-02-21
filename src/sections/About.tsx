@@ -14,6 +14,7 @@ const TOOLS: { name: string; icon: string }[] = [
   { name: 'Firebase', icon: '<path d="M6 20l2-14 3 6-5 8zm0 0l10 0-4-7L6 20zm6-16l-2 7 6 9 4-2L12 4z"/>' },
   { name: 'Three.js', icon: '<path d="M3 3h18L12 21z"/><path d="M12 3v18M3 3l9 18M21 3l-9 18" stroke="black" stroke-width="0.5"/>' },
   { name: 'Node.js', icon: '<path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><text x="12" y="15" text-anchor="middle" font-size="8" font-weight="700" fill="black" font-family="sans-serif">N</text>' },
+  { name: 'Midjourney', icon: '<circle cx="12" cy="12" r="10"/><path d="M7 15c1-4 3-7 5-9m0 0c2 2 4 5 5 9" stroke="black" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="12" cy="8" r="2" fill="black"/>' },
 ]
 
 export function About() {
@@ -26,7 +27,7 @@ export function About() {
             Riz Rose
             <VerifiedBadge color="red" />
           </h2>
-          <p className="about-role">Creative Director & Engineer</p>
+          <p className="about-role">Full-stack Creative</p>
           <p className="about-location-text">3+ years in the Solana ecosystem</p>
         </div>
       </div>

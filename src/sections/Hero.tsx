@@ -3,7 +3,7 @@ import { ClientTicker } from '../components/ClientTicker'
 import { AsciiRose } from '../components/AsciiRose'
 import { CASE_STUDIES } from '../constants/projects'
 
-const BOOK_COLORS = ['#FCE184', '#EA4335', '#34A853', '#9945FF']
+const BOOK_COLORS = ['#FCE184', '#F5B731', '#34A853', '#111111']
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)

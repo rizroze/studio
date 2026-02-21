@@ -14,11 +14,11 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     question: 'What does the process look like?',
-    answer: 'Discovery → Design → Build → Ship. We start with a call to understand your brand and goals. Then I explore directions, lock in the visual system, build it out in code, and deploy. You\'re in the loop the entire time.'
+    answer: 'Discovery → Design → Build → Ship. I start with a call to understand your brand and goals. Then I explore directions, lock in the visual system, build it out in code, and deploy. You\'re in the loop the entire time.'
   },
   {
     question: 'What if I just need one thing?',
-    answer: 'We scope it on the call. Not every project needs the full stack — sometimes it\'s a pitch deck, sometimes it\'s a landing page. I\'ll recommend the right tier based on what you actually need.'
+    answer: 'I scope it on the call. Not every project needs the full stack — sometimes it\'s a pitch deck, sometimes it\'s a landing page. I\'ll recommend the right tier based on what you actually need.'
   },
   {
     question: 'Do you work outside web3?',
@@ -26,7 +26,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     question: 'How do revisions work?',
-    answer: 'Each tier includes revision rounds (2 for Sprint, 3 for Build, unlimited for Studio). Most clients rarely need more than one — the upfront discovery work means we\'re aligned before pixels get pushed.'
+    answer: 'Each tier includes revision rounds (2 for Sprint, 3 for Build, unlimited for Studio). Most clients rarely need more than one — the upfront discovery work means I\'m aligned with your vision before pixels get pushed.'
   },
   {
     question: 'How do payments work?',

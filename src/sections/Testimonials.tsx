@@ -6,7 +6,7 @@ export function Testimonials() {
     <section id="testimonials" className="testimonials-full">
       <div className="testimonials-inner" data-reveal>
         <h2 className="section-title-xl" style={{ marginBottom: 40 }}>
-          Don't take it from us<br />listen to the people.
+          Real words from<br />real clients.
         </h2>
 
         <div className="testimonials-grid">
