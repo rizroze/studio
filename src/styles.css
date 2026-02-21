@@ -736,10 +736,10 @@ main {
 }
 
 .book-cover img {
-  max-height: 50px;
+  max-height: 60px;
   width: auto;
   object-fit: contain;
-  opacity: 0.15;
+  opacity: 0.4;
   transition: opacity 0.3s var(--smooth-ease);
 }
 
@@ -770,7 +770,7 @@ main {
 }
 
 .book:has(> input:checked) .book-cover img {
-  opacity: 0.35;
+  opacity: 0.6;
 }
 
 .book:has(> input:checked) .book-spine,

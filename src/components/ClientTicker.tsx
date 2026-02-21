@@ -1,5 +1,5 @@
 const LOGOS = [
-  { src: '/content/logos/radiant-logo.webp', alt: 'Radiants', className: 'logo-radiants' },
+  { src: '/content/logos/radiants-pixel.svg', alt: 'Radiants', className: 'logo-radiants' },
   { src: '/content/logos/hydex logo.png', alt: 'Hydex', className: 'logo-hydex' },
   { src: '/content/logos/Solana Logomark - Color.svg', alt: 'Solana', className: 'logo-solana' },
   { src: '/content/logos/soladex.svg', alt: 'Soladex', className: 'logo-soladex' },
