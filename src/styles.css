@@ -1432,7 +1432,7 @@ main {
 
 .pricing-back-title {
   font-family: 'Urbanist', sans-serif;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   margin-bottom: 20px;
   color: rgba(255, 255, 255, 0.6);
@@ -1448,7 +1448,7 @@ main {
 }
 
 .pricing-features-back li {
-  font-size: 15px;
+  font-size: 17px;
   color: rgba(255, 255, 255, 0.7);
   display: flex;
   align-items: center;
@@ -1465,7 +1465,7 @@ main {
 
 .pricing-name {
   font-family: 'Urbanist', sans-serif;
-  font-size: 28px;
+  font-size: 34px;
   font-weight: 700;
   font-style: italic;
   letter-spacing: -0.02em;
@@ -1485,7 +1485,7 @@ main {
 }
 
 .pricing-audience {
-  font-size: 15px;
+  font-size: 17px;
   color: rgba(255, 255, 255, 0.45);
   margin-bottom: 12px;
 }
@@ -1495,20 +1495,11 @@ main {
   background: var(--divider);
 }
 
-.pricing-price {
-  font-family: 'Fragment Mono', monospace;
-  font-size: 42px;
-  font-weight: 400;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-  letter-spacing: -0.02em;
-}
-
 .pricing-desc {
-  font-size: 16px;
+  font-size: 18px;
   color: rgba(255, 255, 255, 0.5);
   line-height: 1.6;
-  max-width: 300px;
+  max-width: 340px;
 }
 
 
@@ -2491,7 +2482,6 @@ main {
 @media (max-width: 480px) {
   .section { padding: 60px 16px; }
   .pricing-flip-front, .pricing-flip-back { padding: 24px 16px; }
-  .pricing-price { font-size: 28px; }
   .testimonial-card-full { padding: 20px; }
   .testimonial-quote-large p { font-size: 15px; }
 }

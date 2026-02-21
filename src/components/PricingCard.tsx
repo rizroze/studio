@@ -16,7 +16,6 @@ export function PricingCard({ tier }: PricingCardProps) {
           </div>
           <p className="pricing-audience">{tier.audience}</p>
           <div className="pricing-divider" />
-          <div className="pricing-price">{tier.price}</div>
           <p className="pricing-desc">{tier.description}</p>
         </div>
 
