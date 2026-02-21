@@ -1,0 +1,23 @@
+<svg width="1024" height="1024" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#9945FF" flood-opacity="0.6"/>
+      <feComposite in2="blur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="128" height="128" rx="28" fill="#000"/>
+  <!-- Briefcase with glow - centered -->
+  <g filter="url(#glow)">
+    <rect x="26" y="44" width="76" height="52" rx="6" fill="#9945FF"/>
+    <path d="M48 44 V36 Q48 30 54 30 H74 Q80 30 80 36 V44"
+          stroke="#9945FF" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Inner detail (clasp) -->
+  <rect x="54" y="66" width="20" height="8" rx="2" fill="#000" opacity="0.25"/>
+</svg>

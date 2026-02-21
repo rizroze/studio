@@ -1,0 +1,23 @@
+import { PricingCard } from '../components/PricingCard'
+import { PRICING_TIERS } from '../constants/services'
+
+export function Services() {
+  return (
+    <section id="services" className="section">
+      <h2 className="section-title-xl" data-reveal>Simple pricing. Serious work.</h2>
+      <p className="page-subtitle" style={{ marginBottom: 48 }} data-reveal>
+        Every tier includes the same person doing the design, code, and animation.
+      </p>
+
+      <div className="pricing-cards" data-reveal-stagger>
+        {PRICING_TIERS.map(tier => (
+          <PricingCard key={tier.name} tier={tier} />
+        ))}
+      </div>
+
+      <p className="pricing-footer-note" data-reveal>
+        Accepts SOL, USDC, and traditional payments. 50% upfront, 50% on delivery.
+      </p>
+    </section>
+  )
+}
