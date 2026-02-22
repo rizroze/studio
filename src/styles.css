@@ -1465,7 +1465,7 @@ main {
 
 .pricing-name {
   font-family: 'Urbanist', sans-serif;
-  font-size: 34px;
+  font-size: 38px;
   font-weight: 700;
   font-style: italic;
   letter-spacing: -0.02em;
@@ -1485,7 +1485,7 @@ main {
 }
 
 .pricing-audience {
-  font-size: 17px;
+  font-size: 19px;
   color: rgba(255, 255, 255, 0.45);
   margin-bottom: 12px;
 }
@@ -1493,10 +1493,11 @@ main {
 .pricing-divider {
   height: 1px;
   background: var(--divider);
+  margin-bottom: 16px;
 }
 
 .pricing-desc {
-  font-size: 18px;
+  font-size: 20px;
   color: rgba(255, 255, 255, 0.5);
   line-height: 1.6;
   max-width: 340px;
