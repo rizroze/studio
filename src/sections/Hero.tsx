@@ -1,12 +1,22 @@
 import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { useGSAP } from '@gsap/react'
 import { ClientTicker } from '../components/ClientTicker'
 import { AsciiRose } from '../components/AsciiRose'
 import { CASE_STUDIES } from '../constants/projects'
 
-const BOOK_COLORS = ['#FCE184', '#F5B731', '#34A853', '#111111']
+const BOOK_COLORS = ['#FCE184', '#F5B731', '#34A853', '#1a1a2e']
+
+const SPINE_LOGOS: (string | null)[] = [
+  '/content/logos/rad-spine.png',
+  '/content/logos/wayy-spine.png',
+  '/content/logos/hydex-spine.png',
+  null, // Fullport — text label
+]
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
+  const shelfRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     let ticking = false
@@ -28,6 +38,26 @@ export function Hero() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Ambient float animation
+  useGSAP(() => {
+    const shelf = shelfRef.current
+    if (!shelf) return
+    const books = shelf.querySelectorAll('.book')
+    books.forEach((el, i) => {
+      const container = el.closest('.book-container')!
+      const tween = gsap.to(el, {
+        top: -3,
+        duration: 4 + i * 0.5,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        delay: i * 0.4,
+      })
+      container.addEventListener('mouseenter', () => tween.pause())
+      container.addEventListener('mouseleave', () => tween.resume())
+    })
+  }, { scope: shelfRef })
+
   return (
     <section id="hero" className="hero-studio" ref={sectionRef}>
       <AsciiRose />
@@ -47,14 +77,21 @@ export function Hero() {
         </div>
 
         <div className="hero-right">
-          <div className="bookshelf">
+          <div className="bookshelf" ref={shelfRef}>
             {CASE_STUDIES.map((p, i) => (
-              <label key={p.slug} className="book-container">
-                <div
-                  className="book"
-                  style={{ '--book-color': BOOK_COLORS[i] } as React.CSSProperties}
-                >
-                  <div className="book-spine"></div>
+              <label
+                key={p.slug}
+                className="book-container"
+                style={{ '--bk-color': BOOK_COLORS[i] } as React.CSSProperties}
+              >
+                <div className="book">
+                  <div className="book-spine">
+                    {SPINE_LOGOS[i] ? (
+                      <img src={SPINE_LOGOS[i]!} alt={p.title} className="spine-logo" />
+                    ) : (
+                      <span className="spine-text">{p.title}</span>
+                    )}
+                  </div>
                   <div className="book-back"></div>
                   <div className="book-cover">
                     <img src={p.thumbnail} alt={p.title} />
