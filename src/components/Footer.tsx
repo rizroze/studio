@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { IpodPlayer } from './IpodPlayer'
 
 const INITIAL_EMOJIS = [
@@ -10,14 +10,49 @@ const INITIAL_EMOJIS = [
 
 export function Footer() {
   const [emojis, setEmojis] = useState(INITIAL_EMOJIS)
-  const [bumped, setBumped] = useState<string | null>(null)
+  const [clicked, setClicked] = useState<string | null>(null)
+  const [pressed, setPressed] = useState<Set<string>>(new Set())
+  const [spinning, setSpinning] = useState<Record<string, { prev: number; next: number; direction: 'up' | 'down' }>>({})
+  const timeoutsRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set())
 
   const handleEmojiClick = (key: string) => {
+    const current = emojis.find(e => e.key === key)
+    if (!current) return
+
+    const wasPressed = pressed.has(key)
+    const nextCount = wasPressed ? current.count - 1 : current.count + 1
+
+    // Trigger slot animation
+    setSpinning(prev => ({
+      ...prev,
+      [key]: { prev: current.count, next: nextCount, direction: wasPressed ? 'down' : 'up' }
+    }))
+
+    // Update count
     setEmojis(prev => prev.map(e =>
-      e.key === key ? { ...e, count: e.count + 1 } : e
+      e.key === key ? { ...e, count: nextCount } : e
     ))
-    setBumped(key)
-    setTimeout(() => setBumped(null), 300)
+
+    // Toggle pressed
+    setPressed(prev => {
+      const next = new Set(prev)
+      wasPressed ? next.delete(key) : next.add(key)
+      return next
+    })
+
+    // Trigger clicked animation
+    setClicked(key)
+    const clickTimeout = setTimeout(() => setClicked(null), 500)
+    timeoutsRef.current.add(clickTimeout)
+
+    // Clear spinner after animation
+    const spinTimeout = setTimeout(() => {
+      setSpinning(prev => {
+        const { [key]: _, ...rest } = prev
+        return rest
+      })
+    }, 350)
+    timeoutsRef.current.add(spinTimeout)
   }
 
   return (
@@ -34,11 +69,20 @@ export function Footer() {
             {emojis.map(e => (
               <button
                 key={e.key}
-                className={`footer-emoji-pill ${bumped === e.key ? 'bumped' : ''}`}
+                className={`footer-emoji-pill ${pressed.has(e.key) ? 'pressed' : ''} ${clicked === e.key ? 'clicked' : ''}`}
                 onClick={() => handleEmojiClick(e.key)}
               >
                 <span className="footer-emoji">{e.emoji}</span>
-                <span className="footer-emoji-count">{e.count}</span>
+                <span className="footer-emoji-count-wrapper">
+                  {spinning[e.key] ? (
+                    <>
+                      <span className={`footer-slot slot-exit-${spinning[e.key].direction}`}>{spinning[e.key].prev}</span>
+                      <span className={`footer-slot slot-enter-${spinning[e.key].direction}`}>{spinning[e.key].next}</span>
+                    </>
+                  ) : (
+                    <span className="footer-slot-static">{e.count}</span>
+                  )}
+                </span>
               </button>
             ))}
           </div>
