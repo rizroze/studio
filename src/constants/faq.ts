@@ -14,7 +14,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     question: 'What does the process look like?',
-    answer: 'Discovery → Design → Build → Ship. I start with a call to understand your brand and goals. Then I explore directions, lock in the visual system, build it out in code, and deploy. You\'re in the loop the entire time.'
+    answer: 'Discovery → Design → Build → Ship. I start with a call to understand your brand and goals. Then I explore directions, lock in the visual system, build it out in code, and deploy. You see everything as it happens.'
   },
   {
     question: 'What if I just need one thing?',
