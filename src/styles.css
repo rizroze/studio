@@ -3,17 +3,6 @@
    Liquid glass design system + single-page scroll
    =========================== */
 
-*, *::before, *::after {
-  cursor: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMyAyTDMgMTdMNy41IDEyLjVMMTEgMThMMTMuNSAxNi41TDEwIDExTDE2IDExTDMgMloiIGZpbGw9IndoaXRlIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==) 3 2, auto;
-}
-
-a, button, label, [role="button"], input[type="radio"], input[type="checkbox"],
-.book-container, .footer-emoji-pill, .pricing-card-studio, .faq-question,
-.nav-pill-link, .preview-view-btn, .footer-link, .footer-brand-big,
-.ipod-wheel, .ipod-btn {
-  cursor: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNy41IDEuNXY4TDUgNy41bC0xLjUgMS41TDggMTZoNS41bDItNlY1LjVoLTN2LTRoLTV6IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=) 5 1, pointer;
-}
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
@@ -2721,10 +2710,6 @@ main {
 /* ===========================
    TOUCH DEVICES
    =========================== */
-@media (hover: none) {
-  *, *::before, *::after { cursor: auto !important; }
-}
-
 /* ===========================
    REDUCED MOTION
    =========================== */
