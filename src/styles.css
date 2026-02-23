@@ -752,6 +752,19 @@ main {
   transition: opacity 0.3s var(--smooth-ease);
 }
 
+/* Gentle float tease — applied to one book at a time via JS */
+.book-container.book-tease:not(:has(input:checked)) {
+  animation: book-tease 3.5s ease-in-out 1;
+}
+.book-container.book-tease:hover {
+  animation: none;
+}
+
+@keyframes book-tease {
+  0%, 100% { transform: translateZ(calc(var(--bk-depth) / -2)); }
+  50% { transform: translateY(-6px) translateZ(calc(var(--bk-depth) / -2)); }
+}
+
 .book-container:hover {
   transform: translateY(-10px) translateZ(calc(var(--bk-depth) / -2));
 }
@@ -1707,6 +1720,10 @@ main {
   font-style: italic;
   margin-bottom: 4px;
 }
+.about-name-large .verified-check {
+  width: 22px;
+  height: 22px;
+}
 
 .about-role {
   font-size: 16px;
@@ -1739,7 +1756,7 @@ main {
 }
 
 .about-story {
-  max-width: 100%;
+  max-width: 480px;
 }
 
 .about-story p {
@@ -1793,10 +1810,8 @@ main {
 .tool-icon-svg {
   width: 20px;
   height: 20px;
-  color: rgba(255, 255, 255, 0.6);
   fill: rgba(255, 255, 255, 0.6);
-  stroke: rgba(255, 255, 255, 0.6);
-  stroke-width: 1.5;
+  stroke: none;
 }
 
 .tool-icon-label {

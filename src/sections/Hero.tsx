@@ -1,6 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { useGSAP } from '@gsap/react'
 import { ClientTicker } from '../components/ClientTicker'
 import { AsciiRose } from '../components/AsciiRose'
 import { CASE_STUDIES } from '../constants/projects'
@@ -17,6 +15,32 @@ const SPINE_LOGOS: (string | null)[] = [
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const shelfRef = useRef<HTMLDivElement>(null)
+
+  // Random float tease — one book at a time
+  useEffect(() => {
+    const shelf = shelfRef.current
+    if (!shelf) return
+    const containers = shelf.querySelectorAll('.book-container')
+    let last = -1
+
+    const tease = () => {
+      // Pick a random book, different from last
+      let next: number
+      do { next = Math.floor(Math.random() * containers.length) } while (next === last && containers.length > 1)
+      last = next
+
+      // Remove from all, add to chosen
+      containers.forEach(c => c.classList.remove('book-tease'))
+      const el = containers[next]
+      // Force reflow so animation restarts
+      void (el as HTMLElement).offsetWidth
+      el.classList.add('book-tease')
+    }
+
+    tease()
+    const id = setInterval(tease, 4000)
+    return () => clearInterval(id)
+  }, [])
 
   useEffect(() => {
     let ticking = false
@@ -38,37 +62,17 @@ export function Hero() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Ambient float animation
-  useGSAP(() => {
-    const shelf = shelfRef.current
-    if (!shelf) return
-    const books = shelf.querySelectorAll('.book')
-    books.forEach((el, i) => {
-      const container = el.closest('.book-container')!
-      const tween = gsap.to(el, {
-        top: -3,
-        duration: 4 + i * 0.5,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        delay: i * 0.4,
-      })
-      container.addEventListener('mouseenter', () => tween.pause())
-      container.addEventListener('mouseleave', () => tween.resume())
-    })
-  }, { scope: shelfRef })
-
   return (
     <section id="hero" className="hero-studio" ref={sectionRef}>
       <AsciiRose />
       <div className="hero-split">
         <div className="hero-left">
           <h1 className="hero-headline">
-            Your product is great.<br />
-            Your brand should be <span className="hero-accent">too.</span>
+            I design it, code it,<br />
+            and ship <span className="hero-accent">the whole thing.</span>
           </h1>
           <p className="hero-subline">
-            Helping web3 teams turn shipped code into brands that win <strong>attention</strong>, <strong>trust</strong>, and <strong>traction</strong>.
+            Brand, website, motion — designed and built together, from <strong>concept</strong> to <strong>production</strong>.
           </p>
           <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="hero-cta">
             <img src="/rizzy-avatar.png" alt="" className="hero-cta-avatar" />

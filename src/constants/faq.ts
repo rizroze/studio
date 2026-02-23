@@ -5,8 +5,8 @@ export interface FAQItem {
 
 export const FAQ_ITEMS: FAQItem[] = [
   {
-    question: 'What do you mean by "no handoffs"?',
-    answer: 'I design, code, animate, and deploy — all one person. There\'s no designer handing a Figma file to a developer and hoping nothing gets lost. What I design is exactly what gets built.'
+    question: 'Why one person instead of a team?',
+    answer: 'Everything stays in one head. Design decisions carry straight into code, animations match the original vision, and nothing gets diluted between people. It also means faster turnaround and one point of contact for everything.'
   },
   {
     question: 'How fast can you start?',

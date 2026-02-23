@@ -63,7 +63,7 @@ export function Footer() {
             <img src="/rizzy-avatar.png" alt="Rizzy Studio" className="footer-pfp-big" />
             <span>Rizzy Studio</span>
           </a>
-          <p className="footer-tagline-big">The creative director your web3 project is missing.</p>
+          <p className="footer-tagline-big">The rizz your brand's been missing.</p>
 
           <div className="footer-emoji-row">
             {emojis.map(e => (

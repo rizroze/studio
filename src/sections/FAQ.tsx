@@ -6,7 +6,7 @@ export function FAQ() {
     <section id="contact" className="section faq-contact-section">
       <div className="faq-contact-grid">
         <div className="faq-col">
-          <h2 className="section-title-xl" data-reveal>Frequently Asked</h2>
+          <h2 className="section-title-xl" data-reveal>Before you ask.</h2>
           <div className="faq-list">
             {FAQ_ITEMS.map((item, i) => (
               <FAQItem key={i} question={item.question} answer={item.answer} />
@@ -17,8 +17,8 @@ export function FAQ() {
         <div className="cta-col">
           <div className="cta-card">
             <img src="/rizzy-avatar.png" alt="Riz Rose" className="cta-card-pfp" />
-            <h3 className="cta-card-headline">Ready to ship something real?</h3>
-            <p className="cta-card-sub">15 minutes. No pitch deck. Just tell me what you're building.</p>
+            <h3 className="cta-card-headline">Let's build something.</h3>
+            <p className="cta-card-sub">15 min call. No pitch deck needed. Just tell me what you're working on.</p>
             <a
               href="https://cal.com/rizzytoday"
               target="_blank"
