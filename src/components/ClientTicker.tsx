@@ -14,12 +14,13 @@ export function ClientTicker() {
     <div className="client-ticker">
       <div className="client-ticker-track">
         {doubled.map((logo, i) => (
-          <img
-            key={`${logo.alt}-${i}`}
-            src={logo.src}
-            alt={logo.alt}
-            className={`ticker-logo ${logo.className}`}
-          />
+          <span key={`${logo.alt}-${i}`} className="ticker-logo-zone">
+            <img
+              src={logo.src}
+              alt={logo.alt}
+              className={`ticker-logo ${logo.className}`}
+            />
+          </span>
         ))}
       </div>
     </div>

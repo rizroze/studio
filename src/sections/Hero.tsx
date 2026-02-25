@@ -21,6 +21,7 @@ export function Hero() {
   useEffect(() => {
     const shelf = shelfRef.current
     if (!shelf) return
+    const zones = shelf.querySelectorAll('.book-zone')
     const containers = shelf.querySelectorAll('.book-container')
     let last = -1
     let paused = false
@@ -48,7 +49,7 @@ export function Hero() {
 
     let hoverCount = 0
 
-    // Hover on a book: kill all tease, pause loop
+    // Hover on zone (stable wrapper): kill all tease, pause loop
     const onEnter = () => {
       hoverCount++
       paused = true
@@ -56,7 +57,7 @@ export function Hero() {
       clearAllTease()
     }
 
-    // Leave a book: resume 1.5s after last book unhovered
+    // Leave zone: resume 1.5s after last book unhovered
     const onLeave = () => {
       hoverCount--
       if (hoverCount > 0) return
@@ -67,9 +68,9 @@ export function Hero() {
       }, 1500)
     }
 
-    containers.forEach(c => {
-      c.addEventListener('mouseenter', onEnter)
-      c.addEventListener('mouseleave', onLeave)
+    zones.forEach(z => {
+      z.addEventListener('mouseenter', onEnter)
+      z.addEventListener('mouseleave', onLeave)
     })
 
     tease()
@@ -77,9 +78,9 @@ export function Hero() {
     return () => {
       clearInterval(id)
       if (resumeTimer) clearTimeout(resumeTimer)
-      containers.forEach(c => {
-        c.removeEventListener('mouseenter', onEnter)
-        c.removeEventListener('mouseleave', onLeave)
+      zones.forEach(z => {
+        z.removeEventListener('mouseenter', onEnter)
+        z.removeEventListener('mouseleave', onLeave)
       })
     }
   }, [])
@@ -130,27 +131,28 @@ export function Hero() {
             <div className="shelf-line" />
             <span className="shelf-label">MY_LIBRARY</span>
             {CASE_STUDIES.map((p, i) => (
-              <label
-                key={p.slug}
-                className="book-container"
-                style={{ '--bk-color': BOOK_COLORS[i] } as React.CSSProperties}
-              >
-                <div className="book">
-                  <div className="book-spine">
-                    {SPINE_LOGOS[i] ? (
-                      <img src={SPINE_LOGOS[i]!} alt={p.title} className="spine-logo" />
-                    ) : (
-                      <span className="spine-text">{p.title}</span>
-                    )}
+              <div key={p.slug} className="book-zone">
+                <label
+                  className="book-container"
+                  style={{ '--bk-color': BOOK_COLORS[i] } as React.CSSProperties}
+                >
+                  <div className="book">
+                    <div className="book-spine">
+                      {SPINE_LOGOS[i] ? (
+                        <img src={SPINE_LOGOS[i]!} alt={p.title} className="spine-logo" />
+                      ) : (
+                        <span className="spine-text">{p.title}</span>
+                      )}
+                    </div>
+                    <div className="book-back"></div>
+                    <div className="book-cover">
+                      <img src={p.thumbnail} alt={p.title} />
+                    </div>
+                    <div className="book-side"></div>
+                    <input type="radio" name="hero-book" />
                   </div>
-                  <div className="book-back"></div>
-                  <div className="book-cover">
-                    <img src={p.thumbnail} alt={p.title} />
-                  </div>
-                  <div className="book-side"></div>
-                  <input type="radio" name="hero-book" />
-                </div>
-              </label>
+                </label>
+              </div>
             ))}
           </div>
         </div>

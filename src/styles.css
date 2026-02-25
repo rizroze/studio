@@ -292,11 +292,7 @@ main {
     box-shadow 0.6s var(--smooth-ease);
 }
 
-/* Chromium: real liquid glass via SVG displacement filter */
-[data-glass='true'] .site-nav {
-  backdrop-filter: url(#glass-displacement) saturate(var(--glass-saturation, 1));
-  background: hsl(0 0% 0% / var(--glass-frost, 0));
-}
+/* Chromium: glass displacement only on the scrolled pill (not fullbar — too wide, kills perf) */
 
 .nav-inner {
   max-width: 1200px;
@@ -837,6 +833,12 @@ main {
   pointer-events: none;
 }
 
+/* Stable hover zone — cursor stays on this element even when the book
+   lifts via translateY. Prevents the Emil Kowalski hover-flicker bug. */
+.book-zone {
+  cursor: pointer;
+}
+
 .book-container {
   --bk-width: 50px;
   --bk-height: calc(var(--bk-width) * 4);
@@ -891,7 +893,7 @@ main {
 .book-container.book-tease:not(:has(input:checked)) {
   animation: book-tease 3.5s ease-in-out 1;
 }
-.book-container.book-tease:hover {
+.book-zone:hover .book-container.book-tease {
   animation: none;
 }
 @keyframes book-tease {
@@ -899,14 +901,14 @@ main {
   50% { transform: translateY(-6px) translateZ(calc(var(--bk-depth) / -2)); }
 }
 
-.book-container:hover {
+.book-zone:hover .book-container {
   transform: translateY(-10px) translateZ(calc(var(--bk-depth) / -2));
 }
-.book-container:hover::before {
+.book-zone:hover .book-container::before {
   opacity: 0.5;
   width: 90%;
 }
-.book-container:hover::after {
+.book-zone:hover .book-container::after {
   opacity: 0.35;
   filter: blur(28px);
   width: 140%;
@@ -962,7 +964,7 @@ main {
   pointer-events: none;
 }
 
-.book-container:nth-of-type(1) .spine-logo {
+.bookshelf > :nth-child(3) .spine-logo {
   max-width: 110%;
   max-height: 65%;
 }
@@ -980,12 +982,12 @@ main {
   pointer-events: none;
 }
 
-/* Varied heights per book */
-/* .shelf-line is :nth-child(1), books start at :nth-child(2) */
-.book-container:nth-of-type(1) { --bk-height: calc(var(--bk-width) * 4.8); } /* rad — tallest */
-.book-container:nth-of-type(2) { --bk-height: calc(var(--bk-width) * 3.6); }
-.book-container:nth-of-type(3) { --bk-height: calc(var(--bk-width) * 4.2); }
-.book-container:nth-of-type(4) { --bk-height: calc(var(--bk-width) * 3.8); }
+/* Varied heights per book — .book-zone wraps each .book-container
+   Shelf children: .shelf-line, .shelf-label, then .book-zone×4 → books start at :nth-child(3) */
+.bookshelf > :nth-child(3) .book-container { --bk-height: calc(var(--bk-width) * 4.8); } /* rad — tallest */
+.bookshelf > :nth-child(4) .book-container { --bk-height: calc(var(--bk-width) * 3.6); }
+.bookshelf > :nth-child(5) .book-container { --bk-height: calc(var(--bk-width) * 4.2); }
+.bookshelf > :nth-child(6) .book-container { --bk-height: calc(var(--bk-width) * 3.8); }
 
 .book-back {
   background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
@@ -1103,6 +1105,13 @@ main {
   width: max-content;
 }
 
+.ticker-logo-zone {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 48px;
+  flex-shrink: 0;
+}
+
 .ticker-logo {
   height: 32px;
   width: auto;
@@ -1110,11 +1119,9 @@ main {
   filter: brightness(0) invert(1);
   opacity: 0.5;
   transition: all 0.4s var(--smooth-ease);
-  margin-right: 48px;
-  flex-shrink: 0;
 }
 
-.ticker-logo:hover {
+.ticker-logo-zone:hover .ticker-logo {
   filter: none;
   opacity: 1;
   transform: scale(1.15);

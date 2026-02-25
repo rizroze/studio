@@ -58,7 +58,7 @@ const BASE: GlassConfig = {
 
 const PILL_COLLAPSED: GlassConfig = { ...BASE }
 const PILL_EXPANDED: GlassConfig = { ...BASE, width: 600 }
-const FULLBAR: GlassConfig = { ...BASE, width: 1400, height: 60, radius: 0 }
+
 
 // Cache displacement maps by config dimensions — avoids regenerating
 // the same Canvas + toDataURL() on every MutationObserver callback
@@ -210,15 +210,9 @@ export function GlassFilter() {
 
     const update = () => {
       const isScrolled = nav.classList.contains('scrolled')
+      if (!isScrolled) return // fullbar doesn't use displacement (too wide, kills perf)
       const isExpanded = nav.classList.contains('expanded')
-
-      if (!isScrolled) {
-        applyConfig(FULLBAR)
-      } else if (isExpanded) {
-        applyConfig(PILL_EXPANDED)
-      } else {
-        applyConfig(PILL_COLLAPSED)
-      }
+      applyConfig(isExpanded ? PILL_EXPANDED : PILL_COLLAPSED)
     }
 
     update()
