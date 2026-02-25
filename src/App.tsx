@@ -5,6 +5,8 @@ import { Nav } from './components/Nav'
 import { Footer } from './components/Footer'
 import { CursorGlitch } from './components/CursorGlitch'
 import { ScrollReveal } from './components/ScrollReveal'
+import { GsapAnimations } from './components/GsapAnimations'
+import { GlassFilter } from './components/GlassFilter'
 import { Hero } from './sections/Hero'
 import { Work } from './sections/Work'
 import { Testimonials } from './sections/Testimonials'
@@ -23,6 +25,15 @@ export function App() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [showBackToTop, setShowBackToTop] = useState(false)
   const pendingView = useRef<View | null>(null)
+
+  // Remove loading screen once app is ready
+  useEffect(() => {
+    const loader = document.getElementById('loader')
+    if (loader) {
+      loader.classList.add('loader-exit')
+      setTimeout(() => loader.remove(), 400)
+    }
+  }, [])
 
   const transitionTo = useCallback((next: View) => {
     pendingView.current = next
@@ -46,12 +57,18 @@ export function App() {
     transitionTo({ type: 'home' })
   }, [transitionTo])
 
-  // Scroll progress + back to top
+  // Scroll progress + back to top (rAF-throttled)
   useEffect(() => {
+    let ticking = false
     const onScroll = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight
-      setScrollProgress(h > 0 ? window.scrollY / h : 0)
-      setShowBackToTop(window.scrollY > window.innerHeight)
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        const h = document.documentElement.scrollHeight - window.innerHeight
+        setScrollProgress(h > 0 ? window.scrollY / h : 0)
+        setShowBackToTop(window.scrollY > window.innerHeight)
+        ticking = false
+      })
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -63,11 +80,13 @@ export function App() {
 
   return (
     <>
+      <GlassFilter />
       <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress})` }} />
       <div className="grain-overlay" />
       <CursorGlitch />
       <Nav onLogoClick={goHome} />
       <ScrollReveal />
+      {view.type === 'home' && <GsapAnimations />}
       <main className={`page-content ${transitioning ? 'page-exit' : 'page-enter'}`}>
         {view.type === 'home' && (
           <>

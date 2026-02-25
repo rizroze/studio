@@ -14,16 +14,44 @@ interface NavProps {
 
 export function Nav({ onLogoClick }: NavProps) {
   const mobileOpen = useMobileNav()
-  const { scrolledPastHero, pillExpanded } = useNavScroll()
+  const { scrolledPastHero, pillExpanded, activeSection } = useNavScroll()
   const navRef = useRef<HTMLElement>(null)
 
+  // Single throttled scroll handler for hero threshold + active section
   useEffect(() => {
-    const onScroll = () => {
+    const sectionIds = ['work', 'services', 'about', 'contact']
+    let ticking = false
+
+    const update = () => {
+      const scrollY = window.scrollY
       const heroHeight = window.innerHeight * 0.7
-      navStore.setScrolledPastHero(window.scrollY > heroHeight)
+      navStore.setScrolledPastHero(scrollY > heroHeight)
+
+      const midpoint = scrollY + window.innerHeight * 0.4
+      if (scrollY < window.innerHeight * 0.5) {
+        navStore.setActiveSection('')
+      } else {
+        let active = ''
+        for (const id of sectionIds) {
+          const el = document.getElementById(id)
+          if (!el) continue
+          if (el.offsetTop <= midpoint) active = id
+        }
+        navStore.setActiveSection(active)
+      }
     }
+
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        update()
+        ticking = false
+      })
+    }
+
     window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
+    update()
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
@@ -38,9 +66,10 @@ export function Nav({ onLogoClick }: NavProps) {
     return () => document.removeEventListener('click', onClick)
   }, [pillExpanded])
 
-  const handleLinkClick = () => {
+  const handleLinkClick = (href: string) => {
     navStore.close()
     navStore.closePill()
+    navStore.lockActiveSection(href.slice(1))
   }
 
   const scrollToTop = (e: React.MouseEvent) => {
@@ -71,15 +100,15 @@ export function Nav({ onLogoClick }: NavProps) {
             <a
               key={item.href}
               href={item.href}
-              className="nav-link"
-              onClick={handleLinkClick}
+              className={`nav-link ${activeSection === item.href.slice(1) ? 'active' : ''}`}
+              onClick={() => handleLinkClick(item.href)}
             >
               {item.label}
             </a>
           ))}
         </div>
 
-        <a href="#contact" className="nav-cta desktop-only" onClick={handleLinkClick}>
+        <a href="#contact" className="nav-cta desktop-only" onClick={() => handleLinkClick('#contact')}>
           Book a call
         </a>
 
@@ -107,12 +136,12 @@ export function Nav({ onLogoClick }: NavProps) {
               key={item.href}
               href={item.href}
               className="nav-mobile-link"
-              onClick={handleLinkClick}
+              onClick={() => handleLinkClick(item.href)}
             >
               {item.label}
             </a>
           ))}
-          <a href="#contact" className="nav-mobile-cta" onClick={handleLinkClick}>
+          <a href="#contact" className="nav-mobile-cta" onClick={() => handleLinkClick('#contact')}>
             Book a call
           </a>
         </div>

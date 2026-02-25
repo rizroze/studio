@@ -21,11 +21,14 @@ export function ScrollReveal() {
 
     observe()
 
-    // Re-observe after view changes
+    // Re-observe after view changes — watch only direct children of main
+    // (page content swaps), not the entire subtree which fires on every
+    // class toggle, GSAP animation, and glass filter update
+    const main = document.querySelector('main') || document.body
     const mo = new MutationObserver(() => {
       requestAnimationFrame(observe)
     })
-    mo.observe(document.body, { childList: true, subtree: true })
+    mo.observe(main, { childList: true })
 
     return () => {
       observer.disconnect()

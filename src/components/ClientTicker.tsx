@@ -8,10 +8,12 @@ const LOGOS = [
 ]
 
 export function ClientTicker() {
+  // 2 identical copies — scroll by exactly -50% for seamless loop
+  const doubled = [...LOGOS, ...LOGOS]
   return (
     <div className="client-ticker">
       <div className="client-ticker-track">
-        {[...LOGOS, ...LOGOS].map((logo, i) => (
+        {doubled.map((logo, i) => (
           <img
             key={`${logo.alt}-${i}`}
             src={logo.src}

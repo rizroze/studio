@@ -4,15 +4,18 @@ interface NavState {
   mobileOpen: boolean
   scrolledPastHero: boolean
   pillExpanded: boolean
+  activeSection: string
 }
 
 let state: NavState = {
   mobileOpen: false,
   scrolledPastHero: false,
-  pillExpanded: false
+  pillExpanded: false,
+  activeSection: ''
 }
 
 const listeners = new Set<() => void>()
+let scrollLockUntil = 0
 
 function emit() {
   listeners.forEach(fn => fn())
@@ -47,6 +50,18 @@ export const navStore = {
       state = { ...state, pillExpanded: false }
       emit()
     }
+  },
+  setActiveSection: (section: string) => {
+    if (Date.now() < scrollLockUntil) return
+    if (state.activeSection !== section) {
+      state = { ...state, activeSection: section }
+      emit()
+    }
+  },
+  lockActiveSection: (section: string) => {
+    state = { ...state, activeSection: section }
+    scrollLockUntil = Date.now() + 800
+    emit()
   }
 }
 
@@ -57,5 +72,5 @@ export function useMobileNav() {
 
 export function useNavScroll() {
   const s = useSyncExternalStore(navStore.subscribe, navStore.getSnapshot)
-  return { scrolledPastHero: s.scrolledPastHero, pillExpanded: s.pillExpanded }
+  return { scrolledPastHero: s.scrolledPastHero, pillExpanded: s.pillExpanded, activeSection: s.activeSection }
 }

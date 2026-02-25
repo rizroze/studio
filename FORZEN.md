@@ -19,7 +19,7 @@ It's not a blog. It's not a playground. It's a business tool dressed in liquid g
 | Framework | React 18 + Vite | Fast dev, fast builds, no SSR needed for a portfolio |
 | Styling | Single `styles.css` (~2900 lines) | CSS modules were tried and reverted — one file is simpler to reason about |
 | State | `useSyncExternalStore` | No Zustand, no Redux. A hand-rolled store for nav state. That's it. |
-| Animations | CSS transitions + keyframes | GSAP is in `package.json` but CSS does 95% of the work |
+| Animations | CSS transitions + GSAP | CSS handles hovers/reveals, GSAP handles hero entrance choreography |
 | Analytics | Vercel Analytics + Speed Insights | Free tier, zero config, tracks CTA conversions |
 | Deploy | Vercel (GitHub integration) | Push to `main`, it deploys. That's the whole pipeline. |
 | Fonts | Google Fonts (Urbanist, Inter Tight, Fragment Mono) | Loaded async with `media="print"` trick for non-blocking |
@@ -59,8 +59,10 @@ studio/
 │   │   ├── ProjectPage.tsx # Individual project deep-dive
 │   │   └── AllProjects.tsx # Grid of all work
 │   ├── components/         # Reusable UI pieces
-│   │   ├── Nav.tsx         # Floating pill nav
+│   │   ├── Nav.tsx         # Floating pill nav (morphs → Dynamic Island style)
 │   │   ├── Footer.tsx      # Emoji reactions, iPod, links
+│   │   ├── GlassFilter.tsx # SVG displacement filter (liquid glass refraction)
+│   │   ├── GsapAnimations.tsx # Hero entrance timeline + book choreography
 │   │   ├── ProjectCard.tsx # Tilt-on-hover project cards
 │   │   ├── PricingCard.tsx # Glass pricing cards
 │   │   ├── IpodPlayer.tsx  # Working iPod Nano music player
@@ -295,7 +297,141 @@ ScrollReveal uses `MutationObserver` to detect when new elements are added to th
 
 ---
 
+## The Liquid Glass Displacement Filter: A War Story
+
+This is the crown jewel of the site — and the hardest thing we built. The nav pill doesn't just have `backdrop-filter: blur()` like every other glassmorphism site. It has **real optical refraction**. Background content warps outward through the edges of the pill like you're looking through actual glass. There's subtle chromatic aberration (RGB color splitting) at the boundaries. The center is crystal clear. It looks like Apple's iOS 18 liquid glass, but on the web.
+
+It's implemented in `src/components/GlassFilter.tsx` and it took multiple sessions of debugging to get right. Here's everything we learned.
+
+### How SVG Displacement Filters Work
+
+The effect uses `backdrop-filter: url(#svg-filter)` — a Chromium-only feature that applies an SVG filter to the content behind an element. The core primitive is `feDisplacementMap`: it takes a "displacement map" (a colored image) and shifts every pixel of the backdrop based on the map's color values at that position.
+
+The formula: `P'(x,y) = P(x + scale × (C/255 - 0.5), y + scale × (C/255 - 0.5))`
+
+When a pixel in the map is exactly `rgb(128, 128, 128)` (neutral gray), the formula gives zero displacement — that pixel stays put. When the map has a gradient from black to red, pixels get shifted along the X-axis. Blue gradients shift along Y. The `scale` parameter controls how far pixels can move (ours is -180, meaning up to 90px of displacement).
+
+To get **chromatic aberration** (rainbow edge fringing), we run three separate `feDisplacementMap` passes — one for red, one for green, one for blue — each with a slightly different `scale` value (-180, -170, -160). Then we blend the channels back together with `feBlend mode="screen"`. The result: each color channel is displaced by a slightly different amount, creating that prismatic glass-edge look.
+
+### The Displacement Map: Why Canvas, Not SVG
+
+The displacement map itself is a small image with this structure:
+- **Neutral gray background** (128,128,128) — no displacement outside the pill
+- **Red gradient left→right** within the pill shape — drives X-axis warp
+- **Blue gradient top→bottom**, blended with `globalCompositeOperation: 'difference'` — drives Y-axis warp
+- **Blurred gray center rect** — neutralizes the center so only edges displace
+
+The reference technique (Jhey Tompkins' CodePen) generates this map as an SVG, serializes it with `XMLSerializer`, and loads it as a data URI via `feImage`. This works because the SVG contains CSS like `mix-blend-mode: difference` and `filter: blur(11px)` that Chromium processes during rasterization.
+
+**Except it doesn't.** Not reliably.
+
+When `feImage` loads an SVG data URI, it renders it as an image — and SVG-as-image restricts CSS property evaluation. `mix-blend-mode: difference` gets ignored. `filter: blur()` gets ignored. The center neutralization rect doesn't work, and the entire pill becomes a fully-displaced mess.
+
+We confirmed this by extracting the displacement map pixels in the browser:
+- SVG approach: center pixels showed raw gradient values (no neutralization)
+- Canvas approach: center pixels showed rgb(128, 116, 129) (properly neutralized)
+
+**The fix:** Generate the displacement map using Canvas 2D. Canvas natively supports `globalCompositeOperation = 'difference'` and `ctx.filter = 'blur(11px)'` — these are real API calls, not CSS properties that might be ignored. The Canvas output is a correct raster bitmap every time.
+
+```ts
+// The key operations that SVG-as-image can't do but Canvas can:
+ctx.globalCompositeOperation = 'difference'  // ← native blend mode
+ctx.filter = `blur(${c.blur}px)`            // ← native CSS filter
+```
+
+### The Filter Region Problem: Why the Warp Was Invisible
+
+Even with a correct displacement map, the effect was invisible. Why?
+
+SVG filters have a **filter region** — the area they process. By default, it's `x="-10%" y="-10%" width="120%" height="120%"`, meaning only 10% beyond the element's bounds is captured. For our 48px tall pill, that's **4.8px** of extra backdrop on top and bottom.
+
+But with `scale: -180`, edge pixels can displace up to **90px** away. When `feDisplacementMap` tries to sample the backdrop 90px from the edge, that position is way outside the captured region. It gets transparent. The warp effect dies.
+
+**The fix:** Extend the filter region massively:
+```xml
+<filter x="-100%" y="-200%" width="300%" height="500%">
+```
+
+This captures 1× the element width on each side and 2× the element height on top/bottom — plenty of backdrop for the displacement to sample from.
+
+### The Alignment Trap: Why Extending the Region Broke Everything First
+
+Here's the trap that cost us a full day: when you extend the filter region, `feImage` at `width="100%" height="100%"` fills the **entire filter region**, not just the element. Our 240×48 displacement map got stretched to 720×240, completely misaligning the pill shape in the map with the actual element on screen.
+
+**The fix:** Pre-size the Canvas displacement map to match the **entire filter region**, not just the element. The pill shape is drawn centered in a larger canvas padded with neutral gray:
+
+```ts
+// Filter region: x=-100% y=-200% width=300% height=500%
+const padX = c.width          // 240px padding left and right
+const padY = c.height * 2     // 96px padding top and bottom
+const totalW = c.width + padX * 2   // 720px total (3× element)
+const totalH = c.height + padY * 2  // 240px total (5× element)
+
+canvas.width = totalW
+canvas.height = totalH
+
+// Fill everything neutral gray first
+ctx.fillStyle = 'rgb(128, 128, 128)'
+ctx.fillRect(0, 0, totalW, totalH)
+
+// Then draw the pill gradients centered at (padX, padY)
+```
+
+Now `feImage` fills the filter region naturally, the displacement map is the right size, the pill aligns with the element, and the gray padding ensures zero displacement outside the pill. Everything clicks.
+
+### The Three Bugs, Summarized
+
+| Bug | Symptom | Root Cause | Fix |
+|-----|---------|------------|-----|
+| SVG data URI CSS restriction | Full-surface chromatic chaos, no clean center | `mix-blend-mode` and `filter:blur()` ignored in SVG-as-image | Canvas 2D with native `globalCompositeOperation` and `ctx.filter` |
+| Filter region too small | Warp effect invisible | Default 10% extension = 4.8px, but displacement reaches 90px | Extended to x=-100% y=-200% width=300% height=500% |
+| Map/region misalignment | Pill shape displaced from actual element | feImage stretches small map to fill large filter region | Pre-size Canvas to full filter region, pill centered with gray padding |
+
+### Config Params
+
+All three nav states (full bar, collapsed pill, expanded pill) share the same base params — only `width`, `height`, and `radius` change:
+
+```ts
+const BASE = {
+  scale: -180,      // Displacement magnitude (pixels)
+  border: 0.07,     // Neutralization inset (fraction of min dimension)
+  lightness: 50,    // Center rect gray value
+  alpha: 0.93,      // Center rect opacity (< 1 lets edges bleed slightly)
+  blur: 11,         // Center rect blur radius
+  r: 0, g: 10, b: 20,  // Per-channel scale offsets (chromatic aberration)
+  frost: 0,         // Background tint opacity
+  saturation: 1,    // Backdrop saturation multiplier
+}
+```
+
+The per-channel offsets (`r: 0, g: 10, b: 20`) mean red displaces at -180, green at -170, blue at -160 — creating the subtle rainbow fringing at edges.
+
+### Chromium Only
+
+This technique only works in Chromium. Safari and Firefox don't support `backdrop-filter: url(#svg-filter)`. On those browsers, the component returns `null` and the nav falls back to regular `backdrop-filter: blur(50px) saturate(120%)` — still looks good, just not *as* good.
+
+Detection is simple: `navigator.userAgent` check for "Chrome/". When Chromium is detected, `document.documentElement.dataset.glass = 'true'` activates the CSS rule that swaps to the SVG displacement filter.
+
+### Why This Matters
+
+Every glassmorphism site uses the same `backdrop-filter: blur()`. This one bends light. The displacement map creates actual optical refraction — content doesn't just blur behind the glass, it *warps* toward the edges like real curved glass would. It's the difference between frosted glass and a lens.
+
+And it's 225 lines of code. No WebGL. No shaders. No libraries. Just Canvas 2D, SVG filters, and a stubborn refusal to give up.
+
+---
+
 ## Bugs We Fought (And What They Taught Us)
+
+### The Book Entrance Animation: Respecting preserve-3d
+
+The bookshelf books are 3D CSS objects using `transform-style: preserve-3d`. This creates a constraint: you can't animate `opacity` on a preserve-3d element because `opacity < 1` flattens the 3D rendering. And you can't animate `transform` on `.book-container` because it would override the CSS `translateZ()` that creates the shelf depth.
+
+The solution in `GsapAnimations.tsx`:
+1. Hide containers with `gsap.set('.book-container', { autoAlpha: 0 })` (visibility:hidden + opacity:0)
+2. For each book, simultaneously: reveal the container with `autoAlpha: 1` over 0.15s (fast enough that 3D flattening isn't noticeable), and animate the inner `.book` element with `y: -25 → 0` using `back.out(1.6)` ease for a satisfying landing bounce
+3. After all books land, `clearProps` removes all inline styles so the CSS hover effects work normally
+
+The key insight: keep the 3D-breaking animation (opacity) as short as possible (0.15s), and put the visible motion (y translation) on a child element that doesn't have preserve-3d.
 
 ### The CSS Modules Experiment
 Early in development, CSS modules were introduced for scoped styling. The result: harder to debug, lost cascade context, couldn't share styles between sections easily. Reverted back to one file. **Lesson:** CSS modules shine in large apps with many developers. For a solo project under 3000 lines, a single file with good organization wins.
@@ -315,7 +451,7 @@ Free tier allows 100 deploys/day. During a heavy build session, we hit the limit
 
 - **Custom domain** — OG meta tags and sitemap still point to `studio-psi-beryl-56.vercel.app`. Need to update when `rizzy.today` is pointed here.
 - **More case studies** — Only 4 projects currently. The `CASE_STUDIES` array in `projects.ts` is the only thing that needs updating.
-- **GSAP animations** — GSAP is installed (`package.json`) but barely used. The plan was to add scroll-triggered animations, text reveals, and ambient book floating. Most of the animation work ended up being CSS-only.
+- **GSAP animations** — GSAP is now used for the hero entrance timeline (headline → subline → CTA → shelf line → books landing one by one). Still room for scroll-triggered reveals and text animations in other sections.
 - **Form/contact section** — Currently just links to Cal.com. A contact form could capture leads who aren't ready to book.
 - **Blog/writing** — Would help with SEO and establishing authority. Not critical for launch.
 
@@ -327,6 +463,6 @@ This site follows one rule: **the minimum complexity that achieves the desired r
 
 No routing library for three views. No state library for one store. No animation library for hover effects. No CSS framework for one stylesheet. No image optimization pipeline — just compress in Python and commit the output.
 
-Every dependency earns its place. React earns it because the component model makes the section-based architecture clean. Vite earns it because the dev experience is instant. Vercel earns it because deploy is one push. GSAP is installed for future scroll choreography but hasn't earned its keep yet.
+Every dependency earns its place. React earns it because the component model makes the section-based architecture clean. Vite earns it because the dev experience is instant. Vercel earns it because deploy is one push. GSAP earns it because the hero entrance timeline (sequenced headlines, staggered book drops, shelf line animation) requires choreography that CSS can't express.
 
 The result is a site that loads fast, deploys anywhere, and can be understood by reading ~26 files. That's the whole thing. No build pipeline mysteries, no config files to decode, no abstraction layers to peel back. Just components, styles, and data.

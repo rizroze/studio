@@ -8,7 +8,7 @@ const BOOK_COLORS = ['#FCE184', '#F5B731', '#34A853', '#1a1a2e']
 
 const SPINE_LOGOS: (string | null)[] = [
   '/content/logos/rad-spine.png',
-  '/content/logos/wayy-spine.png',
+  '/content/logos/wayy-spine.webp',
   '/content/logos/hydex-spine.png',
   null, // Fullport — text label
 ]
@@ -17,30 +17,71 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const shelfRef = useRef<HTMLDivElement>(null)
 
-  // Random float tease — one book at a time
+  // Random float tease — pauses entirely on hover, resumes 1.5s after leave
   useEffect(() => {
     const shelf = shelfRef.current
     if (!shelf) return
     const containers = shelf.querySelectorAll('.book-container')
     let last = -1
+    let paused = false
+    let resumeTimer: ReturnType<typeof setTimeout> | null = null
+
+    const clearAllTease = () => {
+      containers.forEach(c => c.classList.remove('book-tease'))
+    }
 
     const tease = () => {
-      // Pick a random book, different from last
+      if (paused) return
       let next: number
-      do { next = Math.floor(Math.random() * containers.length) } while (next === last && containers.length > 1)
+      let attempts = 0
+      do {
+        next = Math.floor(Math.random() * containers.length)
+        attempts++
+      } while (next === last && containers.length > 1 && attempts < 8)
       last = next
 
-      // Remove from all, add to chosen
-      containers.forEach(c => c.classList.remove('book-tease'))
-      const el = containers[next]
-      // Force reflow so animation restarts
-      void (el as HTMLElement).offsetWidth
+      clearAllTease()
+      const el = containers[next] as HTMLElement
+      void el.offsetWidth
       el.classList.add('book-tease')
     }
 
+    let hoverCount = 0
+
+    // Hover on a book: kill all tease, pause loop
+    const onEnter = () => {
+      hoverCount++
+      paused = true
+      if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = null }
+      clearAllTease()
+    }
+
+    // Leave a book: resume 1.5s after last book unhovered
+    const onLeave = () => {
+      hoverCount--
+      if (hoverCount > 0) return
+      if (resumeTimer) clearTimeout(resumeTimer)
+      resumeTimer = setTimeout(() => {
+        paused = false
+        tease()
+      }, 1500)
+    }
+
+    containers.forEach(c => {
+      c.addEventListener('mouseenter', onEnter)
+      c.addEventListener('mouseleave', onLeave)
+    })
+
     tease()
     const id = setInterval(tease, 4000)
-    return () => clearInterval(id)
+    return () => {
+      clearInterval(id)
+      if (resumeTimer) clearTimeout(resumeTimer)
+      containers.forEach(c => {
+        c.removeEventListener('mouseenter', onEnter)
+        c.removeEventListener('mouseleave', onLeave)
+      })
+    }
   }, [])
 
   useEffect(() => {
@@ -86,6 +127,8 @@ export function Hero() {
 
         <div className="hero-right">
           <div className="bookshelf" ref={shelfRef}>
+            <div className="shelf-line" />
+            <span className="shelf-label">MY_LIBRARY</span>
             {CASE_STUDIES.map((p, i) => (
               <label
                 key={p.slug}

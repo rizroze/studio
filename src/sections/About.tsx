@@ -1,3 +1,4 @@
+import { useRef, useState, useEffect } from 'react'
 import { VerifiedBadge } from '../components/VerifiedBadge'
 
 const TOOLS: { name: string; icon: string }[] = [
@@ -19,10 +20,46 @@ const TOOLS: { name: string; icon: string }[] = [
 ]
 
 export function About() {
+  const pfpRef = useRef<HTMLImageElement>(null)
+  const [hasSpunOnReveal, setHasSpunOnReveal] = useState(false)
+
+  // Spin once when About section scrolls into view
+  useEffect(() => {
+    const el = pfpRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting && !hasSpunOnReveal) {
+          el.classList.add('pfp-spin')
+          setHasSpunOnReveal(true)
+          el.addEventListener('animationend', () => el.classList.remove('pfp-spin'), { once: true })
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.5 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [hasSpunOnReveal])
+
+  const handleClick = () => {
+    const el = pfpRef.current
+    if (!el || el.classList.contains('pfp-spin')) return
+    el.classList.add('pfp-spin')
+    el.addEventListener('animationend', () => el.classList.remove('pfp-spin'), { once: true })
+  }
+
   return (
     <section id="about" className="section about-section">
       <div className="about-profile" data-reveal>
-        <img src="/rizzy-avatar.png" alt="Zen" className="about-pfp-large" />
+        <img
+          ref={pfpRef}
+          src="/rizzy-avatar.png"
+          alt="Zen"
+          className="about-pfp-large"
+          onClick={handleClick}
+          style={{ cursor: 'pointer' }}
+        />
         <div className="about-identity">
           <h2 className="about-name-large">
             Riz Rose
