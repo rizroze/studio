@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import { Nav } from './components/Nav'
 import { Footer } from './components/Footer'
 import { CursorGlitch } from './components/CursorGlitch'
@@ -65,6 +66,7 @@ export function App() {
         )}
       </main>
       <Footer />
+      <Analytics />
     </>
   )
 }

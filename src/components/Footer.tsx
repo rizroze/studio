@@ -117,6 +117,7 @@ export function Footer() {
 
       <div className="footer-bottom">
         <span>&copy; {new Date().getFullYear()} Rizzy Studio. All rights reserved.</span>
+        <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="footer-link footer-privacy-link">Privacy</a>
       </div>
     </footer>
   )

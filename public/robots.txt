@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://studio-psi-beryl-56.vercel.app/sitemap.xml
