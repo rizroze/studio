@@ -27,7 +27,9 @@ export function Testimonials() {
                 <img src={t.pfp} alt={t.name} className="testimonial-pfp" />
                 <div className="testimonial-info">
                   <div className="testimonial-name">
-                    {t.name}
+                    {t.link ? (
+                      <a href={t.link} target="_blank" rel="noopener noreferrer" className="testimonial-name-link">{t.name}</a>
+                    ) : t.name}
                     <VerifiedBadge color="red" />
                   </div>
                   <div className="testimonial-title">{t.title}</div>

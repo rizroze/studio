@@ -1,3 +1,4 @@
+import { track } from '@vercel/analytics'
 import type { PricingTier } from '../constants/services'
 
 interface PricingCardProps {
@@ -35,6 +36,7 @@ export function PricingCard({ tier }: PricingCardProps) {
             target="_blank"
             rel="noopener noreferrer"
             className={`pricing-cta ${tier.featured ? 'featured' : ''}`}
+            onClick={() => track('cta_click', { location: 'pricing', tier: tier.name })}
           >
             {tier.cta}
           </a>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { track } from '@vercel/analytics'
 import { FAQ_ITEMS } from '../constants/faq'
 
 export function FAQ() {
@@ -24,6 +25,7 @@ export function FAQ() {
               target="_blank"
               rel="noopener noreferrer"
               className="cta-card-btn"
+              onClick={() => track('cta_click', { location: 'contact' })}
             >
               <span className="status-dot" />
               Schedule a call

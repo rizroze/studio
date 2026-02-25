@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { track } from '@vercel/analytics'
 import { ClientTicker } from '../components/ClientTicker'
 import { AsciiRose } from '../components/AsciiRose'
 import { CASE_STUDIES } from '../constants/projects'
@@ -74,7 +75,7 @@ export function Hero() {
           <p className="hero-subline">
             Brand, website, motion — designed and built together, from <strong>concept</strong> to <strong>production</strong>.
           </p>
-          <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="hero-cta">
+          <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="hero-cta" onClick={() => track('cta_click', { location: 'hero' })}>
             <img src="/rizzy-avatar.png" alt="" className="hero-cta-avatar" />
             Book an intro
           </a>

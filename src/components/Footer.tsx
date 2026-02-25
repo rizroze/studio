@@ -103,7 +103,7 @@ export function Footer() {
               <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">X / Twitter</a>
               <a href="https://discord.gg/radiants" target="_blank" rel="noopener noreferrer" className="footer-link">Discord</a>
               <a href="https://github.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
-              <a href="https://rizzy.today" target="_blank" rel="noopener noreferrer" className="footer-link">rizzy.today ↗</a>
+              <a href="mailto:zen@rizzy.today" className="footer-link">zen@rizzy.today</a>
             </div>
           </div>
           <div className="footer-ipod-wrap">
