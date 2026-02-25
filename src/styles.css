@@ -1868,7 +1868,7 @@ main {
   transform: scale(1.05);
 }
 .pfp-spin {
-  animation: pfp-spin-once 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+  animation: pfp-spin-once 1s ease-in-out forwards !important;
 }
 
 .about-name-large {
