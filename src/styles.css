@@ -5,6 +5,119 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* ===========================
+   SCROLL PROGRESS BAR
+   =========================== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.4);
+  transform-origin: left;
+  z-index: 10001;
+  pointer-events: none;
+}
+
+/* ===========================
+   PAGE TRANSITIONS
+   =========================== */
+.page-content {
+  transition: opacity 0.25s var(--smooth-ease), filter 0.25s var(--smooth-ease);
+}
+.page-exit {
+  opacity: 0;
+  filter: blur(4px);
+}
+.page-enter {
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* ===========================
+   BACK TO TOP
+   =========================== */
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.3s var(--smooth-ease);
+  animation: fadeInUp 0.3s var(--smooth-ease);
+}
+.back-to-top:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transform: translateY(-2px);
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===========================
+   AVAILABLE BADGE
+   =========================== */
+.hero-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.available-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.01em;
+}
+.available-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.5);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ===========================
+   ACCESSIBILITY — FOCUS STATES
+   =========================== */
+:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ===========================
+   FONT LOADING — prevent FOUT
+   =========================== */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 :root {
   --bg-primary: rgb(0, 0, 0);
   --bg-secondary: rgb(59, 3, 3);
@@ -2720,6 +2833,8 @@ main {
   .pricing-flip-front, .pricing-flip-back { padding: 24px 16px; }
   .testimonial-card-full { padding: 20px; }
   .testimonial-quote-large p { font-size: 15px; }
+  .hero-cta-row { flex-wrap: wrap; gap: 10px; }
+  .back-to-top { bottom: 16px; right: 16px; width: 36px; height: 36px; }
 }
 
 /* ===========================

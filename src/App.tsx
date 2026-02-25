@@ -1,5 +1,6 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import { Nav } from './components/Nav'
 import { Footer } from './components/Footer'
 import { CursorGlitch } from './components/CursorGlitch'
@@ -18,17 +19,42 @@ type View = { type: 'home' } | { type: 'project'; slug: string } | { type: 'all-
 
 export function App() {
   const [view, setView] = useState<View>({ type: 'home' })
+  const [transitioning, setTransitioning] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [showBackToTop, setShowBackToTop] = useState(false)
+  const pendingView = useRef<View | null>(null)
+
+  const transitionTo = useCallback((next: View) => {
+    pendingView.current = next
+    setTransitioning(true)
+    setTimeout(() => {
+      setView(next)
+      window.scrollTo({ top: 0 })
+      requestAnimationFrame(() => setTransitioning(false))
+    }, 250)
+  }, [])
 
   const openProject = useCallback((slug: string) => {
-    setView({ type: 'project', slug })
-  }, [])
+    transitionTo({ type: 'project', slug })
+  }, [transitionTo])
 
   const openAllProjects = useCallback(() => {
-    setView({ type: 'all-projects' })
-  }, [])
+    transitionTo({ type: 'all-projects' })
+  }, [transitionTo])
 
   const goHome = useCallback(() => {
-    setView({ type: 'home' })
+    transitionTo({ type: 'home' })
+  }, [transitionTo])
+
+  // Scroll progress + back to top
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight
+      setScrollProgress(h > 0 ? window.scrollY / h : 0)
+      setShowBackToTop(window.scrollY > window.innerHeight)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   const currentProject = view.type === 'project'
@@ -37,11 +63,12 @@ export function App() {
 
   return (
     <>
+      <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress})` }} />
       <div className="grain-overlay" />
       <CursorGlitch />
       <Nav onLogoClick={goHome} />
       <ScrollReveal />
-      <main>
+      <main className={`page-content ${transitioning ? 'page-exit' : 'page-enter'}`}>
         {view.type === 'home' && (
           <>
             <Hero />
@@ -66,7 +93,21 @@ export function App() {
         )}
       </main>
       <Footer />
+
+      {showBackToTop && (
+        <button
+          className="back-to-top"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Back to top"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 12V4M5 7L8 4L11 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      )}
+
       <Analytics />
+      <SpeedInsights />
     </>
   )
 }

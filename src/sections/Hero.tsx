@@ -75,10 +75,13 @@ export function Hero() {
           <p className="hero-subline">
             Brand, website, motion — designed and built together, from <strong>concept</strong> to <strong>production</strong>.
           </p>
-          <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="hero-cta" onClick={() => track('cta_click', { location: 'hero' })}>
-            <img src="/rizzy-avatar.png" alt="" className="hero-cta-avatar" />
-            Book an intro
-          </a>
+          <div className="hero-cta-row">
+            <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="hero-cta" onClick={() => track('cta_click', { location: 'hero' })}>
+              <img src="/rizzy-avatar.png" alt="" className="hero-cta-avatar" />
+              Book an intro
+            </a>
+            <span className="available-badge"><span className="available-dot" />Available now</span>
+          </div>
         </div>
 
         <div className="hero-right">

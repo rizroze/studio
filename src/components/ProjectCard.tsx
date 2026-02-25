@@ -49,7 +49,7 @@ export function ProjectCard({ project, onViewProject }: ProjectCardProps) {
         onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') handleClick() }}
       >
         <div className="project-card-thumb" style={{ backgroundColor: project.color }}>
-          <img src={project.thumbnail} alt={project.title} />
+          <img src={project.thumbnail} alt={project.title} loading="lazy" />
         </div>
         <div className="project-card-info">
           <h3 className="project-card-title">{project.title}</h3>

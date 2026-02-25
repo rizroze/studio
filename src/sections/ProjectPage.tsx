@@ -54,7 +54,7 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
           <div className="project-page-gallery">
             {project.gallery.map((img, i) => (
               <div key={i} className="project-page-gallery-item">
-                <img src={img} alt={`${project.title} ${i + 1}`} />
+                <img src={img} alt={`${project.title} ${i + 1}`} loading="lazy" />
               </div>
             ))}
           </div>
@@ -100,7 +100,7 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
               onKeyDown={e => { if (e.key === 'Enter') onSelectProject(p.slug) }}
             >
               <div className="project-card-thumb">
-                <img src={p.thumbnail} alt={p.title} />
+                <img src={p.thumbnail} alt={p.title} loading="lazy" />
               </div>
               <div className="project-card-info">
                 <h3 className="project-card-title">{p.title}</h3>
