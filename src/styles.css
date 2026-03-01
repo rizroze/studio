@@ -71,6 +71,7 @@
    AVAILABLE BADGE
    =========================== */
 .hero-cta-row {
+  opacity: 0;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -722,6 +723,7 @@ main {
 }
 
 .hero-headline {
+  opacity: 0;
   font-family: 'Urbanist', sans-serif;
   font-size: clamp(36px, 5vw, 64px);
   font-weight: 700;
@@ -739,6 +741,7 @@ main {
 }
 
 .hero-subline {
+  opacity: 0;
   font-size: 18px;
   color: rgba(255, 255, 255, 0.5);
   max-width: 460px;
@@ -789,6 +792,7 @@ main {
 
 /* Hero right — 3D Bookshelf (parallax layer) */
 .hero-right {
+  opacity: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1061,6 +1065,7 @@ main {
    CLIENT TICKER (in hero)
    =========================== */
 .hero-ticker {
+  opacity: 0;
   position: relative;
   z-index: 1;
   width: 100%;
@@ -1136,7 +1141,7 @@ main {
 
 @keyframes ticker-scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-25%); }
 }
 
 /* ===========================

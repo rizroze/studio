@@ -8,12 +8,12 @@ const LOGOS = [
 ]
 
 export function ClientTicker() {
-  // 2 identical copies — scroll by exactly -50% for seamless loop
-  const doubled = [...LOGOS, ...LOGOS]
+  // 4 copies so the track is always wider than the viewport — scroll -25% for seamless loop
+  const repeated = [...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS]
   return (
     <div className="client-ticker">
       <div className="client-ticker-track">
-        {doubled.map((logo, i) => (
+        {repeated.map((logo, i) => (
           <span key={`${logo.alt}-${i}`} className="ticker-logo-zone">
             <img
               src={logo.src}

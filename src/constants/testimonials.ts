@@ -10,8 +10,8 @@ export const TESTIMONIALS = [
     job: {
       type: 'radiants',
       logo: '/content/logos/radiant-logo.webp',
-      text: 'Creative Direction',
-      duration: '3 years — and still',
+      text: 'Content Direction',
+      duration: '3 years',
       ongoing: true
     }
   },
