@@ -25,7 +25,7 @@ export const TESTIMONIALS = [
     quote: `"Rizzy has an incredibly keen eye for design. Whether I have a strong idea of what I need or just a rough concept, he always delivers a professional grade product that often exceeds my expectations."`,
     job: {
       type: 'hydex',
-      logo: '/content/logos/hydex logo.png',
+      logo: '/content/hydex-logo-white.png',
       text: 'Logo Animation & Pitch Deck Design',
       duration: undefined,
       ongoing: false
