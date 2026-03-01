@@ -120,7 +120,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       },
     ],
     category: 'brand',
-    description: '3 years content lead. Created hundreds of content pieces, NFT art, and brand motion.',
+    description: '3 years content lead. Created hundreds of content pieces, NFT art, and brand motion. Kept things rad.',
     brief: 'Keep the creative vision alive across everything RadiantsDAO does. Social content, brand assets, vibes, and community identity.',
     challenge: 'Radiants does a lot. NFT drops, community tools, content campaigns, product launches. Everything needed to look and feel like Radiants without slowing anyone down.',
     solution: 'Built the DNA Design System from scratch. Created hundreds of social graphics, NFT art, pixel characters, event promos, and brand motion videos. Established a recognizable visual language (sun-yellow, pixel aesthetic, retro energy) that scales across every format.',
