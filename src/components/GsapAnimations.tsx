@@ -4,6 +4,7 @@ import { useGSAP } from '@gsap/react'
 /**
  * GSAP hero entrance timeline — smooth choreography on first load.
  * No blur filters (GPU-heavy), no bounce overshoot. Just clean fades + slides.
+ * Waits for the loader to clear before starting so the full animation is visible.
  */
 export function GsapAnimations() {
   useGSAP(() => {
@@ -12,7 +13,11 @@ export function GsapAnimations() {
     const zones = gsap.utils.toArray<HTMLElement>('.book-zone')
     gsap.set(zones, { y: -60 })
 
-    const tl = gsap.timeline({ delay: 0.15 })
+    // Wait for loader to finish fading before starting the entrance
+    const loader = document.getElementById('loader')
+    const startDelay = loader ? 0.5 : 0.15
+
+    const tl = gsap.timeline({ delay: startDelay })
 
     // Left side — text rises in sequence
     tl.fromTo('.hero-headline',

@@ -6,7 +6,7 @@ export interface FAQItem {
 export const FAQ_ITEMS: FAQItem[] = [
   {
     question: 'Why one person instead of a team?',
-    answer: 'Everything stays in one head. Design decisions carry straight into code, animations match the original vision, and nothing gets diluted between people. It also means faster turnaround and one point of contact for everything.'
+    answer: 'What we talk about is what shows up on your screen. No handoff gaps, no lazy compromises, no telephone game between staff. It also means faster turnaround and one point of contact for everything.'
   },
   {
     question: 'How fast can you start?',

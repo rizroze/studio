@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { useMobileNav, useNavScroll, navStore } from '../stores/navStore'
 
 const NAV_ITEMS = [
@@ -66,6 +67,16 @@ export function Nav({ onLogoClick }: NavProps) {
     return () => document.removeEventListener('click', onClick)
   }, [pillExpanded])
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [mobileOpen])
+
   const handleLinkClick = (href: string) => {
     navStore.close()
     navStore.closePill()
@@ -88,64 +99,78 @@ export function Nav({ onLogoClick }: NavProps) {
   ].filter(Boolean).join(' ')
 
   return (
-    <nav className={navClass} ref={navRef}>
-      <div className="nav-inner">
-        <a href="#" className="nav-brand" onClick={scrollToTop}>
-          <img src="/rizzy-avatar.png" alt="Rizzy Studio" className="nav-pfp" />
-          <span className="nav-brand-text">Rizzy Studio</span>
-        </a>
+    <>
+      <nav className={navClass} ref={navRef}>
+        <div className="nav-inner">
+          <a href="#" className="nav-brand" onClick={scrollToTop}>
+            <img src="/rizzy-avatar.png" alt="Rizzy Studio" className="nav-pfp" />
+            <span className="nav-brand-text">Rizzy Studio</span>
+          </a>
 
-        <div className="nav-links desktop-only">
-          {NAV_ITEMS.map(item => (
-            <a
-              key={item.href}
-              href={item.href}
-              className={`nav-link ${activeSection === item.href.slice(1) ? 'active' : ''}`}
-              onClick={() => handleLinkClick(item.href)}
-            >
-              {item.label}
-            </a>
-          ))}
-        </div>
+          <div className="nav-links desktop-only">
+            {NAV_ITEMS.map(item => (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`nav-link ${activeSection === item.href.slice(1) ? 'active' : ''}`}
+                onClick={() => handleLinkClick(item.href)}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
 
-        <a href="#contact" className="nav-cta desktop-only" onClick={() => handleLinkClick('#contact')}>
-          Book a call
-        </a>
-
-        <button
-          className="nav-dot-toggle desktop-only"
-          onClick={navStore.togglePill}
-          aria-label="Toggle navigation"
-        >
-          <span /><span /><span />
-        </button>
-
-        <button
-          className={`nav-mobile-toggle mobile-only ${mobileOpen ? 'open' : ''}`}
-          onClick={navStore.toggle}
-          aria-label="Toggle menu"
-        >
-          <span /><span /><span />
-        </button>
-      </div>
-
-      {mobileOpen && (
-        <div className="nav-mobile-menu">
-          {NAV_ITEMS.map(item => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="nav-mobile-link"
-              onClick={() => handleLinkClick(item.href)}
-            >
-              {item.label}
-            </a>
-          ))}
-          <a href="#contact" className="nav-mobile-cta" onClick={() => handleLinkClick('#contact')}>
+          <a href="#contact" className="nav-cta desktop-only" onClick={() => handleLinkClick('#contact')}>
             Book a call
           </a>
+
+          <button
+            className="nav-dot-toggle desktop-only"
+            onClick={navStore.togglePill}
+            aria-label="Toggle navigation"
+          >
+            <span /><span /><span />
+          </button>
+
+          <button
+            className={`nav-mobile-toggle mobile-only ${mobileOpen ? 'open' : ''}`}
+            onClick={navStore.toggle}
+            aria-label="Toggle menu"
+          >
+            <span /><span /><span />
+          </button>
         </div>
+      </nav>
+
+      {mobileOpen && createPortal(
+        <div className="nav-mobile-menu">
+          <div className="nav-mobile-header">
+            <a href="#" className="nav-brand" onClick={(e) => { scrollToTop(e); navStore.close() }}>
+              <img src="/rizzy-avatar.png" alt="Rizzy Studio" className="nav-pfp" />
+              <span className="nav-brand-text">Rizzy Studio</span>
+            </a>
+            <button className="nav-mobile-toggle open" onClick={() => navStore.close()} aria-label="Close menu">
+              <span /><span /><span />
+            </button>
+          </div>
+          <div className="nav-mobile-menu-inner">
+            {NAV_ITEMS.map(item => (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`nav-mobile-link ${activeSection === item.href.slice(1) ? 'active' : ''}`}
+                onClick={() => handleLinkClick(item.href)}
+              >
+                {item.label}
+              </a>
+            ))}
+            <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="nav-mobile-cta" onClick={() => navStore.close()}>
+              Book a call
+            </a>
+          </div>
+        </div>,
+        document.body
       )}
-    </nav>
+    </>
   )
 }

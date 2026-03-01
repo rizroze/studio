@@ -262,7 +262,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     slug: 'hydex',
     title: 'Hydex',
     client: 'DeFi',
-    tags: ['Brand Identity', 'Pitch Deck', 'Presentation Design'],
+    tags: ['Pitch Deck', 'Presentation Design'],
     thumbnail: '/content/hydex-logo-white.png',
     color: '#34A853',
     gallery: [
