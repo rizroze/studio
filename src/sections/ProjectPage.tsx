@@ -50,31 +50,6 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
           ))}
         </div>
 
-        {project.video && (
-          <div className="project-video-wrap">
-            {project.videoLabel && (
-              <span className="project-video-label">{project.videoLabel}</span>
-            )}
-            <video
-              src={project.video}
-              controls
-              preload="auto"
-              playsInline
-              className="project-video"
-            />
-          </div>
-        )}
-
-        {project.gallery.length > 0 && (
-          <div className="project-page-gallery gallery-deck">
-            {project.gallery.map((img, i) => (
-              <div key={i} className="project-page-gallery-item">
-                <img src={img} alt={`${project.title} ${i + 1}`} loading="lazy" />
-              </div>
-            ))}
-          </div>
-        )}
-
         <div className="project-page-section">
           <h3>Brief</h3>
           <p>{project.brief}</p>
@@ -100,6 +75,31 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
           <h3>Result</h3>
           <p>{project.result}</p>
         </div>
+
+        {project.video && (
+          <div className="project-video-wrap">
+            {project.videoLabel && (
+              <span className="project-video-label">{project.videoLabel}</span>
+            )}
+            <video
+              src={project.video}
+              controls
+              preload="auto"
+              playsInline
+              className="project-video"
+            />
+          </div>
+        )}
+
+        {project.gallery.length > 0 && (
+          <div className="project-page-gallery gallery-deck">
+            {project.gallery.map((img, i) => (
+              <div key={i} className="project-page-gallery-item">
+                <img src={img} alt={`${project.title} ${i + 1}`} loading="lazy" />
+              </div>
+            ))}
+          </div>
+        )}
 
         {project.sections && project.sections.map((section, i) => (
           <div key={i} className="project-page-subsection">
