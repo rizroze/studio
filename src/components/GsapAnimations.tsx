@@ -1,10 +1,28 @@
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 
+// Preload bookshelf images so they're cached before the entrance animation
+function preloadBookImages(): Promise<void> {
+  const imgs = document.querySelectorAll<HTMLImageElement>('.bookshelf img')
+  if (!imgs.length) return Promise.resolve()
+  const promises = Array.from(imgs).map(img => {
+    if (img.complete) return Promise.resolve()
+    return new Promise<void>(resolve => {
+      img.onload = () => resolve()
+      img.onerror = () => resolve()
+    })
+  })
+  // Don't wait forever — cap at 2s
+  return Promise.race([
+    Promise.all(promises).then(() => {}),
+    new Promise<void>(resolve => setTimeout(resolve, 2000)),
+  ])
+}
+
 /**
  * GSAP hero entrance timeline — smooth choreography on first load.
  * No blur filters (GPU-heavy), no bounce overshoot. Just clean fades + slides.
- * Waits for the loader to clear before starting so the full animation is visible.
+ * Waits for the loader to clear and book images to load before starting.
  */
 export function GsapAnimations() {
   useGSAP(() => {
@@ -13,8 +31,9 @@ export function GsapAnimations() {
     const zones = gsap.utils.toArray<HTMLElement>('.book-zone')
     gsap.set(zones, { y: -60 })
 
-    // Wait for loader to finish fading before starting the entrance
     const loader = document.getElementById('loader')
+
+    const runTimeline = () => {
     const startDelay = loader ? 0.5 : 0.15
 
     const tl = gsap.timeline({ delay: startDelay })
@@ -72,6 +91,9 @@ export function GsapAnimations() {
       gsap.set(zones, { clearProps: 'transform' })
       window.dispatchEvent(new Event('books-landed'))
     })
+    } // end runTimeline
+
+    preloadBookImages().then(runTimeline)
   }, [])
 
   return null

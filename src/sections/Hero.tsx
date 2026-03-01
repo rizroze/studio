@@ -152,14 +152,14 @@ export function Hero() {
                   <div className="book">
                     <div className="book-spine">
                       {SPINE_LOGOS[i] ? (
-                        <img src={SPINE_LOGOS[i]!} alt={p.title} className="spine-logo" />
+                        <img src={SPINE_LOGOS[i]!} alt={p.title} className="spine-logo" loading="eager" />
                       ) : (
                         <span className="spine-text">{p.title}</span>
                       )}
                     </div>
                     <div className="book-back"></div>
                     <div className="book-cover">
-                      <img src={p.thumbnail} alt={p.title} />
+                      <img src={p.thumbnail} alt={p.title} loading="eager" />
                     </div>
                     <div className="book-side"></div>
                     <input type="radio" name="hero-book" />
