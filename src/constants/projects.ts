@@ -159,7 +159,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     category: 'web',
     description: 'Built the first prototype with 2 devs. After a long pause, revamped the entire product into an art prediction market. Redesigned and rebuilt in 1 week. Founder.',
     brief: 'Take a prediction market concept from prototype to live Solana product. Twice.',
-    challenge: 'The first version was a rough prototype. When it was time to come back, the whole product needed to be rethought as an art prediction market. New UI, new flows, new on-chain logic, and shipped fast.',
+    challenge: 'Started this as a tool for covering all the needs of an on-chain creator. Built the first version with 2 developers, then put it on a shelf and forgot about it. The Solana Graveyard hackathon made me want to rework it. The whole product needed to be rethought as an art prediction market. New UI, new flows, new on-chain logic, and shipped fast.',
     solution: 'Redesigned and rebuilt the entire frontend in 1 week. Next.js 16, Prisma + MongoDB, Solana wallet adapter. Retro pixel design system with real-time battles, escrow wallets, and two-step transaction signing.',
     stack: ['Next.js', 'TypeScript', 'Prisma', 'MongoDB', 'Solana', 'Zustand', 'GSAP'],
     result: 'A live prediction market on Solana Devnet. From prototype to full product revamp.',
