@@ -2567,9 +2567,8 @@ main {
 }
 
 .project-page-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 12px;
+  columns: 2;
+  column-gap: 12px;
   margin-bottom: 40px;
 }
 
@@ -2577,6 +2576,8 @@ main {
   background: var(--bg-secondary);
   border-radius: 12px;
   overflow: hidden;
+  break-inside: avoid;
+  margin-bottom: 12px;
 }
 
 .project-page-gallery-item img {
@@ -2588,6 +2589,30 @@ main {
 
 .project-page-gallery-item:hover img {
   transform: scale(1.03);
+}
+
+/* Landscape-heavy sections: 2-col grid for uniform rows */
+.gallery-landscape {
+  columns: unset;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.gallery-landscape .project-page-gallery-item {
+  margin-bottom: 0;
+}
+
+/* 3-col deck grid */
+.gallery-deck {
+  columns: unset;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.gallery-deck .project-page-gallery-item {
+  margin-bottom: 0;
 }
 
 /* === Video Player === */
@@ -2640,19 +2665,26 @@ main {
   margin-bottom: 20px;
 }
 
-/* Square grid for PFP art */
+/* Square grid for PFP art & square content */
 .gallery-squares {
+  columns: unset;
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
 }
 
-.gallery-item-square {
+.gallery-squares .project-page-gallery-item {
+  margin-bottom: 0;
   aspect-ratio: 1 / 1;
+}
+
+.gallery-squares .project-page-gallery-item img {
+  height: 100%;
+  object-fit: cover;
 }
 
 .gallery-item-square img {
   image-rendering: pixelated;
-  height: 100%;
-  object-fit: cover;
 }
 
 .project-page-section {
@@ -2918,7 +2950,8 @@ main {
   .cta-col { position: static; }
   .project-page-hero { height: 220px; border-radius: 12px; }
   .project-page-title { font-size: 28px; }
-  .project-page-gallery { grid-template-columns: 1fr; }
+  .project-page-gallery { columns: 1; }
+  .gallery-landscape, .gallery-deck { grid-template-columns: 1fr; }
   .project-video { border-radius: 8px; }
   .faq-question { padding: 16px 20px; font-size: 14px; }
   .faq-answer p { padding: 0 20px 16px; font-size: 13px; }

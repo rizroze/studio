@@ -2,7 +2,7 @@ export interface ProjectSection {
   title: string
   description: string
   gallery: string[]
-  layout?: 'grid' | 'squares' | 'masonry'  // grid = default 3-col, squares = small 1:1, masonry = mixed
+  layout?: 'grid' | 'squares' | 'landscape'  // grid = default columns, squares = 1:1 grid, landscape = 2-col grid
 }
 
 export interface CaseStudyData {
@@ -52,47 +52,62 @@ export const CASE_STUDIES: CaseStudyData[] = [
         title: 'Constant Updates',
         description: 'Weekly branded content for RadSpaces, the community podcast and Twitter Spaces. Each post designed to stop the scroll with a unique visual direction.',
         gallery: [
+          // landscape / wide
+          '/content/radiants/radspaces/content-ts.webp',
+          '/content/radiants/radspaces/content-screenshot.webp',
+          // square
+          '/content/radiants/radspaces/radspaces-44.webp',
+          '/content/radiants/radspaces/radspaces-32.webp',
+          '/content/radiants/radspaces/content-raddz.webp',
+          // portrait
           '/content/radiants/radspaces/radspaces-57.webp',
           '/content/radiants/radspaces/radspaces-54-google.webp',
           '/content/radiants/radspaces/radspaces-54-tools.webp',
-          '/content/radiants/radspaces/radspaces-44.webp',
-          '/content/radiants/radspaces/radspaces-32.webp',
           '/content/radiants/radspaces/radspaces-46.webp',
           '/content/radiants/radspaces/radspaces-dela.webp',
           '/content/radiants/radspaces/content-this.webp',
-          '/content/radiants/radspaces/content-ts.webp',
-          '/content/radiants/radspaces/content-raddz.webp',
           '/content/radiants/radspaces/content-frame-1.webp',
           '/content/radiants/radspaces/content-frame-2.webp',
+          '/content/radiants/radspaces/radspaces-57now.webp',
+          '/content/radiants/radspaces/radspaces-55.webp',
+          '/content/radiants/radspaces/radspaces-56.webp',
         ],
       },
       {
         title: 'Community & Events',
         description: 'Event graphics, community moments, and recurring content. From the first-ever Burn Event to weekly co-working days and vibecoding sessions.',
         gallery: [
+          // landscape
           '/content/radiants/community/vibecode.webp',
+          '/content/radiants/community/radgangz.webp',
+          // square / near-square
+          '/content/radiants/community/be-rad.webp',
+          '/content/radiants/community/burn-event.webp',
           '/content/radiants/community/coworking.webp',
           '/content/radiants/community/dinner.webp',
-          '/content/radiants/community/radgangz.webp',
-          '/content/radiants/community/be-rad.webp',
           '/content/radiants/radspaces/community-private-event.webp',
-          '/content/radiants/radspaces/content-screenshot.webp',
         ],
       },
       {
         title: 'Brand Art',
         description: 'Original illustrations, photo treatments, and brand pieces that define the Radiants visual identity.',
         gallery: [
-          '/content/radiants/brand/brand-art.webp',
+          // landscape
           '/content/radiants/brand/photo-1.webp',
           '/content/radiants/brand/photo-2.webp',
           '/content/radiants/brand/photo-3.webp',
           '/content/radiants/brand/brand-radshader.webp',
+          // square
+          '/content/radiants/brand/brand-rad46.webp',
+          '/content/radiants/brand/yeehaw.webp',
+          // portrait
+          '/content/radiants/brand/brand-art.webp',
         ],
       },
       {
         title: 'Monolith 2026',
         description: 'Full content campaign for Solana Mobile\'s flagship event. Announcement threads, FAQ graphics, social cards, and post-event recaps covering the Vibecoding workshop and hackathon highlights.',
+        layout: 'landscape',
         gallery: [
           '/content/monolith/announcement-1.webp',
           '/content/monolith/announcement-3.webp',
@@ -116,6 +131,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       {
         title: 'Seeker Hackathon',
         description: 'Ran the entire content campaign. Prize announcements, FAQ threads, countdown graphics, milestone celebrations, and sponsor thank-yous. 500+ signups.',
+        layout: 'squares',
         gallery: [
           '/content/seeker/prize.webp',
           '/content/seeker/faq-1.webp',
@@ -189,23 +205,31 @@ export const CASE_STUDIES: CaseStudyData[] = [
     thumbnail: '/content/logos/wayy-logomark-black.webp',
     color: '#F5B731',
     gallery: [
-      '/content/wayy/deck-title.webp',
-      '/content/wayy/deck-problem.webp',
-      '/content/wayy/deck-solution.webp',
-      '/content/wayy/deck-product.webp',
-      '/content/wayy/deck-tokenomics.webp',
-      '/content/wayy/deck-roadmap.webp',
+      '/content/wayy/deck-01.webp',
+      '/content/wayy/deck-02.webp',
+      '/content/wayy/deck-03.webp',
+      '/content/wayy/deck-04.webp',
+      '/content/wayy/deck-05.webp',
+      '/content/wayy/deck-06.webp',
+      '/content/wayy/deck-07.webp',
+      '/content/wayy/deck-08.webp',
+      '/content/wayy/deck-09.webp',
+      '/content/wayy/deck-10.webp',
+      '/content/wayy/deck-11.webp',
+      '/content/wayy/deck-12.webp',
+      '/content/wayy/deck-13.webp',
+      '/content/wayy/deck-14.webp',
       '/content/wayy/web-home.webp',
       '/content/wayy/web-markets.webp',
       '/content/wayy/web-battle.webp',
     ],
     previewGallery: [
-      '/content/wayy/deck-title.webp',
-      '/content/wayy/deck-problem.webp',
-      '/content/wayy/deck-solution.webp',
-      '/content/wayy/deck-product.webp',
-      '/content/wayy/deck-tokenomics.webp',
-      '/content/wayy/deck-roadmap.webp',
+      '/content/wayy/deck-01.webp',
+      '/content/wayy/deck-02.webp',
+      '/content/wayy/deck-03.webp',
+      '/content/wayy/deck-06.webp',
+      '/content/wayy/deck-07.webp',
+      '/content/wayy/deck-12.webp',
     ],
     video: '/content/wayy/wayy-social.mp4',
     videoLabel: 'Social Launch Video',

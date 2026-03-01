@@ -66,7 +66,7 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
         )}
 
         {project.gallery.length > 0 && (
-          <div className="project-page-gallery">
+          <div className="project-page-gallery gallery-deck">
             {project.gallery.map((img, i) => (
               <div key={i} className="project-page-gallery-item">
                 <img src={img} alt={`${project.title} ${i + 1}`} loading="lazy" />
@@ -106,7 +106,7 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
             <h2 className="project-subsection-title">{section.title}</h2>
             <p className="project-subsection-desc">{section.description}</p>
             {section.gallery.length > 0 && (
-              <div className={`project-page-gallery ${section.layout === 'squares' ? 'gallery-squares' : ''}`}>
+              <div className={`project-page-gallery ${section.layout === 'squares' ? 'gallery-squares' : section.layout === 'landscape' ? 'gallery-landscape' : ''}`}>
                 {section.gallery.map((img, j) => (
                   <div key={j} className={`project-page-gallery-item ${section.layout === 'squares' ? 'gallery-item-square' : ''}`}>
                     <img src={img} alt={`${section.title} ${j + 1}`} loading="lazy" />
