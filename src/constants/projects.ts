@@ -41,12 +41,12 @@ export const CASE_STUDIES: CaseStudyData[] = [
     color: '#FCE184',
     gallery: [],
     previewGallery: [
-      '/content/radiants/community/rad55.webp',
-      '/content/radiants/community/rad56.webp',
-      '/content/radiants/brand-art/be-rad.webp',
-      '/content/radiants/community/rad-dinner.webp',
+      '/content/radiants/community/ts.webp',
+      '/content/radiants/community/image-1.webp',
+      '/content/radiants/community/image.webp',
       '/content/radiants/community/57now.webp',
-      '/content/radiants/brand-art/gameboi-rad.webp',
+      '/content/radiants/community/rad57upcoming.webp',
+      '/content/radiants/community/rad56.webp',
     ],
     sections: [
       {
