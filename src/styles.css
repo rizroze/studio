@@ -326,7 +326,7 @@ main {
   transition: transform 0.5s var(--bounce-ease);
 }
 
-.nav-brand:hover .nav-pfp { transform: scale(1.1); }
+.nav-brand:hover .nav-pfp { transform: rotate(360deg) scale(1.1); }
 
 .nav-brand-text {
   font-family: 'Urbanist', sans-serif;
@@ -957,6 +957,36 @@ main {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  position: relative;
+}
+
+/* Light sheen that slides across spine on hover */
+.book-spine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.35) 55%,
+    transparent 100%
+  );
+  transform: translateY(-120%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.book-zone:hover .book-spine::after {
+  animation: spine-sheen 0.6s ease-out forwards;
+}
+
+@keyframes spine-sheen {
+  0% { transform: translateY(-120%); }
+  100% { transform: translateY(120%); }
 }
 
 .spine-logo {
@@ -967,6 +997,9 @@ main {
   opacity: 0.85;
   filter: brightness(0);
   pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
 }
 
 .bookshelf > :nth-child(3) .spine-logo {
@@ -2613,6 +2646,11 @@ main {
 
 .gallery-deck .project-page-gallery-item {
   margin-bottom: 0;
+  background: none;
+}
+
+.gallery-item-wide {
+  grid-column: 1 / -1;
 }
 
 /* === Video Player === */

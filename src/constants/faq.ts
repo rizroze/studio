@@ -10,7 +10,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     question: 'How fast can you start?',
-    answer: 'Within a week of booking. Sprint projects ship in 2–3 weeks. Build projects run 4–6 weeks. Studio engagements are 6–8 weeks with ongoing support.'
+    answer: 'Within a week of booking. Start projects ship in 2–3 weeks. Build projects run 4–6 weeks. Studio engagements are 6–8 weeks with ongoing support.'
   },
   {
     question: 'What does the process look like?',
@@ -26,7 +26,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     question: 'How do revisions work?',
-    answer: 'Each tier includes revision rounds (2 for Sprint, 3 for Build, unlimited for Studio). Most clients rarely need more than one. The upfront discovery work means I\'m aligned with your vision before pixels get pushed.'
+    answer: 'Each tier includes revision rounds (2 for Start, 3 for Build, unlimited for Studio). Most clients rarely need more than one. The upfront discovery work means I\'m aligned with your vision before pixels get pushed.'
   },
   {
     question: 'How do payments work?',

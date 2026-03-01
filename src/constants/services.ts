@@ -11,7 +11,7 @@ export interface PricingTier {
 
 export const PRICING_TIERS: PricingTier[] = [
   {
-    name: 'Sprint',
+    name: 'Start',
     audience: 'For teams launching something new',
     description: 'A water-tight brand identity you can ship with confidence. Logo, colors, type, and a social kit ready for launch day.',
     features: [
@@ -30,7 +30,7 @@ export const PRICING_TIERS: PricingTier[] = [
     audience: 'For teams ready to convert',
     description: 'Brand identity plus a custom coded website. Designed, built, and deployed by one person. Your brand turns into a live product.',
     features: [
-      'Everything in Sprint',
+      'Everything in Start',
       'Custom website (React)',
       'Responsive + mobile-first',
       'Animation & micro-interactions',

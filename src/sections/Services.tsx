@@ -6,7 +6,7 @@ export function Services() {
     <section id="services" className="section">
       <h2 className="section-title-xl" data-reveal>Pick a scope. Get everything.</h2>
       <p className="page-subtitle" style={{ marginBottom: 48 }} data-reveal>
-        Design, code, and animation. All included in every tier.
+        One person. Every skill your project needs.
       </p>
 
       <div className="pricing-cards" data-reveal-stagger>

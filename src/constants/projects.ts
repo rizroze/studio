@@ -2,7 +2,8 @@ export interface ProjectSection {
   title: string
   description: string
   gallery: string[]
-  layout?: 'grid' | 'squares' | 'landscape'  // grid = default columns, squares = 1:1 grid, landscape = 2-col grid
+  layout?: 'grid' | 'squares' | 'landscape' | 'deck'  // grid = default columns, squares = 1:1 grid, landscape = 2-col grid, deck = 3-col grid
+  wideIndices?: number[]  // gallery item indices that span full row width
 }
 
 export interface CaseStudyData {
@@ -40,62 +41,87 @@ export const CASE_STUDIES: CaseStudyData[] = [
     color: '#FCE184',
     gallery: [],
     previewGallery: [
-      '/content/radiants/radspaces/radspaces-55.webp',
-      '/content/radiants/radspaces/radspaces-56.webp',
-      '/content/radiants/brand/yeehaw.webp',
-      '/content/radiants/community/burn-event.webp',
-      '/content/radiants/radspaces/radspaces-57now.webp',
-      '/content/radiants/brand/brand-rad46.webp',
+      '/content/radiants/community/rad55.webp',
+      '/content/radiants/community/rad56.webp',
+      '/content/radiants/brand-art/be-rad.webp',
+      '/content/radiants/community/rad-dinner.webp',
+      '/content/radiants/community/57now.webp',
+      '/content/radiants/brand-art/gameboi-rad.webp',
     ],
     sections: [
       {
         title: 'Community & Events',
         description: 'Weekly branded content, event graphics, and community moments. From RadSpaces podcast posts to the first-ever Burn Event, co-working days, and vibecoding sessions.',
+        layout: 'deck',
         gallery: [
-          '/content/radiants/radspaces/content-ts.webp',
-          '/content/radiants/community/vibecode.webp',
-          '/content/radiants/radspaces/content-screenshot.webp',
-          '/content/radiants/community/radgangz.webp',
-          '/content/radiants/radspaces/radspaces-44.webp',
-          '/content/radiants/radspaces/radspaces-32.webp',
-          '/content/radiants/community/be-rad.webp',
-          '/content/radiants/community/burn-event.webp',
-          '/content/radiants/radspaces/content-raddz.webp',
-          '/content/radiants/community/coworking.webp',
-          '/content/radiants/community/dinner.webp',
-          '/content/radiants/radspaces/radspaces-57.webp',
-          '/content/radiants/radspaces/radspaces-54-google.webp',
-          '/content/radiants/radspaces/radspaces-54-tools.webp',
-          '/content/radiants/radspaces/radspaces-46.webp',
-          '/content/radiants/radspaces/radspaces-dela.webp',
-          '/content/radiants/radspaces/content-this.webp',
-          '/content/radiants/radspaces/content-frame-1.webp',
-          '/content/radiants/radspaces/content-frame-2.webp',
-          '/content/radiants/radspaces/radspaces-57now.webp',
-          '/content/radiants/radspaces/radspaces-55.webp',
-          '/content/radiants/radspaces/radspaces-56.webp',
-          '/content/radiants/radspaces/community-private-event.webp',
+          // 2026
+          '/content/radiants/community/ts.webp',               // Jan 2026
+          '/content/radiants/community/image-1.webp',           // Jan 2026
+          '/content/radiants/community/image.webp',             // Jan 2026
+          '/content/radiants/community/57now.webp',             // Dec 2025 — RadSpaces #57
+          '/content/radiants/community/rad57upcoming.webp',     // Dec 2025
+          '/content/radiants/community/rad56.webp',             // Nov 2025 — RadSpaces #56
+          '/content/radiants/community/rad55.webp',             // Nov 2025 — RadSpaces #55
+          '/content/radiants/community/dela.webp',              // Nov 2025
+          '/content/radiants/community/this.webp',              // Nov 2025
+          '/content/radiants/community/rad522.webp',            // Nov 2025 — RadSpaces #52
+          '/content/radiants/community/rad52.webp',             // Nov 2025
+          '/content/radiants/community/rad51-now.webp',         // Oct 2025 — RadSpaces #51
+          '/content/radiants/community/rad-51.webp',            // Oct 2025
+          '/content/radiants/community/dolero50-2.webp',        // Oct 2025 — RadSpaces #50
+          '/content/radiants/community/rad50.webp',             // Oct 2025
+          '/content/radiants/community/49.webp',                // Oct 2025 — RadSpaces #49
+          '/content/radiants/community/rad48-1hr.webp',         // Oct 2025 — RadSpaces #48
+          '/content/radiants/community/radspaces48.webp',       // Oct 2025
+          '/content/radiants/community/1231231.webp',           // Sep 2025
+          // 2025
+          '/content/radiants/community/frame-1000005468.webp',  // Apr 2025
+          '/content/radiants/community/frame-1000005467.webp',  // Apr 2025
+          // 2024
+          '/content/radiants/community/11422.webp',             // Apr 2024
+          '/content/radiants/community/private-event.webp',     // Mar 2024
+          '/content/radiants/community/rad-dinner.webp',        // Mar 2024
         ],
       },
       {
         title: 'Brand Art',
         description: 'Original illustrations, photo treatments, and brand pieces that define the Radiants visual identity.',
+        layout: 'deck',
+        wideIndices: [9],
         gallery: [
-          // landscape
-          '/content/radiants/brand/photo-1.webp',
-          '/content/radiants/brand/photo-2.webp',
-          '/content/radiants/brand/photo-3.webp',
-          '/content/radiants/brand/brand-radshader.webp',
           // square
-          '/content/radiants/brand/brand-rad46.webp',
-          '/content/radiants/brand/yeehaw.webp',
+          '/content/radiants/brand-art/132.webp',
+          '/content/radiants/brand-art/6days.webp',
+          '/content/radiants/brand-art/be-rad.webp',
+          '/content/radiants/brand-art/breakpointrad.webp',
+          '/content/radiants/brand-art/frame-2085660600.webp',
+          '/content/radiants/brand-art/radintern.webp',
+          '/content/radiants/brand-art/radpep.webp',
+          '/content/radiants/brand-art/radsss.webp',
+          '/content/radiants/brand-art/radzcominnggez.gif',
+          // landscape
+          '/content/radiants/brand-art/radfam2024-dinga.webp',
+          '/content/radiants/brand-art/sprite-00021.gif',
+          '/content/radiants/brand-art/image-2.webp',
+          '/content/radiants/brand-art/rad1.webp',
+          '/content/radiants/brand-art/radgangz.webp',
+          '/content/radiants/brand-art/frame-2085660589.webp',
+          '/content/radiants/brand-art/5daysleft.webp',
+          '/content/radiants/brand-art/frame_2085660586.webp',
+          '/content/radiants/brand-art/gameboi-rad.webp',
+          '/content/radiants/brand-art/screenshot-2024-09-14-at-02.55.19.webp',
+          '/content/radiants/brand-art/rad_missing.webp',
+          '/content/radiants/brand-art/rad-desertfunk.webp',
+          '/content/radiants/brand-art/radskellu.webp',
           // portrait
-          '/content/radiants/brand/brand-art.webp',
+          '/content/radiants/brand-art/mfrad.webp',
+          '/content/radiants/brand-art/screenshot-2025-10-28-at-20.01.56.webp',
+          '/content/radiants/brand-art/raddz.webp',
         ],
       },
       {
         title: 'Monolith 2026',
-        description: 'Full content campaign for Solana Mobile\'s flagship event. Announcement threads, FAQ graphics, social cards, and post-event recaps covering the Vibecoding workshop and hackathon highlights.',
+        description: 'Full content campaign for Solana Mobile\'s flagship event. Announcement threads, FAQ graphics, social cards, and post-event recaps covering the workshops.',
         layout: 'landscape',
         gallery: [
           '/content/monolith/announcement-1.webp',
@@ -114,23 +140,21 @@ export const CASE_STUDIES: CaseStudyData[] = [
           '/content/monolith/monolith-workshop-1.webp',
           '/content/monolith/monolith-workshop-2.webp',
           '/content/monolith/monolith-space.webp',
-          '/content/monolith/monolith-todo.webp',
         ],
       },
       {
         title: 'Seeker Hackathon',
-        description: 'Ran the entire content campaign. Prize announcements, FAQ threads, countdown graphics, milestone celebrations, and sponsor thank-yous. 500+ signups.',
+        description: 'Ran the entire content campaign graphics — stayed in the audience\'s feed and mind throughout. Prize announcements, FAQ threads, countdowns, milestone celebrations, and sponsor shoutouts. 500+ signups.',
         layout: 'squares',
         gallery: [
           '/content/seeker/prize.webp',
           '/content/seeker/faq-1.webp',
           '/content/seeker/seeker-faq-2.webp',
-          '/content/seeker/categories.webp',
           '/content/seeker/500-signups.webp',
           '/content/seeker/seeker-100-signups.webp',
           '/content/seeker/submissions.webp',
           '/content/seeker/sponsors.webp',
-          '/content/seeker/app-screenshot.webp',
+          '/content/seeker/seeker-bonk.webp',
           '/content/seeker/seeker-3123.webp',
           '/content/seeker/seeker-closed.webp',
           '/content/seeker/seeker-come.webp',
@@ -146,34 +170,22 @@ export const CASE_STUDIES: CaseStudyData[] = [
         description: 'Custom pixel art profile pictures for the Radiants community. Each one hand-crafted in the signature sun-yellow palette.',
         layout: 'squares',
         gallery: [
-          '/content/radiants/pfps/chadbudd.webp',
-          '/content/radiants/pfps/lucky-rizz.webp',
-          '/content/radiants/pfps/rad-bastard.webp',
-          '/content/radiants/pfps/rizzy.webp',
-          '/content/radiants/pfps/alex.webp',
-          '/content/radiants/pfps/bored-king.webp',
-          '/content/radiants/pfps/clarence.webp',
-          '/content/radiants/pfps/cronus.webp',
-          '/content/radiants/pfps/devour.webp',
-          '/content/radiants/pfps/dicky.webp',
-          '/content/radiants/pfps/dinga.webp',
-          '/content/radiants/pfps/fee.webp',
-          '/content/radiants/pfps/hanko.webp',
-          '/content/radiants/pfps/ism.webp',
-          '/content/radiants/pfps/kemosabe.webp',
-          '/content/radiants/pfps/lib.webp',
-          '/content/radiants/pfps/luigi.webp',
-          '/content/radiants/pfps/meat.webp',
-          '/content/radiants/pfps/professor-mint.webp',
-          '/content/radiants/pfps/s3b.webp',
-          '/content/radiants/pfps/sanj.webp',
-          '/content/radiants/pfps/sim.webp',
-          '/content/radiants/pfps/slorg.webp',
-          '/content/radiants/pfps/smile.webp',
-          '/content/radiants/pfps/sp.webp',
-          '/content/radiants/pfps/timort.webp',
-          '/content/radiants/pfps/vijay.webp',
-          '/content/radiants/pfps/wetiko.webp',
+          '/content/radiants/pfps/blonde.webp',
+          '/content/radiants/pfps/brz.webp',
+          '/content/radiants/pfps/chadbuddha.webp',
+          '/content/radiants/pfps/devourcousin.webp',
+          '/content/radiants/pfps/dro.webp',
+          '/content/radiants/pfps/dude.webp',
+          '/content/radiants/pfps/haidaa.webp',
+          '/content/radiants/pfps/hodja.webp',
+          '/content/radiants/pfps/jankie.webp',
+          '/content/radiants/pfps/kolomb.webp',
+          '/content/radiants/pfps/maurice.webp',
+          '/content/radiants/pfps/rad-bastard-2.webp',
+          '/content/radiants/pfps/radgarl.webp',
+          '/content/radiants/pfps/robba.webp',
+          '/content/radiants/pfps/uncle.webp',
+          '/content/radiants/pfps/wakeupneo.webp',
         ],
       },
     ],
