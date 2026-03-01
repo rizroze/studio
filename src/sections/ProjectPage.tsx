@@ -58,7 +58,7 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
             <video
               src={project.video}
               controls
-              preload="metadata"
+              preload="auto"
               playsInline
               className="project-video"
             />

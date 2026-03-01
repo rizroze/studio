@@ -192,13 +192,13 @@ export const CASE_STUDIES: CaseStudyData[] = [
     video: '/content/hydex/hydex-social.mp4',
     videoLabel: 'Brand Motion',
     category: 'brand',
-    description: 'Brand identity and investor pitch deck for a DeFi privacy bridge. Two deck iterations with data visualization, branded typography, and motion elements.',
+    description: 'Pitch deck and logo animation for a DeFi privacy bridge. Two deck iterations with data visualization, branded typography, and motion elements.',
     brief: 'Design an investor-ready pitch deck and brand direction for a Solana DeFi protocol looking to raise their seed round.',
     challenge: 'Translating dense DeFi mechanics and market data into a compelling visual narrative that builds conviction with investors in under 10 minutes.',
     solution: 'Custom-designed deck with branded typography, infographics, and a clear narrative arc. Each slide moves from problem to solution to traction, with motion elements for the live presentation. Two iterations, refining the story and visuals across rounds of feedback.',
     stack: ['Figma', 'After Effects', 'Custom Typography'],
     result: 'A deck that helped the team secure meetings and communicate their vision with clarity and confidence.',
-    resultMetric: 'Pitch deck that secured investor meetings.'
+    resultMetric: 'Pitch deck and logo animation that secured investor meetings.'
   },
   {
     slug: 'fullport',
