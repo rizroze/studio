@@ -103,7 +103,6 @@ export function Footer() {
               <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">X / Twitter</a>
               <a href="https://discord.gg/radiants" target="_blank" rel="noopener noreferrer" className="footer-link">Discord</a>
               <a href="https://github.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
-              <a href="mailto:rizzy2day@gmail.com" className="footer-link">rizzy2day@gmail.com</a>
               <a href="https://rizztoday.vercel.app" target="_blank" rel="noopener noreferrer" className="footer-link">Personal website</a>
             </div>
           </div>
