@@ -34,7 +34,7 @@ export function AllProjects({ onBack, onViewProject }: AllProjectsProps) {
               tabIndex={0}
               onKeyDown={e => { if (e.key === 'Enter') onViewProject(p.slug) }}
             >
-              <div className="project-card-thumb">
+              <div className="project-card-thumb" style={{ backgroundColor: p.color }}>
                 <img src={p.thumbnail} alt={p.title} loading="lazy" />
               </div>
               <div className="project-card-info">

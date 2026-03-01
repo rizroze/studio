@@ -34,7 +34,7 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
         </button>
       </div>
 
-      <div className="project-page-hero">
+      <div className="project-page-hero" style={{ backgroundColor: project.color }}>
         <img src={project.thumbnail} alt={project.title} className="project-page-thumb" />
       </div>
 

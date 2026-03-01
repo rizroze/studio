@@ -12,7 +12,7 @@ export const TESTIMONIALS = [
       logo: '/content/logos/radiant-logo.webp',
       text: 'Content Direction',
       duration: '3 years',
-      ongoing: true
+      ongoing: false
     }
   },
   {

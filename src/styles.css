@@ -1208,14 +1208,13 @@ main {
   max-height: 80px;
   width: auto;
   object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.5;
+  opacity: 0.85;
   transition: opacity 0.4s var(--smooth-ease), transform 0.4s var(--smooth-ease);
   will-change: transform, opacity;
 }
 
 .project-card-studio:hover .project-card-thumb img {
-  opacity: 0.8;
+  opacity: 1;
   transform: scale(1.05);
 }
 
@@ -2533,8 +2532,7 @@ main {
   max-height: 120px;
   width: auto;
   object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.6;
+  opacity: 0.85;
 }
 
 .project-page-body {

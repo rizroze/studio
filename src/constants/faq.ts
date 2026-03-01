@@ -18,7 +18,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     question: 'What if I just need one thing?',
-    answer: 'I scope it on the call. Not every project needs the full stack — sometimes it\'s a pitch deck, sometimes it\'s a landing page. I\'ll recommend the right tier based on what you actually need.'
+    answer: 'I scope it on the call. Not every project needs the full stack. Sometimes it\'s a pitch deck, sometimes it\'s a landing page. I\'ll recommend the right tier based on what you actually need.'
   },
   {
     question: 'Do you work outside web3?',
@@ -26,7 +26,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     question: 'How do revisions work?',
-    answer: 'Each tier includes revision rounds (2 for Sprint, 3 for Build, unlimited for Studio). Most clients rarely need more than one — the upfront discovery work means I\'m aligned with your vision before pixels get pushed.'
+    answer: 'Each tier includes revision rounds (2 for Sprint, 3 for Build, unlimited for Studio). Most clients rarely need more than one. The upfront discovery work means I\'m aligned with your vision before pixels get pushed.'
   },
   {
     question: 'How do payments work?',

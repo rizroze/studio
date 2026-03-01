@@ -13,7 +13,7 @@ export const PRICING_TIERS: PricingTier[] = [
   {
     name: 'Sprint',
     audience: 'For teams launching something new',
-    description: 'A water-tight brand identity you can ship with confidence. Logo, colors, type, and a social kit — ready for launch day.',
+    description: 'A water-tight brand identity you can ship with confidence. Logo, colors, type, and a social kit ready for launch day.',
     features: [
       'Logo & visual identity',
       'Color palette & typography',
@@ -28,7 +28,7 @@ export const PRICING_TIERS: PricingTier[] = [
   {
     name: 'Build',
     audience: 'For teams ready to convert',
-    description: 'Brand identity plus a custom coded website — designed, built, and deployed by one person. Your brand turns into a live product.',
+    description: 'Brand identity plus a custom coded website. Designed, built, and deployed by one person. Your brand turns into a live product.',
     features: [
       'Everything in Sprint',
       'Custom website (React)',
@@ -45,7 +45,7 @@ export const PRICING_TIERS: PricingTier[] = [
   {
     name: 'Studio',
     audience: 'For teams that need a creative director',
-    description: 'Full creative direction — brand, website, motion, design system, and ongoing support. One person owns the entire creative stack.',
+    description: 'Full creative direction. Brand, website, motion, design system, and ongoing support. One person owns the entire creative stack.',
     features: [
       'Everything in Build',
       'Design system & component library',

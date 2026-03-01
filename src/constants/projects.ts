@@ -34,9 +34,9 @@ export const CASE_STUDIES: CaseStudyData[] = [
   {
     slug: 'radiants',
     title: 'Radiants',
-    client: 'RadiantsDAO',
-    tags: ['Creative Direction', 'Design System', 'Motion', 'Brand Identity'],
-    thumbnail: '/content/logos/radiants-pixel.svg',
+    client: 'Brand & Content Direction',
+    tags: ['Intern Lead'],
+    thumbnail: '/content/logos/radiants-pixel-dark.svg',
     color: '#FCE184',
     gallery: [],
     previewGallery: [
@@ -60,7 +60,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       },
       {
         title: 'RadSpaces',
-        description: 'Weekly branded content for RadSpaces — the community podcast and Twitter Spaces. Each post designed to stop the scroll with a unique visual direction.',
+        description: 'Weekly branded content for RadSpaces, the community podcast and Twitter Spaces. Each post designed to stop the scroll with a unique visual direction.',
         gallery: [
           '/content/radiants/radspaces/radspaces-55.webp',
           '/content/radiants/radspaces/radspaces-56.webp',
@@ -71,7 +71,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       },
       {
         title: 'Community & Events',
-        description: 'Event graphics, community moments, and recurring content — from the first-ever Burn Event to weekly co-working days and vibecoding sessions.',
+        description: 'Event graphics, community moments, and recurring content. From the first-ever Burn Event to weekly co-working days and vibecoding sessions.',
         gallery: [
           '/content/radiants/community/burn-event.webp',
           '/content/radiants/community/vibecode.webp',
@@ -94,7 +94,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       },
       {
         title: 'Monolith 2026',
-        description: 'Full content campaign for Solana Mobile\'s flagship event — announcement threads, FAQ graphics, social cards, and post-event recaps covering the Vibecoding workshop and hackathon highlights.',
+        description: 'Full content campaign for Solana Mobile\'s flagship event. Announcement threads, FAQ graphics, social cards, and post-event recaps covering the Vibecoding workshop and hackathon highlights.',
         gallery: [
           '/content/monolith/announcement-1.webp',
           '/content/monolith/announcement-3.webp',
@@ -107,7 +107,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       },
       {
         title: 'Seeker Hackathon',
-        description: 'Ran the entire content campaign — prize announcements, FAQ threads, countdown graphics, milestone celebrations, and sponsor thank-yous. 500+ signups.',
+        description: 'Ran the entire content campaign. Prize announcements, FAQ threads, countdown graphics, milestone celebrations, and sponsor thank-yous. 500+ signups.',
         gallery: [
           '/content/seeker/prize.webp',
           '/content/seeker/faq-1.webp',
@@ -121,19 +121,19 @@ export const CASE_STUDIES: CaseStudyData[] = [
     ],
     category: 'brand',
     description: '3 years as creative director and content lead. Built the DNA Design System, created hundreds of content pieces, NFT art, and brand motion. Still keeping it rad.',
-    brief: 'Keep the creative vision alive across everything RadiantsDAO does — social content, brand assets, design system, and community identity.',
-    challenge: 'Radiants does a lot — NFT drops, community tools, content campaigns, product launches. Everything needed to look and feel like Radiants without slowing anyone down.',
-    solution: 'Built the DNA Design System from scratch. Created hundreds of social graphics, NFT art, pixel characters, event promos, and brand motion videos. Established a recognizable visual language — sun-yellow, pixel aesthetic, retro energy — that scales across every format.',
+    brief: 'Keep the creative vision alive across everything RadiantsDAO does. Social content, brand assets, vibes, and community identity.',
+    challenge: 'Radiants does a lot. NFT drops, community tools, content campaigns, product launches. Everything needed to look and feel like Radiants without slowing anyone down.',
+    solution: 'Built the DNA Design System from scratch. Created hundreds of social graphics, NFT art, pixel characters, event promos, and brand motion videos. Established a recognizable visual language (sun-yellow, pixel aesthetic, retro energy) that scales across every format.',
     stack: ['Figma', 'Remotion', 'React', 'CSS', 'After Effects', 'Midjourney'],
-    result: 'A brand that stays consistent across every touchpoint — from Twitter posts to hackathon booths to product UI.',
+    result: 'A brand that stays consistent across every touchpoint. From Twitter posts to hackathon booths to product UI.',
     resultMetric: '3 years as Creative Director. Hundreds of deliverables.'
   },
   {
     slug: 'wayy',
     title: 'WAYY',
-    client: 'RadiantsDAO',
+    client: 'Art Prediction Market',
     tags: ['Product Design', 'Solana', 'Prediction Market', 'Full Stack'],
-    thumbnail: '/content/logos/wayy-logomark.webp',
+    thumbnail: '/content/logos/wayy-logomark-black.webp',
     color: '#F5B731',
     gallery: [
       '/content/wayy/deck-title.webp',
@@ -157,18 +157,18 @@ export const CASE_STUDIES: CaseStudyData[] = [
     video: '/content/wayy/wayy-social.mp4',
     videoLabel: 'Social Launch Video',
     category: 'web',
-    description: 'Built the first prototype with 2 devs. After a long pause, revamped the entire product into an art prediction market — redesigned and rebuilt in 1 week. Co-founder.',
-    brief: 'Take a prediction market concept from prototype to live Solana product — twice.',
-    challenge: 'The first version was a rough prototype. When it was time to come back, the whole product needed to be rethought as an art prediction market — new UI, new flows, new on-chain logic — and shipped fast.',
+    description: 'Built the first prototype with 2 devs. After a long pause, revamped the entire product into an art prediction market. Redesigned and rebuilt in 1 week. Founder.',
+    brief: 'Take a prediction market concept from prototype to live Solana product. Twice.',
+    challenge: 'The first version was a rough prototype. When it was time to come back, the whole product needed to be rethought as an art prediction market. New UI, new flows, new on-chain logic, and shipped fast.',
     solution: 'Redesigned and rebuilt the entire frontend in 1 week. Next.js 16, Prisma + MongoDB, Solana wallet adapter. Retro pixel design system with real-time battles, escrow wallets, and two-step transaction signing.',
     stack: ['Next.js', 'TypeScript', 'Prisma', 'MongoDB', 'Solana', 'Zustand', 'GSAP'],
-    result: 'A live prediction market on Solana Devnet — from prototype to full product revamp.',
-    resultMetric: 'Full product revamp in 1 week. Co-founder.'
+    result: 'A live prediction market on Solana Devnet. From prototype to full product revamp.',
+    resultMetric: 'Full product revamp in 1 week. Founder.'
   },
   {
     slug: 'hydex',
     title: 'Hydex',
-    client: 'Hydex',
+    client: 'DeFi Brand & Pitch Deck',
     tags: ['Brand Identity', 'Pitch Deck', 'Presentation Design'],
     thumbnail: '/content/hydex-logo-white.png',
     color: '#34A853',
@@ -195,7 +195,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     description: 'Brand identity and investor pitch deck for a DeFi privacy bridge. Two deck iterations with data visualization, branded typography, and motion elements.',
     brief: 'Design an investor-ready pitch deck and brand direction for a Solana DeFi protocol looking to raise their seed round.',
     challenge: 'Translating dense DeFi mechanics and market data into a compelling visual narrative that builds conviction with investors in under 10 minutes.',
-    solution: 'Custom-designed deck with branded typography, infographics, and a clear narrative arc. Each slide moves from problem to solution to traction, with motion elements for the live presentation. Two iterations — refining the story and visuals across rounds of feedback.',
+    solution: 'Custom-designed deck with branded typography, infographics, and a clear narrative arc. Each slide moves from problem to solution to traction, with motion elements for the live presentation. Two iterations, refining the story and visuals across rounds of feedback.',
     stack: ['Figma', 'After Effects', 'Custom Typography'],
     result: 'A deck that helped the team secure meetings and communicate their vision with clarity and confidence.',
     resultMetric: 'Pitch deck that secured investor meetings.'
@@ -203,7 +203,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
   {
     slug: 'fullport',
     title: 'Fullport',
-    client: 'Monolith Hackathon',
+    client: 'Solana Portfolio Tracker',
     tags: ['Mobile App', 'React Native', 'Solana', 'Portfolio Tracker'],
     thumbnail: '/content/logos/fullport-briefcase.svg',
     color: '#1a1a2e',
@@ -229,9 +229,9 @@ export const CASE_STUDIES: CaseStudyData[] = [
     videoLabel: 'App Demo',
     category: 'mobile',
     description: 'Solana portfolio tracker built for the Seeker mobile device. Shipped as an APK for the Monolith 2026 hackathon.',
-    brief: 'Build a native mobile portfolio tracker for the Solana Seeker device — real-time token balances, prices, and portfolio analytics.',
+    brief: 'Build a native mobile portfolio tracker for the Solana Seeker device. Real-time token balances, prices, and portfolio analytics.',
     challenge: 'Building a performant mobile app from scratch in hackathon timeframe, with real Solana data via Helius DAS API and smooth animations on mobile hardware.',
-    solution: 'React Native + Expo SDK 54 with Reanimated 4 for buttery 60fps animations. Zustand + TanStack Query for state and caching. Liquid glass design system adapted for mobile — dark theme, frosted glass cards, smooth transitions.',
+    solution: 'React Native + Expo SDK 54 with Reanimated 4 for buttery 60fps animations. Zustand + TanStack Query for state and caching. Liquid glass design system adapted for mobile with dark theme, frosted glass cards, and smooth transitions.',
     stack: ['React Native', 'Expo', 'TypeScript', 'Zustand', 'Helius API', 'Reanimated'],
     result: 'Working APK shipped within hackathon deadline. Real portfolio data, smooth animations, and a polished mobile experience.',
     resultMetric: 'Shipped working APK at Monolith hackathon.'
