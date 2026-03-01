@@ -19,7 +19,7 @@ export function FAQ() {
           <div className="cta-card">
             <img src="/rizzy-avatar.png" alt="Riz Rose" className="cta-card-pfp" />
             <h3 className="cta-card-headline">Let's build something.</h3>
-            <p className="cta-card-sub">15 min call. No pitch deck needed. Just tell me what you're working on.</p>
+            <p className="cta-card-sub">15 min call. No pitch deck needed. Let's chat about what you're thinking on.</p>
             <a
               href="https://cal.com/rizzytoday"
               target="_blank"

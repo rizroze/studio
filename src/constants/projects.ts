@@ -41,11 +41,11 @@ export const CASE_STUDIES: CaseStudyData[] = [
     gallery: [],
     previewGallery: [
       '/content/radiants/radspaces/radspaces-55.webp',
-      '/content/radiants/community/burn-event.webp',
-      '/content/radiants/brand/yeehaw.webp',
-      '/content/monolith/announcement-1.webp',
-      '/content/seeker/prize.webp',
       '/content/radiants/radspaces/radspaces-56.webp',
+      '/content/radiants/brand/yeehaw.webp',
+      '/content/radiants/community/burn-event.webp',
+      '/content/radiants/radspaces/radspaces-57.webp',
+      '/content/radiants/brand/brand-art.webp',
     ],
     sections: [
       {
