@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import type { CaseStudyData } from '../constants/projects'
 
 interface ProjectCardProps {
@@ -8,11 +8,17 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, onViewProject }: ProjectCardProps) {
   const [expanded, setExpanded] = useState(false)
+  const wrapRef = useRef<HTMLDivElement>(null)
   const cardRef = useRef<HTMLDivElement>(null)
+  const rafRef = useRef(0)
+  const rectRef = useRef<DOMRect | null>(null)
 
   const handleClick = () => {
     if (!expanded) {
       setExpanded(true)
+      cancelAnimationFrame(rafRef.current)
+      const card = cardRef.current
+      if (card) card.style.transform = ''
     }
   }
 
@@ -21,29 +27,57 @@ export function ProjectCard({ project, onViewProject }: ProjectCardProps) {
     onViewProject(project.slug)
   }
 
+  const handleMouseEnter = useCallback(() => {
+    const wrap = wrapRef.current
+    if (!wrap || expanded) return
+    rectRef.current = wrap.getBoundingClientRect()
+  }, [expanded])
+
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     const card = cardRef.current
-    if (!card || expanded) return
-    const rect = card.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width - 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5
-    card.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${y * -12}deg)`
+    const rect = rectRef.current
+    if (!card || !rect || expanded) return
+
+    cancelAnimationFrame(rafRef.current)
+    const clientX = e.clientX
+    const clientY = e.clientY
+    rafRef.current = requestAnimationFrame(() => {
+      const x = (clientX - rect.left) / rect.width - 0.5
+      const y = (clientY - rect.top) / rect.height - 0.5
+      card.style.transform = `rotateY(${x * 12}deg) rotateX(${y * -12}deg)`
+    })
   }, [expanded])
 
   const handleMouseLeave = useCallback(() => {
+    cancelAnimationFrame(rafRef.current)
     const card = cardRef.current
     if (!card) return
     card.style.transform = ''
+    rectRef.current = null
   }, [])
 
+  useEffect(() => {
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [])
+
+  // Curated preview images for the card — previewGallery > gallery > sections
+  const previewImages = project.previewGallery
+    ?? (project.gallery.length > 0
+      ? project.gallery
+      : project.sections?.flatMap(s => s.gallery).slice(0, 6) ?? [])
+
   return (
-    <div className="project-card-tilt-wrap">
+    <div
+      ref={wrapRef}
+      className="project-card-tilt-wrap"
+      onMouseEnter={handleMouseEnter}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
       <div
         ref={cardRef}
         className={`project-card-studio ${expanded ? 'expanded' : ''}`}
         onClick={handleClick}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
         role="button"
         tabIndex={0}
         onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') handleClick() }}
@@ -66,9 +100,9 @@ export function ProjectCard({ project, onViewProject }: ProjectCardProps) {
 
         <div className={`project-card-preview ${expanded ? 'open' : ''}`}>
           <div className="project-card-preview-inner">
-            {project.gallery.length > 1 && (
+            {previewImages.length > 1 && (
               <div className="preview-gallery">
-                {project.gallery.map((img, i) => (
+                {previewImages.slice(0, 6).map((img, i) => (
                   <div key={i} className="preview-gallery-item">
                     <img src={img} alt={`${project.title} ${i + 1}`} />
                   </div>

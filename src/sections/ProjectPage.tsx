@@ -50,6 +50,21 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
           ))}
         </div>
 
+        {project.video && (
+          <div className="project-video-wrap">
+            {project.videoLabel && (
+              <span className="project-video-label">{project.videoLabel}</span>
+            )}
+            <video
+              src={project.video}
+              controls
+              preload="metadata"
+              playsInline
+              className="project-video"
+            />
+          </div>
+        )}
+
         {project.gallery.length > 0 && (
           <div className="project-page-gallery">
             {project.gallery.map((img, i) => (
@@ -85,6 +100,22 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
           <h3>Result</h3>
           <p>{project.result}</p>
         </div>
+
+        {project.sections && project.sections.map((section, i) => (
+          <div key={i} className="project-page-subsection">
+            <h2 className="project-subsection-title">{section.title}</h2>
+            <p className="project-subsection-desc">{section.description}</p>
+            {section.gallery.length > 0 && (
+              <div className={`project-page-gallery ${section.layout === 'squares' ? 'gallery-squares' : ''}`}>
+                {section.gallery.map((img, j) => (
+                  <div key={j} className={`project-page-gallery-item ${section.layout === 'squares' ? 'gallery-item-square' : ''}`}>
+                    <img src={img} alt={`${section.title} ${j + 1}`} loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
 
       <div className="project-page-more">
@@ -99,7 +130,7 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
               tabIndex={0}
               onKeyDown={e => { if (e.key === 'Enter') onSelectProject(p.slug) }}
             >
-              <div className="project-card-thumb">
+              <div className="project-card-thumb" style={{ backgroundColor: p.color }}>
                 <img src={p.thumbnail} alt={p.title} loading="lazy" />
               </div>
               <div className="project-card-info">

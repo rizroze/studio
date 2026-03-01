@@ -424,14 +424,21 @@ And it's 225 lines of code. No WebGL. No shaders. No libraries. Just Canvas 2D, 
 
 ### The Book Entrance Animation: Respecting preserve-3d
 
-The bookshelf books are 3D CSS objects using `transform-style: preserve-3d`. This creates a constraint: you can't animate `opacity` on a preserve-3d element because `opacity < 1` flattens the 3D rendering. And you can't animate `transform` on `.book-container` because it would override the CSS `translateZ()` that creates the shelf depth.
+The bookshelf books are 3D CSS objects using `transform-style: preserve-3d`. This creates a constraint: you can't animate `opacity` on a preserve-3d element because `opacity < 1` flattens the 3D rendering.
 
 The solution in `GsapAnimations.tsx`:
-1. Hide containers with `gsap.set('.book-container', { autoAlpha: 0 })` (visibility:hidden + opacity:0)
-2. For each book, simultaneously: reveal the container with `autoAlpha: 1` over 0.15s (fast enough that 3D flattening isn't noticeable), and animate the inner `.book` element with `y: -25 → 0` using `back.out(1.6)` ease for a satisfying landing bounce
-3. After all books land, `clearProps` removes all inline styles so the CSS hover effects work normally
+1. Pre-position all `.book-container` elements at `y: -120` (above their landing spot)
+2. Fade in the `.hero-right` parent (opacity 0 → 1) — this reveals all books at once without individual opacity
+3. Each book falls into place individually: `y: -120 → 0` with `back.out(1.4)` ease for that satisfying overshoot landing, staggered by 0.1s
+4. After the last book lands: `gsap.set(containers, { clearProps: 'transform' })` removes all inline styles so CSS hover/tease effects work
 
-The key insight: keep the 3D-breaking animation (opacity) as short as possible (0.15s), and put the visible motion (y translation) on a child element that doesn't have preserve-3d.
+The key insight: animate `opacity` on the **parent** (one transition, brief), animate `translateY` on each **child** (the visible motion). And always `clearProps` after GSAP is done — inline transforms override CSS `:hover` rules forever.
+
+### Hover Flicker: The Stable Wrapper Pattern
+
+Books and ticker logos had a frustrating flicker — hovering would trigger a transform (lift/float), which moved the element away from the cursor, which triggered mouseleave, which undid the transform, which moved it back under the cursor... infinite loop.
+
+**Fix:** Separate the hover trigger from the hover effect. Each book got a `.book-zone` wrapper (stable, no transform) around the `.book-container` (receives the visual effect). Hover detection happens on the zone, transform happens on the container. The zone never moves, so the cursor stays "inside." Same pattern applied to `.ticker-logo-zone` for the client logo ticker. Simple concept, but it's the kind of thing that only reveals itself through actual user testing.
 
 ### The CSS Modules Experiment
 Early in development, CSS modules were introduced for scoped styling. The result: harder to debug, lost cascade context, couldn't share styles between sections easily. Reverted back to one file. **Lesson:** CSS modules shine in large apps with many developers. For a solo project under 3000 lines, a single file with good organization wins.
@@ -451,9 +458,30 @@ Free tier allows 100 deploys/day. During a heavy build session, we hit the limit
 
 - **Custom domain** — OG meta tags and sitemap still point to `studio-psi-beryl-56.vercel.app`. Need to update when `rizzy.today` is pointed here.
 - **More case studies** — Only 4 projects currently. The `CASE_STUDIES` array in `projects.ts` is the only thing that needs updating.
-- **GSAP animations** — GSAP is now used for the hero entrance timeline (headline → subline → CTA → shelf line → books landing one by one). Still room for scroll-triggered reveals and text animations in other sections.
+- **GSAP animations** — Hero entrance is fully choreographed. Scroll reveals are CSS-driven (no GSAP needed). Could add SplitText for section titles but honestly, the current CSS reveals work fine.
 - **Form/contact section** — Currently just links to Cal.com. A contact form could capture leads who aren't ready to book.
 - **Blog/writing** — Would help with SEO and establishing authority. Not critical for launch.
+
+---
+
+## Studio vs Rizztoday: Same DNA, Different Animal
+
+These two sites share the same liquid glass tokens (blur, saturate, border opacity), the same fonts (Urbanist, Inter Tight, Fragment Mono), the same easing curves, and the same store pattern. But they're designed for completely different purposes and feel different when you use them.
+
+| | rizztoday | studio |
+|---|-----------|--------|
+| **Purpose** | Personal playground — "come hang out" | Business storefront — "let me build for you" |
+| **Hero** | Deep maroon gradient, status button with cascading actions | Split layout, 3D bookshelf with falling books |
+| **Navbar** | Static glass fullbar, always visible | Dynamic glass pill with SVG displacement + chromatic aberration |
+| **Interactivity** | Emoji reactions (Firebase), guestbook, sticky note, card stack | 3D card tilt, bookshelf tease, pricing flip cards |
+| **GSAP** | Not used at all | Hero entrance choreography only |
+| **3D** | None | Perspective cards, preserve-3d books, translateZ depth layers |
+| **Film grain** | None | SVG feTurbulence overlay at 3% |
+| **Scroll** | No indicator | 2px white progress bar |
+| **Conversion** | No CTA (it's a portfolio) | Cal.com booking tracked with Vercel Analytics |
+| **Parallax** | None | ASCII rose + bookshelf on scroll |
+
+Rizztoday invites play. Studio commands respect. Both achieve their goal through the same underlying design language, but the personality layer is completely different. If rizztoday is a living room, studio is a showroom.
 
 ---
 
@@ -466,3 +494,11 @@ No routing library for three views. No state library for one store. No animation
 Every dependency earns its place. React earns it because the component model makes the section-based architecture clean. Vite earns it because the dev experience is instant. Vercel earns it because deploy is one push. GSAP earns it because the hero entrance timeline (sequenced headlines, staggered book drops, shelf line animation) requires choreography that CSS can't express.
 
 The result is a site that loads fast, deploys anywhere, and can be understood by reading ~26 files. That's the whole thing. No build pipeline mysteries, no config files to decode, no abstraction layers to peel back. Just components, styles, and data.
+
+---
+
+## Reference Files
+
+- **GSAP Cheatsheet** — `~/studio/GSAP_CHEATSHEET.md` — Every motion.dev (Framer Motion) pattern translated to GSAP + CSS. Written as a reference for building animations without Framer Motion.
+- **Styles** — `~/studio/src/styles.css` — The single source of truth (~2900 lines)
+- **Glass Filter** — `~/studio/src/components/GlassFilter.tsx` — The SVG displacement crown jewel (302 lines)

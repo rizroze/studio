@@ -16,6 +16,7 @@ import { FAQ } from './sections/FAQ'
 import { ProjectPage } from './sections/ProjectPage'
 import { AllProjects } from './sections/AllProjects'
 import { CASE_STUDIES } from './constants/projects'
+import { Agentation } from 'agentation'
 
 type View = { type: 'home' } | { type: 'project'; slug: string } | { type: 'all-projects' }
 
@@ -127,6 +128,7 @@ export function App() {
 
       <Analytics />
       <SpeedInsights />
+      {import.meta.env.DEV && <Agentation />}
     </>
   )
 }

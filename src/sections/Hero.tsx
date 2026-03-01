@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { track } from '@vercel/analytics'
 import { ClientTicker } from '../components/ClientTicker'
 import { AsciiRose } from '../components/AsciiRose'
-import { CASE_STUDIES } from '../constants/projects'
+import { CASE_STUDIES, BOOKSHELF_SLUGS } from '../constants/projects'
 
 const BOOK_COLORS = ['#FCE184', '#F5B731', '#34A853', '#1a1a2e']
 
@@ -13,11 +13,16 @@ const SPINE_LOGOS: (string | null)[] = [
   null, // Fullport — text label
 ]
 
+// Bookshelf shows only 4 curated projects, not the full CASE_STUDIES list
+const BOOKSHELF_PROJECTS = BOOKSHELF_SLUGS.map(
+  slug => CASE_STUDIES.find(p => p.slug === slug)!
+)
+
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const shelfRef = useRef<HTMLDivElement>(null)
 
-  // Random float tease — pauses entirely on hover, resumes 1.5s after leave
+  // Random float tease — waits for GSAP entrance to finish, then starts
   useEffect(() => {
     const shelf = shelfRef.current
     if (!shelf) return
@@ -25,6 +30,8 @@ export function Hero() {
     const containers = shelf.querySelectorAll('.book-container')
     let last = -1
     let paused = false
+    let ready = false
+    let intervalId: ReturnType<typeof setInterval> | null = null
     let resumeTimer: ReturnType<typeof setTimeout> | null = null
 
     const clearAllTease = () => {
@@ -32,7 +39,7 @@ export function Hero() {
     }
 
     const tease = () => {
-      if (paused) return
+      if (paused || !ready) return
       let next: number
       let attempts = 0
       do {
@@ -49,7 +56,6 @@ export function Hero() {
 
     let hoverCount = 0
 
-    // Hover on zone (stable wrapper): kill all tease, pause loop
     const onEnter = () => {
       hoverCount++
       paused = true
@@ -57,7 +63,6 @@ export function Hero() {
       clearAllTease()
     }
 
-    // Leave zone: resume 1.5s after last book unhovered
     const onLeave = () => {
       hoverCount--
       if (hoverCount > 0) return
@@ -68,16 +73,24 @@ export function Hero() {
       }, 1500)
     }
 
+    // Only start teasing after GSAP entrance clears transforms
+    const onBooksLanded = () => {
+      ready = true
+      tease()
+      intervalId = setInterval(tease, 4000)
+    }
+
     zones.forEach(z => {
       z.addEventListener('mouseenter', onEnter)
       z.addEventListener('mouseleave', onLeave)
     })
 
-    tease()
-    const id = setInterval(tease, 4000)
+    window.addEventListener('books-landed', onBooksLanded)
+
     return () => {
-      clearInterval(id)
+      if (intervalId) clearInterval(intervalId)
       if (resumeTimer) clearTimeout(resumeTimer)
+      window.removeEventListener('books-landed', onBooksLanded)
       zones.forEach(z => {
         z.removeEventListener('mouseenter', onEnter)
         z.removeEventListener('mouseleave', onLeave)
@@ -130,7 +143,7 @@ export function Hero() {
           <div className="bookshelf" ref={shelfRef}>
             <div className="shelf-line" />
             <span className="shelf-label">MY_LIBRARY</span>
-            {CASE_STUDIES.map((p, i) => (
+            {BOOKSHELF_PROJECTS.map((p, i) => (
               <div key={p.slug} className="book-zone">
                 <label
                   className="book-container"

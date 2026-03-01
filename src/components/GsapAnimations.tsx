@@ -4,18 +4,20 @@ import { useGSAP } from '@gsap/react'
 /**
  * GSAP hero entrance timeline — sequenced choreography that CSS can't do.
  *
- * Books fall from above one by one. They become visible mid-fall as the
- * parent .hero-right fades in. No opacity animation on books themselves
- * (preserve-3d on .book would flatten if any ancestor has opacity < 1).
- * We animate translateY on .book-container which does NOT have preserve-3d.
+ * Books fall from above one by one. We animate .book-zone (the outer wrapper)
+ * instead of .book-container because .book-container has a CSS base transform
+ * (translateZ) for 3D positioning. GSAP inline transforms would overwrite it,
+ * breaking the 3D depth during the fall animation.
+ *
+ * .hero-right fades in during the fall so books become visible mid-air.
  */
 export function GsapAnimations() {
   useGSAP(() => {
     gsap.set('.shelf-label', { opacity: 0 })
 
-    // Position books above their landing spot before anything is visible
-    const containers = gsap.utils.toArray<HTMLElement>('.book-container')
-    gsap.set(containers, { y: -120 })
+    // Animate .book-zone (wrapper) — leaves .book-container's CSS transform untouched
+    const zones = gsap.utils.toArray<HTMLElement>('.book-zone')
+    gsap.set(zones, { y: -120 })
 
     const tl = gsap.timeline({ delay: 0.15 })
 
@@ -50,9 +52,9 @@ export function GsapAnimations() {
       'reveal+=0.4'
     )
 
-    // Books fall into place one by one — only translateY, no opacity
-    containers.forEach((container, i) => {
-      tl.to(container, {
+    // Books fall into place one by one via their .book-zone wrapper
+    zones.forEach((zone, i) => {
+      tl.to(zone, {
         y: 0,
         duration: 0.5,
         ease: 'back.out(1.4)',
@@ -60,15 +62,17 @@ export function GsapAnimations() {
     })
 
     // Clean up GSAP inline transforms so CSS hover/tease still works
-    const lastBookLands = `reveal+=${0.15 + containers.length * 0.1 + 0.5}`
+    const lastBookLands = `reveal+=${0.15 + zones.length * 0.1 + 0.5}`
     tl.call(() => {
-      gsap.set(containers, { clearProps: 'transform' })
+      gsap.set(zones, { clearProps: 'transform' })
+      // Signal that entrance is done — tease system can start
+      window.dispatchEvent(new Event('books-landed'))
     }, [], lastBookLands)
 
     tl.fromTo('.hero-ticker',
       { opacity: 0, y: 15 },
       { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
-      `reveal+=${0.15 + containers.length * 0.1 + 0.2}`
+      `reveal+=${0.15 + zones.length * 0.1 + 0.2}`
     )
   }, [])
 

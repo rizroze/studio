@@ -97,8 +97,9 @@
   50% { opacity: 0.4; }
 }
 @keyframes pfp-spin-once {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  0% { transform: scale(1) rotate(0deg); }
+  40% { transform: scale(1.1) rotate(180deg); }
+  100% { transform: scale(1) rotate(360deg); }
 }
 
 /* ===========================
@@ -1170,30 +1171,16 @@ main {
   border: 1px solid var(--panel-border);
   border-radius: 16px;
   overflow: hidden;
-  transition: transform 0.15s ease, border-color 0.3s var(--smooth-ease), box-shadow 0.3s var(--smooth-ease);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease-out, border-color 0.3s var(--smooth-ease);
   cursor: pointer;
-  transform-style: preserve-3d;
   will-change: transform;
 }
 
 .project-card-studio:hover {
   border-color: rgba(255, 255, 255, 0.2);
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(168, 85, 247, 0.05);
 }
 
-.project-card-studio:hover .project-card-title {
-  transform: translateZ(24px);
-}
-
-.project-card-studio:hover .project-card-tags {
-  transform: translateZ(16px);
-}
-
-.project-card-studio:hover .project-card-result {
-  transform: translateZ(32px);
-}
 
 .project-card-studio.expanded {
   border-color: rgba(255, 255, 255, 0.2);
@@ -1218,7 +1205,8 @@ main {
   object-fit: contain;
   filter: brightness(0) invert(1);
   opacity: 0.5;
-  transition: all 0.4s var(--smooth-ease);
+  transition: opacity 0.4s var(--smooth-ease), transform 0.4s var(--smooth-ease);
+  will-change: transform, opacity;
 }
 
 .project-card-studio:hover .project-card-thumb img {
@@ -1299,19 +1287,13 @@ main {
   background: var(--bg-secondary);
   border-radius: 8px;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   aspect-ratio: 16 / 10;
-  padding: 12px;
 }
 
 .preview-gallery-item img {
-  max-height: 48px;
-  width: auto;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.6;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .preview-description {
@@ -1632,17 +1614,17 @@ main {
 .job-done-tag {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin-top: 12px;
-  padding: 8px 12px;
+  padding: 16px 16px;
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
-  font-size: 11px;
+  border-radius: 10px;
+  font-size: 13px;
 }
 
 .job-brand-logo {
-  height: 16px;
-  width: 16px;
+  height: 22px;
+  width: 22px;
   object-fit: contain;
   opacity: 0.9;
   flex-shrink: 0;
@@ -1653,8 +1635,8 @@ main {
 .job-done-tag.radiants .job-text { color: var(--brand-gold); }
 .job-done-tag.hydex .job-text { color: var(--brand-green); }
 .job-done-tag .ongoing-dot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background-color: var(--brand-green);
   box-shadow: 0 0 6px rgba(74, 222, 128, 0.6);
@@ -1868,7 +1850,7 @@ main {
   transform: scale(1.05);
 }
 .pfp-spin {
-  animation: pfp-spin-once 1s ease-in-out forwards !important;
+  animation: pfp-spin-once 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
 }
 
 .about-name-large {
@@ -2592,19 +2574,83 @@ main {
   background: var(--bg-secondary);
   border-radius: 12px;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   aspect-ratio: 16 / 10;
-  padding: 24px;
 }
 
 .project-page-gallery-item img {
-  max-height: 100px;
-  width: auto;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-page-gallery-item:hover img {
+  transform: scale(1.03);
+}
+
+/* === Video Player === */
+.project-video-wrap {
+  margin-bottom: 40px;
+}
+
+.project-video-label {
+  display: inline-block;
+  font-family: 'Urbanist', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 12px;
+}
+
+.project-video {
+  width: 100%;
+  border-radius: 12px;
+  background: #000;
+  outline: none;
+}
+
+.project-video:focus-visible {
+  outline: 2px solid rgba(168, 85, 247, 0.5);
+  outline-offset: 2px;
+}
+
+/* === Project Subsections (e.g. Radiants sub-projects) === */
+.project-page-subsection {
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid var(--divider);
+}
+
+.project-subsection-title {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.project-subsection-desc {
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 20px;
+}
+
+/* Square grid for PFP art — small 1:1 tiles */
+.gallery-squares {
+  grid-template-columns: repeat(auto-fit, minmax(120px, 150px));
+  gap: 10px;
+}
+
+.gallery-item-square {
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+}
+
+.gallery-item-square img {
+  image-rendering: pixelated;
 }
 
 .project-page-section {
@@ -2871,6 +2917,7 @@ main {
   .project-page-hero { height: 220px; border-radius: 12px; }
   .project-page-title { font-size: 28px; }
   .project-page-gallery { grid-template-columns: 1fr; }
+  .project-video { border-radius: 8px; }
   .faq-question { padding: 16px 20px; font-size: 14px; }
   .faq-answer p { padding: 0 20px 16px; font-size: 13px; }
 }
