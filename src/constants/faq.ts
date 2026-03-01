@@ -10,7 +10,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     question: 'How fast can you start?',
-    answer: 'Within a week of booking. Start projects ship in 2–3 weeks. Build projects run 4–6 weeks. Studio engagements are 6–8 weeks with ongoing support.'
+    answer: 'Within a week of booking. Start projects ship in 1–2 weeks. Build projects run 2–4 weeks. Studio engagements are 6–8 weeks with ongoing support.'
   },
   {
     question: 'What does the process look like?',
