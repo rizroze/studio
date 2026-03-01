@@ -3013,8 +3013,11 @@ main {
   .cta-col { position: static; }
   .project-page-hero { height: 220px; border-radius: 12px; }
   .project-page-title { font-size: 28px; }
-  .project-page-gallery { columns: 1; }
-  .gallery-landscape, .gallery-deck { grid-template-columns: 1fr; }
+  .project-page-gallery { columns: 2; gap: 8px; }
+  .project-page-gallery-item { margin-bottom: 8px; }
+  .gallery-deck { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .gallery-squares { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .gallery-landscape { grid-template-columns: 1fr; }
   .project-video { border-radius: 8px; }
   .faq-question { padding: 16px 20px; font-size: 14px; }
   .faq-answer p { padding: 0 20px 16px; font-size: 13px; }
