@@ -49,17 +49,20 @@ export const CASE_STUDIES: CaseStudyData[] = [
     ],
     sections: [
       {
-        title: 'Constant Updates',
-        description: 'Weekly branded content for RadSpaces, the community podcast and Twitter Spaces. Each post designed to stop the scroll with a unique visual direction.',
+        title: 'Community & Events',
+        description: 'Weekly branded content, event graphics, and community moments. From RadSpaces podcast posts to the first-ever Burn Event, co-working days, and vibecoding sessions.',
         gallery: [
-          // landscape / wide
           '/content/radiants/radspaces/content-ts.webp',
+          '/content/radiants/community/vibecode.webp',
           '/content/radiants/radspaces/content-screenshot.webp',
-          // square
+          '/content/radiants/community/radgangz.webp',
           '/content/radiants/radspaces/radspaces-44.webp',
           '/content/radiants/radspaces/radspaces-32.webp',
+          '/content/radiants/community/be-rad.webp',
+          '/content/radiants/community/burn-event.webp',
           '/content/radiants/radspaces/content-raddz.webp',
-          // portrait
+          '/content/radiants/community/coworking.webp',
+          '/content/radiants/community/dinner.webp',
           '/content/radiants/radspaces/radspaces-57.webp',
           '/content/radiants/radspaces/radspaces-54-google.webp',
           '/content/radiants/radspaces/radspaces-54-tools.webp',
@@ -71,20 +74,6 @@ export const CASE_STUDIES: CaseStudyData[] = [
           '/content/radiants/radspaces/radspaces-57now.webp',
           '/content/radiants/radspaces/radspaces-55.webp',
           '/content/radiants/radspaces/radspaces-56.webp',
-        ],
-      },
-      {
-        title: 'Community & Events',
-        description: 'Event graphics, community moments, and recurring content. From the first-ever Burn Event to weekly co-working days and vibecoding sessions.',
-        gallery: [
-          // landscape
-          '/content/radiants/community/vibecode.webp',
-          '/content/radiants/community/radgangz.webp',
-          // square / near-square
-          '/content/radiants/community/be-rad.webp',
-          '/content/radiants/community/burn-event.webp',
-          '/content/radiants/community/coworking.webp',
-          '/content/radiants/community/dinner.webp',
           '/content/radiants/radspaces/community-private-event.webp',
         ],
       },
