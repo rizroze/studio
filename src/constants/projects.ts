@@ -219,9 +219,6 @@ export const CASE_STUDIES: CaseStudyData[] = [
       '/content/wayy/deck-12.webp',
       '/content/wayy/deck-13.webp',
       '/content/wayy/deck-14.webp',
-      '/content/wayy/web-home.webp',
-      '/content/wayy/web-markets.webp',
-      '/content/wayy/web-battle.webp',
     ],
     previewGallery: [
       '/content/wayy/deck-01.webp',
