@@ -45,8 +45,6 @@ export const CASE_STUDIES: CaseStudyData[] = [
       '/content/radiants/community/image-1.webp',
       '/content/radiants/community/image.webp',
       '/content/radiants/community/57now.webp',
-      '/content/radiants/community/rad57upcoming.webp',
-      '/content/radiants/community/rad56.webp',
     ],
     sections: [
       {
