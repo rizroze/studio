@@ -68,6 +68,7 @@ export function IpodPlayer() {
     <div className="ipod-nano">
       <div className="ipod-body">
         <div className={`ipod-screen ${isPlaying ? 'active' : ''}`}>
+          <div className="ipod-now-playing">Now Playing</div>
           <div className="song-title">{PLAYLIST[currentTrack]?.title || 'No Track'}</div>
           <div className="equalizer">
             <span className="bar"></span>
