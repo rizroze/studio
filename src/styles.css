@@ -2320,13 +2320,11 @@ main {
   max-width: 1200px;
   margin: 0 auto;
   padding-top: 28px;
-  text-align: center;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.4);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 12px;
 }
 .footer-privacy-link {
   font-size: 13px;
