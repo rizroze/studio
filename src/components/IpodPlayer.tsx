@@ -12,46 +12,53 @@ export function IpodPlayer() {
     }
   }, [])
 
+  const shouldPlayRef = useRef(false)
+
   const loadTrack = (index: number) => {
     const newIndex = ((index % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length
     setCurrentTrack(newIndex)
     return newIndex
   }
 
+  // Auto-play when track changes and shouldPlayRef is true
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio || !shouldPlayRef.current) return
+    const onCanPlay = () => {
+      audio.play().catch(() => setIsPlaying(false))
+    }
+    audio.addEventListener('canplay', onCanPlay, { once: true })
+    audio.load()
+    return () => audio.removeEventListener('canplay', onCanPlay)
+  }, [currentTrack])
+
   const togglePlay = () => {
     if (!audioRef.current) return
     if (isPlaying) {
       audioRef.current.pause()
       setIsPlaying(false)
+      shouldPlayRef.current = false
     } else {
       audioRef.current.play().catch(() => setIsPlaying(false))
       setIsPlaying(true)
+      shouldPlayRef.current = true
     }
   }
 
   const prevTrack = () => {
-    const newIndex = loadTrack(currentTrack - 1)
-    if (audioRef.current) {
-      audioRef.current.src = PLAYLIST[newIndex].src
-      if (isPlaying) audioRef.current.play().catch(() => setIsPlaying(false))
-    }
+    shouldPlayRef.current = isPlaying
+    loadTrack(currentTrack - 1)
   }
 
   const nextTrack = () => {
-    const newIndex = loadTrack(currentTrack + 1)
-    if (audioRef.current) {
-      audioRef.current.src = PLAYLIST[newIndex].src
-      if (isPlaying) audioRef.current.play().catch(() => setIsPlaying(false))
-    }
+    shouldPlayRef.current = isPlaying
+    loadTrack(currentTrack + 1)
   }
 
   const handleEnded = () => {
     if (PLAYLIST.length > 1) {
-      const newIndex = loadTrack(currentTrack + 1)
-      if (audioRef.current) {
-        audioRef.current.src = PLAYLIST[newIndex].src
-        audioRef.current.play().catch(() => setIsPlaying(false))
-      }
+      shouldPlayRef.current = true
+      loadTrack(currentTrack + 1)
     } else {
       setIsPlaying(false)
     }
