@@ -1054,8 +1054,8 @@ main {
 
 /* Varied heights per book — .book-zone wraps each .book-container
    Shelf children: .shelf-line, .shelf-label, then .book-zone×4 → books start at :nth-child(3) */
-.bookshelf > :nth-child(3) .book-container { --bk-height: calc(var(--bk-width) * 4.8); } /* rad — tallest */
-.bookshelf > :nth-child(4) .book-container { --bk-height: calc(var(--bk-width) * 3.6); }
+.bookshelf > :nth-child(3) .book-container { --bk-height: calc(var(--bk-width) * 3.4); } /* rad — smallest */
+.bookshelf > :nth-child(4) .book-container { --bk-height: calc(var(--bk-width) * 4.8); } /* wayy — tallest */
 .bookshelf > :nth-child(5) .book-container { --bk-height: calc(var(--bk-width) * 4.2); }
 .bookshelf > :nth-child(6) .book-container { --bk-height: calc(var(--bk-width) * 3.8); }
 
