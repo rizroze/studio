@@ -2329,8 +2329,8 @@ main {
   gap: 12px;
 }
 .footer-privacy-link {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.3);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
   text-decoration: none;
 }
 
