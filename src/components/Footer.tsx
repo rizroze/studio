@@ -8,10 +8,39 @@ const INITIAL_EMOJIS = [
   { key: 'heart', emoji: '❤️', count: 63 },
 ]
 
+const STORAGE_KEY = 'emoji-counts'
+const PRESSED_KEY = 'emoji-pressed'
+
+function loadCounts(): typeof INITIAL_EMOJIS {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) return INITIAL_EMOJIS
+    const saved = JSON.parse(raw) as Record<string, number>
+    return INITIAL_EMOJIS.map(e => ({ ...e, count: saved[e.key] ?? e.count }))
+  } catch { return INITIAL_EMOJIS }
+}
+
+function saveCounts(emojis: typeof INITIAL_EMOJIS) {
+  const map: Record<string, number> = {}
+  emojis.forEach(e => { map[e.key] = e.count })
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(map))
+}
+
+function loadPressed(): Set<string> {
+  try {
+    const raw = localStorage.getItem(PRESSED_KEY)
+    return raw ? new Set(JSON.parse(raw)) : new Set()
+  } catch { return new Set() }
+}
+
+function savePressed(pressed: Set<string>) {
+  localStorage.setItem(PRESSED_KEY, JSON.stringify([...pressed]))
+}
+
 export function Footer() {
-  const [emojis, setEmojis] = useState(INITIAL_EMOJIS)
+  const [emojis, setEmojis] = useState(loadCounts)
   const [clicked, setClicked] = useState<string | null>(null)
-  const [pressed, setPressed] = useState<Set<string>>(new Set())
+  const [pressed, setPressed] = useState<Set<string>>(loadPressed)
   const [spinning, setSpinning] = useState<Record<string, { prev: number; next: number; direction: 'up' | 'down' }>>({})
   const timeoutsRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set())
 
@@ -28,15 +57,18 @@ export function Footer() {
       [key]: { prev: current.count, next: nextCount, direction: wasPressed ? 'down' : 'up' }
     }))
 
-    // Update count
-    setEmojis(prev => prev.map(e =>
-      e.key === key ? { ...e, count: nextCount } : e
-    ))
+    // Update count + persist
+    setEmojis(prev => {
+      const updated = prev.map(e => e.key === key ? { ...e, count: nextCount } : e)
+      saveCounts(updated)
+      return updated
+    })
 
-    // Toggle pressed
+    // Toggle pressed + persist
     setPressed(prev => {
       const next = new Set(prev)
       wasPressed ? next.delete(key) : next.add(key)
+      savePressed(next)
       return next
     })
 
