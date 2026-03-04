@@ -1994,7 +1994,7 @@ main {
 
 .tools-grid-icons {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 6px;
 }
 
@@ -3020,7 +3020,8 @@ main {
   .about-pfp-large { width: 80px; height: 80px; }
   .about-two-col { grid-template-columns: 1fr; gap: 32px; }
   .about-tools-col { position: static; }
-  .tools-grid-icons { grid-template-columns: repeat(4, 1fr); }
+  .tools-grid-icons { grid-template-columns: repeat(3, 1fr); }
+  .preview-description { white-space: normal; }
 
   .footer-inner { grid-template-columns: 1fr; gap: 32px; }
   .footer-right { flex-direction: row; flex-wrap: wrap; gap: 24px; }
