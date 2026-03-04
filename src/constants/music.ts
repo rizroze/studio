@@ -6,5 +6,6 @@ export const PLAYLIST = [
   { title: "Get Down On It", src: "/content/music/Kool & The Gang - Get Down On It.mp3" },
   { title: "Dance Naked Under Palmtrees", src: "/content/music/Dance Naked Under Palmtrees.mp3" },
   { title: "Diamente", src: "/content/music/Diamente from YouTube.mp3" },
-  { title: "Calling Aventura King", src: "/content/music/Kid Loco - Calling Aventura King.mp3" }
+  { title: "Calling Aventura King", src: "/content/music/Kid Loco - Calling Aventura King.mp3" },
+  { title: "Our Dance", src: "/content/music/Wax Tailor - Our Dance.mp3" }
 ]
