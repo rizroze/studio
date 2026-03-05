@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import type { CaseStudyData } from '../constants/projects'
 import { CASE_STUDIES } from '../constants/projects'
 
@@ -10,6 +10,21 @@ interface ProjectPageProps {
 
 export function ProjectPage({ project, onClose, onSelectProject }: ProjectPageProps) {
   const otherProjects = CASE_STUDIES.filter(p => p.slug !== project.slug)
+  const [lightbox, setLightbox] = useState<{ images: string[]; index: number } | null>(null)
+
+  const openLightbox = useCallback((images: string[], index: number) => {
+    setLightbox({ images, index })
+  }, [])
+
+  const closeLightbox = useCallback(() => setLightbox(null), [])
+
+  const lightboxPrev = useCallback(() => {
+    setLightbox(prev => prev ? { ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length } : null)
+  }, [])
+
+  const lightboxNext = useCallback(() => {
+    setLightbox(prev => prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null)
+  }, [])
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -17,11 +32,17 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (lightbox) {
+        if (e.key === 'Escape') closeLightbox()
+        else if (e.key === 'ArrowLeft') lightboxPrev()
+        else if (e.key === 'ArrowRight') lightboxNext()
+        return
+      }
       if (e.key === 'Escape') onClose()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [onClose])
+  }, [onClose, lightbox, closeLightbox, lightboxPrev, lightboxNext])
 
   return (
     <div className="project-page">
@@ -97,7 +118,7 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
         {project.gallery.length > 0 && (
           <div className="project-page-gallery gallery-deck">
             {project.gallery.map((img, i) => (
-              <div key={i} className="project-page-gallery-item">
+              <div key={i} className="project-page-gallery-item gallery-clickable" onClick={() => openLightbox(project.gallery, i)}>
                 <img src={img} alt={`${project.title} ${i + 1}`} loading="lazy" />
               </div>
             ))}
@@ -111,7 +132,7 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
             {section.gallery.length > 0 && (
               <div className={`project-page-gallery ${section.layout === 'squares' ? 'gallery-squares' : section.layout === 'landscape' ? 'gallery-landscape' : section.layout === 'deck' ? 'gallery-deck' : ''}`}>
                 {section.gallery.map((img, j) => (
-                  <div key={j} className={`project-page-gallery-item ${section.layout === 'squares' ? 'gallery-item-square' : ''} ${section.wideIndices?.includes(j) ? 'gallery-item-wide' : ''}`}>
+                  <div key={j} className={`project-page-gallery-item ${section.layout === 'squares' ? 'gallery-item-square' : ''} ${section.wideIndices?.includes(j) ? 'gallery-item-wide' : ''} gallery-clickable`} onClick={() => openLightbox(section.gallery, j)}>
                     <img src={img} alt={`${section.title} ${j + 1}`} loading="lazy" />
                   </div>
                 ))}
@@ -120,6 +141,28 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
           </div>
         ))}
       </div>
+
+      {lightbox && (
+        <div className="deck-lightbox" onClick={closeLightbox}>
+          <div className="deck-lightbox-inner" onClick={e => e.stopPropagation()}>
+            <img src={lightbox.images[lightbox.index]} alt={`Slide ${lightbox.index + 1}`} className="deck-lightbox-img" />
+            <span className="deck-lightbox-counter">{lightbox.index + 1} / {lightbox.images.length}</span>
+            {lightbox.images.length > 1 && (
+              <>
+                <button className="deck-lightbox-arrow deck-lightbox-prev" onClick={lightboxPrev} aria-label="Previous slide">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M13 4L7 10L13 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+                <button className="deck-lightbox-arrow deck-lightbox-next" onClick={lightboxNext} aria-label="Next slide">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4L13 10L7 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+              </>
+            )}
+            <button className="deck-lightbox-close" onClick={closeLightbox} aria-label="Close">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4L14 14M14 4L4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="project-page-more">
         <h2 className="section-title">More work</h2>
