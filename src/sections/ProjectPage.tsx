@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import type { CaseStudyData } from '../constants/projects'
 import { CASE_STUDIES } from '../constants/projects'
 
@@ -142,7 +143,7 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
         ))}
       </div>
 
-      {lightbox && (
+      {lightbox && createPortal(
         <div className="deck-lightbox" onClick={closeLightbox}>
           <div className="deck-lightbox-inner" onClick={e => e.stopPropagation()}>
             <img src={lightbox.images[lightbox.index]} alt={`Slide ${lightbox.index + 1}`} className="deck-lightbox-img" />
@@ -161,7 +162,8 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4L14 14M14 4L4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
             </button>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       <div className="project-page-more">
