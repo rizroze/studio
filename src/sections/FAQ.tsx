@@ -17,7 +17,7 @@ export function FAQ() {
 
         <div className="cta-col">
           <div className="cta-card">
-            <img src="/rizzy-avatar.png" alt="Riz Rose" className="cta-card-pfp" />
+            <img src="/rizzy-avatar.webp" alt="Riz Rose" className="cta-card-pfp" />
             <h3 className="cta-card-headline">Let's build something.</h3>
             <p className="cta-card-sub">15 min call. No pitch deck needed. Let's chat about what you're thinking on.</p>
             <a
@@ -33,7 +33,7 @@ export function FAQ() {
             <div className="cta-card-socials">
               <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer">X</a>
               <span className="contact-divider-dot" />
-              <a href="https://discord.gg/radiants" target="_blank" rel="noopener noreferrer">Discord</a>
+              <a href="https://discord.com/users/rizzytoday" target="_blank" rel="noopener noreferrer">Discord</a>
               <span className="contact-divider-dot" />
               <a href="https://github.com/rizzytoday" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>

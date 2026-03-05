@@ -132,7 +132,7 @@ export function Hero() {
           </p>
           <div className="hero-cta-row">
             <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="hero-cta" onClick={() => track('cta_click', { location: 'hero' })}>
-              <img src="/rizzy-avatar.png" alt="" className="hero-cta-avatar" />
+              <img src="/rizzy-avatar.webp" alt="" className="hero-cta-avatar" />
               Book an intro
             </a>
             <span className="available-badge"><span className="available-dot" />Available now</span>

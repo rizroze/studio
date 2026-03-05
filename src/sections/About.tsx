@@ -59,7 +59,7 @@ export function About() {
       <div className="about-profile" data-reveal>
         <img
           ref={pfpRef}
-          src="/rizzy-avatar.png"
+          src="/rizzy-avatar.webp"
           alt="Zen"
           className="about-pfp-large"
           onClick={handleClick}

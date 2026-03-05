@@ -103,7 +103,7 @@ export function Nav({ onLogoClick }: NavProps) {
       <nav className={navClass} ref={navRef}>
         <div className="nav-inner">
           <a href="#" className="nav-brand" onClick={scrollToTop}>
-            <img src="/rizzy-avatar.png" alt="Rizzy Studio" className="nav-pfp" />
+            <img src="/rizzy-avatar.webp" alt="Rizzy Studio" className="nav-pfp" />
             <span className="nav-brand-text">Rizzy Studio</span>
           </a>
 
@@ -146,7 +146,7 @@ export function Nav({ onLogoClick }: NavProps) {
         <div className="nav-mobile-menu">
           <div className="nav-mobile-header">
             <a href="#" className="nav-brand" onClick={(e) => { scrollToTop(e); navStore.close() }}>
-              <img src="/rizzy-avatar.png" alt="Rizzy Studio" className="nav-pfp" />
+              <img src="/rizzy-avatar.webp" alt="Rizzy Studio" className="nav-pfp" />
               <span className="nav-brand-text">Rizzy Studio</span>
             </a>
             <button className="nav-mobile-toggle open" onClick={() => navStore.close()} aria-label="Close menu">

@@ -92,7 +92,7 @@ export function Footer() {
       <div className="footer-inner">
         <div className="footer-main">
           <a href="#" className="footer-brand-big" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
-            <img src="/rizzy-avatar.png" alt="Rizzy Studio" className="footer-pfp-big" />
+            <img src="/rizzy-avatar.webp" alt="Rizzy Studio" className="footer-pfp-big" />
             <span>Rizzy Studio</span>
           </a>
           <p className="footer-tagline-big">The rizz your brand's been missing.</p>
@@ -133,7 +133,7 @@ export function Footer() {
             <div className="footer-col">
               <h4 className="footer-heading">Connect</h4>
               <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">X / Twitter</a>
-              <a href="https://discord.gg/radiants" target="_blank" rel="noopener noreferrer" className="footer-link">Discord</a>
+              <a href="https://discord.com/users/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">Discord</a>
               <a href="https://github.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
               <a href="https://rizztoday.vercel.app" target="_blank" rel="noopener noreferrer" className="footer-link">Personal website</a>
             </div>
