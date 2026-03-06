@@ -22,7 +22,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     question: 'Do you work outside web3?',
-    answer: 'Yes. Web3 is where most of my portfolio lives, but great design is great design. If you\'re building something interesting in AI, SaaS, or consumer tech, I\'m down.'
+    answer: 'Yes. Web3 is where most of my portfolio lives, but great design is great design. If you\'re building something interesting, I\'m down.'
   },
   {
     question: 'How do revisions work?',
