@@ -1072,7 +1072,7 @@ main {
 .bookshelf > :nth-child(8) .book-cover img { max-height: 80px; } /* corner — transparent C */
 .bookshelf > :nth-child(7) .spine-text { color: rgba(0,0,0,0.85); font-weight: 700; }
 .bookshelf > :nth-child(8) .book-container { --bk-height: calc(var(--bk-width) * 3.6); } /* corner */
-.bookshelf > :nth-child(8) .spine-text { color: rgba(0,0,0,0.85); font-family: 'Chomsky', serif; text-transform: none; font-size: 10px; letter-spacing: 0; }
+.bookshelf > :nth-child(8) .spine-text { color: rgba(0,0,0,0.85); font-family: 'Chomsky', serif; text-transform: none; font-size: 14px; letter-spacing: 0; }
 
 .book-back {
   background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
@@ -1218,9 +1218,9 @@ main {
 .ticker-logo.logo-soladex { height: 32px; }
 .ticker-logo.logo-skr { height: 34px; }
 .ticker-logo.logo-solana-mobile { height: 38px; }
-.ticker-logo.logo-fullport { height: 30px; }
-.ticker-logo.logo-wfd { height: 30px; }
-.ticker-logo.logo-corner { height: 30px; }
+.ticker-logo.logo-fullport { height: 34px; }
+.ticker-logo.logo-wfd { height: 34px; border-radius: 8px; }
+.ticker-logo.logo-corner { height: 34px; }
 
 @keyframes ticker-scroll {
   0% { transform: translateX(0); }
