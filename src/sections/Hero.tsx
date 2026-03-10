@@ -181,11 +181,11 @@ export function Hero() {
               >
                 <div className="book">
                   <div className="book-spine">
-                    <span className="spine-text">the corner</span>
+                    <span className="spine-text">The Corner</span>
                   </div>
                   <div className="book-back"></div>
                   <div className="book-cover">
-                    <img src="/content/logos/corner-logo.webp" alt="The Corner" loading="eager" />
+                    <img src="/content/logos/corner-c.webp" alt="The Corner" loading="eager" />
                   </div>
                   <div className="book-side"></div>
                   <input type="radio" name="hero-book" />

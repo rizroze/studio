@@ -5,9 +5,9 @@ const LOGOS = [
   { src: '/content/logos/soladex.svg', alt: 'Soladex', className: 'logo-soladex' },
   { src: '/content/logos/skr-seeker.png', alt: 'Seeker', className: 'logo-skr' },
   { src: '/content/logos/solana-mobile.svg', alt: 'Solana Mobile', className: 'logo-solana-mobile' },
-  { src: '/content/logos/fullport-logo.svg', alt: 'Fullport', className: 'logo-fullport' },
-  { src: '/content/whatsfordinner/logo.webp', alt: "What's for Dinner", className: 'logo-wfd' },
-  { src: '/content/logos/corner-logo.webp', alt: 'The Corner', className: 'logo-corner' },
+  { src: '/content/logos/fullport-ticker.svg', alt: 'Fullport', className: 'logo-fullport' },
+  { src: '/content/logos/wfd-ticker.svg', alt: "What's for Dinner", className: 'logo-wfd' },
+  { src: '/content/logos/corner-c.webp', alt: 'The Corner', className: 'logo-corner' },
 ]
 
 export function ClientTicker() {
