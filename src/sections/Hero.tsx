@@ -173,6 +173,25 @@ export function Hero() {
                 </label>
               </div>
             ))}
+            {/* Corner — standalone book, not a case study */}
+            <div className="book-zone">
+              <label
+                className="book-container"
+                style={{ '--bk-color': '#F5F0E8' } as React.CSSProperties}
+              >
+                <div className="book">
+                  <div className="book-spine">
+                    <span className="spine-text">the corner</span>
+                  </div>
+                  <div className="book-back"></div>
+                  <div className="book-cover">
+                    <img src="/content/logos/corner-logo.webp" alt="The Corner" loading="eager" />
+                  </div>
+                  <div className="book-side"></div>
+                  <input type="radio" name="hero-book" />
+                </div>
+              </label>
+            </div>
           </div>
         </div>
       </div>
