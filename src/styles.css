@@ -4,6 +4,14 @@
    =========================== */
 
 @font-face {
+  font-family: 'Chomsky';
+  src: url('/fonts/Chomsky.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Geist Pixel';
   src: url('/fonts/GeistPixel-Square.woff2') format('woff2');
   font-weight: 400;
@@ -1059,9 +1067,12 @@ main {
 .bookshelf > :nth-child(5) .book-container { --bk-height: calc(var(--bk-width) * 4.2); }
 .bookshelf > :nth-child(6) .book-container { --bk-height: calc(var(--bk-width) * 3.8); }
 .bookshelf > :nth-child(7) .book-container { --bk-height: calc(var(--bk-width) * 4.0); } /* wfd */
-.bookshelf > :nth-child(7) .spine-text { color: rgba(0,0,0,0.85); }
+.bookshelf > :nth-child(4) .book-cover img { max-height: 80px; } /* wayy — small logomark */
+.bookshelf > :nth-child(7) .book-cover img { max-height: 80px; border-radius: 12px; } /* wfd — square icon */
+.bookshelf > :nth-child(8) .book-cover img { max-height: 80px; border-radius: 12px; } /* corner — square icon */
+.bookshelf > :nth-child(7) .spine-text { color: rgba(0,0,0,0.85); font-weight: 700; }
 .bookshelf > :nth-child(8) .book-container { --bk-height: calc(var(--bk-width) * 3.6); } /* corner */
-.bookshelf > :nth-child(8) .spine-text { color: rgba(0,0,0,0.85); }
+.bookshelf > :nth-child(8) .spine-text { color: rgba(0,0,0,0.85); font-family: 'Chomsky', serif; text-transform: none; font-size: 10px; letter-spacing: 0; }
 
 .book-back {
   background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
@@ -1090,7 +1101,7 @@ main {
   max-height: 60px;
   width: auto;
   object-fit: contain;
-  opacity: 0.4;
+  opacity: 0.9;
   transition: opacity 0.3s var(--smooth-ease);
 }
 
@@ -1121,7 +1132,7 @@ main {
 }
 
 .book:has(> input:checked) .book-cover img {
-  opacity: 0.6;
+  opacity: 0.95;
 }
 
 .book:has(> input:checked) .book-spine,
@@ -1207,6 +1218,9 @@ main {
 .ticker-logo.logo-soladex { height: 32px; }
 .ticker-logo.logo-skr { height: 34px; }
 .ticker-logo.logo-solana-mobile { height: 38px; }
+.ticker-logo.logo-fullport { height: 30px; }
+.ticker-logo.logo-wfd { height: 30px; border-radius: 6px; }
+.ticker-logo.logo-corner { height: 30px; border-radius: 6px; }
 
 @keyframes ticker-scroll {
   0% { transform: translateX(0); }

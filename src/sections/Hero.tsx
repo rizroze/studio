@@ -177,7 +177,7 @@ export function Hero() {
             <div className="book-zone">
               <label
                 className="book-container"
-                style={{ '--bk-color': '#F5F0E8' } as React.CSSProperties}
+                style={{ '--bk-color': '#EDE4D0' } as React.CSSProperties}
               >
                 <div className="book">
                   <div className="book-spine">
