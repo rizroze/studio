@@ -1053,11 +1053,13 @@ main {
 }
 
 /* Varied heights per book — .book-zone wraps each .book-container
-   Shelf children: .shelf-line, .shelf-label, then .book-zone×4 → books start at :nth-child(3) */
+   Shelf children: .shelf-line, .shelf-label, then .book-zone×5 → books start at :nth-child(3) */
 .bookshelf > :nth-child(3) .book-container { --bk-height: calc(var(--bk-width) * 3.4); } /* rad — smallest */
 .bookshelf > :nth-child(4) .book-container { --bk-height: calc(var(--bk-width) * 4.8); } /* wayy — tallest */
 .bookshelf > :nth-child(5) .book-container { --bk-height: calc(var(--bk-width) * 4.2); }
 .bookshelf > :nth-child(6) .book-container { --bk-height: calc(var(--bk-width) * 3.8); }
+.bookshelf > :nth-child(7) .book-container { --bk-height: calc(var(--bk-width) * 4.0); } /* wfd */
+.bookshelf > :nth-child(7) .spine-text { color: rgba(0,0,0,0.85); }
 
 .book-back {
   background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
@@ -1229,6 +1231,9 @@ main {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+}
+.work-grid > :last-child:nth-child(odd) {
+  grid-column: 1 / -1;
 }
 
 .project-card-tilt-wrap {

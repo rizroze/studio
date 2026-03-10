@@ -4,13 +4,19 @@ import { ClientTicker } from '../components/ClientTicker'
 import { AsciiRose } from '../components/AsciiRose'
 import { CASE_STUDIES, BOOKSHELF_SLUGS } from '../constants/projects'
 
-const BOOK_COLORS = ['#FCE184', '#F5B731', '#34A853', '#1a1a2e']
+const BOOK_COLORS = ['#FCE184', '#F5B731', '#34A853', '#1a1a2e', '#F97316']
 
 const SPINE_LOGOS: (string | null)[] = [
   '/content/logos/rad-spine.png',
   '/content/logos/wayy-spine.webp',
   '/content/logos/hydex-spine.png',
   null, // Fullport — text label
+  null, // whatsfordinner — text label
+]
+
+const SPINE_TEXTS: (string | null)[] = [
+  null, null, null, null,
+  'whatsfordinner',
 ]
 
 // Bookshelf shows only 4 curated projects, not the full CASE_STUDIES list
@@ -154,7 +160,7 @@ export function Hero() {
                       {SPINE_LOGOS[i] ? (
                         <img src={SPINE_LOGOS[i]!} alt={p.title} className="spine-logo" loading="eager" />
                       ) : (
-                        <span className="spine-text">{p.title}</span>
+                        <span className="spine-text">{SPINE_TEXTS[i] ?? p.title}</span>
                       )}
                     </div>
                     <div className="book-back"></div>

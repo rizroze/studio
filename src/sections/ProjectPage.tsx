@@ -116,7 +116,7 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
           </div>
         )}
 
-        {project.gallery.length > 0 && (
+        {project.gallery.length > 0 && !project.sections?.length && (
           <div className="project-page-gallery gallery-deck">
             {project.gallery.map((img, i) => (
               <div key={i} className="project-page-gallery-item gallery-clickable" onClick={() => openLightbox(project.gallery, i)}>

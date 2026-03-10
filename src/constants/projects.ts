@@ -29,7 +29,7 @@ export interface CaseStudyData {
 }
 
 // Which projects appear on the hero bookshelf (order matters — maps to BOOK_COLORS/SPINE_LOGOS)
-export const BOOKSHELF_SLUGS = ['radiants', 'wayy', 'hydex', 'fullport'] as const
+export const BOOKSHELF_SLUGS = ['radiants', 'wayy', 'hydex', 'fullport', 'whatsfordinner'] as const
 
 export const CASE_STUDIES: CaseStudyData[] = [
   {
@@ -346,6 +346,23 @@ export const CASE_STUDIES: CaseStudyData[] = [
     ],
     video: '/content/fullport/fullport-demo.mp4',
     videoLabel: 'App Demo',
+    sections: [
+      {
+        title: 'Pitch Deck',
+        description: 'Investor deck designed for the Monolith 2026 hackathon submission. Clear narrative from problem to product to traction.',
+        gallery: [
+          '/content/fullport/slide-01.webp',
+          '/content/fullport/slide-02.webp',
+          '/content/fullport/slide-03.webp',
+          '/content/fullport/slide-04.webp',
+          '/content/fullport/slide-05.webp',
+          '/content/fullport/slide-06.webp',
+          '/content/fullport/slide-07.webp',
+          '/content/fullport/slide-08.webp',
+        ],
+        layout: 'deck',
+      },
+    ],
     category: 'mobile',
     description: 'Solana portfolio tracker built for the Seeker mobile device. Shipped as an APK for the Monolith 2026 hackathon.',
     brief: 'Build a native mobile portfolio tracker for the Solana Seeker device. Real-time token balances, prices, and portfolio analytics.',
@@ -354,5 +371,71 @@ export const CASE_STUDIES: CaseStudyData[] = [
     stack: ['React Native', 'Expo', 'TypeScript', 'Zustand', 'Helius API', 'Reanimated'],
     result: 'Working APK shipped within hackathon deadline. Real portfolio data, smooth animations, and a polished mobile experience.',
     resultMetric: 'Shipped working APK at Monolith hackathon.'
+  },
+  {
+    slug: 'whatsfordinner',
+    title: "What's for Dinner",
+    client: 'Personal Project',
+    tags: ['Web App', 'AI', 'SaaS'],
+    thumbnail: '/content/whatsfordinner/logo.webp',
+    color: '#F97316',
+    gallery: [
+      '/content/whatsfordinner/landing-1.webp',
+      '/content/whatsfordinner/landing-2.webp',
+      '/content/whatsfordinner/landing-3.webp',
+      '/content/whatsfordinner/preview-1.webp',
+      '/content/whatsfordinner/onboarding-1.webp',
+      '/content/whatsfordinner/onboarding-2.webp',
+      '/content/whatsfordinner/onboarding-3.webp',
+      '/content/whatsfordinner/onboarding-4.webp',
+      '/content/whatsfordinner/onboarding-5.webp',
+    ],
+    previewGallery: [
+      '/content/whatsfordinner/landing-1.webp',
+      '/content/whatsfordinner/landing-2.webp',
+      '/content/whatsfordinner/preview-1.webp',
+      '/content/whatsfordinner/onboarding-3.webp',
+    ],
+    video: '/content/whatsfordinner/whatsfordinner-demo.mp4',
+    videoLabel: 'App Demo',
+    sections: [
+      {
+        title: 'Landing Page',
+        description: 'Warm minimal design with orange accents on cream. Hero with social proof metrics, meal plan preview with grocery list, and simple pricing.',
+        gallery: [
+          '/content/whatsfordinner/landing-1.webp',
+          '/content/whatsfordinner/landing-2.webp',
+          '/content/whatsfordinner/landing-3.webp',
+        ],
+        layout: 'deck',
+      },
+      {
+        title: 'Onboarding Flow',
+        description: '5-step visual onboarding with emoji grids, interactive progress circles, and personalization — household size, budget, dietary needs, preferences, and delivery schedule.',
+        gallery: [
+          '/content/whatsfordinner/onboarding-1.webp',
+          '/content/whatsfordinner/onboarding-2.webp',
+          '/content/whatsfordinner/onboarding-3.webp',
+          '/content/whatsfordinner/onboarding-4.webp',
+          '/content/whatsfordinner/onboarding-5.webp',
+        ],
+        layout: 'deck',
+      },
+      {
+        title: 'Meal Plan Dashboard',
+        description: 'Weekly meal plan with day-by-day breakdown, calorie counts, cook times, and an auto-generated grocery list with estimated cost.',
+        gallery: [
+          '/content/whatsfordinner/preview-1.webp',
+        ],
+      },
+    ],
+    category: 'web',
+    description: 'AI-powered meal planner that generates personalized weekly meal plans based on dietary preferences, budget, and household size.',
+    brief: 'Build an AI meal planning SaaS that takes the daily stress out of deciding what to eat.',
+    challenge: 'Everyone asks "what\'s for dinner?" and nobody has a good answer. Meal planning is tedious, generic apps don\'t know your budget or allergies, and meal kits cost a fortune. The goal: make it so simple that a 2-minute onboarding gives you a full week of personalized meals, recipes, and a grocery list — food you actually want to eat.',
+    solution: 'Built a full AI meal planning SaaS from scratch. 5-step onboarding captures household size, budget, dietary needs, and preferences — then Claude generates a complete weekly plan with recipes, calorie counts, cook times, and a consolidated grocery list with estimated cost. Warm minimal UI keeps the experience friendly and approachable, not clinical.',
+    stack: ['Next.js', 'React', 'Supabase', 'Claude API', 'Tailwind', 'Resend', 'Lemon Squeezy'],
+    result: 'A warm, intuitive meal planner that makes weekly planning feel effortless.',
+    resultMetric: 'AI-powered meal planning SaaS with personalized weekly plans.'
   },
 ]
