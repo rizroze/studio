@@ -1218,10 +1218,10 @@ main {
 .ticker-logo.logo-soladex { height: 32px; }
 .ticker-logo.logo-skr { height: 34px; }
 .ticker-logo.logo-solana-mobile { height: 38px; }
-.ticker-logo.logo-fullport { height: 38px; }
-.ticker-logo.logo-corner { height: 38px; }
+.ticker-logo.logo-fullport { height: 50px; }
+.ticker-logo.logo-corner { height: 50px; }
 .ticker-emoji {
-  font-size: 32px;
+  font-size: 46px;
   filter: grayscale(1);
   opacity: 0.6;
   transition: all 0.4s var(--smooth-ease);
