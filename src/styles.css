@@ -1070,7 +1070,7 @@ main {
 .bookshelf > :nth-child(4) .book-cover img { max-height: 80px; } /* wayy — small logomark */
 .bookshelf > :nth-child(7) .book-cover img { max-height: 80px; border-radius: 12px; } /* wfd — square icon */
 .bookshelf > :nth-child(8) .book-cover img { max-height: 80px; } /* corner — transparent C */
-.bookshelf > :nth-child(7) .spine-text { color: rgba(0,0,0,0.85); font-weight: 700; }
+.bookshelf > :nth-child(7) .spine-text { color: rgba(0,0,0,0.85); font-weight: 800; }
 .bookshelf > :nth-child(8) .book-container { --bk-height: calc(var(--bk-width) * 3.6); } /* corner */
 .bookshelf > :nth-child(8) .spine-text { color: rgba(0,0,0,0.85); font-family: 'Chomsky', serif; text-transform: none; font-size: 14px; letter-spacing: 0; }
 
@@ -1224,7 +1224,7 @@ main {
 
 @keyframes ticker-scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-25%); }
+  100% { transform: translateX(-50%); }
 }
 
 /* ===========================

@@ -11,8 +11,8 @@ const LOGOS = [
 ]
 
 export function ClientTicker() {
-  // 4 copies so the track is always wider than the viewport — scroll -25% for seamless loop
-  const repeated = [...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS]
+  // 2 identical halves — animate -50% so it loops seamlessly
+  const repeated = [...LOGOS, ...LOGOS]
   return (
     <div className="client-ticker">
       <div className="client-ticker-track">
