@@ -1070,9 +1070,9 @@ main {
 .bookshelf > :nth-child(4) .book-cover img { max-height: 80px; } /* wayy — small logomark */
 .bookshelf > :nth-child(7) .book-cover img { max-height: 80px; border-radius: 12px; } /* wfd — square icon */
 .bookshelf > :nth-child(8) .book-cover img { max-height: 80px; } /* corner — transparent C */
-.bookshelf > :nth-child(7) .spine-text { color: rgba(0,0,0,0.85); font-weight: 800; }
+.bookshelf > :nth-child(7) .spine-text { color: rgba(0,0,0,0.85); font-weight: 800; -webkit-text-stroke: 0.5px rgba(0,0,0,0.85); }
 .bookshelf > :nth-child(8) .book-container { --bk-height: calc(var(--bk-width) * 3.6); } /* corner */
-.bookshelf > :nth-child(8) .spine-text { color: rgba(0,0,0,0.85); font-family: 'Chomsky', serif; text-transform: none; font-size: 14px; letter-spacing: 0; }
+.bookshelf > :nth-child(8) .spine-text { color: rgba(0,0,0,0.85); font-family: 'Chomsky', serif; text-transform: none; font-size: 18px; letter-spacing: 0; }
 
 .book-back {
   background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
@@ -1218,9 +1218,19 @@ main {
 .ticker-logo.logo-soladex { height: 32px; }
 .ticker-logo.logo-skr { height: 34px; }
 .ticker-logo.logo-solana-mobile { height: 38px; }
-.ticker-logo.logo-fullport { height: 34px; }
-.ticker-logo.logo-wfd { height: 34px; border-radius: 8px; }
-.ticker-logo.logo-corner { height: 34px; }
+.ticker-logo.logo-fullport { height: 38px; }
+.ticker-logo.logo-corner { height: 38px; }
+.ticker-emoji {
+  font-size: 32px;
+  filter: grayscale(1);
+  opacity: 0.6;
+  transition: all 0.4s var(--smooth-ease);
+}
+.ticker-logo-zone:hover .ticker-emoji {
+  filter: none;
+  opacity: 1;
+  transform: scale(1.15);
+}
 
 @keyframes ticker-scroll {
   0% { transform: translateX(0); }
