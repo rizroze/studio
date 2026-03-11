@@ -1213,17 +1213,18 @@ main {
 .ticker-logo-zone:hover .ticker-logo {
   filter: none;
   opacity: 1;
-  transform: scale(1.15);
 }
 
-.ticker-logo.logo-hydex { height: 28px; }
-.ticker-logo.logo-radiants { height: 32px; }
-.ticker-logo.logo-soladex { height: 32px; }
-.ticker-logo.logo-skr { height: 34px; }
+.ticker-logo.logo-radiants { height: 38px; }
+.ticker-logo.logo-hydex { height: 36px; }
+.ticker-logo.logo-solana { height: 34px; }
+.ticker-logo.logo-soladex { height: 36px; }
+.ticker-logo.logo-skr { height: 36px; }
 .ticker-logo.logo-solana-mobile { height: 38px; }
-.ticker-logo.logo-fullport { height: 50px; }
-.ticker-logo.logo-wfd { height: 50px; }
-.ticker-logo.logo-corner { height: 50px; }
+.ticker-logo.logo-fullport { height: 54px; }
+.ticker-logo.logo-wayy { height: 38px; }
+.ticker-logo.logo-wfd { height: 38px; }
+.ticker-logo.logo-corner { height: 56px; }
 
 @keyframes ticker-scroll {
   0% { transform: translate3d(0, 0, 0); }
