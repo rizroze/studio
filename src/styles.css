@@ -1187,8 +1187,11 @@ main {
 .client-ticker-track {
   display: flex;
   align-items: center;
-  animation: ticker-scroll 20s linear infinite;
+  animation: ticker-scroll 30s linear infinite;
   width: max-content;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .ticker-logo-zone {
@@ -1219,22 +1222,13 @@ main {
 .ticker-logo.logo-skr { height: 34px; }
 .ticker-logo.logo-solana-mobile { height: 38px; }
 .ticker-logo.logo-fullport { height: 50px; }
+.ticker-logo.logo-wfd { height: 50px; }
 .ticker-logo.logo-corner { height: 50px; }
-.ticker-emoji {
-  font-size: 46px;
-  filter: grayscale(1);
-  opacity: 0.6;
-  transition: all 0.4s var(--smooth-ease);
-}
-.ticker-logo-zone:hover .ticker-emoji {
-  filter: none;
-  opacity: 1;
-  transform: scale(1.15);
 }
 
 @keyframes ticker-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
 /* ===========================

@@ -23,7 +23,7 @@ export const PRICING_TIERS: PricingTier[] = [
     ],
     cta: 'Book a call',
     bookingUrl: 'https://cal.com/rizzytoday',
-    timeline: '2–3 weeks'
+    timeline: '1–2 weeks'
   },
   {
     name: 'Build',
@@ -40,7 +40,7 @@ export const PRICING_TIERS: PricingTier[] = [
     featured: true,
     cta: 'Book a call',
     bookingUrl: 'https://cal.com/rizzytoday',
-    timeline: '4–6 weeks'
+    timeline: '2–4 weeks'
   },
   {
     name: 'Studio',

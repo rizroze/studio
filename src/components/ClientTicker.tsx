@@ -1,4 +1,4 @@
-type LogoItem = { src: string; alt: string; className: string } | { emoji: string; alt: string; className: string }
+type LogoItem = { src: string; alt: string; className: string }
 
 const LOGOS: LogoItem[] = [
   { src: '/content/logos/radiants-pixel.svg', alt: 'Radiants', className: 'logo-radiants' },
@@ -8,7 +8,7 @@ const LOGOS: LogoItem[] = [
   { src: '/content/logos/skr-seeker.png', alt: 'Seeker', className: 'logo-skr' },
   { src: '/content/logos/solana-mobile.svg', alt: 'Solana Mobile', className: 'logo-solana-mobile' },
   { src: '/content/logos/fullport-ticker.svg', alt: 'Fullport', className: 'logo-fullport' },
-  { emoji: '🍴', alt: "What's for Dinner", className: 'logo-wfd' },
+  { src: '/content/logos/wfd-icon.webp', alt: "What's for Dinner", className: 'logo-wfd' },
   { src: '/content/logos/corner-c.webp', alt: 'The Corner', className: 'logo-corner' },
 ]
 
@@ -20,15 +20,11 @@ export function ClientTicker() {
       <div className="client-ticker-track">
         {repeated.map((logo, i) => (
           <span key={`${logo.alt}-${i}`} className="ticker-logo-zone">
-            {'emoji' in logo ? (
-              <span className={`ticker-emoji ${logo.className}`}>{logo.emoji}</span>
-            ) : (
-              <img
-                src={logo.src}
-                alt={logo.alt}
-                className={`ticker-logo ${logo.className}`}
-              />
-            )}
+            <img
+              src={logo.src}
+              alt={logo.alt}
+              className={`ticker-logo ${logo.className}`}
+            />
           </span>
         ))}
       </div>
