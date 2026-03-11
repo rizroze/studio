@@ -1224,7 +1224,6 @@ main {
 .ticker-logo.logo-fullport { height: 50px; }
 .ticker-logo.logo-wfd { height: 50px; }
 .ticker-logo.logo-corner { height: 50px; }
-}
 
 @keyframes ticker-scroll {
   0% { transform: translate3d(0, 0, 0); }
