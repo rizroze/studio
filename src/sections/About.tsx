@@ -77,15 +77,15 @@ export function About() {
 
       <div className="about-two-col">
         <div className="about-story" data-reveal>
-          <h3 className="section-title-lg">Not an agency. Just me.</h3>
+          <h3 className="section-title-lg">Vision. Execution. One person.</h3>
           <p>
-            Design, code, animation, deployment. It all happens in one place. You talk to one person, everything moves faster, and what's on your mind lives on your screen.
+            I direct, design, and build. Your project gets treated like it's mine — because for the time we're building together, it is.
           </p>
           <p>
-            4+ years in Solana. Brands, design systems, pitch decks, mobile apps, prediction markets, DeFi protocols, hackathon campaigns, logo animations, motion design, infographics. Making complex things look good and click with people. That's what I do.
+            Brand, website, motion, app, pitch deck, content — everything your project needs to fly. 4+ years in Solana, from hackathon launches to full protocol brands.
           </p>
           <p>
-            Fast replies, real-time progress, and your project gets treated like it's mine. Because for the time we're building together, it is.
+            Fast replies, real progress, no waiting around. Clarity in motion.
           </p>
         </div>
 
