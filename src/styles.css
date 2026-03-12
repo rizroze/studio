@@ -2014,6 +2014,7 @@ main {
 .about-tools-col {
   position: sticky;
   top: 100px;
+  padding-top: 20px;
 }
 
 .about-tools-heading {
