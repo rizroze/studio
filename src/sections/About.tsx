@@ -56,37 +56,39 @@ export function About() {
 
   return (
     <section id="about" className="section about-section">
-      <div className="about-profile" data-reveal>
-        <img
-          ref={pfpRef}
-          src="/rizzy-avatar.webp"
-          alt="Zen"
-          className="about-pfp-large"
-          onClick={handleClick}
-          style={{ cursor: 'pointer' }}
-        />
-        <div className="about-identity">
-          <h2 className="about-name-large">
-            Riz Rose
-            <VerifiedBadge color="red" />
-          </h2>
-          <p className="about-role">Creative Direction & Code</p>
-          <p className="about-location-text">4+ years in the Solana ecosystem</p>
-        </div>
-      </div>
+      <div className="about-layout">
+        <div className="about-left-col">
+          <div className="about-profile" data-reveal>
+            <img
+              ref={pfpRef}
+              src="/rizzy-avatar.webp"
+              alt="Zen"
+              className="about-pfp-large"
+              onClick={handleClick}
+              style={{ cursor: 'pointer' }}
+            />
+            <div className="about-identity">
+              <h2 className="about-name-large">
+                Riz Rose
+                <VerifiedBadge color="red" />
+              </h2>
+              <p className="about-role">Creative Direction & Code</p>
+              <p className="about-location-text">4+ years in the Solana ecosystem</p>
+            </div>
+          </div>
 
-      <div className="about-two-col">
-        <div className="about-story" data-reveal>
-          <h3 className="section-title-lg">Vision & Execution</h3>
-          <p>
-            I direct, design, and build. Your project gets treated like it's mine, because for the time we're building together, it is.
-          </p>
-          <p>
-            Brand, website, motion, app, pitch deck, content. Everything your project needs to fly. 4+ years in Solana, from hackathon launches to full protocol brands.
-          </p>
-          <p>
-            Fast replies, real progress, no waiting around. Clarity in motion.
-          </p>
+          <div className="about-story" data-reveal>
+            <h3 className="section-title-lg">Vision & Execution</h3>
+            <p>
+              I direct, design, and build. Your project gets treated like it's mine, because for the time we're building together, it is.
+            </p>
+            <p>
+              Brand, website, motion, app, pitch deck, content. Everything your project needs to fly. 4+ years in Solana, from hackathon launches to full protocol projects.
+            </p>
+            <p>
+              Fast replies, real progress, no waiting around. Clarity in motion.
+            </p>
+          </div>
         </div>
 
         <div className="about-tools-col" data-reveal>

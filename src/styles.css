@@ -1928,8 +1928,6 @@ main {
   align-items: center;
   gap: 28px;
   margin-bottom: 40px;
-  max-width: 900px;
-  margin-left: auto;
   margin-right: auto;
 }
 
@@ -1979,6 +1977,15 @@ main {
   font-style: italic;
   letter-spacing: -0.03em;
   margin-bottom: 20px;
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 48px;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .about-two-col {
@@ -3152,6 +3159,7 @@ main {
 
   .about-profile { gap: 20px; }
   .about-pfp-large { width: 80px; height: 80px; }
+  .about-layout { grid-template-columns: 1fr; gap: 32px; }
   .about-two-col { grid-template-columns: 1fr; gap: 32px; }
   .about-tools-col { position: static; }
   .tools-grid-icons { grid-template-columns: repeat(3, 1fr); }
