@@ -1985,6 +1985,7 @@ main {
   display: grid;
   grid-template-columns: 1fr 280px;
   gap: 48px;
+  align-items: start;
   max-width: 900px;
   margin: 0 auto;
   align-items: start;

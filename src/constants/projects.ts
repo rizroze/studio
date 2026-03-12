@@ -188,13 +188,13 @@ export const CASE_STUDIES: CaseStudyData[] = [
       },
     ],
     category: 'brand',
-    description: '3 years content lead. Created hundreds of content pieces.\nKept things rad.',
+    description: '2+ years content lead. Created hundreds of content pieces.\nKept things rad.',
     brief: 'Keep the creative vision alive across everything RadiantsDAO does. Social content, brand assets, vibes, and community identity.',
     challenge: 'Radiants does a lot. NFT drops, community tools, content campaigns, product launches. Everything needed to feel like RAD without slowing anyone down.',
     solution: 'Expanded the brand\'s visual language. Created hundreds of social graphics, NFT art, pixel characters, infographics, pitchdecks, memes, motion. Everything RAD.',
     stack: ['Figma', 'Remotion', 'React', 'CSS', 'After Effects', 'Midjourney'],
     result: 'A brand that stays consistent across every touchpoint. From Twitter posts to hackathon booths.',
-    resultMetric: '3 years Content Direction'
+    resultMetric: '2+ years Content Direction'
   },
   {
     slug: 'wayy',

@@ -5,10 +5,6 @@ export function Testimonials() {
   return (
     <section id="testimonials" className="testimonials-full">
       <div className="testimonials-inner" data-reveal>
-        <h2 className="section-title-xl" style={{ marginBottom: 40 }}>
-          The receipts.
-        </h2>
-
         <div className="testimonials-grid">
           {TESTIMONIALS.map(t => (
             <div key={t.id} className="testimonial-card">
