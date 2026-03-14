@@ -142,18 +142,19 @@ export function Footer() {
               </button>
             ))}
           </div>
-        </div>
 
-        <div className="footer-right">
-          <div className="footer-links-grid">
-            <div className="footer-col">
-              <h4 className="footer-heading">Connect</h4>
+          <div className="footer-connect">
+            <h4 className="footer-heading">Connect</h4>
+            <div className="footer-connect-links">
               <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">X / Twitter</a>
               <a href="https://discord.com/users/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">Discord</a>
               <a href="https://github.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
               <a href="https://rizztoday.vercel.app" target="_blank" rel="noopener noreferrer" className="footer-link">Personal website</a>
             </div>
           </div>
+        </div>
+
+        <div className="footer-right">
           <div className="footer-ipod-wrap">
             <IpodPlayer />
             <svg className="ipod-cable" viewBox="0 0 800 400">

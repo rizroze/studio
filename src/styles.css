@@ -2639,6 +2639,15 @@ main {
   z-index: -1;
 }
 
+.footer-connect {
+  margin-top: 28px;
+}
+
+.footer-connect-links {
+  display: flex;
+  gap: 20px;
+}
+
 .footer-links-grid {
   display: flex;
   gap: 60px;
@@ -3749,6 +3758,10 @@ main {
   .footer-right { flex-direction: row; flex-wrap: wrap; gap: 20px; }
   .footer-links-grid { flex-direction: column; gap: 20px; }
   .site-footer { padding: 48px 20px calc(24px + env(safe-area-inset-bottom, 0px)); }
+  .footer-connect { margin-top: 20px; }
+  .footer-connect-links { gap: 14px; flex-wrap: wrap; }
+  .footer-connect .footer-heading { font-size: 11px; margin-bottom: 10px; }
+  .footer-connect .footer-link { font-size: 13px; }
   .footer-pfp-big { width: 64px; height: 64px; }
   .footer-brand-big { gap: 12px; font-size: 24px; margin-bottom: 8px; }
   .footer-tagline-big { font-size: 22px; margin-bottom: 16px; }
