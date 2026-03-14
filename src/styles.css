@@ -2442,6 +2442,7 @@ main {
   overflow: hidden;
 }
 
+
 .footer-inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -2985,6 +2986,7 @@ main {
   animation: laserSweep 0.8s 0.6s var(--smooth-ease) forwards;
 }
 
+[data-reveal].revealed .biz-card-btn:hover::after,
 .biz-card-btn:hover::after {
   animation: laserSweepHover 0.6s var(--smooth-ease) forwards;
 }
