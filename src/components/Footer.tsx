@@ -139,7 +139,7 @@ export function Footer() {
             {EMOJI_KEYS.map(e => (
               <button
                 key={e.key}
-                className={`footer-emoji-pill ${pressed.has(e.key) ? 'pressed' : ''} ${clicked === e.key ? 'clicked' : ''}`}
+                className={`footer-emoji-pill emoji-${e.key} ${pressed.has(e.key) ? 'pressed' : ''} ${clicked === e.key ? 'clicked' : ''}`}
                 onClick={() => handleEmojiClick(e.key)}
               >
                 <span className="footer-emoji">{e.emoji}</span>
