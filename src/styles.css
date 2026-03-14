@@ -3755,11 +3755,11 @@ main {
   .project-card-studio:hover .project-card-arrow { transform: none; }
 
   .footer-inner { grid-template-columns: 1fr; gap: 24px; }
-  .footer-right { align-items: flex-end; }
+  .footer-right { align-items: flex-end; padding-right: 20px; }
   .footer-ipod-wrap { margin-left: auto; }
   .footer-links-grid { flex-direction: column; gap: 20px; }
-  .site-footer { padding: 48px 20px calc(24px + env(safe-area-inset-bottom, 0px)); }
-  .footer-connect { margin-top: 20px; }
+  .site-footer { padding: 48px 20px calc(24px + env(safe-area-inset-bottom, 0px)); overflow: hidden; }
+  .footer-connect { margin-top: auto; padding-top: 32px; }
   .footer-connect-links { flex-direction: column; gap: 10px; }
   .footer-connect .footer-heading { font-size: 11px; margin-bottom: 10px; }
   .footer-connect .footer-link { font-size: 13px; }
