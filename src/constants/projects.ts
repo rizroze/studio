@@ -38,7 +38,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     title: 'Radiants',
     client: 'Brand & Content Direction',
     tags: ['Intern Lead'],
-    thumbnail: '/content/logos/radiants-pixel-dark.svg',
+    thumbnail: '/content/radiants/thumbnail.webp',
     color: '#FCE184',
     gallery: [],
     previewGallery: [
