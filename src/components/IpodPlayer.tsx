@@ -44,13 +44,18 @@ export function IpodPlayer() {
     const text = titleRef.current
     const wrap = titleWrapRef.current
     if (!text || !wrap) return
-    const overflow = text.scrollWidth - wrap.clientWidth
-    if (overflow > 0) {
-      text.style.setProperty('--marquee-offset', `-${overflow}px`)
-      text.style.animationPlayState = 'running'
-    } else {
-      text.style.animation = 'none'
+    const measure = () => {
+      text.style.animation = ''
+      const overflow = text.scrollWidth - wrap.clientWidth
+      if (overflow > 0) {
+        text.style.setProperty('--marquee-offset', `-${overflow}px`)
+      } else {
+        text.style.setProperty('--marquee-offset', '0px')
+      }
     }
+    requestAnimationFrame(measure)
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
   }, [currentTrack])
 
   // Progress tracking
