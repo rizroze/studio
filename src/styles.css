@@ -2434,6 +2434,7 @@ main {
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.5fr 1fr;
+  align-items: center;
   gap: 60px;
   padding-bottom: 48px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
@@ -3768,22 +3769,22 @@ main {
   }
   .project-card-studio:hover .project-card-arrow { transform: none; }
 
-  .footer-inner { grid-template-columns: 1fr; gap: 32px; padding-bottom: 16px; }
+  .site-footer { padding: 48px 20px calc(40px + env(safe-area-inset-bottom, 0px)); overflow: hidden; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
+  .footer-inner { grid-template-columns: 1fr; gap: 40px; padding-bottom: 16px; }
   .footer-bottom-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
   .footer-connect { margin-top: 0; }
   .footer-connect-links { flex-direction: column; gap: 6px; }
   .footer-connect .footer-heading { font-size: 11px; margin-bottom: 6px; }
   .footer-connect .footer-link { font-size: 13px; }
   .footer-links-grid { flex-direction: column; gap: 20px; }
-  .site-footer { padding: 48px 20px calc(40px + env(safe-area-inset-bottom, 0px)); overflow: hidden; min-height: 95svh; display: flex; flex-direction: column; justify-content: space-between; }
   .project-card-arrow { display: none; }
   .preview-view-btn { display: none; }
   .footer-pfp-big { width: 48px; height: 48px; }
   .footer-brand-big { gap: 10px; font-size: 22px; margin-bottom: 4px; }
-  .footer-tagline-big { font-size: 18px; margin-bottom: 10px; }
-  .footer-emoji-row { gap: 5px; flex-wrap: nowrap; }
+  .footer-tagline-big { font-size: 18px; margin-bottom: 12px; }
+  .footer-emoji-row { gap: 5px; flex-wrap: nowrap; margin-bottom: 12px; }
   .footer-emoji-pill { padding: 5px 8px; gap: 4px; font-size: 11px; }
-  .footer-bottom { padding-top: 12px; font-size: 11px; }
+  .footer-bottom { padding-top: 12px; font-size: 11px; margin-top: auto; }
 
   .testimonials-grid { grid-template-columns: 1fr; }
   .testimonial-card { padding: 24px; }
