@@ -2498,7 +2498,7 @@ main {
   color: inherit;
   transition: all 0.3s var(--bounce-ease);
   position: relative;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .footer-emoji-pill::before {
@@ -2508,10 +2508,8 @@ main {
   left: -100%;
   width: 100%;
   height: 100%;
-  border-radius: 50px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   transition: left 0.5s var(--smooth-ease);
-  clip-path: inset(0 -1px round 50px);
 }
 
 .footer-emoji-pill:hover {
@@ -2551,6 +2549,8 @@ main {
   font-size: 20px;
   line-height: 1;
   transition: transform 0.3s var(--bounce-ease);
+  position: relative;
+  z-index: 2;
 }
 
 /* Each emoji gets a unique click animation */
