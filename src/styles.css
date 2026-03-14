@@ -3386,7 +3386,8 @@ main {
   gap: 5px;
   opacity: 0;
   transition: opacity 0.3s var(--smooth-ease);
-  margin-bottom: 2px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .ipod-screen.active .ipod-screen-header {
@@ -3451,7 +3452,11 @@ main {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  position: relative;
+}
+
+.ipod-track-info {
+  flex: 1;
+  min-width: 0;
 }
 
 .ipod-album-initial {
@@ -3473,11 +3478,14 @@ main {
   height: 100%;
   object-fit: cover;
   border-radius: inherit;
+  opacity: 0.3;
+  filter: grayscale(1);
+  transition: opacity 0.4s var(--smooth-ease), filter 0.4s var(--smooth-ease);
 }
 
-.ipod-track-info {
-  flex: 1;
-  min-width: 0;
+.ipod-screen.active .ipod-album-img {
+  opacity: 1;
+  filter: grayscale(0);
 }
 
 .ipod-track-artist {
@@ -3495,19 +3503,30 @@ main {
 }
 
 .ipod-track-title {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ipod-track-title-text {
   font-family: 'Geist Pixel', monospace;
   font-size: 10px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.2);
+  display: inline-block;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  animation: ipodMarquee 8s linear 2s infinite;
   transition: color 0.4s var(--smooth-ease);
 }
 
-.ipod-screen.active .ipod-track-title {
+.ipod-screen.active .ipod-track-title-text {
   color: #fff;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes ipodMarquee {
+  0%, 15% { transform: translateX(0); }
+  45%, 55% { transform: translateX(calc(-100% + 80px)); }
+  85%, 100% { transform: translateX(0); }
 }
 
 /* Progress bar */

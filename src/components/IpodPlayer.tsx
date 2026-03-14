@@ -116,7 +116,9 @@ export function IpodPlayer() {
                 )}
               </div>
               <div className="ipod-track-info">
-                <div className="ipod-track-title">{track?.title || 'No Track'}</div>
+                <div className="ipod-track-title">
+                  <span className="ipod-track-title-text" key={currentTrack}>{track?.title || 'No Track'}</span>
+                </div>
                 {track?.artist && <div className="ipod-track-artist">{track.artist}</div>}
               </div>
             </div>
