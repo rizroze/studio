@@ -435,24 +435,6 @@ main {
     box-shadow 0.6s var(--smooth-ease);
 }
 
-/* Black bar bg — pops instantly at top, slides up when scrolling away */
-.site-nav::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--divider);
-  z-index: -1;
-  transform: translateY(-100%);
-  transition: transform 0.15s ease-out;
-}
-
-.site-nav.at-top::after {
-  transform: translateY(0);
-  transition: transform 0.25s var(--smooth-ease);
-}
 
 /* Chromium: glass displacement only on the scrolled pill (not fullbar — too wide, kills perf) */
 
