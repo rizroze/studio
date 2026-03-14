@@ -3647,6 +3647,9 @@ main {
   .hero-cta-avatar { width: 28px; height: 28px; }
   .back-to-top { bottom: 16px; right: 16px; width: 36px; height: 36px; }
   .project-card-tags-float { top: 8px; right: 8px; gap: 4px; flex-wrap: wrap; max-width: calc(100% - 16px); }
+  .project-card-title { font-size: 16px; }
+  .project-card-result { font-size: 10px; }
+  .project-card-arrow { padding: 5px 10px; font-size: 11px; }
   .biz-card-btn { padding: 14px 28px; min-height: 44px; }
   .biz-card-links { flex-wrap: wrap; gap: 12px; }
 }
