@@ -2992,7 +2992,6 @@ main {
 .biz-card-btn:hover {
   background: var(--brand-red-hover);
   border-color: var(--brand-red-hover);
-  transform: translateY(-2px) scale(1.02);
   box-shadow: 0 8px 30px rgba(196, 30, 30, 0.4);
 }
 
