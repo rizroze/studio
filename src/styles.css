@@ -1430,14 +1430,16 @@ main {
   display: block;
   border-radius: 20px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-  transition: transform 0.15s ease-out, box-shadow 0.3s var(--smooth-ease);
+  transition: transform 0.15s ease-out, box-shadow 0.3s var(--smooth-ease), border-color 0.3s var(--smooth-ease);
   cursor: pointer;
   will-change: transform;
 }
 
 .project-card-studio:hover {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .project-card-studio.expanded:hover {
