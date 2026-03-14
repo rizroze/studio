@@ -27,7 +27,9 @@ export function ProjectCard({ project, onViewProject }: ProjectCardProps) {
   }, [])
 
   const handleClick = () => {
-    if (!expanded) {
+    if (expanded) {
+      onViewProject(project.slug)
+    } else {
       setExpanded(true)
       cancelAnimationFrame(rafRef.current)
       const card = cardRef.current
