@@ -3609,6 +3609,20 @@ main {
   .tools-grid-icons { grid-template-columns: repeat(3, 1fr); }
   .preview-description { white-space: normal; }
 
+  /* Mobile card: arrow floats top-left, bottom is full-width title */
+  .project-card-bottom { flex-direction: column; }
+  .project-card-arrow {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    bottom: auto;
+    right: auto;
+    opacity: 1;
+    transform: none;
+    z-index: 2;
+  }
+  .project-card-studio:hover .project-card-arrow { transform: none; }
+
   .footer-inner { grid-template-columns: 1fr; gap: 32px; }
   .footer-right { flex-direction: row; flex-wrap: wrap; gap: 24px; }
   .footer-links-grid { flex-direction: column; gap: 24px; }
