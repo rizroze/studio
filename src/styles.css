@@ -3644,7 +3644,10 @@ main {
   .about-layout { grid-template-columns: 1fr; gap: 32px; }
   .about-two-col { grid-template-columns: 1fr; gap: 32px; }
   .about-tools-col { position: static; }
-  .tools-grid-icons { grid-template-columns: repeat(3, 1fr); }
+  .tools-grid-icons { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .tool-icon-item { padding: 8px 2px; gap: 4px; border-radius: 8px; }
+  .tool-icon-svg { width: 16px; height: 16px; }
+  .tool-icon-label { font-size: 8px; }
   .preview-description { white-space: normal; }
 
   /* Mobile card: arrow floats top-left, bottom is full-width title */
@@ -3668,8 +3671,8 @@ main {
   .footer-pfp-big { width: 64px; height: 64px; }
   .footer-brand-big { gap: 12px; font-size: 24px; margin-bottom: 8px; }
   .footer-tagline-big { font-size: 22px; margin-bottom: 16px; }
-  .footer-emoji-row { gap: 8px; }
-  .footer-emoji-pill { padding: 6px 14px; font-size: 13px; }
+  .footer-emoji-row { gap: 6px; flex-wrap: nowrap; }
+  .footer-emoji-pill { padding: 6px 10px; gap: 5px; font-size: 12px; }
   .footer-bottom { padding-top: 16px; font-size: 11px; }
 
   .testimonials-grid { grid-template-columns: 1fr; }
