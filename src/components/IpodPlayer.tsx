@@ -45,18 +45,30 @@ export function IpodPlayer() {
     const wrap = titleWrapRef.current
     if (!text || !wrap) return
     const measure = () => {
+      // Pause animation and reset position to measure true width
+      const prevAnim = text.style.animation
       text.style.animation = 'none'
+      text.style.transform = 'translateX(0)'
       text.offsetHeight // force reflow
-      text.style.animation = ''
-      const overflow = text.scrollWidth - wrap.clientWidth
-      if (overflow > 0) {
-        text.style.setProperty('--marquee-offset', `-${overflow}px`)
+      const textW = text.scrollWidth
+      const wrapW = wrap.clientWidth
+      const overflow = textW - wrapW
+      if (overflow > 2) {
+        text.style.setProperty('--marquee-offset', `-${overflow + 8}px`)
       } else {
         text.style.setProperty('--marquee-offset', '0px')
       }
+      // Restore animation
+      text.style.transform = ''
+      text.style.animation = prevAnim || ''
+      // Force restart so it picks up new offset
+      void text.offsetHeight
+      text.style.animation = ''
     }
-    // Measure after fonts load (fallback font width differs)
-    document.fonts.ready.then(() => requestAnimationFrame(measure))
+    // Wait for fonts + multiple frames to ensure layout is settled
+    document.fonts.ready.then(() => {
+      setTimeout(() => requestAnimationFrame(measure), 100)
+    })
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
   }, [currentTrack])
