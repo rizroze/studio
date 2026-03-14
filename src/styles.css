@@ -3524,9 +3524,9 @@ main {
 }
 
 @keyframes ipodMarquee {
-  0%, 15% { transform: translateX(0); }
-  45%, 55% { transform: translateX(calc(-100% + 80px)); }
-  85%, 100% { transform: translateX(0); }
+  0%, 20% { transform: translateX(0); }
+  50%, 70% { transform: translateX(var(--marquee-offset, 0px)); }
+  90%, 100% { transform: translateX(0); }
 }
 
 /* Progress bar */

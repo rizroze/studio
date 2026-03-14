@@ -3,6 +3,8 @@ import { PLAYLIST } from '../constants/music'
 
 export function IpodPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
+  const titleRef = useRef<HTMLSpanElement>(null)
+  const titleWrapRef = useRef<HTMLDivElement>(null)
   const [currentTrack, setCurrentTrack] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
@@ -35,6 +37,20 @@ export function IpodPlayer() {
     audio.addEventListener('canplay', onCanPlay, { once: true })
     audio.load()
     return () => audio.removeEventListener('canplay', onCanPlay)
+  }, [currentTrack])
+
+  // Measure title overflow and set marquee distance
+  useEffect(() => {
+    const text = titleRef.current
+    const wrap = titleWrapRef.current
+    if (!text || !wrap) return
+    const overflow = text.scrollWidth - wrap.clientWidth
+    if (overflow > 0) {
+      text.style.setProperty('--marquee-offset', `-${overflow}px`)
+      text.style.animationPlayState = 'running'
+    } else {
+      text.style.animation = 'none'
+    }
   }, [currentTrack])
 
   // Progress tracking
@@ -116,8 +132,8 @@ export function IpodPlayer() {
                 )}
               </div>
               <div className="ipod-track-info">
-                <div className="ipod-track-title">
-                  <span className="ipod-track-title-text" key={currentTrack}>{track?.title || 'No Track'}</span>
+                <div className="ipod-track-title" ref={titleWrapRef}>
+                  <span className="ipod-track-title-text" ref={titleRef} key={currentTrack}>{track?.title || 'No Track'}</span>
                 </div>
                 {track?.artist && <div className="ipod-track-artist">{track.artist}</div>}
               </div>
