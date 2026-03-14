@@ -1534,8 +1534,14 @@ main {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 20px 18px 16px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 80%);
+  padding: 40px 18px 16px;
+  background: linear-gradient(to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.55) 20%,
+    rgba(0, 0, 0, 0.3) 40%,
+    rgba(0, 0, 0, 0.1) 65%,
+    transparent 100%
+  );
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
