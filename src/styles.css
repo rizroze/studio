@@ -2622,6 +2622,20 @@ main {
   overflow: visible;
 }
 
+.footer-bottom-row {
+  display: contents;
+}
+
+.footer-bottom-row .footer-connect {
+  grid-column: 1;
+}
+
+.footer-bottom-row .footer-ipod-wrap {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  justify-self: start;
+}
+
 .footer-ipod-wrap {
   position: relative;
   overflow: visible;
@@ -3754,24 +3768,22 @@ main {
   }
   .project-card-studio:hover .project-card-arrow { transform: none; }
 
-  .footer-inner { grid-template-columns: 1fr; gap: 24px; }
-  .footer-main { display: flex; flex-direction: column; }
-  .footer-right { align-items: flex-end; padding-right: 20px; }
-  .footer-ipod-wrap { margin-left: auto; }
+  .footer-inner { grid-template-columns: 1fr; gap: 12px; padding-bottom: 16px; }
+  .footer-bottom-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+  .footer-connect { margin-top: 0; }
+  .footer-connect-links { flex-direction: column; gap: 6px; }
+  .footer-connect .footer-heading { font-size: 11px; margin-bottom: 6px; }
+  .footer-connect .footer-link { font-size: 13px; }
   .footer-links-grid { flex-direction: column; gap: 20px; }
-  .site-footer { padding: 48px 20px calc(24px + env(safe-area-inset-bottom, 0px)); overflow: hidden; }
-  .footer-connect { margin-top: auto; padding-top: 32px; }
+  .site-footer { padding: 32px 20px calc(16px + env(safe-area-inset-bottom, 0px)); overflow: hidden; }
   .project-card-arrow { display: none; }
   .preview-view-btn { display: none; }
-  .footer-connect-links { flex-direction: column; gap: 10px; }
-  .footer-connect .footer-heading { font-size: 11px; margin-bottom: 10px; }
-  .footer-connect .footer-link { font-size: 13px; }
-  .footer-pfp-big { width: 64px; height: 64px; }
-  .footer-brand-big { gap: 12px; font-size: 24px; margin-bottom: 8px; }
-  .footer-tagline-big { font-size: 22px; margin-bottom: 16px; }
-  .footer-emoji-row { gap: 6px; flex-wrap: nowrap; }
-  .footer-emoji-pill { padding: 6px 10px; gap: 5px; font-size: 12px; }
-  .footer-bottom { padding-top: 16px; font-size: 11px; }
+  .footer-pfp-big { width: 48px; height: 48px; }
+  .footer-brand-big { gap: 10px; font-size: 22px; margin-bottom: 4px; }
+  .footer-tagline-big { font-size: 18px; margin-bottom: 10px; }
+  .footer-emoji-row { gap: 5px; flex-wrap: nowrap; }
+  .footer-emoji-pill { padding: 5px 8px; gap: 4px; font-size: 11px; }
+  .footer-bottom { padding-top: 12px; font-size: 11px; }
 
   .testimonials-grid { grid-template-columns: 1fr; }
   .testimonial-card { padding: 24px; }
