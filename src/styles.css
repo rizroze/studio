@@ -2998,6 +2998,8 @@ main {
   background: var(--brand-red-hover);
   border-color: var(--brand-red-hover);
   box-shadow: 0 8px 30px rgba(196, 30, 30, 0.4);
+  transform: translateY(-2px) scale(1.02);
+  cursor: pointer;
 }
 
 .biz-card-btn:active {
@@ -3774,6 +3776,7 @@ main {
   .bookshelf { transform: scale(0.65); transform-origin: center; }
   .book-container { --bk-width: 40px; }
   .hero-ticker { flex-direction: column; gap: 16px; padding: 24px 0; }
+  .client-ticker-track { animation-duration: 15s; }
   .ascii-rose { transform: translate(-50%, -50%) scale(0.8); }
   .ascii-rose pre { font-size: 6px; }
 
