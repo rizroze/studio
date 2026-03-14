@@ -2986,7 +2986,12 @@ main {
 }
 
 .biz-card-btn:hover::after {
-  animation: laserSweep 0.6s var(--smooth-ease) forwards;
+  animation: laserSweepHover 0.6s var(--smooth-ease) forwards;
+}
+
+@keyframes laserSweepHover {
+  0%   { left: -60%; }
+  100% { left: 120%; }
 }
 
 @keyframes laserSweep {
@@ -2998,8 +3003,6 @@ main {
   background: var(--brand-red-hover);
   border-color: var(--brand-red-hover);
   box-shadow: 0 8px 30px rgba(196, 30, 30, 0.4);
-  transform: translateY(-2px) scale(1.02);
-  cursor: pointer;
 }
 
 .biz-card-btn:active {
