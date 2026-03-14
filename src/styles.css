@@ -3523,16 +3523,15 @@ main {
 
 .ipod-album-row {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
+  align-items: flex-start;
+  gap: 6px;
   margin-bottom: 2px;
 }
 
 .ipod-album-art {
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
   background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
@@ -3542,9 +3541,8 @@ main {
 }
 
 .ipod-track-info {
-  width: 100%;
+  flex: 1;
   min-width: 0;
-  text-align: center;
 }
 
 .ipod-album-initial {
