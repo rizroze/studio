@@ -21,12 +21,28 @@ import { Agentation } from 'agentation'
 
 type View = { type: 'home' } | { type: 'project'; slug: string } | { type: 'all-projects' }
 
+function viewFromPath(path: string): View {
+  if (path.startsWith('/work/')) {
+    const slug = path.slice(6)
+    if (CASE_STUDIES.some(p => p.slug === slug)) return { type: 'project', slug }
+  }
+  if (path === '/work') return { type: 'all-projects' }
+  return { type: 'home' }
+}
+
+function pathFromView(v: View): string {
+  if (v.type === 'project') return `/work/${v.slug}`
+  if (v.type === 'all-projects') return '/work'
+  return '/'
+}
+
 export function App() {
-  const [view, setView] = useState<View>({ type: 'home' })
+  const [view, setView] = useState<View>(() => viewFromPath(window.location.pathname))
   const [transitioning, setTransitioning] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [showBackToTop, setShowBackToTop] = useState(false)
   const pendingView = useRef<View | null>(null)
+  const isPopState = useRef(false)
 
   // Remove loading screen once app is ready
   useEffect(() => {
@@ -37,11 +53,34 @@ export function App() {
     }
   }, [])
 
+  // Handle browser back/forward
+  useEffect(() => {
+    const onPopState = () => {
+      isPopState.current = true
+      const next = viewFromPath(window.location.pathname)
+      pendingView.current = next
+      setTransitioning(true)
+      setTimeout(() => {
+        setView(next)
+        window.scrollTo({ top: 0 })
+        requestAnimationFrame(() => {
+          setTransitioning(false)
+          isPopState.current = false
+        })
+      }, 250)
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
+
   const transitionTo = useCallback((next: View) => {
     pendingView.current = next
     setTransitioning(true)
     setTimeout(() => {
       setView(next)
+      if (!isPopState.current) {
+        history.pushState(null, '', pathFromView(next))
+      }
       window.scrollTo({ top: 0 })
       requestAnimationFrame(() => setTransitioning(false))
     }, 250)

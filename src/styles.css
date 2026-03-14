@@ -40,15 +40,17 @@
    PAGE TRANSITIONS
    =========================== */
 .page-content {
-  transition: opacity 0.25s var(--smooth-ease), filter 0.25s var(--smooth-ease);
+  transition: opacity 0.3s var(--smooth-ease), filter 0.3s var(--smooth-ease), transform 0.3s var(--smooth-ease);
 }
 .page-exit {
   opacity: 0;
-  filter: blur(4px);
+  filter: blur(6px);
+  transform: translateY(12px);
 }
 .page-enter {
   opacity: 1;
   filter: blur(0);
+  transform: translateY(0);
 }
 
 /* ===========================
