@@ -3757,6 +3757,7 @@ main {
   .footer-inner { grid-template-columns: 1fr; gap: 24px; }
   .footer-right { align-items: flex-end; padding-right: 20px; }
   .footer-ipod-wrap { margin-left: auto; }
+  .ipod-cable { display: none; }
   .footer-links-grid { flex-direction: column; gap: 20px; }
   .site-footer { padding: 48px 20px calc(24px + env(safe-area-inset-bottom, 0px)); overflow: hidden; }
   .footer-connect { margin-top: auto; padding-top: 32px; }
