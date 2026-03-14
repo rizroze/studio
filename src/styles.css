@@ -3775,7 +3775,7 @@ main {
   .footer-connect .footer-heading { font-size: 11px; margin-bottom: 6px; }
   .footer-connect .footer-link { font-size: 13px; }
   .footer-links-grid { flex-direction: column; gap: 20px; }
-  .site-footer { padding: 32px 20px calc(16px + env(safe-area-inset-bottom, 0px)); overflow: hidden; }
+  .site-footer { padding: 48px 20px calc(40px + env(safe-area-inset-bottom, 0px)); overflow: hidden; min-height: 85svh; display: flex; flex-direction: column; justify-content: space-between; }
   .project-card-arrow { display: none; }
   .preview-view-btn { display: none; }
   .footer-pfp-big { width: 48px; height: 48px; }
