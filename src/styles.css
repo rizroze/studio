@@ -2419,7 +2419,7 @@ main {
    =========================== */
 .site-footer {
   background: var(--brand-red);
-  padding: 80px 24px 40px;
+  padding: 80px 24px calc(40px + env(safe-area-inset-bottom, 0px));
   position: relative;
   overflow: hidden;
 }
