@@ -312,11 +312,14 @@ img { display: block; max-width: 100%; }
 
 /* Word-by-word reveal */
 .word-reveal {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .word-reveal-word {
   display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
   opacity: 0;
   transform: translateY(100%);
   transition: opacity 0.5s var(--smooth-ease), transform 0.5s var(--bounce-ease);
