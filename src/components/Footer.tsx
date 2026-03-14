@@ -34,6 +34,14 @@ export function Footer() {
   const [spinning, setSpinning] = useState<Record<string, { prev: number; next: number; direction: 'up' | 'down' }>>({})
   const timeoutsRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set())
 
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      timeoutsRef.current.forEach(t => clearTimeout(t))
+      timeoutsRef.current.clear()
+    }
+  }, [])
+
   // Load counts from Firestore when ready
   useEffect(() => {
     if (!db || !isReady) return

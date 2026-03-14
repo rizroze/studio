@@ -36,7 +36,7 @@ export function useFirebase() {
       if (cancelled) return
       initFirebase().then(firestore => {
         if (!cancelled) { setDb(firestore); setIsReady(true) }
-      }).catch(() => {})
+      }).catch((e) => { console.error('Firebase init failed:', e) })
     }
 
     // Lazy load — on first interaction or after 8s fallback

@@ -95,7 +95,7 @@ export function PricingCard({ tier }: PricingCardProps) {
             target="_blank"
             rel="noopener noreferrer"
             className="pricing-cta"
-            style={{ background: accent, borderColor: accent, color: accent === '#ffffff' ? '#000' : '#000' }}
+            style={{ background: accent, borderColor: accent, color: '#000' }}
             onClick={() => track('cta_click', { location: 'pricing', tier: tier.name })}
           >
             {tier.cta}

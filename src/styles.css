@@ -260,6 +260,7 @@ html {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 72px;
+  overflow-x: hidden;
 }
 
 body {
@@ -270,6 +271,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   cursor: default;
+  overflow-x: hidden;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -932,6 +934,8 @@ main {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  padding: 0 0.05em 0.1em;
+  margin: 0 -0.05em -0.1em;
 }
 
 .hero-word {
@@ -3541,6 +3545,7 @@ main {
   .testimonials-grid { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr; gap: 40px; }
   .footer-links-grid { gap: 40px; }
+  .faq-contact-grid { grid-template-columns: 1fr; }
 }
 
 /* ===========================
@@ -3641,6 +3646,9 @@ main {
   .hero-cta { font-size: 13px; padding: 8px 20px 8px 8px; }
   .hero-cta-avatar { width: 28px; height: 28px; }
   .back-to-top { bottom: 16px; right: 16px; width: 36px; height: 36px; }
+  .project-card-tags-float { top: 8px; right: 8px; gap: 4px; flex-wrap: wrap; max-width: calc(100% - 16px); }
+  .biz-card-btn { padding: 14px 28px; min-height: 44px; }
+  .biz-card-links { flex-wrap: wrap; gap: 12px; }
 }
 
 /* ===========================

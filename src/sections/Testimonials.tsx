@@ -3,7 +3,8 @@ import { VerifiedBadge } from '../components/VerifiedBadge'
 import { XLogo } from '../components/XLogo'
 
 export function Testimonials() {
-  const devour = TESTIMONIALS.find(t => t.id === 'devour')!
+  const devour = TESTIMONIALS.find(t => t.id === 'devour')
+  if (!devour) return null
 
   return (
     <section id="testimonials" className="testimonials-full">
@@ -12,14 +13,14 @@ export function Testimonials() {
           "{devour.quote.replace(/^"|"$/g, '')}"
         </p>
         <div className="testimonial-attribution">
-          <img src={devour.pfp} alt={devour.name} className="testimonial-pfp" />
+          <img src={devour.pfp} alt={devour.name} className="testimonial-pfp" loading="lazy" />
           <div className="testimonial-info">
             <div className="testimonial-name">
               {devour.link ? (
                 <a href={devour.link} target="_blank" rel="noopener noreferrer" className="testimonial-name-link">{devour.name}</a>
               ) : devour.name}
               <VerifiedBadge color="red" />
-              <a href={devour.link || ''} target="_blank" rel="noopener noreferrer" className="testimonial-x-link"><XLogo size={11} /></a>
+              {devour.link && <a href={devour.link} target="_blank" rel="noopener noreferrer" className="testimonial-x-link"><XLogo size={11} /></a>}
             </div>
             <div className="testimonial-title">{devour.title}</div>
           </div>
@@ -37,7 +38,8 @@ export function Testimonials() {
 }
 
 export function TestimonialBanner() {
-  const jerk = TESTIMONIALS.find(t => t.id === 'jerk-terror')!
+  const jerk = TESTIMONIALS.find(t => t.id === 'jerk-terror')
+  if (!jerk) return null
 
   return (
     <div className="testimonial-banner" data-reveal>
@@ -46,14 +48,14 @@ export function TestimonialBanner() {
           "{jerk.quote.replace(/^"|"$/g, '')}"
         </p>
         <div className="testimonial-attribution">
-          <img src={jerk.pfp} alt={jerk.name} className="testimonial-pfp" />
+          <img src={jerk.pfp} alt={jerk.name} className="testimonial-pfp" loading="lazy" />
           <div className="testimonial-info">
             <div className="testimonial-name">
               {jerk.link ? (
                 <a href={jerk.link} target="_blank" rel="noopener noreferrer" className="testimonial-name-link">{jerk.name}</a>
               ) : jerk.name}
               <VerifiedBadge color="red" />
-              <a href={jerk.link || ''} target="_blank" rel="noopener noreferrer" className="testimonial-x-link"><XLogo size={11} /></a>
+              {jerk.link && <a href={jerk.link} target="_blank" rel="noopener noreferrer" className="testimonial-x-link"><XLogo size={11} /></a>}
             </div>
             <div className="testimonial-title">{jerk.title}</div>
           </div>

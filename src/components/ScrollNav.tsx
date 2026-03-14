@@ -26,6 +26,20 @@ export function ScrollNav() {
   const [visible, setVisible] = useState(false)
   const [hovered, setHovered] = useState(false)
   const rafRef = useRef(0)
+  const offsetsRef = useRef<number[]>([])
+
+  // Cache section offsets on mount + resize
+  useEffect(() => {
+    const cacheOffsets = () => {
+      offsetsRef.current = SECTIONS.map(s => {
+        const el = document.getElementById(s.id)
+        return el ? el.offsetTop : 0
+      })
+    }
+    cacheOffsets()
+    window.addEventListener('resize', cacheOffsets, { passive: true })
+    return () => window.removeEventListener('resize', cacheOffsets)
+  }, [])
 
   useEffect(() => {
     const onScroll = () => {
@@ -33,24 +47,22 @@ export function ScrollNav() {
       rafRef.current = requestAnimationFrame(() => {
         const y = window.scrollY
         const vh = window.innerHeight
+        const offsets = offsetsRef.current
 
         setVisible(y > vh * 0.4)
 
         let currentIdx = 0
         let sectionProgress = 0
 
-        for (let i = 0; i < SECTIONS.length; i++) {
-          const el = document.getElementById(SECTIONS[i].id)
-          if (!el) continue
-          const top = el.offsetTop - vh * 0.4
+        for (let i = 0; i < offsets.length; i++) {
+          const top = offsets[i] - vh * 0.4
           if (y >= top) {
             currentIdx = i
-            const nextEl = i < SECTIONS.length - 1 ? document.getElementById(SECTIONS[i + 1].id) : null
-            if (nextEl) {
-              const sectionHeight = nextEl.offsetTop - el.offsetTop
+            if (i < offsets.length - 1) {
+              const sectionHeight = offsets[i + 1] - offsets[i]
               sectionProgress = Math.min(1, Math.max(0, (y - top) / sectionHeight))
             } else {
-              const remaining = document.body.scrollHeight - el.offsetTop - vh
+              const remaining = document.body.scrollHeight - offsets[i] - vh
               sectionProgress = remaining > 0 ? Math.min(1, (y - top) / remaining) : 1
             }
           }
