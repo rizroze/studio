@@ -3769,9 +3769,9 @@ main {
   }
   .project-card-studio:hover .project-card-arrow { transform: none; }
 
-  .site-footer { padding: 48px 20px calc(40px + env(safe-area-inset-bottom, 0px)); overflow: hidden; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
-  .footer-inner { grid-template-columns: 1fr; gap: 40px; padding-bottom: 16px; }
-  .footer-bottom-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+  .site-footer { padding: 60px 20px calc(40px + env(safe-area-inset-bottom, 0px)); overflow: hidden; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-start; }
+  .footer-inner { grid-template-columns: 1fr; gap: 24px; padding-bottom: 16px; }
+  .footer-bottom-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-top: 20px; }
   .footer-connect { margin-top: 0; }
   .footer-connect-links { flex-direction: column; gap: 6px; }
   .footer-connect .footer-heading { font-size: 11px; margin-bottom: 6px; }
