@@ -3847,6 +3847,7 @@ main {
   .footer-emoji-row { gap: 5px; flex-wrap: nowrap; margin-bottom: 12px; }
   .footer-emoji-pill { padding: 5px 8px; gap: 4px; font-size: 11px; }
   .footer-bottom { padding-top: 12px; font-size: 11px; margin-top: auto; }
+  .footer-bottom .footer-privacy-link { display: none; }
 
   .testimonials-grid { grid-template-columns: 1fr; }
   .testimonial-card { padding: 24px; }
