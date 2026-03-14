@@ -3373,13 +3373,15 @@ main {
 
 /* Now Playing header */
 .ipod-screen-header {
-  height: 16px;
+  height: 18px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 5px;
   opacity: 0;
   transition: opacity 0.3s var(--smooth-ease);
+  margin-bottom: 2px;
 }
 
 .ipod-screen.active .ipod-screen-header {
@@ -3393,6 +3395,30 @@ main {
   color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+/* Equalizer bars */
+.ipod-eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  height: 8px;
+}
+
+.ipod-eq-bar {
+  width: 2px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 1px;
+  animation: eqBounce 0.6s ease-in-out infinite alternate;
+}
+
+.ipod-eq-bar:nth-child(1) { height: 3px; animation-delay: 0s; }
+.ipod-eq-bar:nth-child(2) { height: 6px; animation-delay: 0.15s; }
+.ipod-eq-bar:nth-child(3) { height: 4px; animation-delay: 0.3s; }
+
+@keyframes eqBounce {
+  0% { height: 2px; }
+  100% { height: 8px; }
 }
 
 .ipod-screen-inner {
@@ -3630,9 +3656,16 @@ main {
   }
   .project-card-studio:hover .project-card-arrow { transform: none; }
 
-  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
-  .footer-right { flex-direction: row; flex-wrap: wrap; gap: 24px; }
-  .footer-links-grid { flex-direction: column; gap: 24px; }
+  .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+  .footer-right { flex-direction: row; flex-wrap: wrap; gap: 20px; }
+  .footer-links-grid { flex-direction: column; gap: 20px; }
+  .site-footer { padding: 48px 20px calc(24px + env(safe-area-inset-bottom, 0px)); }
+  .footer-pfp-big { width: 64px; height: 64px; }
+  .footer-brand-big { gap: 12px; font-size: 24px; margin-bottom: 8px; }
+  .footer-tagline-big { font-size: 22px; margin-bottom: 16px; }
+  .footer-emoji-row { gap: 8px; }
+  .footer-emoji-pill { padding: 6px 14px; font-size: 13px; }
+  .footer-bottom { padding-top: 16px; font-size: 11px; }
 
   .testimonials-grid { grid-template-columns: 1fr; }
   .testimonial-card { padding: 24px; }

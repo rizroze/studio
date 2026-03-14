@@ -98,6 +98,13 @@ export function IpodPlayer() {
         <div className={`ipod-screen ${isPlaying ? 'active' : ''}`}>
           <div className="ipod-screen-header">
             <span>Now Playing</span>
+            {isPlaying && (
+              <span className="ipod-eq">
+                <span className="ipod-eq-bar" />
+                <span className="ipod-eq-bar" />
+                <span className="ipod-eq-bar" />
+              </span>
+            )}
           </div>
           <div className="ipod-screen-inner">
             <div className="ipod-track-meta">

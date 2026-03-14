@@ -16,6 +16,9 @@ let cachedDb: Firestore | null = null
 
 async function initFirebase(): Promise<Firestore> {
   if (cachedDb) return cachedDb
+  if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
+    throw new Error('Firebase config missing — check VITE_FIREBASE_* env vars')
+  }
   const { initializeApp } = await import('firebase/app')
   const { getFirestore } = await import('firebase/firestore')
   const app = initializeApp(firebaseConfig)
