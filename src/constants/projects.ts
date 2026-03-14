@@ -26,6 +26,7 @@ export interface CaseStudyData {
   stack: string[]
   result: string
   resultMetric: string
+  coverZoom?: number  // CSS scale for card cover (source images must be high-res enough)
 }
 
 // Which projects appear on the hero bookshelf (order matters — maps to BOOK_COLORS/SPINE_LOGOS)
@@ -41,10 +42,11 @@ export const CASE_STUDIES: CaseStudyData[] = [
     color: '#FCE184',
     gallery: [],
     previewGallery: [
+      '/content/radiants/brand-art/radgangz.webp',
       '/content/radiants/community/ts.webp',
       '/content/radiants/community/image-1.webp',
-      '/content/radiants/community/image.webp',
       '/content/radiants/community/57now.webp',
+      '/content/radiants/community/dela.webp',
     ],
     sections: [
       {
@@ -203,6 +205,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     tags: ['Product Design', 'Solana', 'Prediction Market', 'Full Stack'],
     thumbnail: '/content/logos/wayy-logomark-black.webp',
     color: '#F5B731',
+    coverZoom: 1.4,
     gallery: [
       '/content/wayy/deck-01.webp',
       '/content/wayy/deck-02.webp',
@@ -224,6 +227,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       '/content/wayy/deck-02.webp',
       '/content/wayy/deck-03.webp',
       '/content/wayy/deck-06.webp',
+      '/content/wayy/deck-08.webp',
     ],
     video: '/content/wayy/wayy-social.mp4',
     videoLabel: 'Social Launch Video',
@@ -233,6 +237,27 @@ export const CASE_STUDIES: CaseStudyData[] = [
     challenge: 'Started this as a tool for covering all the needs of an on-chain creator. Built the first version with 2 developers, then put it on a shelf and forgot about it. The Solana Graveyard hackathon made me want to rework it. The whole product needed to be rethought as an art prediction market. New UI, new flows, new on-chain logic, and shipped fast.',
     solution: 'Redesigned and rebuilt the entire frontend in 1 week. Next.js 16, Prisma + MongoDB, Solana wallet adapter. Retro pixel design system with real-time battles, escrow wallets, and two-step transaction signing.',
     sections: [
+      {
+        title: 'Pitch Deck',
+        description: 'Investor deck telling the WAYY story — from problem to product to vision.',
+        layout: 'deck',
+        gallery: [
+          '/content/wayy/deck-01.webp',
+          '/content/wayy/deck-02.webp',
+          '/content/wayy/deck-03.webp',
+          '/content/wayy/deck-04.webp',
+          '/content/wayy/deck-05.webp',
+          '/content/wayy/deck-06.webp',
+          '/content/wayy/deck-07.webp',
+          '/content/wayy/deck-08.webp',
+          '/content/wayy/deck-09.webp',
+          '/content/wayy/deck-10.webp',
+          '/content/wayy/deck-11.webp',
+          '/content/wayy/deck-12.webp',
+          '/content/wayy/deck-13.webp',
+          '/content/wayy/deck-14.webp',
+        ],
+      },
       {
         title: 'Website UI',
         description: 'The live product interface. Contest browsing, sealed betting, leaderboards, artist profiles, and real-time battle views.',
@@ -267,6 +292,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       '/content/hydex-brand/deck-02.webp',
       '/content/hydex-brand/deck-03.webp',
       '/content/hydex-brand/deck-04.webp',
+      '/content/hydex-brand/deck-05.webp',
     ],
     video: '/content/hydex/hydex-social.mp4',
     videoLabel: 'Brand Motion',
@@ -328,6 +354,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     tags: ['Mobile App', 'React Native', 'Solana', 'Portfolio Tracker'],
     thumbnail: '/content/logos/fullport-briefcase.svg',
     color: '#1a1a2e',
+    coverZoom: 1.4,
     gallery: [
       '/content/fullport/slide-01.webp',
       '/content/fullport/slide-02.webp',
@@ -343,6 +370,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       '/content/fullport/slide-02.webp',
       '/content/fullport/slide-03.webp',
       '/content/fullport/slide-04.webp',
+      '/content/fullport/slide-05.webp',
     ],
     video: '/content/fullport/fullport-demo.mp4',
     videoLabel: 'App Demo',
@@ -395,6 +423,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       '/content/whatsfordinner/landing-2.webp',
       '/content/whatsfordinner/preview-1.webp',
       '/content/whatsfordinner/onboarding-3.webp',
+      '/content/whatsfordinner/onboarding-1.webp',
     ],
     video: '/content/whatsfordinner/whatsfordinner-demo.mp4',
     videoLabel: 'App Demo',

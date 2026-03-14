@@ -7,9 +7,10 @@ import { CursorGlitch } from './components/CursorGlitch'
 import { ScrollReveal } from './components/ScrollReveal'
 import { GsapAnimations } from './components/GsapAnimations'
 import { GlassFilter } from './components/GlassFilter'
+import { ScrollNav } from './components/ScrollNav'
 import { Hero } from './sections/Hero'
 import { Work } from './sections/Work'
-import { Testimonials } from './sections/Testimonials'
+import { Testimonials, TestimonialBanner } from './sections/Testimonials'
 import { Services } from './sections/Services'
 import { About } from './sections/About'
 import { FAQ } from './sections/FAQ'
@@ -87,6 +88,7 @@ export function App() {
       <CursorGlitch />
       <Nav onLogoClick={goHome} />
       <ScrollReveal />
+      {view.type === 'home' && <ScrollNav />}
       {view.type === 'home' && <GsapAnimations />}
       <main className={`page-content ${transitioning ? 'page-exit' : 'page-enter'}`}>
         {view.type === 'home' && (
@@ -97,6 +99,7 @@ export function App() {
             <Services />
             <About />
             <FAQ />
+            <TestimonialBanner />
           </>
         )}
 

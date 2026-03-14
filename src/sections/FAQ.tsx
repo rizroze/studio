@@ -1,14 +1,17 @@
 import { useState } from 'react'
 import { track } from '@vercel/analytics'
 import { FAQ_ITEMS } from '../constants/faq'
+import { VerifiedBadge } from '../components/VerifiedBadge'
+import { XLogo } from '../components/XLogo'
+import { WordReveal } from '../components/WordReveal'
 
 export function FAQ() {
   return (
     <section id="contact" className="section faq-contact-section">
       <div className="faq-contact-grid">
         <div className="faq-col">
-          <h2 className="section-title-xl" data-reveal>Before you ask.</h2>
-          <div className="faq-list">
+          <WordReveal text="Before you ask." className="section-title-xl" tag="h2" />
+          <div className="faq-list" data-reveal-stagger>
             {FAQ_ITEMS.map((item, i) => (
               <FAQItem key={i} question={item.question} answer={item.answer} />
             ))}
@@ -16,28 +19,42 @@ export function FAQ() {
         </div>
 
         <div className="cta-col">
-          <div className="cta-card">
-            <img src="/rizzy-avatar.webp" alt="Riz Rose" className="cta-card-pfp" />
-            <h3 className="cta-card-headline">Let's build something.</h3>
-            <p className="cta-card-sub">15 min call. No pitch deck needed. Let's chat about what you're thinking on.</p>
+          <div className="biz-card" data-reveal>
+            {/* Top — identity */}
+            <div className="biz-card-identity">
+              <img src="/rizzy-avatar.webp" alt="Riz Rose" className="biz-card-pfp" />
+              <div>
+                <h3 className="biz-card-name">Riz Rose <VerifiedBadge color="red" /></h3>
+                <p className="biz-card-role">Creative Direction & Code</p>
+              </div>
+            </div>
+
+            <div className="biz-card-divider" />
+
+            {/* Middle — pitch */}
+            <p className="biz-card-pitch">Your project deserves someone who gives a damn.</p>
+
+            {/* CTA */}
             <a
               href="https://cal.com/rizzytoday"
               target="_blank"
               rel="noopener noreferrer"
-              className="cta-card-btn"
+              className="biz-card-btn"
               onClick={() => track('cta_click', { location: 'contact' })}
             >
               <span className="status-dot" />
-              Schedule a call
+              Let's talk
             </a>
-            <div className="cta-card-socials">
-              <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer">X</a>
-              <span className="contact-divider-dot" />
+
+            <div className="biz-card-divider" />
+
+            {/* Bottom — contact row */}
+            <div className="biz-card-links">
+              <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="biz-link-x"><XLogo size={12} /></a>
               <a href="https://discord.com/users/rizzytoday" target="_blank" rel="noopener noreferrer">Discord</a>
-              <span className="contact-divider-dot" />
               <a href="https://github.com/rizzytoday" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
-            <p className="cta-card-payment">Accepts SOL, USDC, and traditional payments.</p>
+            <p className="biz-card-fine">SOL, USDC, and traditional payments.</p>
           </div>
         </div>
       </div>

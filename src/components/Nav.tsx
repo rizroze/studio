@@ -92,6 +92,32 @@ export function Nav({ onLogoClick }: NavProps) {
     navStore.closePill()
   }
 
+  // Track at-top state for nav background
+  // Black bar pops instantly at scrollY=0, but only after scroll stops
+  useEffect(() => {
+    let topTimer: ReturnType<typeof setTimeout> | null = null
+    const onScroll = () => {
+      const nav = navRef.current
+      if (!nav) return
+      if (topTimer) { clearTimeout(topTimer); topTimer = null }
+      if (window.scrollY > 2) {
+        nav.classList.remove('at-top')
+      } else {
+        // Debounce: only add at-top after scroll settles at 0
+        topTimer = setTimeout(() => {
+          if (window.scrollY < 2) nav.classList.add('at-top')
+        }, 80)
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    // On initial load, if at top, show immediately
+    if (window.scrollY < 2 && navRef.current) navRef.current.classList.add('at-top')
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (topTimer) clearTimeout(topTimer)
+    }
+  }, [])
+
   const navClass = [
     'site-nav',
     scrolledPastHero ? 'scrolled' : '',

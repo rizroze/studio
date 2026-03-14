@@ -1,29 +1,22 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { IpodPlayer } from './IpodPlayer'
+import { useFirebase } from '../services/firebase'
 
-const INITIAL_EMOJIS = [
-  { key: 'salute', emoji: '🫡', count: 42 },
-  { key: 'sword', emoji: '🗡️', count: 18 },
-  { key: 'basketball', emoji: '🏀', count: 27 },
-  { key: 'heart', emoji: '❤️', count: 63 },
+const EMOJI_KEYS = [
+  { key: 'salute', emoji: '🫡' },
+  { key: 'sword', emoji: '🗡️' },
+  { key: 'basketball', emoji: '🏀' },
+  { key: 'heart', emoji: '❤️' },
 ]
 
-const STORAGE_KEY = 'emoji-counts'
-const PRESSED_KEY = 'emoji-pressed'
+const COUNTS_CACHE = 'studio-emoji-counts'
+const PRESSED_KEY = 'studio-emoji-pressed'
 
-function loadCounts(): typeof INITIAL_EMOJIS {
+function getCachedCounts(): Record<string, number> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return INITIAL_EMOJIS
-    const saved = JSON.parse(raw) as Record<string, number>
-    return INITIAL_EMOJIS.map(e => ({ ...e, count: saved[e.key] ?? e.count }))
-  } catch { return INITIAL_EMOJIS }
-}
-
-function saveCounts(emojis: typeof INITIAL_EMOJIS) {
-  const map: Record<string, number> = {}
-  emojis.forEach(e => { map[e.key] = e.count })
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(map))
+    const raw = localStorage.getItem(COUNTS_CACHE)
+    return raw ? JSON.parse(raw) : {}
+  } catch { return {} }
 }
 
 function loadPressed(): Set<string> {
@@ -33,51 +26,62 @@ function loadPressed(): Set<string> {
   } catch { return new Set() }
 }
 
-function savePressed(pressed: Set<string>) {
-  localStorage.setItem(PRESSED_KEY, JSON.stringify([...pressed]))
-}
-
 export function Footer() {
-  const [emojis, setEmojis] = useState(loadCounts)
+  const { db, isReady } = useFirebase()
+  const [counts, setCounts] = useState<Record<string, number>>(getCachedCounts)
   const [clicked, setClicked] = useState<string | null>(null)
   const [pressed, setPressed] = useState<Set<string>>(loadPressed)
   const [spinning, setSpinning] = useState<Record<string, { prev: number; next: number; direction: 'up' | 'down' }>>({})
   const timeoutsRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set())
 
-  const handleEmojiClick = (key: string) => {
-    const current = emojis.find(e => e.key === key)
-    if (!current) return
+  // Load counts from Firestore when ready
+  useEffect(() => {
+    if (!db || !isReady) return
+    let cancelled = false
+    ;(async () => {
+      const { doc, getDoc } = await import('firebase/firestore')
+      try {
+        const snap = await getDoc(doc(db, 'reactions', 'counts'))
+        if (snap.exists() && !cancelled) {
+          const data = snap.data() as Record<string, number>
+          setCounts(data)
+          localStorage.setItem(COUNTS_CACHE, JSON.stringify(data))
+        }
+      } catch (e) {
+        console.error('Error loading emoji counts:', e)
+      }
+    })()
+    return () => { cancelled = true }
+  }, [db, isReady])
 
+  const handleEmojiClick = async (key: string) => {
+    const currentCount = counts[key] || 0
     const wasPressed = pressed.has(key)
-    const nextCount = wasPressed ? current.count - 1 : current.count + 1
+    const nextCount = wasPressed ? Math.max(0, currentCount - 1) : currentCount + 1
 
-    // Trigger slot animation
+    // Optimistic UI — animate immediately
     setSpinning(prev => ({
       ...prev,
-      [key]: { prev: current.count, next: nextCount, direction: wasPressed ? 'down' : 'up' }
+      [key]: { prev: currentCount, next: nextCount, direction: wasPressed ? 'down' : 'up' }
     }))
 
-    // Update count + persist
-    setEmojis(prev => {
-      const updated = prev.map(e => e.key === key ? { ...e, count: nextCount } : e)
-      saveCounts(updated)
+    setCounts(prev => {
+      const updated = { ...prev, [key]: nextCount }
+      localStorage.setItem(COUNTS_CACHE, JSON.stringify(updated))
       return updated
     })
 
-    // Toggle pressed + persist
     setPressed(prev => {
       const next = new Set(prev)
       wasPressed ? next.delete(key) : next.add(key)
-      savePressed(next)
+      localStorage.setItem(PRESSED_KEY, JSON.stringify([...next]))
       return next
     })
 
-    // Trigger clicked animation
     setClicked(key)
     const clickTimeout = setTimeout(() => setClicked(null), 500)
     timeoutsRef.current.add(clickTimeout)
 
-    // Clear spinner after animation
     const spinTimeout = setTimeout(() => {
       setSpinning(prev => {
         const { [key]: _, ...rest } = prev
@@ -85,6 +89,18 @@ export function Footer() {
       })
     }, 350)
     timeoutsRef.current.add(spinTimeout)
+
+    // Atomic Firestore increment
+    if (db) {
+      try {
+        const { doc, setDoc, increment } = await import('firebase/firestore')
+        await setDoc(doc(db, 'reactions', 'counts'), {
+          [key]: increment(wasPressed ? -1 : 1)
+        }, { merge: true })
+      } catch (e) {
+        console.error('Error updating emoji count:', e)
+      }
+    }
   }
 
   return (
@@ -98,7 +114,7 @@ export function Footer() {
           <p className="footer-tagline-big">The rizz your brand's been missing.</p>
 
           <div className="footer-emoji-row">
-            {emojis.map(e => (
+            {EMOJI_KEYS.map(e => (
               <button
                 key={e.key}
                 className={`footer-emoji-pill ${pressed.has(e.key) ? 'pressed' : ''} ${clicked === e.key ? 'clicked' : ''}`}
@@ -112,7 +128,7 @@ export function Footer() {
                       <span className={`footer-slot slot-enter-${spinning[e.key].direction}`}>{spinning[e.key].next}</span>
                     </>
                   ) : (
-                    <span className="footer-slot-static">{e.count}</span>
+                    <span className="footer-slot-static">{counts[e.key] || 0}</span>
                   )}
                 </span>
               </button>
@@ -122,14 +138,6 @@ export function Footer() {
 
         <div className="footer-right">
           <div className="footer-links-grid">
-            <div className="footer-col">
-              <h4 className="footer-heading">Sections</h4>
-              <a href="#work" className="footer-link">Work</a>
-              <a href="#services" className="footer-link">Services</a>
-              <a href="#about" className="footer-link">About</a>
-              <a href="#contact" className="footer-link">Contact</a>
-            </div>
-
             <div className="footer-col">
               <h4 className="footer-heading">Connect</h4>
               <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">X / Twitter</a>

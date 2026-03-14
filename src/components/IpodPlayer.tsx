@@ -5,6 +5,9 @@ export function IpodPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [currentTrack, setCurrentTrack] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [currentTime, setCurrentTime] = useState('0:00')
+  const [remaining, setRemaining] = useState('-0:00')
 
   useEffect(() => {
     if (audioRef.current) {
@@ -17,10 +20,12 @@ export function IpodPlayer() {
   const loadTrack = (index: number) => {
     const newIndex = ((index % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length
     setCurrentTrack(newIndex)
+    setProgress(0)
+    setCurrentTime('0:00')
+    setRemaining('-0:00')
     return newIndex
   }
 
-  // Auto-play when track changes and shouldPlayRef is true
   useEffect(() => {
     const audio = audioRef.current
     if (!audio || !shouldPlayRef.current) return
@@ -31,6 +36,26 @@ export function IpodPlayer() {
     audio.load()
     return () => audio.removeEventListener('canplay', onCanPlay)
   }, [currentTrack])
+
+  // Progress tracking
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+    const onTime = () => {
+      if (!audio.duration) return
+      setProgress((audio.currentTime / audio.duration) * 100)
+      setCurrentTime(formatTime(audio.currentTime))
+      setRemaining(`-${formatTime(audio.duration - audio.currentTime)}`)
+    }
+    audio.addEventListener('timeupdate', onTime)
+    return () => audio.removeEventListener('timeupdate', onTime)
+  }, [])
+
+  const formatTime = (s: number) => {
+    const m = Math.floor(s / 60)
+    const sec = Math.floor(s % 60)
+    return `${m}:${sec.toString().padStart(2, '0')}`
+  }
 
   const togglePlay = () => {
     if (!audioRef.current) return
@@ -64,28 +89,44 @@ export function IpodPlayer() {
     }
   }
 
+  const track = PLAYLIST[currentTrack]
+
   return (
     <div className="ipod-nano">
       <div className="ipod-body">
+        {/* Screen — classic iPod style */}
         <div className={`ipod-screen ${isPlaying ? 'active' : ''}`}>
-          <div className="ipod-now-playing">Now Playing</div>
-          <div className="song-title">{PLAYLIST[currentTrack]?.title || 'No Track'}</div>
-          <div className="equalizer">
-            <span className="bar"></span>
-            <span className="bar"></span>
-            <span className="bar"></span>
+          <div className="ipod-screen-header">
+            <span>Now Playing</span>
+          </div>
+          <div className="ipod-screen-inner">
+            <div className="ipod-track-meta">
+              {currentTrack + 1} of {PLAYLIST.length}
+            </div>
+            <div className="ipod-track-title">{track?.title || 'No Track'}</div>
+            <div className="ipod-progress">
+              <div className="ipod-progress-bar">
+                <div className="ipod-progress-fill" style={{ width: `${progress}%` }} />
+              </div>
+              <div className="ipod-time-row">
+                <span className="ipod-time">{currentTime}</span>
+                <span className="ipod-time">{remaining}</span>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Click Wheel */}
         <div className="click-wheel">
           <div className="wheel-ring">
             <button className="wheel-btn menu">MENU</button>
             <button className="wheel-btn prev" aria-label="Previous track" onClick={prevTrack}>
-              <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
+              <svg width="14" height="10" viewBox="0 0 16 12" fill="currentColor">
                 <path d="M0 0H3V12H0V0ZM3 6L16 12V0L3 6Z"/>
               </svg>
             </button>
             <button className="wheel-btn next" aria-label="Next track" onClick={nextTrack}>
-              <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
+              <svg width="14" height="10" viewBox="0 0 16 12" fill="currentColor">
                 <path d="M16 0H13V12H16V0ZM13 6L0 12V0L13 6Z"/>
               </svg>
             </button>
@@ -102,12 +143,12 @@ export function IpodPlayer() {
               )}
             </button>
           </div>
-          <button className="wheel-center" onClick={togglePlay}></button>
+          <button className="wheel-center" onClick={togglePlay} />
         </div>
       </div>
       <audio
         ref={audioRef}
-        src={PLAYLIST[currentTrack]?.src}
+        src={track?.src}
         onEnded={handleEnded}
       />
     </div>

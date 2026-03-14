@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import type { CaseStudyData } from '../constants/projects'
 import { CASE_STUDIES } from '../constants/projects'
+import { ProjectCard } from '../components/ProjectCard'
 
 interface ProjectPageProps {
   project: CaseStudyData
@@ -170,27 +171,7 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
         <h2 className="section-title">More work</h2>
         <div className="work-grid">
           {otherProjects.map(p => (
-            <div
-              key={p.slug}
-              className="project-card-studio"
-              onClick={() => onSelectProject(p.slug)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={e => { if (e.key === 'Enter') onSelectProject(p.slug) }}
-            >
-              <div className="project-card-thumb" style={{ backgroundColor: p.color }}>
-                <img src={p.thumbnail} alt={p.title} loading="lazy" />
-              </div>
-              <div className="project-card-info">
-                <h3 className="project-card-title">{p.title}</h3>
-                <p className="project-card-client">{p.client}</p>
-                <div className="project-card-tags">
-                  {p.tags.slice(0, 3).map(tag => (
-                    <span key={tag} className="project-tag">{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <ProjectCard key={p.slug} project={p} onViewProject={onSelectProject} />
           ))}
         </div>
       </div>

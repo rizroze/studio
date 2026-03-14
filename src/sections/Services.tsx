@@ -1,10 +1,11 @@
 import { PricingCard } from '../components/PricingCard'
 import { PRICING_TIERS } from '../constants/services'
+import { WordReveal } from '../components/WordReveal'
 
 export function Services() {
   return (
     <section id="services" className="section">
-      <h2 className="section-title-xl" style={{ marginBottom: 48 }} data-reveal>Pick a scope. Get everything.</h2>
+      <WordReveal text="Pick a scope. Get everything." className="section-title-xl" tag="h2" />
 
       <div className="pricing-cards" data-reveal-stagger>
         {PRICING_TIERS.map(tier => (

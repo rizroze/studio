@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { track } from '@vercel/analytics'
 import { ClientTicker } from '../components/ClientTicker'
-import { AsciiRose } from '../components/AsciiRose'
+import { AsciiRose, HeroCursorField } from '../components/AsciiRose'
 import { CASE_STUDIES, BOOKSHELF_SLUGS } from '../constants/projects'
 
 const BOOK_COLORS = ['#FCE184', '#F5B731', '#34A853', '#1a1a2e', '#F97316']
@@ -113,9 +113,7 @@ export function Hero() {
         const el = sectionRef.current
         if (!el) { ticking = false; return }
         const y = window.scrollY
-        const rose = el.querySelector('.ascii-rose') as HTMLElement | null
         const books = el.querySelector('.hero-right') as HTMLElement | null
-        if (rose) rose.style.transform = `translate(-50%, -50%) translateY(${y * 0.3}px)`
         if (books) books.style.transform = `translateY(${y * 0.15}px)`
         ticking = false
       })
@@ -126,19 +124,27 @@ export function Hero() {
 
   return (
     <section id="hero" className="hero-studio" ref={sectionRef}>
+      <HeroCursorField />
       <AsciiRose />
       <div className="hero-split">
         <div className="hero-left">
           <h1 className="hero-headline">
-            I design it, code it,<br />
-            and ship <span className="hero-accent">the whole thing.</span>
+            <span className="hero-word">I</span>{' '}
+            <span className="hero-word">design</span>{' '}
+            <span className="hero-word">it,</span>{' '}
+            <span className="hero-word">code</span>{' '}
+            <span className="hero-word">it,</span>
+            <br />
+            <span className="hero-word">and</span>{' '}
+            <span className="hero-word">ship</span>{' '}
+            <span className="hero-word hero-accent">the</span>{' '}<span className="hero-word hero-accent">whole</span>{' '}<span className="hero-word hero-accent">thing.</span>
           </h1>
           <p className="hero-subline">
-            Helping brands express themselves clearly — brand, website, motion — from <strong>concept</strong> to <strong>production</strong>.
+            Helping brands express themselves clearly. Brand, website, motion. From <strong>concept</strong> to <strong>production</strong>.
           </p>
           <div className="hero-cta-row">
             <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="hero-cta" onClick={() => track('cta_click', { location: 'hero' })}>
-              <img src="/rizzy-avatar.webp" alt="" className="hero-cta-avatar" />
+              <img src="/Rizzytoday Profile Picture.jpg" alt="" className="hero-cta-avatar" />
               Book an intro
             </a>
             <span className="available-badge"><span className="available-dot" />Available now</span>
