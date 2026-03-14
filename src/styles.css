@@ -3514,7 +3514,7 @@ main {
 
 .ipod-track-artist {
   font-family: 'Geist Pixel', monospace;
-  font-size: 7px;
+  font-size: 9px;
   color: rgba(255, 255, 255, 0.1);
   white-space: nowrap;
   overflow: hidden;
@@ -3533,7 +3533,7 @@ main {
 
 .ipod-track-title-text {
   font-family: 'Geist Pixel', monospace;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.2);
   display: inline-block;
