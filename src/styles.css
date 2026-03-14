@@ -3437,28 +3437,26 @@ main {
 .ipod-album-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
+  gap: 6px;
+  margin-bottom: 2px;
 }
 
 .ipod-album-art {
-  width: 36px;
-  height: 36px;
-  border-radius: 4px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   position: relative;
-  overflow: hidden;
 }
 
 .ipod-album-initial {
   font-family: 'Urbanist', sans-serif;
-  font-size: 16px;
+  font-size: 11px;
   font-weight: 700;
   font-style: italic;
   color: rgba(255, 255, 255, 0.15);
@@ -3467,21 +3465,33 @@ main {
 }
 
 .ipod-screen.active .ipod-album-initial {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.5);
 }
 
-.ipod-album-num {
-  font-family: 'Fragment Mono', monospace;
-  font-size: 6px;
-  color: rgba(255, 255, 255, 0.3);
-  position: absolute;
-  bottom: 2px;
-  right: 3px;
+.ipod-album-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
 }
 
 .ipod-track-info {
   flex: 1;
   min-width: 0;
+}
+
+.ipod-track-artist {
+  font-family: 'Geist Pixel', monospace;
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.4s var(--smooth-ease);
+}
+
+.ipod-screen.active .ipod-track-artist {
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .ipod-track-title {
@@ -3688,8 +3698,18 @@ main {
   .tool-icon-label { font-size: 8px; }
   .preview-description { white-space: normal; }
 
-  /* Mobile card: arrow floats top-left, bottom is full-width title */
-  .project-card-bottom { flex-direction: column; }
+  /* Mobile card: stronger gradient, arrow top-left, clear text hierarchy */
+  .project-card-bottom {
+    padding: 48px 14px 14px;
+    background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.7) 30%,
+      rgba(0, 0, 0, 0.35) 55%,
+      transparent 100%
+    );
+  }
+  .project-card-title { font-size: 18px; text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
+  .project-card-result { font-size: 11px; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
   .project-card-arrow {
     position: absolute;
     top: 10px;
@@ -3698,7 +3718,11 @@ main {
     right: auto;
     opacity: 1;
     transform: none;
-    z-index: 2;
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-color: rgba(255, 255, 255, 0.2);
   }
   .project-card-studio:hover .project-card-arrow { transform: none; }
 
