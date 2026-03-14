@@ -482,6 +482,12 @@ main {
   font-style: italic;
   letter-spacing: -0.02em;
   white-space: nowrap;
+  transition: opacity 0.3s var(--smooth-ease);
+}
+
+.nav-brand-text.hide {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .nav-links {
@@ -2437,7 +2443,6 @@ main {
   align-items: center;
   gap: 60px;
   padding-bottom: 48px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .footer-main {}
@@ -2696,7 +2701,8 @@ main {
 .footer-bottom {
   max-width: 1200px;
   margin: 0 auto;
-  padding-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
   font-size: 13px;
   color: rgba(255, 255, 255, 0.4);
   display: flex;
@@ -2983,7 +2989,7 @@ main {
 .project-page-back {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px 20px;
+  padding: 72px 24px 20px;
 }
 
 .project-back-btn {
@@ -3283,7 +3289,7 @@ main {
 .gallery-squares {
   columns: unset;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 8px;
 }
 

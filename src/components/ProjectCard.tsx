@@ -100,7 +100,7 @@ export function ProjectCard({ project, onViewProject }: ProjectCardProps) {
           {previewImages[0] ? (
             <img src={previewImages[0]} alt={project.title} loading="lazy" className={`project-card-cover${project.coverZoom ? ' cover-zoomed' : ''}`} />
           ) : (
-            <img src={project.thumbnail} alt={project.title} loading="lazy" />
+            <img src={project.cardThumbnail || project.thumbnail} alt={project.title} loading="lazy" />
           )}
         </div>
 

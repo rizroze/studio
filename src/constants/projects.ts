@@ -12,6 +12,7 @@ export interface CaseStudyData {
   client: string
   tags: string[]
   thumbnail: string
+  cardThumbnail?: string
   color: string
   gallery: string[]
   previewGallery?: string[]  // curated images for the card preview (overrides gallery/sections)
@@ -38,7 +39,8 @@ export const CASE_STUDIES: CaseStudyData[] = [
     title: 'Radiants',
     client: 'Brand & Content Direction',
     tags: ['Intern Lead'],
-    thumbnail: '/content/radiants/thumbnail.webp',
+    thumbnail: '/content/logos/radiants-pixel-dark.svg',
+    cardThumbnail: '/content/radiants/thumbnail.webp',
     color: '#FCE184',
     gallery: [],
     previewGallery: [

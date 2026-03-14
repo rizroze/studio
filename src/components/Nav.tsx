@@ -15,7 +15,7 @@ interface NavProps {
 
 export function Nav({ onLogoClick }: NavProps) {
   const mobileOpen = useMobileNav()
-  const { scrolledPastHero, pillExpanded, activeSection } = useNavScroll()
+  const { scrolledPastHero, pillExpanded, activeSection, atFooter } = useNavScroll()
   const navRef = useRef<HTMLElement>(null)
 
   // Single throttled scroll handler for hero threshold + active section
@@ -104,7 +104,7 @@ export function Nav({ onLogoClick }: NavProps) {
         <div className="nav-inner">
           <a href="#" className="nav-brand" onClick={scrollToTop}>
             <img src="/rizzy-avatar.webp" alt="Rizzy Studio" className="nav-pfp" />
-            <span className="nav-brand-text">Rizzy Studio</span>
+            <span className={`nav-brand-text ${atFooter ? 'hide' : ''}`}>Rizzy Studio</span>
           </a>
 
           <div className="nav-links desktop-only">

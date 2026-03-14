@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { IpodPlayer } from './IpodPlayer'
 import { useFirebase } from '../services/firebase'
+import { navStore } from '../stores/navStore'
 
 const EMOJI_KEYS = [
   { key: 'salute', emoji: '🫡' },
@@ -33,6 +34,19 @@ export function Footer() {
   const [pressed, setPressed] = useState<Set<string>>(loadPressed)
   const [spinning, setSpinning] = useState<Record<string, { prev: number; next: number; direction: 'up' | 'down' }>>({})
   const timeoutsRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set())
+  const footerRef = useRef<HTMLElement>(null)
+
+  // Track footer visibility for nav brand hide
+  useEffect(() => {
+    const el = footerRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => navStore.setAtFooter(entry.isIntersecting),
+      { threshold: 0.3 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   // Cleanup timeouts on unmount
   useEffect(() => {
@@ -112,7 +126,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" ref={footerRef}>
       <div className="footer-inner">
         <div className="footer-main">
           <a href="#" className="footer-brand-big" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>

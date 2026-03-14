@@ -35,7 +35,7 @@ export function AllProjects({ onBack, onViewProject }: AllProjectsProps) {
               onKeyDown={e => { if (e.key === 'Enter') onViewProject(p.slug) }}
             >
               <div className="project-card-thumb" style={{ backgroundColor: p.color }}>
-                <img src={p.thumbnail} alt={p.title} loading="lazy" />
+                <img src={p.cardThumbnail || p.thumbnail} alt={p.title} loading="lazy" />
               </div>
               <div className="project-card-info">
                 <h3 className="project-card-title">{p.title}</h3>
