@@ -143,6 +143,9 @@ export function Footer() {
             ))}
           </div>
 
+        </div>
+
+        <div className="footer-bottom-row">
           <div className="footer-connect">
             <h4 className="footer-heading">Connect</h4>
             <div className="footer-connect-links">
@@ -152,9 +155,6 @@ export function Footer() {
               <a href="https://rizztoday.vercel.app" target="_blank" rel="noopener noreferrer" className="footer-link">Personal website</a>
             </div>
           </div>
-        </div>
-
-        <div className="footer-right">
           <div className="footer-ipod-wrap">
             <IpodPlayer />
             <svg className="ipod-cable" viewBox="0 0 800 400">
