@@ -133,17 +133,16 @@ export function IpodPlayer() {
         {/* Screen — classic iPod style */}
         <div className={`ipod-screen ${isPlaying ? 'active' : ''}`}>
           <div className="ipod-screen-header">
-            {isPlaying && (
-              <svg className="ipod-play-icon" width="8" height="9" viewBox="0 0 8 9" fill="#2a7adf"><polygon points="0,0 8,4.5 0,9" /></svg>
-            )}
+            <span className="ipod-header-left">
+              {isPlaying && (
+                <span className="ipod-eq">
+                  <span className="ipod-eq-bar" />
+                  <span className="ipod-eq-bar" />
+                  <span className="ipod-eq-bar" />
+                </span>
+              )}
+            </span>
             <span>Now Playing</span>
-            {isPlaying && (
-              <span className="ipod-eq">
-                <span className="ipod-eq-bar" />
-                <span className="ipod-eq-bar" />
-                <span className="ipod-eq-bar" />
-              </span>
-            )}
             <span className={`ipod-battery ${isPlaying ? 'charging' : ''}`}>
               <span className="ipod-battery-body">
                 <span className="ipod-battery-fill" />

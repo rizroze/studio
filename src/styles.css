@@ -3439,7 +3439,7 @@ main {
   position: relative;
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
   transition: all 0.5s var(--smooth-ease);
-  border: 2px solid #222;
+  border: 4px solid #111;
 }
 
 .ipod-screen.active {
@@ -3480,8 +3480,10 @@ main {
   opacity: 1;
 }
 
-.ipod-play-icon {
-  flex-shrink: 0;
+.ipod-header-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
 }
 
 /* Equalizer bars */
@@ -3494,7 +3496,7 @@ main {
 
 .ipod-eq-bar {
   width: 2px;
-  background: #2a7adf;
+  background: #5aadee;
   border-radius: 1px;
   animation: eqBounce 0.5s ease-in-out infinite alternate;
 }
@@ -3509,35 +3511,38 @@ main {
 }
 
 .ipod-screen-header span {
-  font-family: 'Geist Pixel', monospace;
-  font-size: 7px;
-  font-weight: 400;
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
   color: #333;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-transform: none;
+  letter-spacing: 0.01em;
 }
 
 /* Battery icon */
 .ipod-battery {
+  flex: 1;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 0;
 }
 
 .ipod-battery-body {
-  width: 16px;
-  height: 8px;
+  width: 13px;
+  height: 6px;
   border: 1px solid #888;
   border-radius: 2px;
-  padding: 1px;
+  padding: 0;
   display: flex;
   align-items: stretch;
+  overflow: hidden;
 }
 
 .ipod-battery-fill {
   flex: 1;
   background: linear-gradient(180deg, #8eef6e 0%, #4dc832 40%, #3ab520 60%, #5cd840 100%);
-  border-radius: 1px;
+  border-radius: 0;
 }
 
 .ipod-battery.charging .ipod-battery-fill {
@@ -3550,8 +3555,8 @@ main {
 }
 
 .ipod-battery-tip {
-  width: 2px;
-  height: 4px;
+  width: 1.5px;
+  height: 3px;
   background: #888;
   border-radius: 0 2px 2px 0;
   margin-left: -0.5px;
@@ -3560,7 +3565,7 @@ main {
 /* Track counter */
 .ipod-track-counter {
   font-family: 'Geist Pixel', monospace;
-  font-size: 9px;
+  font-size: 8px;
   color: rgba(0, 0, 0, 0.2);
   margin-bottom: 3px;
 }
@@ -3681,9 +3686,9 @@ main {
 
 .ipod-progress-bar {
   width: 100%;
-  height: 6px;
+  height: 8px;
   background: rgba(0, 0, 0, 0.08);
-  border-radius: 3px;
+  border-radius: 4px;
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -3698,12 +3703,20 @@ main {
   position: absolute;
   top: 0; left: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.06);
-  border-radius: 3px;
+  border-radius: 4px 0 0 4px;
   transition: width 0.3s linear;
 }
 
 .ipod-screen.active .ipod-progress-fill {
-  background: linear-gradient(180deg, #6cb4ff 0%, #3a8adf 100%);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 0px,
+      rgba(255, 255, 255, 0.1) 2px,
+      transparent 2px,
+      transparent 5px
+    ),
+    linear-gradient(180deg, #6abcf5 0%, #3a8ede 100%);
   box-shadow: none;
 }
 
