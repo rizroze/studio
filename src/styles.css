@@ -2907,7 +2907,7 @@ main {
   padding: 12px 28px;
   background: var(--brand-red);
   border: 1px solid var(--brand-red);
-  border-radius: 50px;
+  border-radius: 12px;
   font-family: 'Inter Tight', sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -2917,7 +2917,7 @@ main {
   box-shadow: 0 4px 20px rgba(196, 30, 30, 0.3);
 }
 
-/* Laser sweep on scroll reveal */
+/* Laser sweep on scroll reveal + hover */
 .biz-card-btn {
   position: relative;
   overflow: hidden;
@@ -2937,6 +2937,10 @@ main {
 
 [data-reveal].revealed .biz-card-btn::after {
   animation: laserSweep 0.8s 0.6s var(--smooth-ease) forwards;
+}
+
+.biz-card-btn:hover::after {
+  animation: laserSweep 0.6s var(--smooth-ease) forwards;
 }
 
 @keyframes laserSweep {
