@@ -107,10 +107,15 @@ export function IpodPlayer() {
             )}
           </div>
           <div className="ipod-screen-inner">
-            <div className="ipod-track-meta">
-              {currentTrack + 1} of {PLAYLIST.length}
+            <div className="ipod-album-row">
+              <div className="ipod-album-art">
+                <span className="ipod-album-initial">{(track?.title || '?')[0]}</span>
+                <span className="ipod-album-num">{currentTrack + 1}/{PLAYLIST.length}</span>
+              </div>
+              <div className="ipod-track-info">
+                <div className="ipod-track-title">{track?.title || 'No Track'}</div>
+              </div>
             </div>
-            <div className="ipod-track-title">{track?.title || 'No Track'}</div>
             <div className="ipod-progress">
               <div className="ipod-progress-bar">
                 <div className="ipod-progress-fill" style={{ width: `${progress}%` }} />
