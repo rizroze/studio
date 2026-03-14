@@ -10,6 +10,7 @@ export function IpodPlayer() {
   const [progress, setProgress] = useState(0)
   const [currentTime, setCurrentTime] = useState('0:00')
   const [remaining, setRemaining] = useState('-0:00')
+  const [showMenu, setShowMenu] = useState(false)
 
   useEffect(() => {
     if (audioRef.current) {
@@ -131,10 +132,10 @@ export function IpodPlayer() {
     <div className="ipod-nano">
       <div className="ipod-body">
         {/* Screen — classic iPod style */}
-        <div className={`ipod-screen ${isPlaying ? 'active' : ''}`}>
+        <div className={`ipod-screen ${isPlaying || showMenu ? 'active' : ''}`}>
           <div className="ipod-screen-header">
             <span className="ipod-header-left">
-              {isPlaying && (
+              {isPlaying && !showMenu && (
                 <span className="ipod-eq">
                   <span className="ipod-eq-bar" />
                   <span className="ipod-eq-bar" />
@@ -142,7 +143,7 @@ export function IpodPlayer() {
                 </span>
               )}
             </span>
-            <span>Now Playing</span>
+            <span>{showMenu ? 'About' : 'Now Playing'}</span>
             <span className={`ipod-battery ${isPlaying ? 'charging' : ''}`}>
               <span className="ipod-battery-body">
                 <span className="ipod-battery-fill" />
@@ -150,39 +151,68 @@ export function IpodPlayer() {
               <span className="ipod-battery-tip" />
             </span>
           </div>
-          <div className="ipod-screen-inner">
-            <div className="ipod-track-counter">{currentTrack + 1} of {PLAYLIST.length}</div>
-            <div className="ipod-album-row">
-              <div className="ipod-album-art">
-                {track?.cover ? (
-                  <img src={track.cover} alt="" className="ipod-album-img" />
-                ) : (
-                  <span className="ipod-album-initial">{(track?.title || '?')[0]}</span>
-                )}
-              </div>
-              <div className="ipod-track-info">
-                <div className="ipod-track-title" ref={titleWrapRef}>
-                  <span className="ipod-track-title-text" ref={titleRef} key={currentTrack}>{track?.title || 'No Track'}</span>
+
+          {showMenu ? (
+            <div className="ipod-screen-inner">
+              <div className="ipod-track-counter">10 of 10</div>
+              <div className="ipod-album-row">
+                <div className="ipod-album-art" style={{ border: 'none', borderRadius: '50%' }}>
+                  <img src="/rizzy-avatar.webp" alt="Riz" className="ipod-album-img" style={{ opacity: 1, filter: 'none', borderRadius: '50%' }} />
                 </div>
-                {track?.artist && <div className="ipod-track-artist">{track.artist}</div>}
+                <div className="ipod-track-info">
+                  <div className="ipod-track-title">
+                    <span className="ipod-track-title-text" style={{ animation: 'none', color: '#222' }}>Riz Rose</span>
+                  </div>
+                  <div className="ipod-track-artist" style={{ color: '#5aadee' }}>
+                    <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>@rizzytoday</a>
+                  </div>
+                </div>
+              </div>
+              <div className="ipod-progress">
+                <div className="ipod-progress-bar">
+                  <div className="ipod-progress-fill" style={{ width: `${progress}%` }} />
+                </div>
+                <div className="ipod-time-row">
+                  <span className="ipod-time">{currentTime}</span>
+                  <span className="ipod-time">{remaining}</span>
+                </div>
               </div>
             </div>
-            <div className="ipod-progress">
-              <div className="ipod-progress-bar">
-                <div className="ipod-progress-fill" style={{ width: `${progress}%` }} />
+          ) : (
+            <div className="ipod-screen-inner">
+              <div className="ipod-track-counter">{currentTrack + 1} of {PLAYLIST.length}</div>
+              <div className="ipod-album-row">
+                <div className="ipod-album-art">
+                  {track?.cover ? (
+                    <img src={track.cover} alt="" className="ipod-album-img" />
+                  ) : (
+                    <span className="ipod-album-initial">{(track?.title || '?')[0]}</span>
+                  )}
+                </div>
+                <div className="ipod-track-info">
+                  <div className="ipod-track-title" ref={titleWrapRef}>
+                    <span className="ipod-track-title-text" ref={titleRef} key={currentTrack}>{track?.title || 'No Track'}</span>
+                  </div>
+                  {track?.artist && <div className="ipod-track-artist">{track.artist}</div>}
+                </div>
               </div>
-              <div className="ipod-time-row">
-                <span className="ipod-time">{currentTime}</span>
-                <span className="ipod-time">{remaining}</span>
+              <div className="ipod-progress">
+                <div className="ipod-progress-bar">
+                  <div className="ipod-progress-fill" style={{ width: `${progress}%` }} />
+                </div>
+                <div className="ipod-time-row">
+                  <span className="ipod-time">{currentTime}</span>
+                  <span className="ipod-time">{remaining}</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Click Wheel */}
         <div className="click-wheel">
           <div className="wheel-ring">
-            <button className="wheel-btn menu">MENU</button>
+            <button className="wheel-btn menu" onClick={() => setShowMenu(m => !m)}>MENU</button>
             <button className="wheel-btn prev" aria-label="Previous track" onClick={prevTrack}>
               <svg width="14" height="10" viewBox="0 0 16 12" fill="currentColor">
                 <path d="M0 0H3V12H0V0ZM3 6L16 12V0L3 6Z"/>
