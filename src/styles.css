@@ -3630,6 +3630,7 @@ main {
   .testimonials-grid { grid-template-columns: 1fr; }
   .testimonial-card { padding: 24px; }
   .testimonial-card-quote p { font-size: 15px; }
+  .testimonial-quote-text { font-size: 13px; }
 
   .faq-contact-grid { grid-template-columns: 1fr; }
   .cta-col { position: static; }
