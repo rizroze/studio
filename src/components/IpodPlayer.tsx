@@ -45,6 +45,8 @@ export function IpodPlayer() {
     const wrap = titleWrapRef.current
     if (!text || !wrap) return
     const measure = () => {
+      text.style.animation = 'none'
+      text.offsetHeight // force reflow
       text.style.animation = ''
       const overflow = text.scrollWidth - wrap.clientWidth
       if (overflow > 0) {
@@ -53,7 +55,8 @@ export function IpodPlayer() {
         text.style.setProperty('--marquee-offset', '0px')
       }
     }
-    requestAnimationFrame(measure)
+    // Measure after fonts load (fallback font width differs)
+    document.fonts.ready.then(() => requestAnimationFrame(measure))
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
   }, [currentTrack])
