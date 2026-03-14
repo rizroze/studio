@@ -96,7 +96,7 @@ export function About() {
 
         <div className="about-tools-col" data-reveal>
           <h4 className="about-tools-heading">Tools & Stack</h4>
-          <div className="tools-grid-icons" data-reveal-stagger>
+          <div className="tools-grid-icons">
             {TOOLS.map(tool => (
               <div key={tool.name} className="tool-icon-item">
                 <svg className="tool-icon-svg" viewBox="0 0 24 24" dangerouslySetInnerHTML={{ __html: tool.icon }} />

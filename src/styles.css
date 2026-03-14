@@ -940,9 +940,9 @@ main {
   font-weight: 700;
   font-style: italic;
   letter-spacing: -0.04em;
-  line-height: 1.08;
+  line-height: 1.15;
   margin-bottom: 20px;
-  padding-bottom: 6px;
+  overflow: visible;
 }
 
 .hero-accent {
