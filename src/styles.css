@@ -1530,12 +1530,12 @@ main {
   letter-spacing: 0.01em;
   opacity: 0;
   transform: translateX(20px);
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.project-tag-float:nth-child(1) { transition-delay: 0.3s; }
-.project-tag-float:nth-child(2) { transition-delay: 0.4s; }
-.project-tag-float:nth-child(3) { transition-delay: 0.5s; }
+.project-tag-float:nth-child(1) { transition-delay: 0.8s; }
+.project-tag-float:nth-child(2) { transition-delay: 1s; }
+.project-tag-float:nth-child(3) { transition-delay: 1.2s; }
 
 .project-card-studio.in-view .project-tag-float {
   opacity: 1;
