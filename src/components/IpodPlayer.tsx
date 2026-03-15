@@ -8,9 +8,6 @@ export function IpodPlayer() {
   const titleWrapRef = useRef<HTMLDivElement>(null)
   const [currentTrack, setCurrentTrack] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [progress, setProgress] = useState(0)
-  const [currentTime, setCurrentTime] = useState('0:00')
-  const [remaining, setRemaining] = useState('-0:00')
   const [showMenu, setShowMenu] = useState(false)
 
   useEffect(() => {
@@ -24,9 +21,10 @@ export function IpodPlayer() {
   const loadTrack = (index: number) => {
     const newIndex = ((index % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length
     setCurrentTrack(newIndex)
-    setProgress(0)
-    setCurrentTime('0:00')
-    setRemaining('-0:00')
+    // Reset progress display directly
+    if (progressFillRef.current) progressFillRef.current.style.width = '0%'
+    if (currentTimeRef.current) currentTimeRef.current.textContent = '0:00'
+    if (remainingTimeRef.current) remainingTimeRef.current.textContent = '-0:00'
     return newIndex
   }
 
@@ -75,15 +73,20 @@ export function IpodPlayer() {
     return () => window.removeEventListener('resize', measure)
   }, [currentTrack])
 
-  // Progress tracking
+  // Progress tracking — direct DOM updates to avoid React re-renders during playback
+  const progressFillRef = useRef<HTMLDivElement>(null)
+  const currentTimeRef = useRef<HTMLSpanElement>(null)
+  const remainingTimeRef = useRef<HTMLSpanElement>(null)
+
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
     const onTime = () => {
       if (!audio.duration) return
-      setProgress((audio.currentTime / audio.duration) * 100)
-      setCurrentTime(formatTime(audio.currentTime))
-      setRemaining(`-${formatTime(audio.duration - audio.currentTime)}`)
+      const pct = (audio.currentTime / audio.duration) * 100
+      if (progressFillRef.current) progressFillRef.current.style.width = `${pct}%`
+      if (currentTimeRef.current) currentTimeRef.current.textContent = formatTime(audio.currentTime)
+      if (remainingTimeRef.current) remainingTimeRef.current.textContent = `-${formatTime(audio.duration - audio.currentTime)}`
     }
     audio.addEventListener('timeupdate', onTime)
     return () => audio.removeEventListener('timeupdate', onTime)
@@ -171,11 +174,11 @@ export function IpodPlayer() {
               </div>
               <div className="ipod-progress">
                 <div className="ipod-progress-bar">
-                  <div className="ipod-progress-fill" style={{ width: `${progress}%` }} />
+                  <div className="ipod-progress-fill" ref={!showMenu ? undefined : progressFillRef} />
                 </div>
                 <div className="ipod-time-row">
-                  <span className="ipod-time">{currentTime}</span>
-                  <span className="ipod-time">{remaining}</span>
+                  <span className="ipod-time" ref={!showMenu ? undefined : currentTimeRef}>0:00</span>
+                  <span className="ipod-time" ref={!showMenu ? undefined : remainingTimeRef}>-0:00</span>
                 </div>
               </div>
             </div>
@@ -199,11 +202,11 @@ export function IpodPlayer() {
               </div>
               <div className="ipod-progress">
                 <div className="ipod-progress-bar">
-                  <div className="ipod-progress-fill" style={{ width: `${progress}%` }} />
+                  <div className="ipod-progress-fill" ref={showMenu ? undefined : progressFillRef} />
                 </div>
                 <div className="ipod-time-row">
-                  <span className="ipod-time">{currentTime}</span>
-                  <span className="ipod-time">{remaining}</span>
+                  <span className="ipod-time" ref={showMenu ? undefined : currentTimeRef}>0:00</span>
+                  <span className="ipod-time" ref={showMenu ? undefined : remainingTimeRef}>-0:00</span>
                 </div>
               </div>
             </div>

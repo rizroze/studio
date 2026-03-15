@@ -1414,6 +1414,8 @@ main {
   max-width: 1200px;
   margin: 0 auto;
   padding: 80px 24px;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
 }
 
 .work-header {
@@ -1890,6 +1892,8 @@ main {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(168, 85, 247, 0.03) 50%, rgba(255, 255, 255, 0.02) 100%);
   border-top: 1px solid var(--divider);
   border-bottom: 1px solid var(--divider);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 }
 
 .testimonials-inner {
@@ -2248,6 +2252,8 @@ main {
 .about-section {
   padding-top: 80px;
   background: linear-gradient(180deg, transparent 0%, rgba(252, 225, 132, 0.02) 50%, transparent 100%);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
 }
 
 .about-profile {
@@ -2440,6 +2446,8 @@ main {
   padding: 80px 24px calc(40px + env(safe-area-inset-bottom, 0px));
   position: relative;
   overflow: hidden;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
 }
 
 
@@ -2794,6 +2802,8 @@ main {
    =========================== */
 .faq-contact-section {
   padding-bottom: 100px;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
 }
 
 .faq-contact-grid {

@@ -14,7 +14,7 @@ function preloadBookImages(): Promise<void> {
   })
   return Promise.race([
     Promise.all(promises).then(() => {}),
-    new Promise<void>(resolve => setTimeout(resolve, 2000)),
+    new Promise<void>(resolve => setTimeout(resolve, 800)),
   ])
 }
 
@@ -32,7 +32,7 @@ export function GsapAnimations() {
     const loader = document.getElementById('loader')
 
     const runTimeline = () => {
-      const startDelay = loader ? 0.5 : 0.15
+      const startDelay = loader ? 0.2 : 0.1
 
       const tl = gsap.timeline({ delay: startDelay })
 

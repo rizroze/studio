@@ -39,8 +39,8 @@ function pathFromView(v: View): string {
 export function App() {
   const [view, setView] = useState<View>(() => viewFromPath(window.location.pathname))
   const [transitioning, setTransitioning] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const [showBackToTop, setShowBackToTop] = useState(false)
+  const scrollBarRef = useRef<HTMLDivElement>(null)
+  const backToTopRef = useRef<HTMLButtonElement>(null)
   const pendingView = useRef<View | null>(null)
   const isPopState = useRef(false)
 
@@ -49,7 +49,7 @@ export function App() {
     const loader = document.getElementById('loader')
     if (loader) {
       loader.classList.add('loader-exit')
-      setTimeout(() => loader.remove(), 400)
+      setTimeout(() => loader.remove(), 350)
     }
   }, [])
 
@@ -98,7 +98,7 @@ export function App() {
     transitionTo({ type: 'home' })
   }, [transitionTo])
 
-  // Scroll progress + back to top (rAF-throttled)
+  // Scroll progress + back to top — direct DOM updates, zero re-renders
   useEffect(() => {
     let ticking = false
     const onScroll = () => {
@@ -106,8 +106,14 @@ export function App() {
       ticking = true
       requestAnimationFrame(() => {
         const h = document.documentElement.scrollHeight - window.innerHeight
-        setScrollProgress(h > 0 ? window.scrollY / h : 0)
-        setShowBackToTop(window.scrollY > window.innerHeight)
+        const progress = h > 0 ? window.scrollY / h : 0
+        const pastFold = window.scrollY > window.innerHeight
+        if (scrollBarRef.current) {
+          scrollBarRef.current.style.transform = `scaleX(${progress})`
+        }
+        if (backToTopRef.current) {
+          backToTopRef.current.style.display = pastFold ? '' : 'none'
+        }
         ticking = false
       })
     }
@@ -122,7 +128,7 @@ export function App() {
   return (
     <>
       <GlassFilter />
-      <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress})` }} />
+      <div className="scroll-progress" ref={scrollBarRef} />
       <div className="grain-overlay" />
       <CursorGlitch />
       <Nav onLogoClick={goHome} />
@@ -156,17 +162,17 @@ export function App() {
       </main>
       <Footer />
 
-      {showBackToTop && (
-        <button
-          className="back-to-top"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          aria-label="Back to top"
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M8 12V4M5 7L8 4L11 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-      )}
+      <button
+        ref={backToTopRef}
+        className="back-to-top"
+        style={{ display: 'none' }}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label="Back to top"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 12V4M5 7L8 4L11 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
 
       <Analytics />
       <SpeedInsights />

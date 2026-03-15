@@ -19,9 +19,22 @@ export function Nav({ onLogoClick }: NavProps) {
   const navRef = useRef<HTMLElement>(null)
 
   // Single throttled scroll handler for hero threshold + active section
+  // Uses cached offsetTop values to avoid forced layout recalc on every frame
   useEffect(() => {
     const sectionIds = ['work', 'services', 'about', 'contact']
     let ticking = false
+    let cachedOffsets: { id: string; top: number }[] = []
+
+    const cacheOffsets = () => {
+      cachedOffsets = sectionIds.map(id => {
+        const el = document.getElementById(id)
+        return { id, top: el ? el.offsetTop : Infinity }
+      })
+    }
+
+    // Cache on load and resize (layout changes)
+    cacheOffsets()
+    window.addEventListener('resize', cacheOffsets)
 
     const update = () => {
       const scrollY = window.scrollY
@@ -33,10 +46,8 @@ export function Nav({ onLogoClick }: NavProps) {
         navStore.setActiveSection('')
       } else {
         let active = ''
-        for (const id of sectionIds) {
-          const el = document.getElementById(id)
-          if (!el) continue
-          if (el.offsetTop <= midpoint) active = id
+        for (const s of cachedOffsets) {
+          if (s.top <= midpoint) active = s.id
         }
         navStore.setActiveSection(active)
       }
@@ -53,7 +64,10 @@ export function Nav({ onLogoClick }: NavProps) {
 
     window.addEventListener('scroll', onScroll, { passive: true })
     update()
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', cacheOffsets)
+    }
   }, [])
 
   useEffect(() => {
