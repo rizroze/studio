@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { PLAYLIST } from '../constants/music'
+// Classic iPod — built with love
 
 export function IpodPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
