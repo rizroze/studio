@@ -2886,11 +2886,6 @@ main {
   overflow: hidden;
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: background 0.4s var(--smooth-ease), border-radius 0.4s var(--smooth-ease),
-              border-color 0.4s var(--smooth-ease), box-shadow 0.4s var(--smooth-ease);
-}
-.discovery-icon * {
-  transition: all 0.35s var(--smooth-ease);
 }
 
 .discovery-slider-content {

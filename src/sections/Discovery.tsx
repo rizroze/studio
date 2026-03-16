@@ -1,10 +1,26 @@
 import { useRef, useCallback, useEffect } from 'react'
 import { WordReveal } from '../components/WordReveal'
 
-// Direct DOM morphing — matches questionnaire.html exactly
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 const lerpRGB = (r1: number, g1: number, b1: number, r2: number, g2: number, b2: number, t: number) =>
   `rgb(${Math.round(lerp(r1, r2, t))},${Math.round(lerp(g1, g2, t))},${Math.round(lerp(b1, b2, t))})`
+
+// Matrix-style number scramble for dense ticker
+const TICKER_BASE = [
+  { sym: 'BTC', val: 67241 },
+  { sym: 'ETH', val: 3841 },
+  { sym: 'SOL', val: 142.8 },
+  { sym: 'DOGE', val: 0.082 },
+  { sym: 'AVAX', val: 38.2 },
+]
+
+function scrambleNum(base: number, seed: number): string {
+  const jitter = Math.sin(seed * 9999) * base * 0.03
+  const v = base + jitter
+  if (base >= 1000) return v.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  if (base >= 1) return v.toFixed(1)
+  return v.toFixed(3)
+}
 
 interface SliderConfig {
   leftLabel: string
@@ -25,39 +41,39 @@ const SLIDERS: SliderConfig[] = [
     rightTags: 'muted, white space',
     defaultValue: 35,
     canvasStyle: 'background:linear-gradient(135deg,#4a1a8a,#1a3a6a);',
-    canvasHTML: '<div data-orb style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f472b6,#fbbf24);box-shadow:0 0 20px rgba(244,114,182,0.5);"></div>',
+    canvasHTML: '<div data-orb style="width:90px;height:90px;border-radius:14px;background:linear-gradient(135deg,#f472b6,#fbbf24);box-shadow:0 0 24px rgba(244,114,182,0.5);"></div>',
     morph(cv, t) {
       const orb = cv.querySelector('[data-orb]') as HTMLElement
       if (!orb) return
       // Bg: deep purple → dark → white
       if (t < 0.15) {
-        cv.style.background = lerpRGB(30, 15, 60, 20, 20, 30, t / 0.15)
+        cv.style.background = lerpRGB(74, 26, 138, 20, 20, 30, t / 0.15)
       } else if (t < 0.6) {
         cv.style.background = lerpRGB(20, 20, 30, 18, 18, 18, (t - 0.15) / 0.45)
       } else {
         cv.style.background = lerpRGB(18, 18, 18, 250, 250, 250, (t - 0.6) / 0.4)
       }
-      cv.style.borderColor = t > 0.7 ? `rgba(0,0,0,${lerp(0, 0.12, (t - 0.7) / 0.3)})` : 'rgba(255,255,255,0.08)'
-      // Orb size: fills canvas → circle → tiny dot
-      const orbSize = t < 0.1 ? lerp(80, 46, t / 0.1) : lerp(46, 8, (t - 0.1) / 0.9)
+      cv.style.borderColor = t > 0.7 ? `rgba(0,0,0,${lerp(0, 0.15, (t - 0.7) / 0.3)})` : 'rgba(255,255,255,0.08)'
+      // Orb: fills entire 90px frame at 0, shrinks to 6px dot at 1
+      const orbSize = lerp(90, 6, t)
       orb.style.width = orbSize + 'px'
       orb.style.height = orbSize + 'px'
-      orb.style.borderRadius = t < 0.08 ? lerp(16, 50, t / 0.08) + 'px' : '50%'
-      // Orb color: vibrant gradient → desaturating → black dot
+      orb.style.borderRadius = t < 0.05 ? lerp(14, 50, t / 0.05) + 'px' : '50%'
+      // Color: vibrant → desaturating → black
       const sat = lerp(80, 0, t)
       const light = lerp(65, 8, t)
       orb.style.background = t < 0.7
         ? `linear-gradient(135deg, hsl(330,${sat}%,${light}%), hsl(45,${sat}%,${light}%))`
         : lerpRGB(60, 60, 60, 10, 10, 10, (t - 0.7) / 0.3)
-      const glow = lerp(24, 0, Math.min(t * 3, 1))
-      orb.style.boxShadow = `0 0 ${glow}px rgba(244,114,182,${lerp(0.5, 0, Math.min(t * 3, 1))})`
+      const glow = lerp(30, 0, Math.min(t * 2.5, 1))
+      orb.style.boxShadow = `0 0 ${glow}px rgba(244,114,182,${lerp(0.6, 0, Math.min(t * 2.5, 1))})`
     },
   },
   {
     leftLabel: 'Playful',
     rightLabel: 'Serious',
     leftTags: 'figma, slack, rounded',
-    rightTags: 'sharp, structured',
+    rightTags: 'linear, stripe',
     defaultValue: 55,
     canvasStyle: 'background:#fef3c7; border-radius:20px; border-color:#fde68a;',
     canvasHTML: `<div data-shapes style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
@@ -100,35 +116,48 @@ const SLIDERS: SliderConfig[] = [
     rightLabel: 'Spacious',
     leftTags: 'bloomberg, info-heavy',
     rightTags: 'apple.com, breathing room',
-    defaultValue: 52,
+    defaultValue: 20,
     canvasStyle: 'background:#0d0d0d; padding:10px; align-items:flex-start; justify-content:flex-start; flex-direction:column;',
-    canvasHTML: `<div data-lines style="font-family:'Fragment Mono',monospace; font-size:7px; line-height:1.4; color:#4ade80; width:100%;">
-      <div data-line>BTC <span style="float:right;">67,241</span></div>
-      <div data-line>ETH <span style="float:right;">3,841</span></div>
-      <div data-line>SOL <span style="float:right;">142.8</span></div>
-      <div data-line style="color:#ef4444;">DOGE <span style="float:right;">0.082</span></div>
-      <div data-line>AVAX <span style="float:right;">38.2</span></div>
-    </div>`,
+    canvasHTML: `<div data-lines style="font-family:'Fragment Mono',monospace; font-size:7px; line-height:1.4; color:#4ade80; width:100%;"></div>`,
     morph(cv, t) {
       const lines = cv.querySelector('[data-lines]') as HTMLElement
       if (!lines) return
+      // Bg: dark → white
       cv.style.background = lerpRGB(13, 13, 13, 250, 250, 250, t)
-      const rows = lines.querySelectorAll('[data-line]') as NodeListOf<HTMLElement>
+      cv.style.borderColor = t > 0.5 ? `rgba(0,0,0,${lerp(0, 0.12, (t - 0.5) / 0.5)})` : 'rgba(255,255,255,0.08)'
+
+      // Number of visible lines
       const visible = Math.max(1, Math.round(lerp(5, 1, t)))
-      rows.forEach((r, i) => {
-        r.style.opacity = i < visible ? '1' : '0'
-        r.style.height = i < visible ? 'auto' : '0'
-        r.style.overflow = 'hidden'
-      })
+
+      // Scramble numbers on every call for matrix effect
+      const seed = performance.now() * 0.01
+      let html = ''
+      for (let i = 0; i < 5; i++) {
+        const item = TICKER_BASE[i]
+        const isRed = item.sym === 'DOGE'
+        const display = i < visible ? '' : 'display:none;'
+        const color = isRed && t < 0.4 ? 'color:#ef4444;' : ''
+        const val = scrambleNum(item.val, seed + i)
+        html += `<div style="${display}${color}">${item.sym}<span style="float:right;">${val}</span></div>`
+      }
+      lines.innerHTML = html
+
+      // Font size: small packed → large single
       lines.style.fontSize = lerp(7, 14, t) + 'px'
+      lines.style.lineHeight = lerp(1.4, 1.8, t).toString()
+
+      // Color: green terminal → dark → gray
       lines.style.color = t < 0.3
         ? '#4ade80'
         : t < 0.6
           ? lerpRGB(74, 222, 128, 40, 40, 40, (t - 0.3) / 0.3)
           : lerpRGB(40, 40, 40, 120, 120, 120, (t - 0.6) / 0.4)
+
+      // Layout shift: left-aligned → centered
       lines.style.textAlign = t > 0.7 ? 'center' : 'left'
       cv.style.justifyContent = t > 0.7 ? 'center' : 'flex-start'
       cv.style.alignItems = t > 0.7 ? 'center' : 'flex-start'
+      cv.style.padding = lerp(10, 16, t) + 'px'
     },
   },
 ]
@@ -141,7 +170,6 @@ function DiscoverySlider({ card }: { card: SliderConfig }) {
   const dragging = useRef(false)
   const valueRef = useRef(card.defaultValue)
 
-  // Direct DOM updates — no React state, no re-renders, instant
   const applyValue = useCallback((v: number) => {
     valueRef.current = v
     const t = v / 100
