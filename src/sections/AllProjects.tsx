@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { CASE_STUDIES } from '../constants/projects'
+import { ProjectCard } from '../components/ProjectCard'
 
 interface AllProjectsProps {
   onBack: () => void
@@ -26,27 +27,7 @@ export function AllProjects({ onBack, onViewProject }: AllProjectsProps) {
         <h1 className="section-title" style={{ fontSize: 32, marginBottom: 32 }}>All Work</h1>
         <div className="work-grid">
           {CASE_STUDIES.map(p => (
-            <div
-              key={p.slug}
-              className="project-card-studio"
-              onClick={() => onViewProject(p.slug)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={e => { if (e.key === 'Enter') onViewProject(p.slug) }}
-            >
-              <div className="project-card-thumb" style={{ backgroundColor: p.color }}>
-                <img src={p.cardThumbnail || p.thumbnail} alt={p.title} loading="lazy" />
-              </div>
-              <div className="project-card-info">
-                <h3 className="project-card-title">{p.title}</h3>
-                <p className="project-card-client">{p.client}</p>
-                <div className="project-card-tags">
-                  {p.tags.slice(0, 3).map(tag => (
-                    <span key={tag} className="project-tag">{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <ProjectCard key={p.slug} project={p} onViewProject={onViewProject} />
           ))}
         </div>
       </div>
