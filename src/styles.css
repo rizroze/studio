@@ -266,10 +266,6 @@ html {
   overflow-x: hidden;
 }
 
-html {
-  background-color: var(--brand-red);
-}
-
 body {
   font-family: 'Inter Tight', sans-serif;
   background-color: var(--bg-secondary);
@@ -2524,7 +2520,7 @@ main {
    =========================== */
 .site-footer {
   background: var(--brand-red);
-  padding: 80px 24px calc(80px + env(safe-area-inset-bottom, 0px));
+  padding: 80px 24px calc(40px + env(safe-area-inset-bottom, 0px));
   position: relative;
   overflow: hidden;
   content-visibility: auto;
