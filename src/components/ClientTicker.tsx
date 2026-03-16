@@ -1,5 +1,3 @@
-import { useEffect, useRef, useCallback } from 'react'
-
 type LogoItem = { src: string; alt: string; className: string }
 
 const LOGOS: LogoItem[] = [
@@ -10,13 +8,14 @@ const LOGOS: LogoItem[] = [
   { src: '/content/logos/wfd-icon.svg', alt: "What's for Dinner", className: 'logo-wfd' },
   { src: '/content/logos/corner-c.webp', alt: 'The Corner', className: 'logo-corner' },
   { src: '/content/logos/Solana Logomark - Color.svg', alt: 'Solana', className: 'logo-solana' },
+  { src: '/content/logos/solana-mobile-icon.svg', alt: 'Solana Mobile', className: 'logo-solana-mobile' },
   { src: '/content/logos/soladex.svg', alt: 'Soladex', className: 'logo-soladex' },
   { src: '/content/logos/skr-seeker.png', alt: 'Seeker', className: 'logo-skr' },
 ]
 
-function LogoSet({ setRef }: { setRef?: React.RefObject<HTMLDivElement | null> }) {
+function LogoSet() {
   return (
-    <div ref={setRef as React.RefObject<HTMLDivElement>} className="ticker-set" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+    <div className="ticker-set">
       {LOGOS.map((logo) => (
         <span key={logo.alt} className="ticker-logo-zone">
           <img
@@ -32,79 +31,10 @@ function LogoSet({ setRef }: { setRef?: React.RefObject<HTMLDivElement | null> }
 }
 
 export function ClientTicker() {
-  const trackRef = useRef<HTMLDivElement>(null)
-  const firstSetRef = useRef<HTMLDivElement>(null)
-  const posRef = useRef(0)
-  const widthRef = useRef(0)
-
-  const measure = useCallback(() => {
-    if (firstSetRef.current) {
-      widthRef.current = firstSetRef.current.scrollWidth
-    }
-  }, [])
-
-  useEffect(() => {
-    const track = trackRef.current
-    if (!track) return
-
-    // Hide track until measured to prevent gap flash
-    track.style.opacity = '0'
-
-    let animId: number
-
-    // Measure after all images in the set have loaded
-    const imgs = firstSetRef.current?.querySelectorAll('img') ?? []
-    let loaded = 0
-    const total = imgs.length
-
-    const onAllLoaded = () => {
-      measure()
-      // Show track once measured — smooth fade in
-      track.style.transition = 'opacity 0.4s ease'
-      track.style.opacity = '1'
-    }
-
-    const onImgReady = () => {
-      loaded++
-      if (loaded >= total) onAllLoaded()
-    }
-
-    imgs.forEach(img => {
-      if (img.complete) { loaded++ } else {
-        img.addEventListener('load', onImgReady, { once: true })
-        img.addEventListener('error', onImgReady, { once: true })
-      }
-    })
-    if (loaded >= total) onAllLoaded()
-
-    window.addEventListener('resize', measure)
-
-    const animate = () => {
-      const w = widthRef.current
-      if (w > 0) {
-        posRef.current -= 0.5
-        // Modulo wrap — no jump, no accumulation error
-        posRef.current = ((posRef.current % w) + w) % w - w
-        track.style.transform = `translate3d(${posRef.current}px, 0, 0)`
-      }
-      animId = requestAnimationFrame(animate)
-    }
-
-    animId = requestAnimationFrame(animate)
-    return () => {
-      cancelAnimationFrame(animId)
-      window.removeEventListener('resize', measure)
-      imgs.forEach(img => {
-        img.removeEventListener('load', onImgReady)
-        img.removeEventListener('error', onImgReady)
-      })
-    }
-  }, [measure])
-
   return (
     <div className="client-ticker">
-      <div className="client-ticker-track" ref={trackRef}>
-        <LogoSet setRef={firstSetRef} />
+      <div className="client-ticker-track">
+        <LogoSet />
         <LogoSet />
       </div>
     </div>

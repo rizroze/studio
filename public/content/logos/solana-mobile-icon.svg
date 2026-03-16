@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="white">
+  <!-- Phone body -->
+  <rect x="25" y="5" width="50" height="90" rx="8" fill="none" stroke="white" stroke-width="3"/>
+  <!-- Solana triple bars (stylized) -->
+  <path d="M35 38 L55 38 L65 32 L45 32 Z" opacity="0.9"/>
+  <path d="M35 52 L55 52 L65 46 L45 46 Z" opacity="0.9"/>
+  <path d="M35 66 L55 66 L65 60 L45 60 Z" opacity="0.9"/>
+  <!-- Home bar -->
+  <rect x="40" y="82" width="20" height="3" rx="1.5" opacity="0.3"/>
+</svg>
