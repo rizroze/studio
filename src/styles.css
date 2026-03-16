@@ -2876,9 +2876,9 @@ main {
 }
 
 .discovery-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
+  width: 80px;
+  height: 80px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2913,13 +2913,15 @@ main {
   cursor: pointer;
   touch-action: none;
   user-select: none;
+  padding: 16px 0;
+  background-clip: content-box;
 }
 
 .discovery-track-fill {
   position: absolute;
-  top: 0;
+  top: 16px;
   left: 0;
-  height: 100%;
+  height: 4px;
   background: rgba(255, 255, 255, 0.25);
   border-radius: 2px;
   pointer-events: none;
@@ -2928,8 +2930,8 @@ main {
 .discovery-thumb {
   position: absolute;
   top: 50%;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: #fff;
   border: 3px solid #c0392b;
@@ -2968,8 +2970,8 @@ main {
     padding: 20px;
   }
   .discovery-icon {
-    width: 48px;
-    height: 48px;
+    width: 64px;
+    height: 64px;
   }
 }
 
