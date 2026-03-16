@@ -87,8 +87,8 @@ export function GsapAnimations() {
       )
 
       .fromTo('.hero-ticker',
-        { opacity: 0, y: 8 },
-        { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out' },
+        { opacity: 0, y: 8, visibility: 'hidden' },
+        { opacity: 1, y: 0, visibility: 'visible', duration: 0.35, ease: 'power3.out' },
         '-=0.25'
       )
 

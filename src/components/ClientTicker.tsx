@@ -8,7 +8,6 @@ const LOGOS: LogoItem[] = [
   { src: '/content/logos/Solana Logomark - Color.svg', alt: 'Solana', className: 'logo-solana' },
   { src: '/content/logos/soladex.svg', alt: 'Soladex', className: 'logo-soladex' },
   { src: '/content/logos/skr-seeker.png', alt: 'Seeker', className: 'logo-skr' },
-  { src: '/content/logos/solana-mobile.svg', alt: 'Solana Mobile', className: 'logo-solana-mobile' },
   { src: '/content/logos/fullport-ticker.svg', alt: 'Fullport', className: 'logo-fullport' },
   { src: '/content/logos/wayy-logomark.webp', alt: 'WAYY', className: 'logo-wayy' },
   { src: '/content/logos/wfd-icon.svg', alt: "What's for Dinner", className: 'logo-wfd' },
