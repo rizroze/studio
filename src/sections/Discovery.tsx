@@ -218,7 +218,7 @@ function DiscoverySlider({ card }: { card: SliderConfig }) {
   }, [])
 
   return (
-    <div className="discovery-slider-card" data-reveal>
+    <div className="discovery-slider-card">
       <div
         ref={(el) => {
           if (!el) return
@@ -267,25 +267,25 @@ export function Discovery() {
         {SLIDERS.map((card, i) => (
           <DiscoverySlider key={i} card={card} />
         ))}
-      </div>
-      {/* Blurred teaser — hints there's more */}
-      <div className="discovery-slider-card" data-reveal style={{ filter: 'blur(4px)', pointerEvents: 'none', opacity: 0.5 }}>
-        <div className="discovery-icon" style={{ background: '#333', flexDirection: 'column' }}>
-          <div style={{ fontFamily: "'Urbanist',sans-serif", fontWeight: 700, fontSize: 22, letterSpacing: '-0.02em', color: '#fff' }}>Aa</div>
-          <div style={{ fontSize: 8, marginTop: 4, color: 'rgba(255,255,255,0.4)', fontFamily: "'Fragment Mono',monospace" }}>mode</div>
-        </div>
-        <div className="discovery-slider-content">
-          <div className="discovery-slider-labels">
-            <span className="discovery-label-left">Dark</span>
-            <span className="discovery-label-right">Light</span>
+        {/* Blurred teaser — hints there's more */}
+        <div className="discovery-slider-card" style={{ filter: 'blur(4px)', pointerEvents: 'none' }}>
+          <div className="discovery-icon" style={{ background: '#333', flexDirection: 'column' }}>
+            <div style={{ fontFamily: "'Urbanist',sans-serif", fontWeight: 700, fontSize: 22, letterSpacing: '-0.02em', color: '#fff' }}>Aa</div>
+            <div style={{ fontSize: 8, marginTop: 4, color: 'rgba(255,255,255,0.4)', fontFamily: "'Fragment Mono',monospace" }}>mode</div>
           </div>
-          <div className="discovery-track">
-            <div className="discovery-track-fill" style={{ width: '50%' }} />
-            <div className="discovery-thumb" style={{ left: '50%' }} />
-          </div>
-          <div className="discovery-slider-tags">
-            <span className="discovery-tag">linear, rizzy.today</span>
-            <span className="discovery-tag">notion, apple</span>
+          <div className="discovery-slider-content">
+            <div className="discovery-slider-labels">
+              <span className="discovery-label-left">Dark</span>
+              <span className="discovery-label-right">Light</span>
+            </div>
+            <div className="discovery-track">
+              <div className="discovery-track-fill" style={{ width: '50%' }} />
+              <div className="discovery-thumb" style={{ left: '50%' }} />
+            </div>
+            <div className="discovery-slider-tags">
+              <span className="discovery-tag">linear, rizzy.today</span>
+              <span className="discovery-tag">notion, apple</span>
+            </div>
           </div>
         </div>
       </div>
