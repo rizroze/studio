@@ -4198,9 +4198,12 @@ main {
     display: none;
   }
 
-  /* Shrink pill at footer on mobile too */
+  /* Shrink pill at footer on mobile too — centered, tight */
   .site-nav.scrolled.at-footer {
-    max-width: 140px;
+    max-width: 90px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
   }
 
   .site-nav.scrolled.at-footer .nav-brand {
@@ -4212,8 +4215,8 @@ main {
   }
 
   .site-nav.scrolled.at-footer .nav-inner {
-    gap: 4px;
-    padding: 0 12px;
+    gap: 2px;
+    padding: 0 8px;
   }
 
   .hero-studio { padding-top: 120px; }
