@@ -4119,29 +4119,41 @@ main {
   .mobile-only { display: flex; }
   .nav-pfp { width: 26px; height: 26px; }
 
-  /* Reset pill behavior on mobile — premium frosted glass */
+  /* Floating pill nav on mobile — always a pill, never a full bar */
+  .site-nav {
+    top: 10px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+    max-width: calc(100% - 32px);
+    height: 48px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(50px) saturate(140%);
+    -webkit-backdrop-filter: blur(50px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  }
+
   .site-nav.scrolled {
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 100%;
-    height: 56px;
-    top: 0;
-    border-radius: 0;
-    border: none;
-    border-bottom: none;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(50px) saturate(140%) brightness(1.05);
-    -webkit-backdrop-filter: blur(50px) saturate(140%) brightness(1.05);
-    box-shadow:
-      0 0 3px 1px rgba(255, 255, 255, 0.08) inset,
-      0 1px 0 rgba(255, 255, 255, 0.1) inset,
-      0 4px 24px rgba(0, 0, 0, 0.35);
+    left: 16px;
+    right: 16px;
+    width: auto;
+    max-width: calc(100% - 32px);
+    height: 48px;
+    top: 10px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(50px) saturate(140%);
+    -webkit-backdrop-filter: blur(50px) saturate(140%);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
     margin: 0;
   }
 
+  .site-nav .nav-inner,
   .site-nav.scrolled .nav-inner {
-    padding: 0 24px;
+    padding: 0 18px;
     justify-content: space-between;
   }
 
@@ -4149,7 +4161,7 @@ main {
     display: none;
   }
 
-  .hero-studio { padding-top: 80px; }
+  .hero-studio { padding-top: 70px; }
   .hero-split { grid-template-columns: 1fr; gap: 32px; }
   .hero-left { text-align: left; }
   .hero-subline { max-width: 100%; }
