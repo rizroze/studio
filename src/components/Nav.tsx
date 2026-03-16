@@ -18,8 +18,63 @@ export function Nav({ onLogoClick, scrollBarRef }: NavProps) {
   const mobileOpen = useMobileNav()
   const { scrolledPastHero, pillExpanded, activeSection, atFooter } = useNavScroll()
   const navRef = useRef<HTMLElement>(null)
+  const dotRef = useRef<HTMLButtonElement>(null)
+  const angleRef = useRef(0)
+  const orbitingRef = useRef(true)
+  const targetAngleRef = useRef<number | null>(null)
   const [menuVisible, setMenuVisible] = useState(false)
   const [menuClosing, setMenuClosing] = useState(false)
+
+  // JS-driven orbit for the 2-dot toggle
+  useEffect(() => {
+    const el = dotRef.current
+    if (!el) return
+    let animId: number
+    const speed = 360 / 3000 // 360deg per 3s (in deg/ms)
+    let lastTime = performance.now()
+
+    const tick = (now: number) => {
+      const dt = now - lastTime
+      lastTime = now
+
+      if (targetAngleRef.current !== null) {
+        // Smoothly rotate forward toward target
+        const target = targetAngleRef.current
+        const remaining = target - angleRef.current
+        if (remaining <= 0.5) {
+          angleRef.current = target
+          targetAngleRef.current = null
+          orbitingRef.current = false
+        } else {
+          // Ease out as we approach target, but never slower than orbit speed
+          const easeSpeed = Math.max(speed * dt, remaining * 0.08)
+          angleRef.current += easeSpeed
+        }
+      } else if (orbitingRef.current) {
+        angleRef.current += speed * dt
+      }
+
+      el.style.transform = `rotate(${angleRef.current % 360}deg)`
+      animId = requestAnimationFrame(tick)
+    }
+
+    animId = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(animId)
+  }, [])
+
+  // When menu opens/closes, set orbit target
+  useEffect(() => {
+    if (mobileOpen) {
+      // Find next 90deg forward from current angle
+      const current = angleRef.current % 360
+      const next90 = Math.ceil(current / 90) * 90
+      // If we're already very close to 90, go to the next one
+      targetAngleRef.current = angleRef.current + (next90 - current < 5 ? 90 + (next90 - current) : (next90 - current))
+    } else {
+      // Resume orbiting from current position
+      orbitingRef.current = true
+    }
+  }, [mobileOpen])
 
   // Sync menu visibility with open state, adding close animation delay
   useEffect(() => {
@@ -175,6 +230,7 @@ export function Nav({ onLogoClick, scrollBarRef }: NavProps) {
           </button>
 
           <button
+            ref={dotRef}
             className={`nav-mobile-toggle mobile-only ${mobileOpen ? 'open' : ''}`}
             onClick={(e) => { e.stopPropagation(); navStore.toggle() }}
             aria-label="Toggle menu"

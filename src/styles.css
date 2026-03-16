@@ -713,7 +713,7 @@ main {
   }
 }
 
-/* Mobile nav toggle — 2-dot yin-yang */
+/* Mobile nav toggle — 2-dot yin-yang (JS drives rotation) */
 .nav-mobile-toggle {
   display: none;
   position: relative;
@@ -723,8 +723,6 @@ main {
   border: none;
   padding: 0;
   cursor: pointer;
-  transition: transform 3s linear;
-  animation: dotOrbit 3s linear infinite;
 }
 
 .nav-mobile-toggle span {
@@ -733,37 +731,21 @@ main {
   height: 4px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.7);
+  transition: opacity 0.3s var(--smooth-ease), background 0.3s var(--smooth-ease);
 }
 
-/* Default: vertical — top and bottom */
 .nav-mobile-toggle span:nth-child(1) {
   top: 6px;
   left: 12px;
-  transition: all 0.4s var(--bounce-ease);
 }
 
 .nav-mobile-toggle span:nth-child(2) {
   top: 18px;
   left: 12px;
   opacity: 0.35;
-  transition: all 0.4s var(--bounce-ease);
 }
 
-/* Open: horizontal — side by side, same position every time */
-.nav-mobile-toggle.open {
-  animation: none;
-}
-
-.nav-mobile-toggle.open span:nth-child(1) {
-  top: 12px;
-  left: 18px;
-  opacity: 1;
-  background: var(--text-primary);
-}
-
-.nav-mobile-toggle.open span:nth-child(2) {
-  top: 12px;
-  left: 6px;
+.nav-mobile-toggle.open span {
   opacity: 1;
   background: var(--text-primary);
 }
