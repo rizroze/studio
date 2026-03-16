@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 
 type LogoItem = { src: string; alt: string; className: string }
 
@@ -24,6 +24,7 @@ function LogoSet({ setRef }: { setRef?: React.RefObject<HTMLDivElement | null> }
             src={logo.src}
             alt={logo.alt}
             className={`ticker-logo ${logo.className}`}
+            loading="eager"
           />
         </span>
       ))}
@@ -34,32 +35,49 @@ function LogoSet({ setRef }: { setRef?: React.RefObject<HTMLDivElement | null> }
 export function ClientTicker() {
   const trackRef = useRef<HTMLDivElement>(null)
   const firstSetRef = useRef<HTMLDivElement>(null)
+  const posRef = useRef(0)
+  const widthRef = useRef(0)
+
+  const measure = useCallback(() => {
+    if (firstSetRef.current) {
+      widthRef.current = firstSetRef.current.scrollWidth
+    }
+  }, [])
 
   useEffect(() => {
     const track = trackRef.current
-    const firstSet = firstSetRef.current
-    if (!track || !firstSet) return
+    if (!track) return
 
     let animId: number
-    let pos = 0
-    let setWidth = 0
-    const speed = 0.5 // px per frame
 
-    // Wait for images to load then cache width
-    const measure = () => { setWidth = firstSet.offsetWidth }
-    measure()
-    // Re-measure once after images settle
-    setTimeout(measure, 500)
+    // Measure after all images in the set have loaded
+    const imgs = firstSetRef.current?.querySelectorAll('img') ?? []
+    let loaded = 0
+    const total = imgs.length
+
+    const onImgReady = () => {
+      loaded++
+      if (loaded >= total) measure()
+    }
+
+    imgs.forEach(img => {
+      if (img.complete) { loaded++ } else {
+        img.addEventListener('load', onImgReady, { once: true })
+        img.addEventListener('error', onImgReady, { once: true })
+      }
+    })
+    if (loaded >= total) measure()
+
     window.addEventListener('resize', measure)
 
     const animate = () => {
-      if (setWidth === 0) { animId = requestAnimationFrame(animate); return }
-
-      pos -= speed
-      if (pos <= -setWidth) {
-        pos += setWidth
+      const w = widthRef.current
+      if (w > 0) {
+        posRef.current -= 0.5
+        // Modulo wrap — no jump, no accumulation error
+        posRef.current = ((posRef.current % w) + w) % w - w
+        track.style.transform = `translate3d(${posRef.current}px, 0, 0)`
       }
-      track.style.transform = `translate3d(${pos}px, 0, 0)`
       animId = requestAnimationFrame(animate)
     }
 
@@ -67,12 +85,16 @@ export function ClientTicker() {
     return () => {
       cancelAnimationFrame(animId)
       window.removeEventListener('resize', measure)
+      imgs.forEach(img => {
+        img.removeEventListener('load', onImgReady)
+        img.removeEventListener('error', onImgReady)
+      })
     }
-  }, [])
+  }, [measure])
 
   return (
     <div className="client-ticker">
-      <div className="client-ticker-track" ref={trackRef} style={{ animation: 'none' }}>
+      <div className="client-ticker-track" ref={trackRef}>
         <LogoSet setRef={firstSetRef} />
         <LogoSet />
       </div>
