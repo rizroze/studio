@@ -176,7 +176,7 @@ export function Nav({ onLogoClick, scrollBarRef }: NavProps) {
 
           <button
             className={`nav-mobile-toggle mobile-only ${mobileOpen ? 'open' : ''}`}
-            onClick={navStore.toggle}
+            onClick={(e) => { e.stopPropagation(); navStore.toggle() }}
             aria-label="Toggle menu"
           >
             <span /><span />
