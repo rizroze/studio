@@ -1408,16 +1408,16 @@ main {
   opacity: 1;
 }
 
-.ticker-logo.logo-radiants { height: 34px; }
+.ticker-logo.logo-radiants { height: 38px; }
 .ticker-logo.logo-hydex { height: 34px; }
 .ticker-logo.logo-solana { height: 30px; }
 .ticker-logo.logo-soladex { height: 34px; }
 .ticker-logo.logo-skr { height: 34px; }
 .ticker-logo.logo-solana-mobile { height: 34px; }
-.ticker-logo.logo-fullport { height: 34px; }
-.ticker-logo.logo-wayy { height: 34px; }
-.ticker-logo.logo-wfd { height: 34px; }
-.ticker-logo.logo-corner { height: 38px; }
+.ticker-logo.logo-fullport { height: 46px; }
+.ticker-logo.logo-wayy { height: 38px; }
+.ticker-logo.logo-wfd { height: 44px; }
+.ticker-logo.logo-corner { height: 48px; }
 
 @keyframes ticker-scroll {
   0% { transform: translate3d(0, 0, 0); }
