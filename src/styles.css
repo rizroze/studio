@@ -716,14 +716,14 @@ main {
 /* Mobile nav toggle — 2-dot yin-yang */
 .nav-mobile-toggle {
   display: none;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
+  position: relative;
+  width: 28px;
+  height: 28px;
   background: none;
   border: none;
-  padding: 10px;
+  padding: 0;
   cursor: pointer;
+  animation: dotOrbit 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .nav-mobile-toggle span {
@@ -736,21 +736,16 @@ main {
 }
 
 .nav-mobile-toggle span:nth-child(1) {
-  top: 10px;
+  top: 6px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .nav-mobile-toggle span:nth-child(2) {
-  bottom: 10px;
+  bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
   opacity: 0.35;
-}
-
-.nav-mobile-toggle {
-  position: relative;
-  animation: dotOrbit 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .nav-mobile-toggle.open {
@@ -4139,6 +4134,7 @@ main {
 @media (max-width: 768px) {
   .desktop-only { display: none; }
   .mobile-only { display: flex; }
+  .nav-mobile-toggle.mobile-only { display: block; }
   .nav-pfp { width: 26px; height: 26px; }
 
   /* Floating pill nav on mobile — always a pill, never a full bar */
@@ -4193,7 +4189,7 @@ main {
   .bookshelf { transform: scale(0.65); transform-origin: center; }
   .book-container { --bk-width: 40px; }
   .hero-ticker { flex-direction: column; gap: 16px; padding: 24px 0; overflow: visible; }
-  .client-ticker { mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent); }
+  .client-ticker { mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%); }
   .ascii-rose { transform: translate(-50%, -50%) scale(0.8); }
   .ascii-rose pre { font-size: 6px; }
 
