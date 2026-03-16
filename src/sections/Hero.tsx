@@ -105,6 +105,8 @@ export function Hero() {
   }, [])
 
   useEffect(() => {
+    // Skip parallax on mobile — causes scroll jank
+    if (window.innerWidth < 769) return
     let ticking = false
     const onScroll = () => {
       if (ticking) return
