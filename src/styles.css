@@ -2879,7 +2879,7 @@ main {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  transition: background 0.3s var(--smooth-ease);
+  transition: opacity 0.9s var(--smooth-ease), transform 1s var(--pill-ease), background 0.3s var(--smooth-ease);
 }
 .discovery-slider-card:hover {
   background: rgba(255, 255, 255, 0.06);
