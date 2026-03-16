@@ -1379,6 +1379,7 @@ main {
 .client-ticker-track {
   display: flex;
   align-items: center;
+  gap: 48px;
   animation: ticker-scroll 30s linear infinite;
   width: max-content;
   will-change: transform;
@@ -1389,7 +1390,6 @@ main {
 .ticker-logo-zone {
   display: inline-flex;
   align-items: center;
-  margin-right: 48px;
   flex-shrink: 0;
 }
 
