@@ -42,10 +42,17 @@ export function ClientTicker() {
 
     let animId: number
     let pos = 0
+    let setWidth = 0
     const speed = 0.5 // px per frame
 
+    // Wait for images to load then cache width
+    const measure = () => { setWidth = firstSet.offsetWidth }
+    measure()
+    // Re-measure once after images settle
+    setTimeout(measure, 500)
+    window.addEventListener('resize', measure)
+
     const animate = () => {
-      const setWidth = firstSet.offsetWidth
       if (setWidth === 0) { animId = requestAnimationFrame(animate); return }
 
       pos -= speed
@@ -57,7 +64,10 @@ export function ClientTicker() {
     }
 
     animId = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(animId)
+    return () => {
+      cancelAnimationFrame(animId)
+      window.removeEventListener('resize', measure)
+    }
   }, [])
 
   return (
