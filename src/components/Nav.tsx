@@ -134,7 +134,15 @@ export function Nav({ onLogoClick, scrollBarRef }: NavProps) {
 
   return (
     <>
-      <nav className={navClass} ref={navRef}>
+      <nav className={navClass} ref={navRef} onClick={(e) => {
+        // On mobile, clicking anywhere on the pill toggles menu
+        if (window.innerWidth <= 768) {
+          // Don't toggle if clicking a link or the brand
+          const target = e.target as HTMLElement
+          if (target.closest('a') || target.closest('.nav-cta')) return
+          navStore.toggle()
+        }
+      }}>
         <div className="nav-inner">
           <a href="#" className="nav-brand" onClick={scrollToTop}>
             <img src="/rizzy-avatar.webp" alt="Rizzy Studio" className="nav-pfp" />

@@ -723,7 +723,8 @@ main {
   border: none;
   padding: 0;
   cursor: pointer;
-  animation: dotOrbit 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transition: transform 3s linear;
+  animation: dotOrbit 3s linear infinite;
 }
 
 .nav-mobile-toggle span {
@@ -732,44 +733,39 @@ main {
   height: 4px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.7);
-  transition: top 0.4s var(--bounce-ease), bottom 0.4s var(--bounce-ease), left 0.4s var(--bounce-ease), opacity 0.3s var(--smooth-ease), background 0.3s var(--smooth-ease);
 }
 
+/* Default: vertical — top and bottom */
 .nav-mobile-toggle span:nth-child(1) {
   top: 6px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 12px;
+  transition: all 0.4s var(--bounce-ease);
 }
 
 .nav-mobile-toggle span:nth-child(2) {
-  bottom: 6px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 18px;
+  left: 12px;
   opacity: 0.35;
+  transition: all 0.4s var(--bounce-ease);
 }
 
-/* Open: pause orbit, dots slide to horizontal */
+/* Open: horizontal — side by side, same position every time */
 .nav-mobile-toggle.open {
-  animation-play-state: paused;
-}
-
-.nav-mobile-toggle.open span {
-  background: var(--text-primary);
-  opacity: 1;
+  animation: none;
 }
 
 .nav-mobile-toggle.open span:nth-child(1) {
-  top: 50%;
-  left: 30%;
-  transform: translate(-50%, -50%);
+  top: 12px;
+  left: 6px;
+  opacity: 1;
+  background: var(--text-primary);
 }
 
 .nav-mobile-toggle.open span:nth-child(2) {
-  bottom: auto;
-  top: 50%;
-  left: 70%;
-  transform: translate(-50%, -50%);
+  top: 12px;
+  left: 18px;
   opacity: 1;
+  background: var(--text-primary);
 }
 
 .nav-mobile-backdrop {
