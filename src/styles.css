@@ -4138,6 +4138,12 @@ main {
   .nav-mobile-toggle.mobile-only { display: block; }
   .nav-pfp { width: 26px; height: 26px; }
 
+  /* === MOBILE PERFORMANCE === */
+  .grain-overlay { display: none; }
+  .hero-studio::before { animation: none; }
+  [data-reveal] { filter: none; transform: translateY(24px); }
+  .nav-dot-orbit { animation: none; }
+
   /* Floating pill nav on mobile — always a pill, never a full bar */
   .site-nav {
     top: 10px;
