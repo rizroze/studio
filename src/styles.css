@@ -1434,62 +1434,42 @@ main {
   white-space: nowrap;
 }
 
-.client-ticker {
+.ticker-wrap {
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, black 20%, black 80%, transparent);
-  mask-image: linear-gradient(90deg, transparent, black 20%, black 80%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
 }
 
-.client-ticker-track {
+.ticker-move {
   display: flex;
   align-items: center;
-  width: max-content;
-  animation: ticker-scroll 30s linear infinite;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
+  gap: 48px;
+  animation: marquee 40s linear infinite;
 }
 
-.ticker-set {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.ticker-logo-zone {
-  display: inline-flex;
-  align-items: center;
-  padding: 0 24px;
-  flex-shrink: 0;
-}
-
-.ticker-logo {
+.ticker-img {
   height: 32px;
   width: auto;
+  flex-shrink: 0;
   object-fit: contain;
   filter: brightness(0) invert(1);
   opacity: 0.5;
-  transition: all 0.4s var(--smooth-ease);
 }
 
-.ticker-logo-zone:hover .ticker-logo {
-  filter: none;
-  opacity: 1;
-}
+.ticker-img.logo-radiants { height: 38px; }
+.ticker-img.logo-hydex { height: 34px; }
+.ticker-img.logo-solana { height: 30px; }
+.ticker-img.logo-soladex { height: 34px; }
+.ticker-img.logo-skr { height: 34px; }
+.ticker-img.logo-solana-mobile { height: auto; width: 160px; }
+.ticker-img.logo-fullport { height: 58px; }
+.ticker-img.logo-wayy { height: 38px; }
+.ticker-img.logo-wfd { height: 44px; }
+.ticker-img.logo-corner { height: 60px; }
 
-.ticker-logo.logo-radiants { height: 38px; }
-.ticker-logo.logo-hydex { height: 34px; }
-.ticker-logo.logo-solana { height: 30px; }
-.ticker-logo.logo-soladex { height: 34px; }
-.ticker-logo.logo-skr { height: 34px; }
-.ticker-logo.logo-solana-mobile { height: auto; width: 200px; }
-.ticker-logo.logo-fullport { height: 58px; }
-.ticker-logo.logo-wayy { height: 38px; }
-.ticker-logo.logo-wfd { height: 44px; }
-.ticker-logo.logo-corner { height: 60px; }
-
-@keyframes ticker-scroll {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-50%, 0, 0); }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-25%); }
 }
 
 /* ===========================
@@ -4201,9 +4181,8 @@ main {
   .bookshelf { transform: scale(0.65); transform-origin: center; }
   .book-container { --bk-width: 40px; }
   .hero-ticker { flex-direction: column; gap: 16px; padding: 24px 0; overflow: visible; }
-  .client-ticker { -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%); }
-  .client-ticker-track { animation-duration: 20s; }
-  .ticker-logo.logo-solana-mobile { width: 120px; }
+  .ticker-move { animation-duration: 25s; }
+  .ticker-img.logo-solana-mobile { width: 120px; }
   .ascii-rose { transform: translate(-50%, -50%) scale(0.8); }
   .ascii-rose pre { font-size: 6px; }
 
@@ -4329,5 +4308,5 @@ main {
     transition-duration: 0.01ms !important;
   }
 
-  .client-ticker-track { animation-duration: 20s !important; animation-iteration-count: infinite !important; }
+  .ticker-move { animation-duration: 30s !important; animation-iteration-count: infinite !important; }
 }

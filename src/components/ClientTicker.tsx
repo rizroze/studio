@@ -1,41 +1,32 @@
-type LogoItem = { src: string; alt: string; className: string }
-
-const LOGOS: LogoItem[] = [
-  { src: '/content/logos/radiants-pixel.svg', alt: 'Radiants', className: 'logo-radiants' },
-  { src: '/content/logos/wayy-logomark.webp', alt: 'WAYY', className: 'logo-wayy' },
-  { src: '/content/logos/hydex logo.png', alt: 'Hydex', className: 'logo-hydex' },
-  { src: '/content/logos/fullport-ticker.svg', alt: 'Fullport', className: 'logo-fullport' },
-  { src: '/content/logos/wfd-icon.svg', alt: "What's for Dinner", className: 'logo-wfd' },
-  { src: '/content/logos/corner-c.webp', alt: 'The Corner', className: 'logo-corner' },
-  { src: '/content/logos/Solana Logomark - Color.svg', alt: 'Solana', className: 'logo-solana' },
-  { src: '/content/logos/solana-mobile.svg', alt: 'Solana Mobile', className: 'logo-solana-mobile' },
-  { src: '/content/logos/soladex.svg', alt: 'Soladex', className: 'logo-soladex' },
-  { src: '/content/logos/skr-seeker.png', alt: 'Seeker', className: 'logo-skr' },
+const LOGOS = [
+  { src: '/content/logos/radiants-pixel.svg', alt: 'Radiants', cls: 'logo-radiants' },
+  { src: '/content/logos/wayy-logomark.webp', alt: 'WAYY', cls: 'logo-wayy' },
+  { src: '/content/logos/hydex logo.png', alt: 'Hydex', cls: 'logo-hydex' },
+  { src: '/content/logos/fullport-ticker.svg', alt: 'Fullport', cls: 'logo-fullport' },
+  { src: '/content/logos/wfd-icon.svg', alt: "What's for Dinner", cls: 'logo-wfd' },
+  { src: '/content/logos/corner-c.webp', alt: 'The Corner', cls: 'logo-corner' },
+  { src: '/content/logos/Solana Logomark - Color.svg', alt: 'Solana', cls: 'logo-solana' },
+  { src: '/content/logos/solana-mobile.svg', alt: 'Solana Mobile', cls: 'logo-solana-mobile' },
+  { src: '/content/logos/soladex.svg', alt: 'Soladex', cls: 'logo-soladex' },
+  { src: '/content/logos/skr-seeker.png', alt: 'Seeker', cls: 'logo-skr' },
 ]
 
-function LogoSet() {
-  return (
-    <div className="ticker-set">
-      {LOGOS.map((logo) => (
-        <span key={logo.alt} className="ticker-logo-zone">
-          <img
-            src={logo.src}
-            alt={logo.alt}
-            className={`ticker-logo ${logo.className}`}
-            loading="eager"
-          />
-        </span>
-      ))}
-    </div>
-  )
-}
+// Repeat enough times to always fill the screen
+const ITEMS = [...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS]
 
 export function ClientTicker() {
   return (
-    <div className="client-ticker">
-      <div className="client-ticker-track">
-        <LogoSet />
-        <LogoSet />
+    <div className="ticker-wrap">
+      <div className="ticker-move">
+        {ITEMS.map((logo, i) => (
+          <img
+            key={i}
+            src={logo.src}
+            alt={logo.alt}
+            className={`ticker-img ${logo.cls}`}
+            loading="eager"
+          />
+        ))}
       </div>
     </div>
   )
