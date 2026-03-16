@@ -1135,9 +1135,10 @@ main {
   place-items: center;
   transform-style: preserve-3d;
   transform: translateZ(calc(var(--bk-depth) / -2));
-  transition: transform 0.3s var(--smooth-ease), width 0.3s var(--smooth-ease);
+  transition: transform 0.5s var(--bounce-ease), width 0.5s var(--bounce-ease);
   cursor: pointer;
   position: relative;
+  will-change: transform;
 }
 
 /* Contact shadow under each book */
@@ -1151,7 +1152,7 @@ main {
   height: 10px;
   background: radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, transparent 70%);
   border-radius: 50%;
-  transition: opacity 0.3s var(--smooth-ease), width 0.3s var(--smooth-ease);
+  transition: opacity 0.5s var(--smooth-ease), width 0.5s var(--smooth-ease);
   pointer-events: none;
 }
 
@@ -1169,7 +1170,7 @@ main {
   filter: blur(20px);
   pointer-events: none;
   z-index: -1;
-  transition: opacity 0.3s var(--smooth-ease);
+  transition: opacity 0.5s var(--smooth-ease), filter 0.5s var(--smooth-ease);
 }
 
 /* Gentle float tease — applied to one book at a time via JS */
@@ -1211,7 +1212,8 @@ main {
   height: var(--bk-height);
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.3s var(--smooth-ease);
+  transition: transform 0.5s var(--bounce-ease);
+  will-change: transform;
 }
 
 .book > div {
@@ -1340,7 +1342,7 @@ main {
   width: auto;
   object-fit: contain;
   opacity: 0.9;
-  transition: opacity 0.3s var(--smooth-ease);
+  transition: opacity 0.5s var(--smooth-ease);
 }
 
 .book-side {
