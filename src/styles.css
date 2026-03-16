@@ -1444,7 +1444,7 @@ main {
   display: flex;
   align-items: center;
   gap: 48px;
-  animation: marquee 18s linear infinite;
+  animation: marquee 12s linear infinite;
 }
 
 .ticker-img {
@@ -4181,7 +4181,8 @@ main {
   .bookshelf { transform: scale(0.65); transform-origin: center; }
   .book-container { --bk-width: 40px; }
   .hero-ticker { flex-direction: column; gap: 16px; padding: 24px 0; overflow: visible; }
-  .ticker-move { animation-duration: 25s; }
+  .ticker-wrap { -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); }
+  .ticker-move { animation-duration: 10s; }
   .ticker-img.logo-solana-mobile { width: 120px; }
   .ascii-rose { transform: translate(-50%, -50%) scale(0.8); }
   .ascii-rose pre { font-size: 6px; }
