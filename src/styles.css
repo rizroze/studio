@@ -268,7 +268,7 @@ html {
 
 body {
   font-family: 'Inter Tight', sans-serif;
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -878,7 +878,7 @@ main {
    HERO
    =========================== */
 .hero-studio {
-  min-height: 90vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -886,8 +886,6 @@ main {
   position: relative;
   overflow: hidden;
   padding: 120px 24px 0;
-  margin-top: -20px;
-  padding-top: 140px;
 }
 
 .hero-studio::before {
@@ -4164,7 +4162,7 @@ main {
     display: none;
   }
 
-  .hero-studio { padding-top: 140px; }
+  .hero-studio { padding-top: 120px; }
   .hero-split { grid-template-columns: 1fr; gap: 32px; }
   .hero-left { text-align: left; }
   .hero-subline { max-width: 100%; }
