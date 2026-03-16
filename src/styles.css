@@ -2518,7 +2518,7 @@ main {
    =========================== */
 .site-footer {
   background: var(--brand-red);
-  padding: 80px 24px calc(40px + env(safe-area-inset-bottom, 0px));
+  padding: 80px 24px calc(80px + env(safe-area-inset-bottom, 0px));
   position: relative;
   overflow: hidden;
   content-visibility: auto;
@@ -4149,6 +4149,14 @@ main {
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    will-change: max-width, left, right;
+    transition:
+      max-width 0.6s var(--pill-ease),
+      left 0.6s var(--pill-ease),
+      right 0.6s var(--pill-ease),
+      background 0.4s var(--smooth-ease),
+      border-color 0.4s var(--smooth-ease),
+      box-shadow 0.6s var(--smooth-ease);
   }
 
   .site-nav.scrolled {
@@ -4174,6 +4182,27 @@ main {
   }
 
   .site-nav.scrolled .nav-dot-toggle {
+    display: none;
+  }
+
+  /* Shrink pill at footer on mobile too */
+  .site-nav.scrolled.at-footer {
+    max-width: 100px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  .site-nav.scrolled.at-footer .nav-brand {
+    gap: 0;
+  }
+
+  .site-nav.scrolled.at-footer .nav-inner {
+    gap: 4px;
+    padding: 0 10px;
+  }
+
+  .site-nav.scrolled.at-footer .nav-mobile-toggle {
     display: none;
   }
 
@@ -4237,7 +4266,7 @@ main {
   }
   .project-card-studio:hover .project-card-arrow { transform: none; }
 
-  .site-footer { padding: 60px 20px calc(40px + env(safe-area-inset-bottom, 0px)); overflow: hidden; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-start; }
+  .site-footer { padding: 60px 20px calc(80px + env(safe-area-inset-bottom, 0px)); overflow: hidden; min-height: calc(100svh + 60px); display: flex; flex-direction: column; justify-content: flex-start; }
   .footer-inner { grid-template-columns: 1fr; gap: 24px; padding-bottom: 0; }
   .footer-bottom-row { display: flex; flex-direction: row; align-items: flex-start; gap: 16px; margin-top: 20px; }
   .footer-ipod-wrap { margin-left: auto; }
