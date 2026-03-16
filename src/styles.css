@@ -1434,18 +1434,25 @@ main {
 
 .ticker-wrap::before {
   left: 0;
-  background: linear-gradient(to right, var(--bg-secondary), transparent);
+  background: linear-gradient(to right, rgb(59, 3, 3), transparent);
 }
 
 .ticker-wrap::after {
   right: 0;
-  background: linear-gradient(to left, var(--bg-secondary), transparent);
+  background: linear-gradient(to left, rgb(59, 3, 3), transparent);
 }
 
 .ticker-move {
   display: flex;
   align-items: center;
+}
+
+.ticker-set {
+  display: flex;
+  align-items: center;
   gap: 48px;
+  padding-right: 48px;
+  flex-shrink: 0;
 }
 
 .ticker-img {

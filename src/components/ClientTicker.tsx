@@ -13,50 +13,76 @@ const LOGOS = [
   { src: '/content/logos/skr-seeker.png', alt: 'Seeker', cls: 'logo-skr' },
 ]
 
-// Render logos 4 times so there's always enough to fill any screen
-const ALL = [...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS]
+function LogoRow() {
+  return (
+    <>
+      {LOGOS.map((logo, i) => (
+        <img key={i} src={logo.src} alt={logo.alt} className={`ticker-img ${logo.cls}`} loading="eager" />
+      ))}
+    </>
+  )
+}
 
 export function ClientTicker() {
-  const ref = useRef<HTMLDivElement>(null)
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const moveRef = useRef<HTMLDivElement>(null)
+  const setRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const el = ref.current
-    if (!el) return
+    const move = moveRef.current
+    const set = setRef.current
+    if (!move || !set) return
+
     let pos = 0
+    let setWidth = 0
     let raf: number
-    const speed = 0.6
+
+    const measure = () => {
+      setWidth = set.offsetWidth
+    }
+
+    // Wait for all images to load then measure
+    const imgs = set.querySelectorAll('img')
+    let loaded = 0
+    const total = imgs.length
+    const onLoad = () => {
+      loaded++
+      if (loaded >= total) measure()
+    }
+    imgs.forEach(img => {
+      if (img.complete) loaded++
+      else {
+        img.addEventListener('load', onLoad, { once: true })
+        img.addEventListener('error', onLoad, { once: true })
+      }
+    })
+    if (loaded >= total) measure()
+
+    // Also measure on resize
+    window.addEventListener('resize', measure)
 
     const tick = () => {
-      pos -= speed
-      // Reset when first set scrolls out (10 logos × ~80px avg = ~800px)
-      // Measure actual first-set width for accuracy
-      const firstSet = el.children.length / 4
-      let w = 0
-      for (let i = 0; i < firstSet; i++) {
-        const child = el.children[i] as HTMLElement
-        w += child.offsetWidth + 48 // 48 = gap
+      if (setWidth > 0) {
+        pos -= 0.6
+        if (Math.abs(pos) >= setWidth) pos += setWidth
+        move.style.transform = `translate3d(${pos}px,0,0)`
       }
-      if (w > 0 && Math.abs(pos) >= w) pos += w
-      el.style.transform = `translate3d(${pos}px,0,0)`
       raf = requestAnimationFrame(tick)
     }
 
     raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', measure)
+    }
   }, [])
 
   return (
-    <div className="ticker-wrap">
-      <div className="ticker-move" ref={ref}>
-        {ALL.map((logo, i) => (
-          <img
-            key={i}
-            src={logo.src}
-            alt={logo.alt}
-            className={`ticker-img ${logo.cls}`}
-            loading="eager"
-          />
-        ))}
+    <div className="ticker-wrap" ref={wrapRef}>
+      <div className="ticker-move" ref={moveRef}>
+        <div className="ticker-set" ref={setRef}><LogoRow /></div>
+        <div className="ticker-set"><LogoRow /></div>
+        <div className="ticker-set"><LogoRow /></div>
       </div>
     </div>
   )
