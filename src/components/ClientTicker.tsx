@@ -10,7 +10,6 @@ const LOGOS: LogoItem[] = [
   { src: '/content/logos/wfd-icon.svg', alt: "What's for Dinner", className: 'logo-wfd' },
   { src: '/content/logos/corner-c.webp', alt: 'The Corner', className: 'logo-corner' },
   { src: '/content/logos/Solana Logomark - Color.svg', alt: 'Solana', className: 'logo-solana' },
-  { src: '/content/logos/solana-mobile.svg', alt: 'Solana Mobile', className: 'logo-solana-mobile' },
   { src: '/content/logos/soladex.svg', alt: 'Soladex', className: 'logo-soladex' },
   { src: '/content/logos/skr-seeker.png', alt: 'Seeker', className: 'logo-skr' },
 ]
@@ -48,6 +47,9 @@ export function ClientTicker() {
     const track = trackRef.current
     if (!track) return
 
+    // Hide track until measured to prevent gap flash
+    track.style.opacity = '0'
+
     let animId: number
 
     // Measure after all images in the set have loaded
@@ -55,9 +57,16 @@ export function ClientTicker() {
     let loaded = 0
     const total = imgs.length
 
+    const onAllLoaded = () => {
+      measure()
+      // Show track once measured — smooth fade in
+      track.style.transition = 'opacity 0.4s ease'
+      track.style.opacity = '1'
+    }
+
     const onImgReady = () => {
       loaded++
-      if (loaded >= total) measure()
+      if (loaded >= total) onAllLoaded()
     }
 
     imgs.forEach(img => {
@@ -66,7 +75,7 @@ export function ClientTicker() {
         img.addEventListener('error', onImgReady, { once: true })
       }
     })
-    if (loaded >= total) measure()
+    if (loaded >= total) onAllLoaded()
 
     window.addEventListener('resize', measure)
 
