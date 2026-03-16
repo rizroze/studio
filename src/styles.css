@@ -264,6 +264,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 72px;
   overflow-x: hidden;
+  background-color: var(--bg-primary);
 }
 
 body {
@@ -1436,12 +1437,12 @@ main {
 
 .ticker-wrap::before {
   left: 0;
-  background: linear-gradient(to right, rgb(59, 3, 3), transparent);
+  background: linear-gradient(to right, var(--bg-primary), transparent);
 }
 
 .ticker-wrap::after {
   right: 0;
-  background: linear-gradient(to left, rgb(59, 3, 3), transparent);
+  background: linear-gradient(to left, var(--bg-primary), transparent);
 }
 
 .ticker-move {
