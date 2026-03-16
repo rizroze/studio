@@ -173,8 +173,12 @@ function DiscoverySlider({ card }: { card: SliderConfig }) {
     <div className="discovery-slider-card" data-reveal>
       <div
         ref={(el) => {
-          (canvasRef as React.MutableRefObject<HTMLDivElement | null>).current = el
-          if (el) el.style.cssText += card.canvasStyle
+          if (!el) return
+          ;(canvasRef as React.MutableRefObject<HTMLDivElement | null>).current = el
+          if (!el.dataset.init) {
+            el.style.cssText += card.canvasStyle
+            el.dataset.init = '1'
+          }
         }}
         className="discovery-icon"
         dangerouslySetInnerHTML={{ __html: card.canvasHTML }}
