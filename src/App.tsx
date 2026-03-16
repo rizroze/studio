@@ -13,6 +13,7 @@ import { Work } from './sections/Work'
 import { Testimonials, TestimonialBanner } from './sections/Testimonials'
 import { Services } from './sections/Services'
 import { About } from './sections/About'
+import { Discovery } from './sections/Discovery'
 import { FAQ } from './sections/FAQ'
 import { ProjectPage } from './sections/ProjectPage'
 import { AllProjects } from './sections/AllProjects'
@@ -143,6 +144,7 @@ export function App() {
             <Testimonials />
             <Services />
             <About />
+            <Discovery />
             <FAQ />
             <TestimonialBanner />
           </>

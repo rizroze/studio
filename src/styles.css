@@ -2840,6 +2840,139 @@ main {
 }
 
 /* ===========================
+   DISCOVERY — Interactive questionnaire preview
+   =========================== */
+.discovery-section {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.discovery-subtitle {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 560px;
+  margin-bottom: 40px;
+}
+
+.discovery-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.discovery-slider-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 28px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  transition: background 0.3s var(--smooth-ease);
+}
+.discovery-slider-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.discovery-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.discovery-slider-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.discovery-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.discovery-label-left,
+.discovery-label-right {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.discovery-track {
+  position: relative;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+}
+
+.discovery-track-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.discovery-thumb {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #c0392b;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: box-shadow 0.2s var(--smooth-ease);
+}
+.discovery-track:hover .discovery-thumb {
+  box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.2);
+}
+
+.discovery-slider-tags {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.discovery-tag {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: 'Inter Tight', sans-serif;
+}
+
+.discovery-footnote {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 24px;
+  text-align: center;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .discovery-slider-card {
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+  .discovery-icon {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* ===========================
    FAQ + CONTACT — Two-column section
    =========================== */
 .faq-contact-section {
@@ -3435,8 +3568,12 @@ main {
 .gallery-squares {
   columns: unset;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 8px;
+}
+
+.gallery-squares-small {
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
 .gallery-squares .project-page-gallery-item {

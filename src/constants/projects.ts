@@ -2,7 +2,7 @@ export interface ProjectSection {
   title: string
   description: string
   gallery: string[]
-  layout?: 'grid' | 'squares' | 'landscape' | 'deck'  // grid = default columns, squares = 1:1 grid, landscape = 2-col grid, deck = 3-col grid
+  layout?: 'grid' | 'squares' | 'squares-small' | 'landscape' | 'deck'  // grid = default columns, squares = 1:1 grid, squares-small = smaller 1:1, landscape = 2-col grid, deck = 3-col grid
   wideIndices?: number[]  // gallery item indices that span full row width
 }
 
@@ -170,7 +170,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       {
         title: 'PFP Art',
         description: 'Custom pixel art profile pictures for the Radiants community. Each one hand-crafted in the signature sun-yellow palette.',
-        layout: 'squares',
+        layout: 'squares-small',
         gallery: [
           '/content/radiants/pfps/blonde.webp',
           '/content/radiants/pfps/brz.webp',
