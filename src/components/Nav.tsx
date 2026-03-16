@@ -171,7 +171,7 @@ export function Nav({ onLogoClick, scrollBarRef }: NavProps) {
             onClick={navStore.toggle}
             aria-label="Toggle menu"
           >
-            <span /><span /><span />
+            <span /><span />
           </button>
         </div>
         {scrollBarRef && <div className="scroll-progress" ref={scrollBarRef as React.RefObject<HTMLDivElement>} />}
