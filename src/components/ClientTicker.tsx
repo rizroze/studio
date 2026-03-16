@@ -11,22 +11,28 @@ const LOGOS = [
   { src: '/content/logos/skr-seeker.png', alt: 'Seeker', cls: 'logo-skr' },
 ]
 
-// Repeat enough times to always fill the screen
-const ITEMS = [...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS]
+function LogoSet() {
+  return (
+    <div className="ticker-set">
+      {LOGOS.map((logo) => (
+        <img
+          key={logo.alt}
+          src={logo.src}
+          alt={logo.alt}
+          className={`ticker-img ${logo.cls}`}
+          loading="eager"
+        />
+      ))}
+    </div>
+  )
+}
 
 export function ClientTicker() {
   return (
     <div className="ticker-wrap">
       <div className="ticker-move">
-        {ITEMS.map((logo, i) => (
-          <img
-            key={i}
-            src={logo.src}
-            alt={logo.alt}
-            className={`ticker-img ${logo.cls}`}
-            loading="eager"
-          />
-        ))}
+        <LogoSet />
+        <LogoSet />
       </div>
     </div>
   )
