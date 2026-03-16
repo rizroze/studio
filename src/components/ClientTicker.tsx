@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const LOGOS = [
   { src: '/content/logos/radiants-pixel.svg', alt: 'Radiants', cls: 'logo-radiants' },
@@ -24,31 +24,30 @@ function LogoRow() {
 }
 
 export function ClientTicker() {
-  const wrapRef = useRef<HTMLDivElement>(null)
   const moveRef = useRef<HTMLDivElement>(null)
   const setRef = useRef<HTMLDivElement>(null)
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     const move = moveRef.current
     const set = setRef.current
     if (!move || !set) return
 
-    let pos = 0
-    let setWidth = 0
-    let raf: number
-
-    const measure = () => {
-      setWidth = set.offsetWidth
+    const apply = () => {
+      const w = set.offsetWidth
+      if (w <= 0) return
+      // Speed: 0.6px per frame at 60fps = 36px/s
+      const duration = w / 36
+      move.style.setProperty('--ticker-width', `-${w}px`)
+      move.style.animationDuration = `${duration}s`
+      setReady(true)
     }
 
     // Wait for all images to load then measure
     const imgs = set.querySelectorAll('img')
     let loaded = 0
     const total = imgs.length
-    const onLoad = () => {
-      loaded++
-      if (loaded >= total) measure()
-    }
+    const onLoad = () => { loaded++; if (loaded >= total) apply() }
     imgs.forEach(img => {
       if (img.complete) loaded++
       else {
@@ -56,30 +55,15 @@ export function ClientTicker() {
         img.addEventListener('error', onLoad, { once: true })
       }
     })
-    if (loaded >= total) measure()
+    if (loaded >= total) apply()
 
-    // Also measure on resize
-    window.addEventListener('resize', measure)
-
-    const tick = () => {
-      if (setWidth > 0) {
-        pos -= 0.6
-        if (Math.abs(pos) >= setWidth) pos += setWidth
-        move.style.transform = `translate3d(${pos}px,0,0)`
-      }
-      raf = requestAnimationFrame(tick)
-    }
-
-    raf = requestAnimationFrame(tick)
-    return () => {
-      cancelAnimationFrame(raf)
-      window.removeEventListener('resize', measure)
-    }
+    window.addEventListener('resize', apply)
+    return () => window.removeEventListener('resize', apply)
   }, [])
 
   return (
-    <div className="ticker-wrap" ref={wrapRef}>
-      <div className="ticker-move" ref={moveRef}>
+    <div className="ticker-wrap">
+      <div className={`ticker-move ${ready ? 'ticker-running' : ''}`} ref={moveRef}>
         <div className="ticker-set" ref={setRef}><LogoRow /></div>
         <div className="ticker-set"><LogoRow /></div>
         <div className="ticker-set"><LogoRow /></div>

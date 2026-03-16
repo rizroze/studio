@@ -1447,6 +1447,17 @@ main {
 .ticker-move {
   display: flex;
   align-items: center;
+  will-change: transform;
+}
+
+.ticker-running {
+  animation: ticker-scroll linear infinite;
+  animation-duration: 20s; /* overridden by JS */
+}
+
+@keyframes ticker-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(var(--ticker-width), 0, 0); }
 }
 
 .ticker-set {
