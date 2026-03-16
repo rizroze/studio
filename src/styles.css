@@ -2922,7 +2922,7 @@ main {
   left: 0;
   right: 0;
   height: 4px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
   top: 50%;
   transform: translateY(-50%);
