@@ -1356,7 +1356,6 @@ main {
    =========================== */
 .hero-ticker {
   opacity: 0;
-  visibility: hidden;
   position: relative;
   z-index: 1;
   width: 100%;
