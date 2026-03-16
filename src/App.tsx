@@ -61,9 +61,9 @@ export function App() {
       const next = viewFromPath(window.location.pathname)
       pendingView.current = next
       setTransitioning(true)
+      setTimeout(() => window.scrollTo({ top: 0 }), 150)
       setTimeout(() => {
         setView(next)
-        window.scrollTo({ top: 0 })
         requestAnimationFrame(() => {
           setTransitioning(false)
           isPopState.current = false
@@ -77,12 +77,13 @@ export function App() {
   const transitionTo = useCallback((next: View) => {
     pendingView.current = next
     setTransitioning(true)
+    // Scroll to top while content is faded out (invisible by ~150ms)
+    setTimeout(() => window.scrollTo({ top: 0 }), 150)
     setTimeout(() => {
       setView(next)
       if (!isPopState.current) {
         history.pushState(null, '', pathFromView(next))
       }
-      window.scrollTo({ top: 0 })
       requestAnimationFrame(() => setTransitioning(false))
     }, 250)
   }, [])
