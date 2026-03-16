@@ -106,10 +106,13 @@ export function Nav({ onLogoClick }: NavProps) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [mobileOpen])
 
-  const handleLinkClick = (href: string) => {
+  const handleLinkClick = (e: React.MouseEvent, href: string) => {
+    e.preventDefault()
     navStore.close()
     navStore.closePill()
     navStore.lockActiveSection(href.slice(1))
+    const el = document.getElementById(href.slice(1))
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
 
   const scrollToTop = (e: React.MouseEvent) => {
@@ -143,14 +146,14 @@ export function Nav({ onLogoClick }: NavProps) {
                 key={item.href}
                 href={item.href}
                 className={`nav-link ${activeSection === item.href.slice(1) ? 'active' : ''}`}
-                onClick={() => handleLinkClick(item.href)}
+                onClick={(e) => handleLinkClick(e, item.href)}
               >
                 {item.label}
               </a>
             ))}
           </div>
 
-          <a href="#contact" className="nav-cta desktop-only" onClick={() => handleLinkClick('#contact')}>
+          <a href="#contact" className="nav-cta desktop-only" onClick={(e) => handleLinkClick(e, '#contact')}>
             Book a call
           </a>
 
@@ -189,7 +192,7 @@ export function Nav({ onLogoClick }: NavProps) {
                 key={item.href}
                 href={item.href}
                 className={`nav-mobile-link ${activeSection === item.href.slice(1) ? 'active' : ''}`}
-                onClick={() => handleLinkClick(item.href)}
+                onClick={(e) => handleLinkClick(e, item.href)}
               >
                 {item.label}
               </a>
