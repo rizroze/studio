@@ -2910,7 +2910,7 @@ main {
 .discovery-track {
   position: relative;
   height: 4px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
   cursor: pointer;
   touch-action: none;
@@ -2924,7 +2924,7 @@ main {
   top: 16px;
   left: 0;
   height: 4px;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 2px;
   pointer-events: none;
 }
