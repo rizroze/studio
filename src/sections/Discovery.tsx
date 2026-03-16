@@ -289,7 +289,7 @@ export function Discovery() {
           </div>
         </div>
       </div>
-      <p className="discovery-footnote" data-reveal>A brand psychology test disguised as a conversation. Try dragging the sliders.</p>
+      <p className="discovery-footnote" data-reveal>A brand psychology test disguised as a conversation. Drag the sliders.</p>
     </section>
   )
 }
