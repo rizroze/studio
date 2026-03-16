@@ -1397,6 +1397,8 @@ main {
   display: flex;
   align-items: center;
   gap: 32px;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent);
+  mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent);
 }
 
 .hero-ticker-proof {
@@ -1424,26 +1426,6 @@ main {
   position: relative;
 }
 
-.ticker-wrap::before,
-.ticker-wrap::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 60px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.ticker-wrap::before {
-  left: 0;
-  background: linear-gradient(to right, var(--bg-secondary), transparent);
-}
-
-.ticker-wrap::after {
-  right: 0;
-  background: linear-gradient(to left, var(--bg-secondary), transparent);
-}
 
 .ticker-move {
   display: flex;
@@ -4236,7 +4218,7 @@ main {
   .book-container::after { display: none; } /* kill blur glow on mobile */
   .book-container::before { transition: none; } /* no animated shadows */
   .book { transition: transform 0.4s var(--smooth-ease); will-change: auto; }
-  .hero-ticker { flex-direction: column; gap: 16px; padding: 24px 0; overflow: visible; }
+  .hero-ticker { flex-direction: column; gap: 16px; padding: 24px 0; overflow: hidden; }
   .ticker-img.logo-solana-mobile { width: 180px; }
   .ascii-rose { transform: translate(-50%, -50%) scale(0.8); }
   .ascii-rose pre { font-size: 6px; }
