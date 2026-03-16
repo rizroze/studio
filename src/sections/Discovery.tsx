@@ -221,7 +221,7 @@ const SLIDERS: SliderConfig[] = [
 export function Discovery() {
   return (
     <section className="section discovery-section">
-      <WordReveal text="Working with me." className="section-title-xl" tag="h2" />
+      <WordReveal text="Your project starts here." className="section-title-xl" tag="h2" />
       <p className="discovery-subtitle" data-reveal>
         After our call, this lands on your screen — an interactive questionnaire built just for you. Not a form. A conversation that makes sure you get exactly what you need.
       </p>
