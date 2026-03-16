@@ -1437,12 +1437,12 @@ main {
 
 .ticker-wrap::before {
   left: 0;
-  background: linear-gradient(to right, var(--bg-primary), transparent);
+  background: linear-gradient(to right, var(--bg-secondary), transparent);
 }
 
 .ticker-wrap::after {
   right: 0;
-  background: linear-gradient(to left, var(--bg-primary), transparent);
+  background: linear-gradient(to left, var(--bg-secondary), transparent);
 }
 
 .ticker-move {
