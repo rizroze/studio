@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useMemo } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { WordReveal } from '../components/WordReveal'
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
@@ -7,10 +7,11 @@ const lerpRGB = (r1: number, g1: number, b1: number, r2: number, g2: number, b2:
 
 // Loud ↔ Quiet: gradient orb morphs size + saturation + glow
 function VolumeIcon({ t }: { t: number }) {
-  const orbSize = t < 0.1 ? lerp(56, 36, t / 0.1) : lerp(36, 10, (t - 0.1) / 0.9)
+  // Orb: fills 80px box at 0, shrinks to tiny dot at 100
+  const orbSize = t < 0.1 ? lerp(76, 48, t / 0.1) : lerp(48, 12, (t - 0.1) / 0.9)
   const sat = lerp(80, 0, t)
   const light = lerp(65, 8, t)
-  const glow = lerp(24, 0, Math.min(t * 3, 1))
+  const glow = lerp(30, 0, Math.min(t * 3, 1))
   const glowAlpha = lerp(0.5, 0, Math.min(t * 3, 1))
 
   const bg = t < 0.15
@@ -22,14 +23,13 @@ function VolumeIcon({ t }: { t: number }) {
     : lerpRGB(60, 60, 60, 10, 10, 10, (t - 0.7) / 0.3)
 
   return (
-    <div className="discovery-icon" style={{ background: bg, transition: 'all 0.35s cubic-bezier(0.4,0,0.2,1)' }}>
+    <div className="discovery-icon" style={{ background: bg }}>
       <div style={{
         width: orbSize,
         height: orbSize,
         borderRadius: t < 0.08 ? lerp(16, 50, t / 0.08) + 'px' : '50%',
         background: orbBg,
         boxShadow: `0 0 ${glow}px rgba(244,114,182,${glowAlpha})`,
-        transition: 'all 0.35s cubic-bezier(0.4,0,0.2,1)',
       }} />
     </div>
   )
@@ -54,28 +54,20 @@ function MoodIcon({ t }: { t: number }) {
   const frac = (t * 5) - idx
   const next = Math.min(idx + 1, 4)
 
-  const shapes = useMemo(() => colors.map((c, i) => {
-    const color = `rgb(${Math.round(lerp(c.r[idx], c.r[next], frac))},${Math.round(lerp(c.g[idx], c.g[next], frac))},${Math.round(lerp(c.b[idx], c.b[next], frac))})`
-    return (
-      <div key={i} style={{
-        width: lerp(16, 36, t),
-        height: lerp(16, 4, t),
-        borderRadius: lerp(50, 2, t) + '%',
-        background: color,
-        transition: 'all 0.35s cubic-bezier(0.4,0,0.2,1)',
-      }} />
-    )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [t])
-
   return (
-    <div className="discovery-icon" style={{
-      background: bg,
-      borderRadius: radius,
-      transition: 'all 0.35s cubic-bezier(0.4,0,0.2,1)',
-    }}>
+    <div className="discovery-icon" style={{ background: bg, borderRadius: radius }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: lerp(6, 4, t), justifyContent: 'center', alignItems: 'center' }}>
-        {shapes}
+        {colors.map((c, i) => {
+          const color = `rgb(${Math.round(lerp(c.r[idx], c.r[next], frac))},${Math.round(lerp(c.g[idx], c.g[next], frac))},${Math.round(lerp(c.b[idx], c.b[next], frac))})`
+          return (
+            <div key={i} style={{
+              width: lerp(24, 48, t),
+              height: lerp(24, 6, t),
+              borderRadius: lerp(50, 2, t) + '%',
+              background: color,
+            }} />
+          )
+        })}
       </div>
     </div>
   )
@@ -92,15 +84,14 @@ function DensityIcon({ t }: { t: number }) {
 
   const lines = ['BTC  67,241', 'ETH   3,841', 'SOL   142.8', 'DOGE  0.148', 'AVAX  28.41']
   const visible = Math.max(1, Math.round(lerp(5, 1, t)))
-  const fontSize = lerp(7, 9, t)
+  const fontSize = lerp(8, 11, t)
 
   return (
     <div className="discovery-icon" style={{
       background: bg,
       justifyContent: t > 0.7 ? 'center' : 'flex-start',
       alignItems: t > 0.7 ? 'center' : 'flex-start',
-      padding: t > 0.7 ? 0 : 8,
-      transition: 'all 0.35s cubic-bezier(0.4,0,0.2,1)',
+      padding: t > 0.7 ? 0 : 10,
     }}>
       <div style={{
         fontFamily: "'Fragment Mono', monospace",
@@ -108,15 +99,14 @@ function DensityIcon({ t }: { t: number }) {
         fontWeight: 600,
         color: lineColor,
         textAlign: t > 0.7 ? 'center' : 'left',
-        lineHeight: 1.6,
-        transition: 'all 0.35s cubic-bezier(0.4,0,0.2,1)',
+        lineHeight: 1.5,
+        whiteSpace: 'nowrap',
       }}>
         {lines.map((line, i) => (
           <div key={i} style={{
             opacity: i < visible ? 1 : 0,
             height: i < visible ? 'auto' : 0,
             overflow: 'hidden',
-            transition: 'all 0.35s cubic-bezier(0.4,0,0.2,1)',
           }}>
             {line}
           </div>
