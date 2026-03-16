@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 const LOGOS = [
   { src: '/content/logos/radiants-pixel.svg', alt: 'Radiants', cls: 'logo-radiants' },
@@ -26,21 +26,36 @@ function LogoRow() {
 export function ClientTicker() {
   const moveRef = useRef<HTMLDivElement>(null)
   const setRef = useRef<HTMLDivElement>(null)
-  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     const move = moveRef.current
     const set = setRef.current
     if (!move || !set) return
 
+    let anim: Animation | null = null
+
     const apply = () => {
       const w = set.offsetWidth
       if (w <= 0) return
-      // Speed: 0.6px per frame at 60fps = 36px/s
-      const duration = w / 36
-      move.style.setProperty('--ticker-width', `-${w}px`)
-      move.style.animationDuration = `${duration}s`
-      setReady(true)
+
+      // Cancel previous animation
+      if (anim) anim.cancel()
+
+      // Speed: 36px/s (matches old 0.6px/frame at 60fps)
+      const duration = (w / 36) * 1000
+
+      // Web Animations API — runs on compositor thread, no main thread work
+      anim = move.animate(
+        [
+          { transform: 'translate3d(0, 0, 0)' },
+          { transform: `translate3d(-${w}px, 0, 0)` }
+        ],
+        {
+          duration,
+          iterations: Infinity,
+          easing: 'linear'
+        }
+      )
     }
 
     // Wait for all images to load then measure
@@ -58,12 +73,15 @@ export function ClientTicker() {
     if (loaded >= total) apply()
 
     window.addEventListener('resize', apply)
-    return () => window.removeEventListener('resize', apply)
+    return () => {
+      if (anim) anim.cancel()
+      window.removeEventListener('resize', apply)
+    }
   }, [])
 
   return (
     <div className="ticker-wrap">
-      <div className={`ticker-move ${ready ? 'ticker-running' : ''}`} ref={moveRef}>
+      <div className="ticker-move" ref={moveRef}>
         <div className="ticker-set" ref={setRef}><LogoRow /></div>
         <div className="ticker-set"><LogoRow /></div>
         <div className="ticker-set"><LogoRow /></div>
