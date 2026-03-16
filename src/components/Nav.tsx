@@ -163,7 +163,7 @@ export function Nav({ onLogoClick, scrollBarRef }: NavProps) {
             onClick={navStore.togglePill}
             aria-label="Toggle navigation"
           >
-            <span /><span /><span />
+            <span /><span />
           </button>
 
           <button

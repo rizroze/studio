@@ -268,7 +268,7 @@ html {
 
 body {
   font-family: 'Inter Tight', sans-serif;
-  background-color: var(--bg-primary);
+  background-color: var(--bg-secondary);
   color: var(--text-primary);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -561,36 +561,47 @@ main {
   transition: all 0.15s var(--smooth-ease);
 }
 
-/* Nav dot toggle — hidden by default */
+/* Nav dot toggle — hidden by default, 2-dot yin-yang */
 .nav-dot-toggle {
   display: none;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
   background: none;
   border: none;
   padding: 10px;
   cursor: pointer;
   flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  position: relative;
+  animation: dotOrbit 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .nav-dot-toggle span {
-  display: block;
+  position: absolute;
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.7);
   transition: background 0.3s var(--smooth-ease);
-  animation: dotYinYang 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-.nav-dot-toggle span:nth-child(1) { animation-delay: 0s; }
-.nav-dot-toggle span:nth-child(2) { animation-delay: -1s; }
-.nav-dot-toggle span:nth-child(3) { animation-delay: -2s; }
+.nav-dot-toggle span:nth-child(1) {
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-@keyframes dotYinYang {
-  0%   { transform: translateY(-3px) scale(0.85); opacity: 0.4; }
-  50%  { transform: translateY(3px) scale(1.3); opacity: 1; }
-  100% { transform: translateY(-3px) scale(0.85); opacity: 0.4; }
+.nav-dot-toggle span:nth-child(2) {
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.35;
+}
+
+@keyframes dotOrbit {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .nav-dot-toggle:hover span {

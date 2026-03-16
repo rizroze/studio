@@ -6,6 +6,7 @@
     <title>Rizzy Studio — Brand, Web & Motion</title>
     <meta name="description" content="Brand, website, and motion — designed and shipped by one person.">
 
+    <meta name="theme-color" content="rgb(59, 3, 3)">
     <link rel="icon" type="image/webp" href="/newpfp.webp">
     <link rel="apple-touch-icon" href="/newpfp.webp">
 
@@ -34,17 +35,15 @@
     <link rel="preload" as="image" href="/content/logos/fullport-briefcase.svg">
 
     <style>
-      body{margin:0;font-family:'Inter Tight',sans-serif;background-color:rgb(0,0,0);color:#fff}
+      body{margin:0;font-family:'Inter Tight',sans-serif;background-color:rgb(59,3,3);color:#fff}
       #loader{position:fixed;inset:0;z-index:99999;background:rgb(59,3,3);display:flex;align-items:center;justify-content:center;transition:opacity 0.4s ease,filter 0.4s ease}
       #loader::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(168,85,247,0.12) 0%,transparent 50%),radial-gradient(ellipse at 80% 30%,rgba(252,225,132,0.06) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(74,222,128,0.04) 0%,transparent 50%);pointer-events:none}
       #loader.loader-exit{opacity:0;filter:blur(8px);pointer-events:none}
       #loader.loader-hidden{display:none}
-      .loader-inner{position:relative;z-index:1}
-      .loader-yinyang{width:32px;height:32px;position:relative;margin:0 auto;animation:loader-spin 1.8s cubic-bezier(0.4,0,0.2,1) infinite}
-      .loader-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5)}
-      .loader-dot:nth-child(1){top:0;left:50%;transform:translateX(-50%)}
-      .loader-dot:nth-child(2){bottom:0;left:50%;transform:translateX(-50%);opacity:0.25}
-      @keyframes loader-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+      .loader-inner{text-align:center;position:relative;z-index:1}
+      .loader-avatar{width:48px;height:48px;border-radius:50%;display:block;margin:0 auto;animation:loader-spin 1.2s cubic-bezier(0.4,0,0.2,1) infinite}
+      .loader-text{margin-top:12px;font-size:13px;color:rgba(255,255,255,0.4);letter-spacing:0.02em;text-align:center}
+      @keyframes loader-spin{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(0.95)}100%{transform:rotate(360deg) scale(1)}}
     </style>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Fragment+Mono&family=Urbanist:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -72,10 +71,8 @@
 <body>
     <div id="loader">
       <div class="loader-inner">
-        <div class="loader-yinyang">
-          <div class="loader-dot"></div>
-          <div class="loader-dot"></div>
-        </div>
+        <img src="/rizzy-avatar.webp" alt="" class="loader-avatar" />
+        <div class="loader-text">Rizzy Studio</div>
       </div>
     </div>
     <div id="root"></div>
