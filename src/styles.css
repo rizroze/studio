@@ -893,7 +893,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   position: relative;
   overflow: hidden;
   padding: 120px 24px 0;
