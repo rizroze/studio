@@ -3917,7 +3917,8 @@ main {
   .hero-right { justify-content: center; overflow: hidden; }
   .bookshelf { transform: scale(0.65); transform-origin: center; }
   .book-container { --bk-width: 40px; }
-  .hero-ticker { flex-direction: column; gap: 16px; padding: 24px 0; }
+  .hero-ticker { flex-direction: column; gap: 16px; padding: 24px 0; overflow: visible; }
+  .client-ticker { mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent); }
   .ascii-rose { transform: translate(-50%, -50%) scale(0.8); }
   .ascii-rose pre { font-size: 6px; }
 
