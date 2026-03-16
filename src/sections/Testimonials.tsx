@@ -20,7 +20,7 @@ export function Testimonials() {
                 <a href={devour.link} target="_blank" rel="noopener noreferrer" className="testimonial-name-link">{devour.name}</a>
               ) : devour.name}
               <VerifiedBadge color="red" />
-              {devour.link && <a href={devour.link} target="_blank" rel="noopener noreferrer" className="testimonial-x-link"><XLogo size={11} /></a>}
+              {devour.link && <a href={devour.link} target="_blank" rel="noopener noreferrer" className="testimonial-x-link" aria-label={`${devour.name} on X`}><XLogo size={11} /></a>}
             </div>
             <div className="testimonial-title">{devour.title}</div>
           </div>
@@ -55,7 +55,7 @@ export function TestimonialBanner() {
                 <a href={jerk.link} target="_blank" rel="noopener noreferrer" className="testimonial-name-link">{jerk.name}</a>
               ) : jerk.name}
               <VerifiedBadge color="red" />
-              {jerk.link && <a href={jerk.link} target="_blank" rel="noopener noreferrer" className="testimonial-x-link"><XLogo size={11} /></a>}
+              {jerk.link && <a href={jerk.link} target="_blank" rel="noopener noreferrer" className="testimonial-x-link" aria-label={`${jerk.name} on X`}><XLogo size={11} /></a>}
             </div>
             <div className="testimonial-title">{jerk.title}</div>
           </div>

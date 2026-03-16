@@ -240,7 +240,7 @@ export function IpodPlayer() {
               )}
             </button>
           </div>
-          <button className="wheel-center" onClick={togglePlay} />
+          <button className="wheel-center" onClick={togglePlay} aria-label="Play or pause" />
         </div>
       </div>
       <audio
