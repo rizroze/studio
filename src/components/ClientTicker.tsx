@@ -13,21 +13,28 @@ const LOGOS: LogoItem[] = [
   { src: '/content/logos/corner-c.webp', alt: 'The Corner', className: 'logo-corner' },
 ]
 
+function LogoSet() {
+  return (
+    <>
+      {LOGOS.map((logo) => (
+        <span key={logo.alt} className="ticker-logo-zone">
+          <img
+            src={logo.src}
+            alt={logo.alt}
+            className={`ticker-logo ${logo.className}`}
+          />
+        </span>
+      ))}
+    </>
+  )
+}
+
 export function ClientTicker() {
-  // 2 identical halves — animate -50% so it loops seamlessly
-  const repeated = [...LOGOS, ...LOGOS]
   return (
     <div className="client-ticker">
       <div className="client-ticker-track">
-        {repeated.map((logo, i) => (
-          <span key={`${logo.alt}-${i}`} className="ticker-logo-zone">
-            <img
-              src={logo.src}
-              alt={logo.alt}
-              className={`ticker-logo ${logo.className}`}
-            />
-          </span>
-        ))}
+        <LogoSet />
+        <LogoSet />
       </div>
     </div>
   )
