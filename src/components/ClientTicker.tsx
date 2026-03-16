@@ -24,7 +24,7 @@ export function ClientTicker() {
     if (!el) return
     let pos = 0
     let raf: number
-    const speed = window.innerWidth < 769 ? 0.8 : 0.6
+    const speed = 0.6
 
     const tick = () => {
       pos -= speed
