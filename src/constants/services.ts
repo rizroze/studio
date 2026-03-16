@@ -54,7 +54,7 @@ export const PRICING_TIERS: PricingTier[] = [
       'Everything in Build',
       'Design system & component library',
       'Motion graphics package',
-      'Pitch deck design',
+      'Presentation designs',
       'Content direction & strategy',
       'Ongoing support (1 month)',
       'Unlimited revisions'
