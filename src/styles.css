@@ -4223,7 +4223,14 @@ main {
   .hero-cta-row { justify-content: flex-start; }
   .hero-right { justify-content: center; overflow: hidden; }
   .bookshelf { transform: scale(0.65); transform-origin: center; }
-  .book-container { --bk-width: 40px; }
+  .book-container {
+    --bk-width: 40px;
+    will-change: auto;
+    transition: transform 0.4s var(--smooth-ease), width 0.4s var(--smooth-ease);
+  }
+  .book-container::after { display: none; } /* kill blur glow on mobile */
+  .book-container::before { transition: none; } /* no animated shadows */
+  .book { transition: transform 0.4s var(--smooth-ease); will-change: auto; }
   .hero-ticker { flex-direction: column; gap: 16px; padding: 24px 0; overflow: visible; }
   .ticker-img.logo-solana-mobile { width: 180px; }
   .ascii-rose { transform: translate(-50%, -50%) scale(0.8); }
