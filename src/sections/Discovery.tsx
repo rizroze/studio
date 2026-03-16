@@ -117,47 +117,58 @@ const SLIDERS: SliderConfig[] = [
     leftTags: 'bloomberg, info-heavy',
     rightTags: 'apple.com, breathing room',
     defaultValue: 20,
-    canvasStyle: 'background:#0d0d0d; padding:10px; align-items:flex-start; justify-content:flex-start; flex-direction:column;',
-    canvasHTML: `<div data-lines style="font-family:'Fragment Mono',monospace; font-size:7px; line-height:1.4; color:#4ade80; width:100%;"></div>`,
+    canvasStyle: 'background:#0d0d0d; padding:8px; align-items:flex-start; justify-content:flex-start; flex-direction:column;',
+    canvasHTML: `<div data-lines style="font-family:'Fragment Mono',monospace; font-size:7px; line-height:1.5; color:#4ade80; width:100%;">
+      <div data-line><span data-sym>BTC</span><span data-val style="margin-left:auto;">67,241</span></div>
+      <div data-line><span data-sym>ETH</span><span data-val style="margin-left:auto;">3,841</span></div>
+      <div data-line><span data-sym>SOL</span><span data-val style="margin-left:auto;">142.8</span></div>
+      <div data-line style="color:#ef4444;"><span data-sym>DOGE</span><span data-val style="margin-left:auto;">0.082</span></div>
+      <div data-line><span data-sym>AVAX</span><span data-val style="margin-left:auto;">38.2</span></div>
+    </div>`,
     morph(cv, t) {
       const lines = cv.querySelector('[data-lines]') as HTMLElement
       if (!lines) return
-      // Bg: dark → white
-      cv.style.background = lerpRGB(13, 13, 13, 250, 250, 250, t)
-      cv.style.borderColor = t > 0.5 ? `rgba(0,0,0,${lerp(0, 0.12, (t - 0.5) / 0.5)})` : 'rgba(255,255,255,0.08)'
+      const rows = lines.querySelectorAll('[data-line]') as NodeListOf<HTMLElement>
+      const vals = lines.querySelectorAll('[data-val]') as NodeListOf<HTMLElement>
 
-      // Number of visible lines
+      // Bg: dark terminal → white clean
+      cv.style.background = lerpRGB(13, 13, 13, 248, 248, 248, t)
+      cv.style.borderColor = t > 0.4 ? `rgba(0,0,0,${lerp(0, 0.12, (t - 0.4) / 0.6)})` : 'rgba(255,255,255,0.08)'
+
+      // Visible lines: 5 → 1
       const visible = Math.max(1, Math.round(lerp(5, 1, t)))
+      rows.forEach((r, i) => {
+        r.style.display = i < visible ? 'flex' : 'none'
+        r.style.justifyContent = 'space-between'
+        r.style.gap = '6px'
+      })
 
-      // Scramble numbers on every call for matrix effect
-      const seed = performance.now() * 0.01
-      let html = ''
-      for (let i = 0; i < 5; i++) {
-        const item = TICKER_BASE[i]
-        const isRed = item.sym === 'DOGE'
-        const display = i < visible ? '' : 'display:none;'
-        const color = isRed && t < 0.4 ? 'color:#ef4444;' : ''
-        const val = scrambleNum(item.val, seed + i)
-        html += `<div style="${display}${color}">${item.sym}<span style="float:right;">${val}</span></div>`
+      // Font size: stays readable, 7px → 10px max
+      lines.style.fontSize = lerp(7, 10, t) + 'px'
+      lines.style.lineHeight = lerp(1.5, 2.0, t).toString()
+
+      // Color: green → dark gray → medium gray (never green on light bg)
+      if (t < 0.2) {
+        lines.style.color = '#4ade80'
+      } else if (t < 0.45) {
+        lines.style.color = lerpRGB(74, 222, 128, 60, 60, 60, (t - 0.2) / 0.25)
+      } else {
+        lines.style.color = lerpRGB(60, 60, 60, 140, 140, 140, (t - 0.45) / 0.55)
       }
-      lines.innerHTML = html
 
-      // Font size: small packed → large single
-      lines.style.fontSize = lerp(7, 14, t) + 'px'
-      lines.style.lineHeight = lerp(1.4, 1.8, t).toString()
+      // DOGE keeps red only while still green terminal
+      rows[3].style.color = t < 0.25 ? '#ef4444' : ''
 
-      // Color: green terminal → dark → gray
-      lines.style.color = t < 0.3
-        ? '#4ade80'
-        : t < 0.6
-          ? lerpRGB(74, 222, 128, 40, 40, 40, (t - 0.3) / 0.3)
-          : lerpRGB(40, 40, 40, 120, 120, 120, (t - 0.6) / 0.4)
+      // Matrix scramble on numbers while dragging
+      const seed = performance.now() * 0.01
+      vals.forEach((v, i) => {
+        v.textContent = scrambleNum(TICKER_BASE[i].val, seed + i)
+      })
 
-      // Layout shift: left-aligned → centered
-      lines.style.textAlign = t > 0.7 ? 'center' : 'left'
-      cv.style.justifyContent = t > 0.7 ? 'center' : 'flex-start'
-      cv.style.alignItems = t > 0.7 ? 'center' : 'flex-start'
-      cv.style.padding = lerp(10, 16, t) + 'px'
+      // Padding + centering for spacious
+      cv.style.padding = lerp(8, 20, t) + 'px'
+      cv.style.justifyContent = t > 0.6 ? 'center' : 'flex-start'
+      cv.style.alignItems = 'stretch'
     },
   },
 ]
