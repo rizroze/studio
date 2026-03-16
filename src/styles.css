@@ -1444,7 +1444,7 @@ main {
   display: flex;
   align-items: center;
   gap: 48px;
-  animation: marquee 40s linear infinite;
+  animation: marquee 18s linear infinite;
 }
 
 .ticker-img {
@@ -1461,7 +1461,7 @@ main {
 .ticker-img.logo-solana { height: 30px; }
 .ticker-img.logo-soladex { height: 34px; }
 .ticker-img.logo-skr { height: 34px; }
-.ticker-img.logo-solana-mobile { height: auto; width: 160px; }
+.ticker-img.logo-solana-mobile { height: auto; width: 220px; }
 .ticker-img.logo-fullport { height: 58px; }
 .ticker-img.logo-wayy { height: 38px; }
 .ticker-img.logo-wfd { height: 44px; }
