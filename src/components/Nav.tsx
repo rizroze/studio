@@ -81,14 +81,12 @@ export function Nav({ onLogoClick }: NavProps) {
     return () => document.removeEventListener('click', onClick)
   }, [pillExpanded])
 
-  // Lock body scroll when mobile menu is open
+  // Close mobile menu on scroll (dropdown doesn't block page)
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => { document.body.style.overflow = '' }
+    if (!mobileOpen) return
+    const onScroll = () => navStore.close()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [mobileOpen])
 
   const handleLinkClick = (href: string) => {
