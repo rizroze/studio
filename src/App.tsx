@@ -129,10 +129,9 @@ export function App() {
   return (
     <>
       <GlassFilter />
-      <div className="scroll-progress" ref={scrollBarRef} />
       <div className="grain-overlay" />
       <CursorGlitch />
-      <Nav onLogoClick={goHome} />
+      <Nav onLogoClick={goHome} scrollBarRef={scrollBarRef} />
       <ScrollReveal />
       {view.type === 'home' && <ScrollNav />}
       {view.type === 'home' && <GsapAnimations />}

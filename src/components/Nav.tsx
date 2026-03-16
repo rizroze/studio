@@ -11,9 +11,10 @@ const NAV_ITEMS = [
 
 interface NavProps {
   onLogoClick?: () => void
+  scrollBarRef?: React.RefObject<HTMLDivElement | null>
 }
 
-export function Nav({ onLogoClick }: NavProps) {
+export function Nav({ onLogoClick, scrollBarRef }: NavProps) {
   const mobileOpen = useMobileNav()
   const { scrolledPastHero, pillExpanded, activeSection, atFooter } = useNavScroll()
   const navRef = useRef<HTMLElement>(null)
@@ -173,8 +174,13 @@ export function Nav({ onLogoClick }: NavProps) {
             <span /><span /><span />
           </button>
         </div>
+        {scrollBarRef && <div className="scroll-progress" ref={scrollBarRef as React.RefObject<HTMLDivElement>} />}
       </nav>
 
+      {menuVisible && createPortal(
+        <div className="nav-mobile-backdrop" onClick={() => navStore.close()} />,
+        document.body
+      )}
       {menuVisible && createPortal(
         <div className={`nav-mobile-menu ${menuClosing ? 'closing' : ''}`}>
           <div className="nav-mobile-header">
