@@ -16,7 +16,7 @@ const LOGOS: LogoItem[] = [
 
 function LogoSet({ setRef }: { setRef?: React.RefObject<HTMLDivElement | null> }) {
   return (
-    <div ref={setRef} className="ticker-set" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+    <div ref={setRef as React.RefObject<HTMLDivElement>} className="ticker-set" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
       {LOGOS.map((logo) => (
         <span key={logo.alt} className="ticker-logo-zone">
           <img
