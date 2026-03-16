@@ -732,7 +732,7 @@ main {
   height: 4px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.7);
-  transition: background 0.3s var(--smooth-ease);
+  transition: top 0.4s var(--bounce-ease), bottom 0.4s var(--bounce-ease), left 0.4s var(--bounce-ease), opacity 0.3s var(--smooth-ease), background 0.3s var(--smooth-ease);
 }
 
 .nav-mobile-toggle span:nth-child(1) {
@@ -748,12 +748,27 @@ main {
   opacity: 0.35;
 }
 
+/* Open: pause orbit, dots slide to horizontal */
 .nav-mobile-toggle.open {
-  animation: none;
+  animation-play-state: paused;
 }
 
 .nav-mobile-toggle.open span {
   background: var(--text-primary);
+  opacity: 1;
+}
+
+.nav-mobile-toggle.open span:nth-child(1) {
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+}
+
+.nav-mobile-toggle.open span:nth-child(2) {
+  bottom: auto;
+  top: 50%;
+  left: 70%;
+  transform: translate(-50%, -50%);
   opacity: 1;
 }
 
