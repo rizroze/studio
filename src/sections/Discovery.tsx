@@ -90,11 +90,12 @@ const SLIDERS: SliderConfig[] = [
       cv.style.borderColor = t < 0.5
         ? `rgba(253,230,138,${lerp(1, 0, t * 2)})`
         : `rgba(148,163,184,${lerp(0, 0.2, (t - 0.5) * 2)})`
+      // Colors: vibrant → muted → light (stay visible on darkening bg)
       const colors = [
-        { r: [239, 150, 100, 80, 71], g: [68, 80, 110, 100, 85], b: [68, 90, 120, 120, 105] },
-        { r: [59, 100, 130, 120, 100], g: [130, 130, 140, 130, 116], b: [246, 200, 170, 150, 137] },
-        { r: [16, 80, 120, 110, 100], g: [185, 160, 140, 130, 116], b: [129, 120, 120, 120, 137] },
-        { r: [245, 200, 160, 130, 100], g: [158, 140, 130, 130, 116], b: [11, 50, 100, 120, 137] },
+        { r: [239, 180, 140, 160, 180], g: [68, 80, 100, 140, 160], b: [68, 90, 110, 150, 170] },
+        { r: [59, 100, 120, 140, 160], g: [130, 130, 140, 160, 170], b: [246, 200, 180, 170, 180] },
+        { r: [16, 80, 110, 130, 150], g: [185, 160, 150, 160, 170], b: [129, 120, 130, 155, 170] },
+        { r: [245, 200, 170, 160, 170], g: [158, 140, 130, 150, 160], b: [11, 50, 90, 140, 160] },
       ]
       const idx = Math.min(Math.floor(t * 5), 4)
       const frac = (t * 5) - idx
@@ -147,17 +148,17 @@ const SLIDERS: SliderConfig[] = [
       lines.style.fontSize = lerp(7, 10, t) + 'px'
       lines.style.lineHeight = lerp(1.5, 2.0, t).toString()
 
-      // Color: green → dark gray → medium gray (never green on light bg)
-      if (t < 0.2) {
+      // Color: green terminal → dark fast → gray on white
+      if (t < 0.15) {
         lines.style.color = '#4ade80'
-      } else if (t < 0.45) {
-        lines.style.color = lerpRGB(74, 222, 128, 60, 60, 60, (t - 0.2) / 0.25)
+      } else if (t < 0.3) {
+        lines.style.color = lerpRGB(74, 222, 128, 80, 80, 80, (t - 0.15) / 0.15)
       } else {
-        lines.style.color = lerpRGB(60, 60, 60, 140, 140, 140, (t - 0.45) / 0.55)
+        lines.style.color = lerpRGB(80, 80, 80, 120, 120, 120, (t - 0.3) / 0.7)
       }
 
-      // DOGE keeps red only while still green terminal
-      rows[3].style.color = t < 0.25 ? '#ef4444' : ''
+      // DOGE red only in terminal mode
+      rows[3].style.color = t < 0.15 ? '#ef4444' : ''
 
       // Matrix scramble on numbers while dragging
       const seed = performance.now() * 0.01
