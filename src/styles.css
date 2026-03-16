@@ -1413,10 +1413,10 @@ main {
 .ticker-logo.logo-soladex { height: 34px; }
 .ticker-logo.logo-skr { height: 34px; }
 .ticker-logo.logo-solana-mobile { height: 34px; }
-.ticker-logo.logo-fullport { height: 52px; }
+.ticker-logo.logo-fullport { height: 58px; }
 .ticker-logo.logo-wayy { height: 38px; }
 .ticker-logo.logo-wfd { height: 44px; }
-.ticker-logo.logo-corner { height: 54px; }
+.ticker-logo.logo-corner { height: 60px; }
 
 @keyframes ticker-scroll {
   0% { transform: translate3d(0, 0, 0); }
