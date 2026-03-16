@@ -7,9 +7,9 @@ import { CASE_STUDIES, BOOKSHELF_SLUGS } from '../constants/projects'
 const BOOK_COLORS = ['#FCE184', '#F5B731', '#34A853', '#1a1a2e', '#F97316']
 
 const SPINE_LOGOS: (string | null)[] = [
-  '/content/logos/rad-spine.png',
+  '/content/logos/rad-spine.webp',
   '/content/logos/wayy-spine.webp',
-  '/content/logos/hydex-spine.png',
+  '/content/logos/hydex-spine.webp',
   null, // Fullport — text label
   null, // whatsfordinner — text label
 ]
@@ -151,7 +151,7 @@ export function Hero() {
           </p>
           <div className="hero-cta-row">
             <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="hero-cta" onClick={() => track('cta_click', { location: 'hero' })}>
-              <img src="/Rizzytoday Profile Picture.jpg" alt="" className="hero-cta-avatar" />
+              <img src="/Rizzytoday Profile Picture.webp" alt="" className="hero-cta-avatar" />
               Book an intro
             </a>
             <span className="available-badge"><span className="available-dot" />Available now</span>

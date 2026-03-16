@@ -20,7 +20,7 @@ export function AsciiRose() {
 
   useEffect(() => {
     const img = new Image()
-    img.src = '/rizzyrose.png'
+    img.src = '/rizzyrose.webp'
     img.onload = () => {
       const canvas = canvasRef.current
       if (!canvas) return
