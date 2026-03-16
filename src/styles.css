@@ -756,14 +756,14 @@ main {
 
 .nav-mobile-toggle.open span:nth-child(1) {
   top: 12px;
-  left: 6px;
+  left: 18px;
   opacity: 1;
   background: var(--text-primary);
 }
 
 .nav-mobile-toggle.open span:nth-child(2) {
   top: 12px;
-  left: 18px;
+  left: 6px;
   opacity: 1;
   background: var(--text-primary);
 }
