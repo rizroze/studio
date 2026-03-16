@@ -168,6 +168,7 @@ export function Footer() {
               <a href="https://discord.com/users/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">Discord</a>
               <a href="https://github.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
               <a href="https://rizztoday.vercel.app" target="_blank" rel="noopener noreferrer" className="footer-link">Personal website</a>
+              <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="footer-link footer-privacy-mobile">Privacy</a>
             </div>
           </div>
           <div className="footer-ipod-wrap">

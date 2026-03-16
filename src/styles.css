@@ -692,7 +692,7 @@ main {
     padding: 6px 14px;
     gap: 6px;
     font-size: 11px;
-    border-color: var(--glass-border);
+    border-color: var(--brand-red);
     pointer-events: auto;
     transition: opacity 0.25s 0.3s var(--smooth-ease);
   }
@@ -2086,7 +2086,12 @@ main {
   transition: transform 0.6s var(--smooth-ease);
 }
 
-.pricing-flip-wrap:hover .pricing-flip-inner {
+@media (hover: hover) {
+  .pricing-flip-wrap:hover .pricing-flip-inner {
+    transform: rotateY(180deg);
+  }
+}
+.pricing-flip-inner.flipped {
   transform: rotateY(180deg);
 }
 
@@ -2803,6 +2808,9 @@ main {
   color: rgba(255, 255, 255, 0.4);
   text-decoration: none;
 }
+.footer-privacy-mobile {
+  display: none;
+}
 
 /* ===========================
    VIEW ALL BUTTON
@@ -3427,7 +3435,7 @@ main {
 .gallery-squares {
   columns: unset;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 8px;
 }
 
@@ -3731,6 +3739,7 @@ main {
   color: rgba(0, 0, 0, 0.5);
 }
 
+
 .ipod-track-title {
   overflow: hidden;
   white-space: nowrap;
@@ -4007,7 +4016,8 @@ main {
   .footer-emoji-row { gap: 5px; flex-wrap: nowrap; margin-bottom: 12px; }
   .footer-emoji-pill { padding: 5px 8px; gap: 4px; font-size: 11px; }
   .footer-bottom { padding-top: 12px; font-size: 11px; margin-top: auto; }
-  .footer-bottom .footer-privacy-link { display: inline; }
+  .footer-bottom .footer-privacy-link { display: none; }
+  .footer-privacy-mobile { display: inline; }
 
   .testimonials-grid { grid-template-columns: 1fr; }
   .testimonial-card { padding: 24px; }
