@@ -14,7 +14,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     question: 'What does the process look like?',
-    answer: 'We jump on a 15-min call, I listen to what you need. Then you get an interactive questionnaire custom-built for you so I understand exactly what you\'re after. From there you get a proposal, and we go: Discovery → Design → Build → Ship.'
+    answer: '15-min call → custom questionnaire → proposal. Then: Discovery → Design → Build → Ship.'
   },
   {
     question: 'What if I just need one thing?',
