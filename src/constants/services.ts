@@ -20,7 +20,7 @@ export const PRICING_TIERS: PricingTier[] = [
       'Logo & visual identity',
       'Color palette & typography',
       'Brand guidelines document',
-      'Content direction system',
+      'Content direction base',
       '2 revision rounds'
     ],
     cta: 'Book a call',
