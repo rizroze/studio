@@ -177,9 +177,6 @@ export function Nav({ onLogoClick }: NavProps) {
                 {item.label}
               </a>
             ))}
-            <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="nav-mobile-cta" onClick={() => navStore.close()}>
-              Book a call
-            </a>
           </div>
         </div>,
         document.body

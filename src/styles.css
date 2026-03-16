@@ -767,17 +767,18 @@ main {
 .nav-mobile-menu-inner {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 0;
 }
 
 .nav-mobile-link {
-  font-family: 'Urbanist', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  font-style: italic;
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
-  padding: 10px 0;
+  padding: 12px 0;
   transition: color 0.2s var(--smooth-ease);
 }
 
