@@ -1440,16 +1440,17 @@ main {
 
 .client-ticker {
   overflow: hidden;
-  mask-image: linear-gradient(90deg, transparent, black 20%, black 80%, transparent);
   -webkit-mask-image: linear-gradient(90deg, transparent, black 20%, black 80%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 20%, black 80%, transparent);
 }
 
 .client-ticker-track {
   display: flex;
   align-items: center;
   width: max-content;
-  will-change: transform;
   animation: ticker-scroll 30s linear infinite;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .ticker-set {
@@ -4204,7 +4205,9 @@ main {
   .bookshelf { transform: scale(0.65); transform-origin: center; }
   .book-container { --bk-width: 40px; }
   .hero-ticker { flex-direction: column; gap: 16px; padding: 24px 0; overflow: visible; }
-  .client-ticker { mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%); }
+  .client-ticker { -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%); }
+  .client-ticker-track { animation-duration: 20s; }
+  .ticker-logo.logo-solana-mobile { width: 120px; }
   .ascii-rose { transform: translate(-50%, -50%) scale(0.8); }
   .ascii-rose pre { font-size: 6px; }
 
@@ -4330,5 +4333,5 @@ main {
     transition-duration: 0.01ms !important;
   }
 
-  .client-ticker-track { animation-duration: 20s; }
+  .client-ticker-track { animation-duration: 20s !important; animation-iteration-count: infinite !important; }
 }
