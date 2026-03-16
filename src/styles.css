@@ -4175,6 +4175,13 @@ main {
     -webkit-backdrop-filter: blur(50px) saturate(140%);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
     margin: 0;
+    transition:
+      max-width 0.6s var(--pill-ease),
+      left 0.6s var(--pill-ease),
+      right 0.6s var(--pill-ease),
+      background 0.4s var(--smooth-ease),
+      border-color 0.4s var(--smooth-ease),
+      box-shadow 0.6s var(--smooth-ease);
   }
 
   .site-nav .nav-inner,
@@ -4189,23 +4196,20 @@ main {
 
   /* Shrink pill at footer on mobile too */
   .site-nav.scrolled.at-footer {
-    max-width: 100px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
+    max-width: 140px;
   }
 
   .site-nav.scrolled.at-footer .nav-brand {
     gap: 0;
   }
 
-  .site-nav.scrolled.at-footer .nav-inner {
-    gap: 4px;
-    padding: 0 10px;
+  .site-nav.scrolled.at-footer .nav-brand-text {
+    display: none;
   }
 
-  .site-nav.scrolled.at-footer .nav-mobile-toggle {
-    display: none;
+  .site-nav.scrolled.at-footer .nav-inner {
+    gap: 4px;
+    padding: 0 12px;
   }
 
   .hero-studio { padding-top: 120px; }
