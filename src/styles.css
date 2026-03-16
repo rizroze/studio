@@ -895,6 +895,18 @@ main {
   animation: aurora-drift 12s ease-in-out infinite alternate;
 }
 
+.hero-studio::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 160px;
+  background: linear-gradient(to bottom, transparent, var(--bg-primary));
+  pointer-events: none;
+  z-index: 1;
+}
+
 @keyframes aurora-drift {
   0% { opacity: 1; transform: scale(1) translateY(0); }
   100% { opacity: 0.7; transform: scale(1.1) translateY(-20px); }
