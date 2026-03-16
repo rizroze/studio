@@ -92,7 +92,7 @@ function DensityIcon({ t }: { t: number }) {
 
   const lines = ['BTC  67,241', 'ETH   3,841', 'SOL   142.8', 'DOGE  0.148', 'AVAX  28.41']
   const visible = Math.max(1, Math.round(lerp(5, 1, t)))
-  const fontSize = lerp(7, 12, t)
+  const fontSize = lerp(7, 9, t)
 
   return (
     <div className="discovery-icon" style={{
