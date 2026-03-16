@@ -218,7 +218,7 @@ function DiscoverySlider({ card }: { card: SliderConfig }) {
   }, [])
 
   return (
-    <div className="discovery-slider-card">
+    <div className="discovery-slider-card" data-reveal>
       <div
         ref={(el) => {
           if (!el) return
@@ -263,12 +263,12 @@ export function Discovery() {
       <p className="discovery-subtitle" data-reveal>
         After our call, something like this lands on your screen — an interactive questionnaire built just for you. Not a form. Tailored to make sure you get exactly what you need.
       </p>
-      <div className="discovery-sliders" data-reveal-stagger>
+      <div className="discovery-sliders">
         {SLIDERS.map((card, i) => (
           <DiscoverySlider key={i} card={card} />
         ))}
         {/* Blurred teaser — hints there's more */}
-        <div className="discovery-slider-card" style={{ filter: 'blur(4px)', pointerEvents: 'none' }}>
+        <div className="discovery-slider-card" data-reveal style={{ filter: 'blur(4px)', pointerEvents: 'none' }}>
           <div className="discovery-icon" style={{ background: '#333', flexDirection: 'column' }}>
             <div style={{ fontFamily: "'Urbanist',sans-serif", fontWeight: 700, fontSize: 22, letterSpacing: '-0.02em', color: '#fff' }}>Aa</div>
             <div style={{ fontSize: 8, marginTop: 4, color: 'rgba(255,255,255,0.4)', fontFamily: "'Fragment Mono',monospace" }}>mode</div>
