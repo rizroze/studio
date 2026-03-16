@@ -73,7 +73,7 @@ const SLIDERS: SliderConfig[] = [
     leftLabel: 'Playful',
     rightLabel: 'Serious',
     leftTags: 'figma, slack, rounded',
-    rightTags: 'sharp, structured',
+    rightTags: 'linear, sharp, structured',
     defaultValue: 55,
     canvasStyle: 'background:#fef3c7; border-radius:20px; border-color:#fde68a;',
     canvasHTML: `<div data-shapes style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
