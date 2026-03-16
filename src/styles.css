@@ -2958,6 +2958,10 @@ main {
 }
 
 
+.discovery-drag-hint {
+  display: none;
+}
+
 .discovery-footnote {
   font-size: 13px;
   color: rgba(255, 255, 255, 0.3);
@@ -2975,6 +2979,16 @@ main {
   .discovery-icon {
     width: 72px;
     height: 72px;
+  }
+  .discovery-drag-hint {
+    display: block;
+    font-family: 'Fragment Mono', monospace;
+    font-size: 8px;
+    color: rgba(255, 255, 255, 0.25);
+    text-align: center;
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 }
 
