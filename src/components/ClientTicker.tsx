@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+
 type LogoItem = { src: string; alt: string; className: string }
 
 const LOGOS: LogoItem[] = [
@@ -13,9 +15,9 @@ const LOGOS: LogoItem[] = [
   { src: '/content/logos/corner-c.webp', alt: 'The Corner', className: 'logo-corner' },
 ]
 
-function LogoSet() {
+function LogoSet({ setRef }: { setRef?: React.RefObject<HTMLDivElement | null> }) {
   return (
-    <>
+    <div ref={setRef} className="ticker-set" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
       {LOGOS.map((logo) => (
         <span key={logo.alt} className="ticker-logo-zone">
           <img
@@ -25,15 +27,43 @@ function LogoSet() {
           />
         </span>
       ))}
-    </>
+    </div>
   )
 }
 
 export function ClientTicker() {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const firstSetRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const track = trackRef.current
+    const firstSet = firstSetRef.current
+    if (!track || !firstSet) return
+
+    let animId: number
+    let pos = 0
+    const speed = 0.5 // px per frame
+
+    const animate = () => {
+      const setWidth = firstSet.offsetWidth
+      if (setWidth === 0) { animId = requestAnimationFrame(animate); return }
+
+      pos -= speed
+      if (pos <= -setWidth) {
+        pos += setWidth
+      }
+      track.style.transform = `translate3d(${pos}px, 0, 0)`
+      animId = requestAnimationFrame(animate)
+    }
+
+    animId = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(animId)
+  }, [])
+
   return (
     <div className="client-ticker">
-      <div className="client-ticker-track">
-        <LogoSet />
+      <div className="client-ticker-track" ref={trackRef} style={{ animation: 'none' }}>
+        <LogoSet setRef={firstSetRef} />
         <LogoSet />
       </div>
     </div>

@@ -1380,7 +1380,6 @@ main {
 .client-ticker-track {
   display: flex;
   align-items: center;
-  animation: ticker-scroll 30s linear infinite;
   width: max-content;
   will-change: transform;
   backface-visibility: hidden;
@@ -1414,10 +1413,10 @@ main {
 .ticker-logo.logo-soladex { height: 34px; }
 .ticker-logo.logo-skr { height: 34px; }
 .ticker-logo.logo-solana-mobile { height: 34px; }
-.ticker-logo.logo-fullport { height: 46px; }
+.ticker-logo.logo-fullport { height: 52px; }
 .ticker-logo.logo-wayy { height: 38px; }
 .ticker-logo.logo-wfd { height: 44px; }
-.ticker-logo.logo-corner { height: 48px; }
+.ticker-logo.logo-corner { height: 54px; }
 
 @keyframes ticker-scroll {
   0% { transform: translate3d(0, 0, 0); }
@@ -3919,7 +3918,6 @@ main {
   .bookshelf { transform: scale(0.65); transform-origin: center; }
   .book-container { --bk-width: 40px; }
   .hero-ticker { flex-direction: column; gap: 16px; padding: 24px 0; }
-  .client-ticker-track { animation-duration: 15s; }
   .ascii-rose { transform: translate(-50%, -50%) scale(0.8); }
   .ascii-rose pre { font-size: 6px; }
 
