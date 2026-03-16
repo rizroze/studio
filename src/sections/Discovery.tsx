@@ -29,13 +29,21 @@ const SLIDERS: SliderConfig[] = [
     morph(cv, t) {
       const orb = cv.querySelector('[data-orb]') as HTMLElement
       if (!orb) return
-      cv.style.background = t < 0.15
-        ? lerpRGB(30, 15, 60, 20, 20, 30, t / 0.15)
-        : lerpRGB(20, 20, 30, 18, 18, 18, (t - 0.15) / 0.85)
-      const orbSize = t < 0.1 ? lerp(80, 46, t / 0.1) : lerp(46, 12, (t - 0.1) / 0.9)
+      // Bg: deep purple → dark → white
+      if (t < 0.15) {
+        cv.style.background = lerpRGB(30, 15, 60, 20, 20, 30, t / 0.15)
+      } else if (t < 0.6) {
+        cv.style.background = lerpRGB(20, 20, 30, 18, 18, 18, (t - 0.15) / 0.45)
+      } else {
+        cv.style.background = lerpRGB(18, 18, 18, 250, 250, 250, (t - 0.6) / 0.4)
+      }
+      cv.style.borderColor = t > 0.7 ? `rgba(0,0,0,${lerp(0, 0.12, (t - 0.7) / 0.3)})` : 'rgba(255,255,255,0.08)'
+      // Orb size: fills canvas → circle → tiny dot
+      const orbSize = t < 0.1 ? lerp(80, 46, t / 0.1) : lerp(46, 8, (t - 0.1) / 0.9)
       orb.style.width = orbSize + 'px'
       orb.style.height = orbSize + 'px'
       orb.style.borderRadius = t < 0.08 ? lerp(16, 50, t / 0.08) + 'px' : '50%'
+      // Orb color: vibrant gradient → desaturating → black dot
       const sat = lerp(80, 0, t)
       const light = lerp(65, 8, t)
       orb.style.background = t < 0.7
@@ -219,29 +227,26 @@ export function Discovery() {
           <DiscoverySlider key={i} card={card} />
         ))}
       </div>
-      {/* Peek at 4th slider — fades out to hint there's more */}
-      <div className="discovery-peek" data-reveal>
-        <div className="discovery-slider-card">
-          <div className="discovery-icon" style={{ background: '#333', flexDirection: 'column' }}>
-            <div style={{ fontFamily: "'Urbanist',sans-serif", fontWeight: 700, fontSize: 22, letterSpacing: '-0.02em', color: '#fff' }}>Aa</div>
-            <div style={{ fontSize: 8, marginTop: 4, color: 'rgba(255,255,255,0.4)', fontFamily: "'Fragment Mono',monospace" }}>mode</div>
+      {/* Blurred teaser — hints there's more */}
+      <div className="discovery-slider-card" data-reveal style={{ filter: 'blur(4px)', pointerEvents: 'none', opacity: 0.5 }}>
+        <div className="discovery-icon" style={{ background: '#333', flexDirection: 'column' }}>
+          <div style={{ fontFamily: "'Urbanist',sans-serif", fontWeight: 700, fontSize: 22, letterSpacing: '-0.02em', color: '#fff' }}>Aa</div>
+          <div style={{ fontSize: 8, marginTop: 4, color: 'rgba(255,255,255,0.4)', fontFamily: "'Fragment Mono',monospace" }}>mode</div>
+        </div>
+        <div className="discovery-slider-content">
+          <div className="discovery-slider-labels">
+            <span className="discovery-label-left">Dark</span>
+            <span className="discovery-label-right">Light</span>
           </div>
-          <div className="discovery-slider-content">
-            <div className="discovery-slider-labels">
-              <span className="discovery-label-left">Dark</span>
-              <span className="discovery-label-right">Light</span>
-            </div>
-            <div className="discovery-track" style={{ pointerEvents: 'none' }}>
-              <div className="discovery-track-fill" style={{ width: '50%' }} />
-              <div className="discovery-thumb" style={{ left: '50%' }} />
-            </div>
-            <div className="discovery-slider-tags">
-              <span className="discovery-tag">linear, rizzy.today</span>
-              <span className="discovery-tag">notion, apple</span>
-            </div>
+          <div className="discovery-track">
+            <div className="discovery-track-fill" style={{ width: '50%' }} />
+            <div className="discovery-thumb" style={{ left: '50%' }} />
+          </div>
+          <div className="discovery-slider-tags">
+            <span className="discovery-tag">linear, rizzy.today</span>
+            <span className="discovery-tag">notion, apple</span>
           </div>
         </div>
-        <div className="discovery-peek-fade" />
       </div>
       <p className="discovery-footnote" data-reveal>A brand psychology test disguised as a questionnaire. Try dragging the sliders.</p>
     </section>
