@@ -97,6 +97,8 @@ export function PricingCard({ tier }: PricingCardProps) {
 
           <div className="pricing-divider" style={{ background: `linear-gradient(to right, ${accent}, transparent)` }} />
 
+          <p className="pricing-desc">{tier.description}</p>
+
           <div className="pricing-features-grid">
             {tier.features.map(f => (
               <div key={f} className="pricing-feature-item">
@@ -105,8 +107,6 @@ export function PricingCard({ tier }: PricingCardProps) {
               </div>
             ))}
           </div>
-
-          <p className="pricing-desc">{tier.description}</p>
           <div className="pricing-accent-bar-bottom" style={{ background: accent }} />
         </div>
 
