@@ -14,7 +14,7 @@ function preloadBookImages(): Promise<void> {
   })
   return Promise.race([
     Promise.all(promises).then(() => {}),
-    new Promise<void>(resolve => setTimeout(resolve, 800)),
+    new Promise<void>(resolve => setTimeout(resolve, 400)),
   ])
 }
 
@@ -36,59 +36,60 @@ export function GsapAnimations() {
 
       const tl = gsap.timeline({ delay: startDelay })
 
-      // Left side — headline words rise in one by one
+      // Left side — headline words rise in fast
       const words = gsap.utils.toArray<HTMLElement>('.hero-word')
-      gsap.set(words, { opacity: 0, y: 20 })
+      gsap.set(words, { opacity: 0, y: 16 })
       gsap.set('.hero-headline', { opacity: 1 })
 
       tl.to(words, {
         opacity: 1,
         y: 0,
-        duration: 0.5,
-        ease: 'power2.out',
-        stagger: 0.06,
+        duration: 0.4,
+        ease: 'power3.out',
+        stagger: 0.04,
       })
       .fromTo('.hero-subline',
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
-        '-=0.2'
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' },
+        '-=0.25'
       )
       .fromTo('.hero-cta-row',
-        { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
-        '-=0.35'
-      )
-
-      // Right side — bookshelf appears
-      .fromTo('.hero-right',
-        { opacity: 0 },
-        { opacity: 1, duration: 0.4, ease: 'power2.out' },
-        '-=0.4'
-      )
-      .fromTo('.shelf-line',
-        { scaleX: 0 },
-        { scaleX: 1, duration: 0.5, ease: 'power2.out' },
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out' },
         '-=0.3'
       )
 
-      // Books fade in with stagger — no transform to avoid 3D conflicts
-      .to(zones, {
-        opacity: 1,
-        duration: 0.45,
-        ease: 'power2.out',
-        stagger: 0.08,
-      }, '-=0.25')
-
-      .fromTo('.shelf-label',
+      // Right side — bookshelf appears with left side
+      .fromTo('.hero-right',
         { opacity: 0 },
         { opacity: 1, duration: 0.3, ease: 'power2.out' },
-        '-=0.15'
+        '-=0.5'
+      )
+      .fromTo('.shelf-line',
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.4, ease: 'power3.out' },
+        '-=0.3'
+      )
+
+      // Books fade in tight
+      .to(zones, {
+        opacity: 1,
+        duration: 0.35,
+        ease: 'power2.out',
+        stagger: 0.05,
+      }, '-=0.3')
+
+      // Shelf label + ticker arrive together
+      .fromTo('.shelf-label',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.25, ease: 'power2.out' },
+        '-=0.2'
       )
 
       .fromTo('.hero-ticker',
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' },
-        '-=0.1'
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out' },
+        '-=0.25'
       )
 
       .call(() => {

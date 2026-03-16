@@ -129,18 +129,23 @@ export function Hero() {
       <div className="hero-split">
         <div className="hero-left">
           <h1 className="hero-headline">
-            <span className="hero-word">I</span>{' '}
-            <span className="hero-word">design</span>{' '}
-            <span className="hero-word">it,</span>{' '}
-            <span className="hero-word">code</span>{' '}
-            <span className="hero-word">it,</span>
-            <br />
-            <span className="hero-word">and</span>{' '}
-            <span className="hero-word">ship</span>{' '}
-            <span className="hero-word hero-accent">the</span>{' '}<span className="hero-word hero-accent">whole</span>{' '}<span className="hero-word hero-accent">thing.</span>
+            <span className="hero-word">You</span>{' '}
+            <span className="hero-word">don't</span>{' '}
+            <span className="hero-word">need</span>{' '}
+            <span className="hero-word">more</span>{' '}
+            <span className="hero-word">features.</span>{' '}
+            <span className="hero-word">You</span>{' '}
+            <span className="hero-word">need</span>{' '}
+            <span className="hero-word">more</span>{' '}
+            <span className="hero-word hero-accent">conviction</span>{' '}
+            <span className="hero-word hero-accent">in</span>{' '}
+            <span className="hero-word hero-accent">how</span>{' '}
+            <span className="hero-word hero-accent">you</span>{' '}
+            <span className="hero-word hero-accent">present</span>{' '}
+            <span className="hero-word hero-accent">them.</span>
           </h1>
           <p className="hero-subline">
-            Helping brands express themselves clearly. Brand, website, motion. From <strong>concept</strong> to <strong>production</strong>.
+            I help founders and teams go from <strong>idea</strong> to <strong>live product</strong>.<br />Brand, website, motion. No handoffs, no delays.
           </p>
           <div className="hero-cta-row">
             <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="hero-cta" onClick={() => track('cta_click', { location: 'hero' })}>
@@ -205,7 +210,7 @@ export function Hero() {
       <div className="hero-ticker">
         <div className="hero-ticker-proof">
           <span className="ticker-stars">★★★★★</span>
-          <span className="ticker-label">Happy Clients</span>
+          <span className="ticker-label">Clients</span>
         </div>
         <ClientTicker />
       </div>

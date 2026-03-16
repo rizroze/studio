@@ -109,7 +109,8 @@ export function Nav({ onLogoClick }: NavProps) {
   const navClass = [
     'site-nav',
     scrolledPastHero ? 'scrolled' : '',
-    pillExpanded ? 'expanded' : ''
+    pillExpanded ? 'expanded' : '',
+    atFooter ? 'at-footer' : ''
   ].filter(Boolean).join(' ')
 
   return (

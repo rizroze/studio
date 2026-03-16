@@ -14,7 +14,7 @@ export const PRICING_TIERS: PricingTier[] = [
   {
     name: 'Start',
     audience: 'For teams launching something new',
-    tagline: 'Ship your brand with confidence.',
+    tagline: 'Your brand, ready to launch.',
     description: 'A water-tight brand identity you can ship with confidence. Logo, colors, type, and a social kit ready for launch day.',
     features: [
       'Logo & visual identity',
@@ -30,7 +30,7 @@ export const PRICING_TIERS: PricingTier[] = [
   {
     name: 'Build',
     audience: 'For teams ready to convert',
-    tagline: 'Your brand becomes a live product.',
+    tagline: 'Designed, coded, and live.',
     description: 'Brand identity plus a custom coded website. Designed, built, and deployed by one person. Your brand turns into a live product.',
     features: [
       'Everything in Start',
@@ -48,7 +48,7 @@ export const PRICING_TIERS: PricingTier[] = [
   {
     name: 'Studio',
     audience: 'For teams that need a creative director',
-    tagline: 'One person owns your entire creative stack.',
+    tagline: 'One creative director for everything.',
     description: 'Full creative direction. Brand, website, motion, design system, and ongoing support. One person owns the entire creative stack.',
     features: [
       'Everything in Build',
