@@ -266,6 +266,10 @@ html {
   overflow-x: hidden;
 }
 
+html {
+  background-color: var(--brand-red);
+}
+
 body {
   font-family: 'Inter Tight', sans-serif;
   background-color: var(--bg-secondary);
@@ -4272,7 +4276,7 @@ main {
   }
   .project-card-studio:hover .project-card-arrow { transform: none; }
 
-  .site-footer { padding: 100px 20px calc(160px + env(safe-area-inset-bottom, 0px)); overflow: hidden; min-height: calc(100svh + 120px); display: flex; flex-direction: column; justify-content: flex-start; }
+  .site-footer { padding: 70px 20px calc(40px + env(safe-area-inset-bottom, 0px)); overflow: hidden; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-start; }
   .footer-inner { grid-template-columns: 1fr; gap: 24px; padding-bottom: 0; }
   .footer-bottom-row { display: flex; flex-direction: row; align-items: flex-start; gap: 16px; margin-top: 20px; }
   .footer-ipod-wrap { margin-left: auto; }
