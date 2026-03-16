@@ -145,7 +145,7 @@ export function Hero() {
             <span className="hero-word hero-accent">them.</span>
           </h1>
           <p className="hero-subline">
-            I turn what you're building into a <strong>brand people remember</strong>.<br />Today.
+            I turn what you're building into a <strong>brand people remember</strong>. Today.
           </p>
           <div className="hero-cta-row">
             <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="hero-cta" onClick={() => track('cta_click', { location: 'hero' })}>
