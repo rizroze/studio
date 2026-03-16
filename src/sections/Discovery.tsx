@@ -261,7 +261,7 @@ export function Discovery() {
     <section id="discovery" className="section discovery-section">
       <WordReveal text="Your project starts here." className="section-title-xl" tag="h2" />
       <p className="discovery-subtitle" data-reveal>
-        After our call, this lands on your screen — an interactive questionnaire built just for you. Not a form. Tailored to make sure you get exactly what you need.
+        After our call, something like this lands on your screen — an interactive questionnaire built just for you. Not a form. Tailored to make sure you get exactly what you need.
       </p>
       <div className="discovery-sliders" data-reveal-stagger>
         {SLIDERS.map((card, i) => (
