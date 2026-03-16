@@ -3053,8 +3053,8 @@ main {
 }
 
 .biz-step-num {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -3987,7 +3987,7 @@ main {
   .footer-emoji-row { gap: 5px; flex-wrap: nowrap; margin-bottom: 12px; }
   .footer-emoji-pill { padding: 5px 8px; gap: 4px; font-size: 11px; }
   .footer-bottom { padding-top: 12px; font-size: 11px; margin-top: auto; }
-  .footer-bottom .footer-privacy-link { display: none; }
+  .footer-bottom .footer-privacy-link { display: inline; }
 
   .testimonials-grid { grid-template-columns: 1fr; }
   .testimonial-card { padding: 24px; }

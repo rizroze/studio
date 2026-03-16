@@ -41,6 +41,7 @@ export function GsapAnimations() {
       gsap.set(words, { opacity: 0, y: 16 })
       gsap.set('.hero-headline', { opacity: 1 })
 
+      // 14 words × 0.04s stagger = 0.56s + 0.4s duration = words done at ~0.96s
       tl.to(words, {
         opacity: 1,
         y: 0,
@@ -48,48 +49,52 @@ export function GsapAnimations() {
         ease: 'power3.out',
         stagger: 0.04,
       })
+
+      // Subline starts after most words are visible
       .fromTo('.hero-subline',
         { opacity: 0, y: 12 },
         { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' },
-        '-=0.25'
+        0.6
       )
+
+      // CTA right after subline
       .fromTo('.hero-cta-row',
         { opacity: 0, y: 10 },
         { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out' },
-        '-=0.3'
+        0.75
       )
 
-      // Right side — bookshelf appears with left side
+      // Right side — bookshelf appears alongside text
       .fromTo('.hero-right',
         { opacity: 0 },
         { opacity: 1, duration: 0.3, ease: 'power2.out' },
-        '-=0.5'
+        0.5
       )
       .fromTo('.shelf-line',
         { scaleX: 0 },
         { scaleX: 1, duration: 0.4, ease: 'power3.out' },
-        '-=0.3'
+        0.6
       )
 
-      // Books fade in tight
+      // Books fade in
       .to(zones, {
         opacity: 1,
         duration: 0.35,
         ease: 'power2.out',
         stagger: 0.05,
-      }, '-=0.3')
+      }, 0.7)
 
-      // Shelf label + ticker arrive together
+      // Shelf label + ticker
       .fromTo('.shelf-label',
         { opacity: 0 },
         { opacity: 1, duration: 0.25, ease: 'power2.out' },
-        '-=0.2'
+        1.0
       )
 
       .fromTo('.hero-ticker',
-        { opacity: 0, y: 8, visibility: 'hidden' },
-        { opacity: 1, y: 0, visibility: 'visible', duration: 0.35, ease: 'power3.out' },
-        '-=0.25'
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out' },
+        1.0
       )
 
       .call(() => {

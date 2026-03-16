@@ -85,7 +85,7 @@ export function About() {
                 I direct, design, and build. Your project gets treated like it's mine, because for the time we're building together, it is.
               </p>
               <p>
-                Brand, website, motion, app, pitch deck — whatever your project needs to take off. 4+ years in Solana, from hackathon launches to full protocol projects.
+                Brand, website, motion, app, pitch deck. Whatever your project needs to take off. 4+ years in Solana, from hackathon launches to full protocol projects.
               </p>
               <p>
                 Fast replies. Real progress. You'll never wonder what's happening.
