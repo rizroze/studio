@@ -735,12 +735,12 @@ main {
 }
 
 .nav-mobile-toggle span:nth-child(1) {
-  top: 6px;
+  top: 9px;
   left: 12px;
 }
 
 .nav-mobile-toggle span:nth-child(2) {
-  top: 18px;
+  top: 15px;
   left: 12px;
   opacity: 0.35;
 }
