@@ -4149,6 +4149,7 @@ main {
     display: none;
   }
 
+  .hero-studio { padding-top: 80px; }
   .hero-split { grid-template-columns: 1fr; gap: 32px; }
   .hero-left { text-align: left; }
   .hero-subline { max-width: 100%; }
