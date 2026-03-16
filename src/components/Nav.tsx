@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useMobileNav, useNavScroll, navStore } from '../stores/navStore'
 
@@ -17,6 +17,23 @@ export function Nav({ onLogoClick }: NavProps) {
   const mobileOpen = useMobileNav()
   const { scrolledPastHero, pillExpanded, activeSection, atFooter } = useNavScroll()
   const navRef = useRef<HTMLElement>(null)
+  const [menuVisible, setMenuVisible] = useState(false)
+  const [menuClosing, setMenuClosing] = useState(false)
+
+  // Sync menu visibility with open state, adding close animation delay
+  useEffect(() => {
+    if (mobileOpen) {
+      setMenuClosing(false)
+      setMenuVisible(true)
+    } else if (menuVisible) {
+      setMenuClosing(true)
+      const timer = setTimeout(() => {
+        setMenuVisible(false)
+        setMenuClosing(false)
+      }, 250)
+      return () => clearTimeout(timer)
+    }
+  }, [mobileOpen])
 
   // Single throttled scroll handler for hero threshold + active section
   // Uses cached offsetTop values to avoid forced layout recalc on every frame
@@ -155,8 +172,8 @@ export function Nav({ onLogoClick }: NavProps) {
         </div>
       </nav>
 
-      {mobileOpen && createPortal(
-        <div className="nav-mobile-menu">
+      {menuVisible && createPortal(
+        <div className={`nav-mobile-menu ${menuClosing ? 'closing' : ''}`}>
           <div className="nav-mobile-header">
             <a href="#" className="nav-brand" onClick={(e) => { scrollToTop(e); navStore.close() }}>
               <img src="/rizzy-avatar.webp" alt="Rizzy Studio" className="nav-pfp" />
