@@ -37,8 +37,8 @@ const SLIDERS: SliderConfig[] = [
   {
     leftLabel: 'Loud',
     rightLabel: 'Quiet',
-    leftTags: 'gradients, neon, bold',
-    rightTags: 'muted, white space',
+    leftTags: 'neon, bold',
+    rightTags: 'muted, minimal',
     defaultValue: 35,
     canvasStyle: 'background:linear-gradient(135deg,#4a1a8a,#1a3a6a);',
     canvasHTML: '<div data-orb style="width:90px;height:90px;border-radius:14px;background:linear-gradient(135deg,#f472b6,#fbbf24);box-shadow:0 0 24px rgba(244,114,182,0.5);"></div>',
@@ -72,8 +72,8 @@ const SLIDERS: SliderConfig[] = [
   {
     leftLabel: 'Playful',
     rightLabel: 'Serious',
-    leftTags: 'figma, slack, rounded',
-    rightTags: 'linear, sharp, structured',
+    leftTags: 'figma, slack',
+    rightTags: 'linear, sharp',
     defaultValue: 55,
     canvasStyle: 'background:#fef3c7; border-radius:20px; border-color:#fde68a;',
     canvasHTML: `<div data-shapes style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
@@ -115,8 +115,8 @@ const SLIDERS: SliderConfig[] = [
   {
     leftLabel: 'Dense',
     rightLabel: 'Spacious',
-    leftTags: 'bloomberg, info-heavy',
-    rightTags: 'apple.com, breathing room',
+    leftTags: 'bloomberg, packed',
+    rightTags: 'apple.com, clean',
     defaultValue: 20,
     canvasStyle: 'background:#0d0d0d; padding:8px; align-items:flex-start; justify-content:flex-start; flex-direction:column;',
     canvasHTML: `<div data-lines style="font-family:'Fragment Mono',monospace; font-size:7px; line-height:1.5; color:#4ade80; width:100%;">
@@ -145,7 +145,7 @@ const SLIDERS: SliderConfig[] = [
       })
 
       // Font size: stays readable, 7px → 10px max
-      lines.style.fontSize = lerp(7, 10, t) + 'px'
+      lines.style.fontSize = lerp(7, 9, t) + 'px'
       lines.style.lineHeight = lerp(1.5, 2.0, t).toString()
 
       // Color: green terminal → dark fast → gray on white
@@ -167,7 +167,7 @@ const SLIDERS: SliderConfig[] = [
       })
 
       // Padding + centering for spacious
-      cv.style.padding = lerp(8, 20, t) + 'px'
+      cv.style.padding = lerp(8, 14, t) + 'px'
       cv.style.justifyContent = t > 0.6 ? 'center' : 'flex-start'
       cv.style.alignItems = 'stretch'
     },

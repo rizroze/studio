@@ -2977,8 +2977,14 @@ main {
     padding: 20px;
   }
   .discovery-icon {
-    width: 72px;
-    height: 72px;
+    width: 90px;
+    height: 90px;
+  }
+  .discovery-slider-tags {
+    gap: 8px;
+  }
+  .discovery-tag {
+    font-size: 8px;
   }
   .discovery-drag-hint {
     display: block;
