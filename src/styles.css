@@ -37,6 +37,17 @@
   pointer-events: none;
 }
 
+@media (max-width: 768px) {
+  .scroll-progress {
+    top: 55px;
+    left: 26px;
+    width: calc(100% - 52px);
+    height: 1.5px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.5);
+  }
+}
+
 /* ===========================
    PAGE TRANSITIONS
    =========================== */
