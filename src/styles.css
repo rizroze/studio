@@ -114,7 +114,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
+  gap: 5px;
   background: none;
   border: none;
   padding: 8px 0;
@@ -132,18 +132,16 @@
   align-items: center;
   justify-content: center;
   width: 12px; /* matches track width */
-  min-height: 8px;
+  min-height: 2px;
 }
 
 .scroll-nav-dot {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px 0;
+  padding: 0;
   margin: 0;
   position: relative;
-  min-height: 44px;
-  min-width: 44px;
 }
 
 .scroll-nav-dot:hover .scroll-nav-pip {
@@ -171,8 +169,6 @@
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.25s var(--smooth-ease);
-  padding: 8px 12px 8px 16px;
-  margin: -8px -12px -8px 0;
 }
 
 .scroll-nav-label-active {
