@@ -190,12 +190,15 @@ export function Nav({ onLogoClick, scrollBarRef }: NavProps) {
   return (
     <>
       <nav className={navClass} ref={navRef} onClick={(e) => {
-        // On mobile, clicking anywhere on the pill toggles menu
+        const target = e.target as HTMLElement
+        // Don't intercept clicks on links, CTA, or dot toggles
+        if (target.closest('a') || target.closest('.nav-cta') || target.closest('.nav-dot-toggle')) return
         if (window.innerWidth <= 768) {
-          // Don't toggle if clicking a link or the brand
-          const target = e.target as HTMLElement
-          if (target.closest('a') || target.closest('.nav-cta')) return
+          // Mobile: clicking anywhere on pill toggles menu
           navStore.toggle()
+        } else if (scrolledPastHero && !pillExpanded) {
+          // Desktop: clicking anywhere on collapsed pill expands it
+          navStore.togglePill()
         }
       }}>
         <div className="nav-inner">

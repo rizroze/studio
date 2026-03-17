@@ -40,6 +40,7 @@ function pathFromView(v: View): string {
 export function App() {
   const [view, setView] = useState<View>(() => viewFromPath(window.location.pathname))
   const [transitioning, setTransitioning] = useState(false)
+  const [entering, setEntering] = useState(false)
   const scrollBarRef = useRef<HTMLDivElement>(null)
   const backToTopRef = useRef<HTMLButtonElement>(null)
   const pendingView = useRef<View | null>(null)
@@ -61,14 +62,16 @@ export function App() {
       const next = viewFromPath(window.location.pathname)
       pendingView.current = next
       setTransitioning(true)
-      setTimeout(() => window.scrollTo({ top: 0 }), 150)
       setTimeout(() => {
+        window.scrollTo({ top: 0 })
         setView(next)
+        setEntering(true)
+        setTransitioning(false)
+        isPopState.current = false
         requestAnimationFrame(() => {
-          setTransitioning(false)
-          isPopState.current = false
+          requestAnimationFrame(() => setEntering(false))
         })
-      }, 250)
+      }, 220)
     }
     window.addEventListener('popstate', onPopState)
     return () => window.removeEventListener('popstate', onPopState)
@@ -77,15 +80,20 @@ export function App() {
   const transitionTo = useCallback((next: View) => {
     pendingView.current = next
     setTransitioning(true)
-    // Scroll to top while content is faded out (invisible by ~150ms)
-    setTimeout(() => window.scrollTo({ top: 0 }), 150)
+    // Wait for exit animation to complete (200ms), then scroll + swap
     setTimeout(() => {
+      window.scrollTo({ top: 0 })
       setView(next)
       if (!isPopState.current) {
         history.pushState(null, '', pathFromView(next))
       }
-      requestAnimationFrame(() => setTransitioning(false))
-    }, 250)
+      // Start with enter-from position (below + invisible), then animate up
+      setEntering(true)
+      setTransitioning(false)
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setEntering(false))
+      })
+    }, 220)
   }, [])
 
   const openProject = useCallback((slug: string) => {
@@ -136,7 +144,7 @@ export function App() {
       <ScrollReveal />
       {view.type === 'home' && <ScrollNav />}
       {view.type === 'home' && <GsapAnimations />}
-      <main className={`page-content ${transitioning ? 'page-exit' : 'page-enter'}`}>
+      <main className={`page-content ${transitioning ? 'page-exit' : entering ? 'page-enter-from' : 'page-enter'}`}>
         {view.type === 'home' && (
           <>
             <Hero />

@@ -41,17 +41,21 @@
    =========================== */
 .page-content {
   background: var(--bg-primary);
-  transition: opacity 0.3s var(--smooth-ease), filter 0.3s var(--smooth-ease), transform 0.3s var(--smooth-ease);
 }
 .page-exit {
   opacity: 0;
-  filter: blur(6px);
-  transform: translateY(12px);
+  filter: blur(4px);
+  transform: scale(0.99);
+  transition: opacity 0.2s var(--smooth-ease), filter 0.2s var(--smooth-ease), transform 0.2s var(--smooth-ease);
 }
 .page-enter {
   opacity: 1;
-  filter: blur(0);
   transform: translateY(0);
+  transition: opacity 0.35s 0.05s var(--smooth-ease), transform 0.35s 0.05s var(--smooth-ease);
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(24px);
 }
 
 /* ===========================
@@ -91,13 +95,14 @@
    =========================== */
 .scroll-nav {
   position: fixed;
-  right: 24px;
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
   z-index: 998;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.4s var(--smooth-ease);
+  padding: 16px 24px 16px 100px;
 }
 
 .scroll-nav-visible {
@@ -109,7 +114,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 0;
   background: none;
   border: none;
   padding: 8px 0;
@@ -127,16 +132,18 @@
   align-items: center;
   justify-content: center;
   width: 12px; /* matches track width */
-  min-height: 2px;
+  min-height: 8px;
 }
 
 .scroll-nav-dot {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
+  padding: 8px 0;
   margin: 0;
   position: relative;
+  min-height: 44px;
+  min-width: 44px;
 }
 
 .scroll-nav-dot:hover .scroll-nav-pip {
@@ -163,8 +170,9 @@
   color: rgba(255, 255, 255, 0.4);
   white-space: nowrap;
   opacity: 0;
-  pointer-events: none;
   transition: opacity 0.25s var(--smooth-ease);
+  padding: 8px 12px 8px 16px;
+  margin: -8px -12px -8px 0;
 }
 
 .scroll-nav-label-active {
@@ -630,6 +638,7 @@ main {
       0 0 10px 4px rgba(255, 255, 255, 0.04) inset,
       0 8px 32px rgba(0, 0, 0, 0.4);
     overflow: hidden;
+    cursor: pointer;
   }
 
   .site-nav.scrolled.at-footer {
@@ -681,6 +690,7 @@ main {
   .site-nav.scrolled.expanded {
     max-width: 600px;
     overflow: visible;
+    cursor: default;
   }
 
   /* Expanded: content fades in after pill finishes growing */
@@ -4185,9 +4195,9 @@ main {
   /* Shrink pill at footer on mobile too — centered, tight */
   .site-nav.scrolled.at-footer {
     max-width: 90px;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
+    left: calc(50% - 45px);
+    right: calc(50% - 45px);
+    transform: none;
   }
 
   .site-nav.scrolled.at-footer .nav-brand {
