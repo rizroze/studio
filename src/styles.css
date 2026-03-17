@@ -1490,6 +1490,7 @@ main {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+  overflow: visible;
 }
 .work-grid > :last-child:nth-child(odd) {
   grid-column: 1 / -1;

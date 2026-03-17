@@ -59,7 +59,9 @@ export function ProjectCard({ project, onViewProject }: ProjectCardProps) {
     rafRef.current = requestAnimationFrame(() => {
       const x = (clientX - rect.left) / rect.width - 0.5
       const y = (clientY - rect.top) / rect.height - 0.5
-      card.style.transform = `rotateY(${x * 12}deg) rotateX(${y * -12}deg)`
+      // Reduce tilt on wide cards (full-width spans) to prevent clipping
+      const tilt = rect.width > 700 ? 5 : 12
+      card.style.transform = `rotateY(${x * tilt}deg) rotateX(${y * -tilt}deg)`
     })
   }, [expanded])
 
