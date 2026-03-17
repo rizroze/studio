@@ -29,17 +29,25 @@ export function WordReveal({ text, className = '', tag: Tag = 'h3', delay = 0 }:
 
   const words = text.split(' ')
 
+  let wordIndex = 0
+
   return (
     <Tag ref={ref as any} className={`word-reveal ${revealed ? 'word-revealed' : ''} ${className}`}>
-      {words.map((word, i) => (
-        <span
-          key={i}
-          className="word-reveal-word"
-          style={{ transitionDelay: `${delay + i * 80}ms` }}
-        >
-          {word}
-        </span>
-      ))}
+      {words.map((word, i) => {
+        if (word === '\\n') {
+          return <br key={i} />
+        }
+        const idx = wordIndex++
+        return (
+          <span
+            key={i}
+            className="word-reveal-word"
+            style={{ transitionDelay: `${delay + idx * 80}ms` }}
+          >
+            {word}
+          </span>
+        )
+      })}
     </Tag>
   )
 }

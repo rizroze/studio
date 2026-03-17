@@ -2,7 +2,7 @@ export interface ProjectSection {
   title: string
   description: string
   gallery: string[]
-  layout?: 'grid' | 'squares' | 'landscape' | 'deck'  // grid = default columns, squares = 1:1 grid, landscape = 2-col grid, deck = 3-col grid
+  layout?: 'grid' | 'squares' | 'squares-small' | 'landscape' | 'deck'  // grid = default columns, squares = 1:1 grid, squares-small = smaller 1:1, landscape = 2-col grid, deck = 3-col grid
   wideIndices?: number[]  // gallery item indices that span full row width
 }
 
@@ -12,6 +12,7 @@ export interface CaseStudyData {
   client: string
   tags: string[]
   thumbnail: string
+  cardThumbnail?: string
   color: string
   gallery: string[]
   previewGallery?: string[]  // curated images for the card preview (overrides gallery/sections)
@@ -39,6 +40,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     client: 'Brand & Content Direction',
     tags: ['Intern Lead'],
     thumbnail: '/content/logos/radiants-pixel-dark.svg',
+    cardThumbnail: '/content/radiants/thumbnail.webp',
     color: '#FCE184',
     gallery: [],
     previewGallery: [
@@ -168,7 +170,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       {
         title: 'PFP Art',
         description: 'Custom pixel art profile pictures for the Radiants community. Each one hand-crafted in the signature sun-yellow palette.',
-        layout: 'squares',
+        layout: 'squares-small',
         gallery: [
           '/content/radiants/pfps/blonde.webp',
           '/content/radiants/pfps/brz.webp',
@@ -267,11 +269,11 @@ export const CASE_STUDIES: CaseStudyData[] = [
           '/content/wayy/web-02.webp',
           '/content/wayy/web-03.webp',
           '/content/wayy/web-04.webp',
-          '/content/wayy/web-05.webp',
           '/content/wayy/web-06.webp',
+          '/content/wayy/web-09.webp',
           '/content/wayy/web-07.webp',
           '/content/wayy/web-08.webp',
-          '/content/wayy/web-09.webp',
+          '/content/wayy/web-05.webp',
         ],
       },
     ],
@@ -284,7 +286,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     title: 'Hydex',
     client: 'DeFi',
     tags: ['Presentation Design'],
-    thumbnail: '/content/hydex-logo-white.png',
+    thumbnail: '/content/hydex-logo-white.webp',
     color: '#34A853',
     gallery: [],
     previewGallery: [

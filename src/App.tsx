@@ -13,6 +13,7 @@ import { Work } from './sections/Work'
 import { Testimonials, TestimonialBanner } from './sections/Testimonials'
 import { Services } from './sections/Services'
 import { About } from './sections/About'
+import { Discovery } from './sections/Discovery'
 import { FAQ } from './sections/FAQ'
 import { ProjectPage } from './sections/ProjectPage'
 import { AllProjects } from './sections/AllProjects'
@@ -21,28 +22,68 @@ import { Agentation } from 'agentation'
 
 type View = { type: 'home' } | { type: 'project'; slug: string } | { type: 'all-projects' }
 
+function viewFromPath(path: string): View {
+  if (path.startsWith('/work/')) {
+    const slug = path.slice(6)
+    if (CASE_STUDIES.some(p => p.slug === slug)) return { type: 'project', slug }
+  }
+  if (path === '/work') return { type: 'all-projects' }
+  return { type: 'home' }
+}
+
+function pathFromView(v: View): string {
+  if (v.type === 'project') return `/work/${v.slug}`
+  if (v.type === 'all-projects') return '/work'
+  return '/'
+}
+
 export function App() {
-  const [view, setView] = useState<View>({ type: 'home' })
+  const [view, setView] = useState<View>(() => viewFromPath(window.location.pathname))
   const [transitioning, setTransitioning] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const [showBackToTop, setShowBackToTop] = useState(false)
+  const scrollBarRef = useRef<HTMLDivElement>(null)
+  const backToTopRef = useRef<HTMLButtonElement>(null)
   const pendingView = useRef<View | null>(null)
+  const isPopState = useRef(false)
 
   // Remove loading screen once app is ready
   useEffect(() => {
     const loader = document.getElementById('loader')
     if (loader) {
       loader.classList.add('loader-exit')
-      setTimeout(() => loader.remove(), 400)
+      setTimeout(() => loader.remove(), 350)
     }
+  }, [])
+
+  // Handle browser back/forward
+  useEffect(() => {
+    const onPopState = () => {
+      isPopState.current = true
+      const next = viewFromPath(window.location.pathname)
+      pendingView.current = next
+      setTransitioning(true)
+      setTimeout(() => window.scrollTo({ top: 0 }), 150)
+      setTimeout(() => {
+        setView(next)
+        requestAnimationFrame(() => {
+          setTransitioning(false)
+          isPopState.current = false
+        })
+      }, 250)
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
   }, [])
 
   const transitionTo = useCallback((next: View) => {
     pendingView.current = next
     setTransitioning(true)
+    // Scroll to top while content is faded out (invisible by ~150ms)
+    setTimeout(() => window.scrollTo({ top: 0 }), 150)
     setTimeout(() => {
       setView(next)
-      window.scrollTo({ top: 0 })
+      if (!isPopState.current) {
+        history.pushState(null, '', pathFromView(next))
+      }
       requestAnimationFrame(() => setTransitioning(false))
     }, 250)
   }, [])
@@ -59,7 +100,7 @@ export function App() {
     transitionTo({ type: 'home' })
   }, [transitionTo])
 
-  // Scroll progress + back to top (rAF-throttled)
+  // Scroll progress + back to top — direct DOM updates, zero re-renders
   useEffect(() => {
     let ticking = false
     const onScroll = () => {
@@ -67,8 +108,14 @@ export function App() {
       ticking = true
       requestAnimationFrame(() => {
         const h = document.documentElement.scrollHeight - window.innerHeight
-        setScrollProgress(h > 0 ? window.scrollY / h : 0)
-        setShowBackToTop(window.scrollY > window.innerHeight)
+        const progress = h > 0 ? window.scrollY / h : 0
+        const pastFold = window.scrollY > window.innerHeight
+        if (scrollBarRef.current) {
+          scrollBarRef.current.style.transform = `scaleX(${progress})`
+        }
+        if (backToTopRef.current) {
+          backToTopRef.current.style.display = pastFold ? '' : 'none'
+        }
         ticking = false
       })
     }
@@ -83,10 +130,9 @@ export function App() {
   return (
     <>
       <GlassFilter />
-      <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress})` }} />
       <div className="grain-overlay" />
       <CursorGlitch />
-      <Nav onLogoClick={goHome} />
+      <Nav onLogoClick={goHome} scrollBarRef={scrollBarRef} />
       <ScrollReveal />
       {view.type === 'home' && <ScrollNav />}
       {view.type === 'home' && <GsapAnimations />}
@@ -98,6 +144,7 @@ export function App() {
             <Testimonials />
             <Services />
             <About />
+            <Discovery />
             <FAQ />
             <TestimonialBanner />
           </>
@@ -117,17 +164,17 @@ export function App() {
       </main>
       <Footer />
 
-      {showBackToTop && (
-        <button
-          className="back-to-top"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          aria-label="Back to top"
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M8 12V4M5 7L8 4L11 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-      )}
+      <button
+        ref={backToTopRef}
+        className="back-to-top"
+        style={{ display: 'none' }}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label="Back to top"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 12V4M5 7L8 4L11 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
 
       <Analytics />
       <SpeedInsights />

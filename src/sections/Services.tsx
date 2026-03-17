@@ -5,7 +5,7 @@ import { WordReveal } from '../components/WordReveal'
 export function Services() {
   return (
     <section id="services" className="section">
-      <WordReveal text="Pick a scope. Get everything." className="section-title-xl" tag="h2" />
+      <WordReveal text="Three ways to work together." className="section-title-xl" tag="h2" />
 
       <div className="pricing-cards" data-reveal-stagger>
         {PRICING_TIERS.map(tier => (

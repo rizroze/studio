@@ -27,7 +27,9 @@ export function ProjectCard({ project, onViewProject }: ProjectCardProps) {
   }, [])
 
   const handleClick = () => {
-    if (!expanded) {
+    if (expanded) {
+      onViewProject(project.slug)
+    } else {
       setExpanded(true)
       cancelAnimationFrame(rafRef.current)
       const card = cardRef.current
@@ -95,9 +97,11 @@ export function ProjectCard({ project, onViewProject }: ProjectCardProps) {
         tabIndex={0}
         onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') handleClick() }}
       >
-        {/* Full-bleed visual — use cover image if available, fallback to logo on color */}
+        {/* Full-bleed visual — cardThumbnail > previewImages[0] > thumbnail */}
         <div className="project-card-visual" style={{ backgroundColor: project.color }}>
-          {previewImages[0] ? (
+          {project.cardThumbnail ? (
+            <img src={project.cardThumbnail} alt={project.title} loading="lazy" className={`project-card-cover${project.coverZoom ? ' cover-zoomed' : ''}`} />
+          ) : previewImages[0] ? (
             <img src={previewImages[0]} alt={project.title} loading="lazy" className={`project-card-cover${project.coverZoom ? ' cover-zoomed' : ''}`} />
           ) : (
             <img src={project.thumbnail} alt={project.title} loading="lazy" />

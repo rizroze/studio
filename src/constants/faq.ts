@@ -6,7 +6,7 @@ export interface FAQItem {
 export const FAQ_ITEMS: FAQItem[] = [
   {
     question: 'Why one person instead of a team?',
-    answer: 'What we talk about is what shows up on your screen. No handoffs, no compromises. One point of contact for everything.'
+    answer: 'What we talk about is what shows up on your screen. No handoffs, no compromises. That\'s why the work feels different.'
   },
   {
     question: 'How fast can you start?',
@@ -14,7 +14,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     question: 'What does the process look like?',
-    answer: 'Discovery → Design → Build → Ship. You see everything as it happens.'
+    answer: '15-min call → interactive questionnaire tailored for you → custom proposal. Then: Discovery → Design → Build → Ship. You see everything as it happens.'
   },
   {
     question: 'What if I just need one thing?',
@@ -22,7 +22,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     question: 'Do you work outside web3?',
-    answer: 'Yes. If you\'re building something interesting, I\'m down.'
+    answer: 'Yes. The approach is the same — I just need to care about what you\'re building.'
   },
   {
     question: 'How do revisions work?',

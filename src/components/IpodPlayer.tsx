@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { PLAYLIST } from '../constants/music'
+// Classic iPod — built with love
 
 export function IpodPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -7,9 +8,7 @@ export function IpodPlayer() {
   const titleWrapRef = useRef<HTMLDivElement>(null)
   const [currentTrack, setCurrentTrack] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [progress, setProgress] = useState(0)
-  const [currentTime, setCurrentTime] = useState('0:00')
-  const [remaining, setRemaining] = useState('-0:00')
+  const [showMenu, setShowMenu] = useState(false)
 
   useEffect(() => {
     if (audioRef.current) {
@@ -22,9 +21,10 @@ export function IpodPlayer() {
   const loadTrack = (index: number) => {
     const newIndex = ((index % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length
     setCurrentTrack(newIndex)
-    setProgress(0)
-    setCurrentTime('0:00')
-    setRemaining('-0:00')
+    // Reset progress display directly
+    if (progressFillRef.current) progressFillRef.current.style.width = '0%'
+    if (currentTimeRef.current) currentTimeRef.current.textContent = '0:00'
+    if (remainingTimeRef.current) remainingTimeRef.current.textContent = '-0:00'
     return newIndex
   }
 
@@ -44,24 +44,49 @@ export function IpodPlayer() {
     const text = titleRef.current
     const wrap = titleWrapRef.current
     if (!text || !wrap) return
-    const overflow = text.scrollWidth - wrap.clientWidth
-    if (overflow > 0) {
-      text.style.setProperty('--marquee-offset', `-${overflow}px`)
-      text.style.animationPlayState = 'running'
-    } else {
+    const measure = () => {
+      // Pause animation and reset position to measure true width
+      const prevAnim = text.style.animation
       text.style.animation = 'none'
+      text.style.transform = 'translateX(0)'
+      text.offsetHeight // force reflow
+      const textW = text.scrollWidth
+      const wrapW = wrap.clientWidth
+      const overflow = textW - wrapW
+      if (overflow > 2) {
+        text.style.setProperty('--marquee-offset', `-${overflow + 8}px`)
+      } else {
+        text.style.setProperty('--marquee-offset', '0px')
+      }
+      // Restore animation
+      text.style.transform = ''
+      text.style.animation = prevAnim || ''
+      // Force restart so it picks up new offset
+      void text.offsetHeight
+      text.style.animation = ''
     }
+    // Wait for fonts + multiple frames to ensure layout is settled
+    document.fonts.ready.then(() => {
+      setTimeout(() => requestAnimationFrame(measure), 100)
+    })
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
   }, [currentTrack])
 
-  // Progress tracking
+  // Progress tracking — direct DOM updates to avoid React re-renders during playback
+  const progressFillRef = useRef<HTMLDivElement>(null)
+  const currentTimeRef = useRef<HTMLSpanElement>(null)
+  const remainingTimeRef = useRef<HTMLSpanElement>(null)
+
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
     const onTime = () => {
       if (!audio.duration) return
-      setProgress((audio.currentTime / audio.duration) * 100)
-      setCurrentTime(formatTime(audio.currentTime))
-      setRemaining(`-${formatTime(audio.duration - audio.currentTime)}`)
+      const pct = (audio.currentTime / audio.duration) * 100
+      if (progressFillRef.current) progressFillRef.current.style.width = `${pct}%`
+      if (currentTimeRef.current) currentTimeRef.current.textContent = formatTime(audio.currentTime)
+      if (remainingTimeRef.current) remainingTimeRef.current.textContent = `-${formatTime(audio.duration - audio.currentTime)}`
     }
     audio.addEventListener('timeupdate', onTime)
     return () => audio.removeEventListener('timeupdate', onTime)
@@ -111,49 +136,87 @@ export function IpodPlayer() {
     <div className="ipod-nano">
       <div className="ipod-body">
         {/* Screen — classic iPod style */}
-        <div className={`ipod-screen ${isPlaying ? 'active' : ''}`}>
+        <div className={`ipod-screen ${isPlaying || showMenu ? 'active' : ''}`}>
           <div className="ipod-screen-header">
-            <span>Now Playing</span>
-            {isPlaying && (
-              <span className="ipod-eq">
-                <span className="ipod-eq-bar" />
-                <span className="ipod-eq-bar" />
-                <span className="ipod-eq-bar" />
+            <span className="ipod-header-left">
+              {isPlaying && !showMenu && (
+                <span className="ipod-eq">
+                  <span className="ipod-eq-bar" />
+                  <span className="ipod-eq-bar" />
+                  <span className="ipod-eq-bar" />
+                </span>
+              )}
+            </span>
+            <span>{showMenu ? 'About' : 'Now Playing'}</span>
+            <span className={`ipod-battery ${isPlaying ? 'charging' : ''}`}>
+              <span className="ipod-battery-body">
+                <span className="ipod-battery-fill" />
               </span>
-            )}
+              <span className="ipod-battery-tip" />
+            </span>
           </div>
-          <div className="ipod-screen-inner">
-            <div className="ipod-album-row">
-              <div className="ipod-album-art">
-                {track?.cover ? (
-                  <img src={track.cover} alt="" className="ipod-album-img" />
-                ) : (
-                  <span className="ipod-album-initial">{(track?.title || '?')[0]}</span>
-                )}
-              </div>
-              <div className="ipod-track-info">
-                <div className="ipod-track-title" ref={titleWrapRef}>
-                  <span className="ipod-track-title-text" ref={titleRef} key={currentTrack}>{track?.title || 'No Track'}</span>
+
+          {showMenu ? (
+            <div className="ipod-screen-inner">
+              <div className="ipod-track-counter">10 of 10</div>
+              <div className="ipod-album-row">
+                <div className="ipod-album-art" style={{ border: 'none', borderRadius: '50%' }}>
+                  <img src="/rizzy-avatar.webp" alt="Riz" className="ipod-album-img" style={{ opacity: 1, filter: 'none', borderRadius: '50%' }} />
                 </div>
-                {track?.artist && <div className="ipod-track-artist">{track.artist}</div>}
+                <div className="ipod-track-info">
+                  <div className="ipod-track-title">
+                    <span className="ipod-track-title-text" style={{ animation: 'none', color: '#222' }}>Riz Rose</span>
+                  </div>
+                  <div className="ipod-track-artist" style={{ color: '#5aadee' }}>
+                    <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>@rizzytoday</a>
+                  </div>
+                </div>
+              </div>
+              <div className="ipod-progress">
+                <div className="ipod-progress-bar">
+                  <div className="ipod-progress-fill" ref={!showMenu ? undefined : progressFillRef} />
+                </div>
+                <div className="ipod-time-row">
+                  <span className="ipod-time" ref={!showMenu ? undefined : currentTimeRef}>0:00</span>
+                  <span className="ipod-time" ref={!showMenu ? undefined : remainingTimeRef}>-0:00</span>
+                </div>
               </div>
             </div>
-            <div className="ipod-progress">
-              <div className="ipod-progress-bar">
-                <div className="ipod-progress-fill" style={{ width: `${progress}%` }} />
+          ) : (
+            <div className="ipod-screen-inner">
+              <div className="ipod-track-counter">{currentTrack + 1} of {PLAYLIST.length}</div>
+              <div className="ipod-album-row">
+                <div className="ipod-album-art">
+                  {track?.cover ? (
+                    <img src={track.cover} alt="" className="ipod-album-img" />
+                  ) : (
+                    <span className="ipod-album-initial">{(track?.title || '?')[0]}</span>
+                  )}
+                </div>
+                <div className="ipod-track-info">
+                  <div className="ipod-track-title" ref={titleWrapRef}>
+                    <span className="ipod-track-title-text" ref={titleRef} key={currentTrack}>{track?.title || 'No Track'}</span>
+                  </div>
+                  {track?.artist && <div className="ipod-track-artist">{track.artist}</div>}
+                </div>
               </div>
-              <div className="ipod-time-row">
-                <span className="ipod-time">{currentTime}</span>
-                <span className="ipod-time">{remaining}</span>
+              <div className="ipod-progress">
+                <div className="ipod-progress-bar">
+                  <div className="ipod-progress-fill" ref={showMenu ? undefined : progressFillRef} />
+                </div>
+                <div className="ipod-time-row">
+                  <span className="ipod-time" ref={showMenu ? undefined : currentTimeRef}>0:00</span>
+                  <span className="ipod-time" ref={showMenu ? undefined : remainingTimeRef}>-0:00</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Click Wheel */}
         <div className="click-wheel">
           <div className="wheel-ring">
-            <button className="wheel-btn menu">MENU</button>
+            <button className="wheel-btn menu" onClick={() => setShowMenu(m => !m)}>MENU</button>
             <button className="wheel-btn prev" aria-label="Previous track" onClick={prevTrack}>
               <svg width="14" height="10" viewBox="0 0 16 12" fill="currentColor">
                 <path d="M0 0H3V12H0V0ZM3 6L16 12V0L3 6Z"/>
@@ -177,7 +240,7 @@ export function IpodPlayer() {
               )}
             </button>
           </div>
-          <button className="wheel-center" onClick={togglePlay} />
+          <button className="wheel-center" onClick={togglePlay} aria-label="Play or pause" />
         </div>
       </div>
       <audio

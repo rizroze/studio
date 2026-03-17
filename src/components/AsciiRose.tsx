@@ -20,7 +20,7 @@ export function AsciiRose() {
 
   useEffect(() => {
     const img = new Image()
-    img.src = '/rizzyrose.png'
+    img.src = '/rizzyrose.webp'
     img.onload = () => {
       const canvas = canvasRef.current
       if (!canvas) return
@@ -33,14 +33,23 @@ export function AsciiRose() {
       setReady(true)
 
       let last = 0
+      let visible = true
       const loop = (now: number) => {
         animRef.current = requestAnimationFrame(loop)
+        if (!visible) return
         const interval = heroMouse.active ? 16 : 50
         if (now - last < interval) return
         last = now
         render()
       }
       animRef.current = requestAnimationFrame(loop)
+
+      // Pause breathing when scrolled past hero (off-screen)
+      const roseEl = preRef.current?.parentElement
+      if (roseEl) {
+        const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting }, { threshold: 0 })
+        io.observe(roseEl)
+      }
     }
     return () => cancelAnimationFrame(animRef.current)
   }, [])
@@ -132,11 +141,8 @@ export function HeroCursorField() {
     resize()
     window.addEventListener('resize', resize)
 
-    const loop = () => {
-      animRef.current = requestAnimationFrame(loop)
-      render()
-    }
-    animRef.current = requestAnimationFrame(loop)
+    // Only run rAF loop while mouse is active — idle = no GPU work
+    // The loop self-starts on mouseMove and stops when mouse leaves
 
     return () => {
       cancelAnimationFrame(animRef.current)
@@ -202,6 +208,26 @@ export function HeroCursorField() {
     }
   }
 
+  const startLoop = () => {
+    if (animRef.current) return
+    const loop = () => {
+      animRef.current = requestAnimationFrame(loop)
+      render()
+    }
+    animRef.current = requestAnimationFrame(loop)
+  }
+
+  const stopLoop = () => {
+    cancelAnimationFrame(animRef.current)
+    animRef.current = 0
+    // Clear canvas on leave
+    const canvas = canvasRef.current
+    if (canvas) {
+      const ctx = canvas.getContext('2d')
+      if (ctx) ctx.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h)
+    }
+  }
+
   const handleMouseMove = (e: React.MouseEvent) => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -216,11 +242,13 @@ export function HeroCursorField() {
     heroMouse.y = y
     heroMouse.active = true
     heroMouse.heroRect = rect
+    startLoop()
   }
 
   const handleMouseLeave = () => {
     mouseRef.current.active = false
     heroMouse.active = false
+    stopLoop()
   }
 
   return (

@@ -1,3 +1,4 @@
+import { useState, useRef, useCallback } from 'react'
 import { track } from '@vercel/analytics'
 import type { PricingTier } from '../constants/services'
 
@@ -50,9 +51,34 @@ export function PricingCard({ tier }: PricingCardProps) {
   const Icon = config.icon
   const accent = config.accent
 
+  const [flipped, setFlipped] = useState(false)
+  const touchStartY = useRef(0)
+  const touchMoved = useRef(false)
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY
+    touchMoved.current = false
+  }, [])
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (Math.abs(e.touches[0].clientY - touchStartY.current) > 10) {
+      touchMoved.current = true
+    }
+  }, [])
+
+  const handleTap = useCallback(() => {
+    if (touchMoved.current) return
+    setFlipped(f => !f)
+  }, [])
+
   return (
-    <div className={`pricing-flip-wrap ${tier.featured ? 'featured' : ''}`}>
-      <div className="pricing-flip-inner">
+    <div
+      className={`pricing-flip-wrap ${tier.featured ? 'featured' : ''}`}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onClick={handleTap}
+    >
+      <div className={`pricing-flip-inner ${flipped ? 'flipped' : ''}`}>
         {/* Front face */}
         <div className="pricing-flip-front">
 
@@ -71,6 +97,8 @@ export function PricingCard({ tier }: PricingCardProps) {
 
           <div className="pricing-divider" style={{ background: `linear-gradient(to right, ${accent}, transparent)` }} />
 
+          <p className="pricing-desc">{tier.description}</p>
+
           <div className="pricing-features-grid">
             {tier.features.map(f => (
               <div key={f} className="pricing-feature-item">
@@ -79,8 +107,6 @@ export function PricingCard({ tier }: PricingCardProps) {
               </div>
             ))}
           </div>
-
-          <p className="pricing-desc">{tier.description}</p>
           <div className="pricing-accent-bar-bottom" style={{ background: accent }} />
         </div>
 
@@ -96,7 +122,7 @@ export function PricingCard({ tier }: PricingCardProps) {
             rel="noopener noreferrer"
             className="pricing-cta"
             style={{ background: accent, borderColor: accent, color: '#000' }}
-            onClick={() => track('cta_click', { location: 'pricing', tier: tier.name })}
+            onClick={(e) => { e.stopPropagation(); track('cta_click', { location: 'pricing', tier: tier.name }) }}
           >
             {tier.cta}
           </a>

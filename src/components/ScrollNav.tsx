@@ -6,6 +6,7 @@ const SECTIONS = [
   { id: 'testimonials', label: 'Proof' },
   { id: 'services', label: 'Services' },
   { id: 'about', label: 'About' },
+  { id: 'discovery', label: 'Process' },
   { id: 'contact', label: 'Contact' },
 ]
 
@@ -21,12 +22,11 @@ function dockScale(dist: number): number {
 }
 
 export function ScrollNav() {
-  const [activeIdx, setActiveIdx] = useState(0)
-  const [progress, setProgress] = useState(0)
-  const [visible, setVisible] = useState(false)
+  const [scrollState, setScrollState] = useState({ activeIdx: 0, progress: 0, visible: false })
   const [hovered, setHovered] = useState(false)
   const rafRef = useRef(0)
   const offsetsRef = useRef<number[]>([])
+  const prevRef = useRef({ activeIdx: 0, progress: 0, visible: false })
 
   // Cache section offsets on mount + resize
   useEffect(() => {
@@ -49,7 +49,7 @@ export function ScrollNav() {
         const vh = window.innerHeight
         const offsets = offsetsRef.current
 
-        setVisible(y > vh * 0.4)
+        const nowVisible = y > vh * 0.4
 
         let currentIdx = 0
         let sectionProgress = 0
@@ -68,8 +68,13 @@ export function ScrollNav() {
           }
         }
 
-        setActiveIdx(currentIdx)
-        setProgress(sectionProgress)
+        // Only re-render if values actually changed (quantize progress to reduce renders)
+        const quantizedProgress = Math.round(sectionProgress * 50) / 50
+        const prev = prevRef.current
+        if (prev.activeIdx !== currentIdx || prev.visible !== nowVisible || prev.progress !== quantizedProgress) {
+          prevRef.current = { activeIdx: currentIdx, progress: quantizedProgress, visible: nowVisible }
+          setScrollState({ activeIdx: currentIdx, progress: quantizedProgress, visible: nowVisible })
+        }
       })
     }
 
@@ -100,6 +105,8 @@ export function ScrollNav() {
       }
     }
   })
+
+  const { activeIdx, progress, visible } = scrollState
 
   // Interpolated active position for smooth magnification
   const activeSectionPos = activeIdx * STEP

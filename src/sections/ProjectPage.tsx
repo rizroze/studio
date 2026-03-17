@@ -132,9 +132,9 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
             <h2 className="project-subsection-title">{section.title}</h2>
             <p className="project-subsection-desc">{section.description}</p>
             {section.gallery.length > 0 && (
-              <div className={`project-page-gallery ${section.layout === 'squares' ? 'gallery-squares' : section.layout === 'landscape' ? 'gallery-landscape' : section.layout === 'deck' ? 'gallery-deck' : ''}`}>
+              <div className={`project-page-gallery ${section.layout === 'squares' || section.layout === 'squares-small' ? 'gallery-squares' : section.layout === 'landscape' ? 'gallery-landscape' : section.layout === 'deck' ? 'gallery-deck' : ''} ${section.layout === 'squares-small' ? 'gallery-squares-small' : ''}`}>
                 {section.gallery.map((img, j) => (
-                  <div key={j} className={`project-page-gallery-item ${section.layout === 'squares' ? 'gallery-item-square' : ''} ${section.wideIndices?.includes(j) ? 'gallery-item-wide' : ''} gallery-clickable`} onClick={() => openLightbox(section.gallery, j)}>
+                  <div key={j} className={`project-page-gallery-item ${section.layout === 'squares' || section.layout === 'squares-small' ? 'gallery-item-square' : ''} ${section.wideIndices?.includes(j) ? 'gallery-item-wide' : ''} gallery-clickable`} onClick={() => openLightbox(section.gallery, j)}>
                     <img src={img} alt={`${section.title} ${j + 1}`} loading="lazy" />
                   </div>
                 ))}

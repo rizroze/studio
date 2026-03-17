@@ -7,9 +7,9 @@ import { CASE_STUDIES, BOOKSHELF_SLUGS } from '../constants/projects'
 const BOOK_COLORS = ['#FCE184', '#F5B731', '#34A853', '#1a1a2e', '#F97316']
 
 const SPINE_LOGOS: (string | null)[] = [
-  '/content/logos/rad-spine.png',
+  '/content/logos/rad-spine.webp',
   '/content/logos/wayy-spine.webp',
-  '/content/logos/hydex-spine.png',
+  '/content/logos/hydex-spine.webp',
   null, // Fullport — text label
   null, // whatsfordinner — text label
 ]
@@ -105,6 +105,8 @@ export function Hero() {
   }, [])
 
   useEffect(() => {
+    // Skip parallax on mobile — causes scroll jank
+    if (window.innerWidth < 769) return
     let ticking = false
     const onScroll = () => {
       if (ticking) return
@@ -129,22 +131,27 @@ export function Hero() {
       <div className="hero-split">
         <div className="hero-left">
           <h1 className="hero-headline">
-            <span className="hero-word">I</span>{' '}
-            <span className="hero-word">design</span>{' '}
-            <span className="hero-word">it,</span>{' '}
-            <span className="hero-word">code</span>{' '}
-            <span className="hero-word">it,</span>
-            <br />
-            <span className="hero-word">and</span>{' '}
-            <span className="hero-word">ship</span>{' '}
-            <span className="hero-word hero-accent">the</span>{' '}<span className="hero-word hero-accent">whole</span>{' '}<span className="hero-word hero-accent">thing.</span>
+            <span className="hero-word">You</span>{' '}
+            <span className="hero-word">don't</span>{' '}
+            <span className="hero-word">need</span>{' '}
+            <span className="hero-word">more</span>{' '}
+            <span className="hero-word">features.</span>{' '}
+            <span className="hero-word">You</span>{' '}
+            <span className="hero-word">need</span>{' '}
+            <span className="hero-word">more</span>{' '}
+            <span className="hero-word hero-accent">conviction</span>{' '}
+            <span className="hero-word hero-accent">in</span>{' '}
+            <span className="hero-word hero-accent">how</span>{' '}
+            <span className="hero-word hero-accent">you</span>{' '}
+            <span className="hero-word hero-accent">present</span>{' '}
+            <span className="hero-word hero-accent">them.</span>
           </h1>
           <p className="hero-subline">
-            Helping brands express themselves clearly. Brand, website, motion. From <strong>concept</strong> to <strong>production</strong>.
+            I turn what you're building into a <strong>brand people remember</strong>. Today.
           </p>
           <div className="hero-cta-row">
             <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="hero-cta" onClick={() => track('cta_click', { location: 'hero' })}>
-              <img src="/Rizzytoday Profile Picture.jpg" alt="" className="hero-cta-avatar" />
+              <img src="/Rizzytoday Profile Picture.webp" alt="" className="hero-cta-avatar" />
               Book an intro
             </a>
             <span className="available-badge"><span className="available-dot" />Available now</span>
@@ -205,7 +212,7 @@ export function Hero() {
       <div className="hero-ticker">
         <div className="hero-ticker-proof">
           <span className="ticker-stars">★★★★★</span>
-          <span className="ticker-label">Happy Clients</span>
+          <span className="ticker-label">Clients</span>
         </div>
         <ClientTicker />
       </div>

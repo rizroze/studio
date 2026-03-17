@@ -14,7 +14,7 @@ function preloadBookImages(): Promise<void> {
   })
   return Promise.race([
     Promise.all(promises).then(() => {}),
-    new Promise<void>(resolve => setTimeout(resolve, 2000)),
+    new Promise<void>(resolve => setTimeout(resolve, 400)),
   ])
 }
 
@@ -32,63 +32,69 @@ export function GsapAnimations() {
     const loader = document.getElementById('loader')
 
     const runTimeline = () => {
-      const startDelay = loader ? 0.5 : 0.15
+      const startDelay = loader ? 0.2 : 0.1
 
       const tl = gsap.timeline({ delay: startDelay })
 
-      // Left side — headline words rise in one by one
+      // Left side — headline words rise in fast
       const words = gsap.utils.toArray<HTMLElement>('.hero-word')
-      gsap.set(words, { opacity: 0, y: 20 })
+      gsap.set(words, { opacity: 0, y: 16 })
       gsap.set('.hero-headline', { opacity: 1 })
 
+      // 14 words × 0.04s stagger = 0.56s + 0.4s duration = words done at ~0.96s
       tl.to(words, {
         opacity: 1,
         y: 0,
-        duration: 0.5,
-        ease: 'power2.out',
-        stagger: 0.06,
+        duration: 0.4,
+        ease: 'power3.out',
+        stagger: 0.04,
       })
+
+      // Subline starts after most words are visible
       .fromTo('.hero-subline',
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
-        '-=0.2'
-      )
-      .fromTo('.hero-cta-row',
         { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
-        '-=0.35'
+        { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' },
+        0.6
       )
 
-      // Right side — bookshelf appears
+      // CTA right after subline
+      .fromTo('.hero-cta-row',
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out' },
+        0.75
+      )
+
+      // Right side — bookshelf appears alongside text
       .fromTo('.hero-right',
         { opacity: 0 },
-        { opacity: 1, duration: 0.4, ease: 'power2.out' },
-        '-=0.4'
+        { opacity: 1, duration: 0.3, ease: 'power2.out' },
+        0.5
       )
       .fromTo('.shelf-line',
         { scaleX: 0 },
-        { scaleX: 1, duration: 0.5, ease: 'power2.out' },
-        '-=0.3'
+        { scaleX: 1, duration: 0.4, ease: 'power3.out' },
+        0.6
       )
 
-      // Books fade in with stagger — no transform to avoid 3D conflicts
+      // Books fade in
       .to(zones, {
         opacity: 1,
-        duration: 0.45,
+        duration: 0.35,
         ease: 'power2.out',
-        stagger: 0.08,
-      }, '-=0.25')
+        stagger: 0.05,
+      }, 0.7)
 
+      // Shelf label + ticker
       .fromTo('.shelf-label',
         { opacity: 0 },
-        { opacity: 1, duration: 0.3, ease: 'power2.out' },
-        '-=0.15'
+        { opacity: 1, duration: 0.25, ease: 'power2.out' },
+        1.0
       )
 
       .fromTo('.hero-ticker',
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' },
-        '-=0.1'
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out' },
+        1.0
       )
 
       .call(() => {

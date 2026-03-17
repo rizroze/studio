@@ -79,16 +79,16 @@ export function About() {
           </div>
 
           <div className="about-story">
-            <WordReveal text="Vision & Execution" className="section-title-lg" tag="h3" />
+            <WordReveal text="One person. \n The whole thing." className="section-title-lg" tag="h3" />
             <div className="about-paragraphs" data-reveal-stagger>
               <p>
                 I direct, design, and build. Your project gets treated like it's mine, because for the time we're building together, it is.
               </p>
               <p>
-                Brand, website, motion, app, presentation, content. Everything your project needs to fly. 4+ years in Solana, from hackathon launches to full protocol projects.
+                Brand, website, motion, app, presentation. Whatever your project needs to take off. 4+ years in Solana, from hackathon launches to full protocol projects.
               </p>
               <p>
-                Fast replies, real progress, no waiting around. Clarity in motion.
+                Fast replies. Real progress. You'll never wonder what's happening.
               </p>
             </div>
           </div>

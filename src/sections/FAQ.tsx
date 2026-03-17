@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { track } from '@vercel/analytics'
 import { FAQ_ITEMS } from '../constants/faq'
 import { VerifiedBadge } from '../components/VerifiedBadge'
-import { XLogo } from '../components/XLogo'
+
 import { WordReveal } from '../components/WordReveal'
 
 export function FAQ() {
@@ -25,7 +25,6 @@ export function FAQ() {
               <img src="/rizzy-avatar.webp" alt="Riz Rose" className="biz-card-pfp" />
               <div>
                 <h3 className="biz-card-name">Riz Rose <VerifiedBadge color="red" /></h3>
-                <p className="biz-card-role">Creative Direction & Code</p>
               </div>
             </div>
 
@@ -45,16 +44,21 @@ export function FAQ() {
               <span className="status-dot" />
               Let's talk
             </a>
-
-            <div className="biz-card-divider" />
-
-            {/* Bottom — contact row */}
-            <div className="biz-card-links">
-              <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer" className="biz-link-x"><XLogo size={12} /></a>
-              <a href="https://discord.com/users/rizzytoday" target="_blank" rel="noopener noreferrer">Discord</a>
-              <a href="https://github.com/rizzytoday" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <div className="biz-card-steps">
+              <div className="biz-step">
+                <span className="biz-step-num">1</span>
+                <span className="biz-step-text">15-min intro call</span>
+              </div>
+              <div className="biz-step">
+                <span className="biz-step-num">2</span>
+                <span className="biz-step-text">Interactive questionnaire</span>
+              </div>
+              <div className="biz-step">
+                <span className="biz-step-num">3</span>
+                <span className="biz-step-text">Custom proposal</span>
+              </div>
             </div>
-            <p className="biz-card-fine">SOL, USDC, and traditional payments.</p>
+
           </div>
         </div>
       </div>
