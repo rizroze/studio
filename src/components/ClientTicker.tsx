@@ -33,10 +33,15 @@ export function ClientTicker() {
     if (!move || !set) return
 
     let anim: Animation | null = null
+    let lastWidth = 0
 
-    const apply = () => {
+    const apply = (force?: boolean) => {
       const w = set.offsetWidth
       if (w <= 0) return
+
+      // Skip if width hasn't changed (mobile URL bar show/hide triggers resize)
+      if (!force && w === lastWidth) return
+      lastWidth = w
 
       // Cancel previous animation
       if (anim) anim.cancel()
@@ -62,7 +67,7 @@ export function ClientTicker() {
     const imgs = set.querySelectorAll('img')
     let loaded = 0
     const total = imgs.length
-    const onLoad = () => { loaded++; if (loaded >= total) apply() }
+    const onLoad = () => { loaded++; if (loaded >= total) apply(true) }
     imgs.forEach(img => {
       if (img.complete) loaded++
       else {
@@ -70,12 +75,13 @@ export function ClientTicker() {
         img.addEventListener('error', onLoad, { once: true })
       }
     })
-    if (loaded >= total) apply()
+    if (loaded >= total) apply(true)
 
-    window.addEventListener('resize', apply)
+    const onResize = () => apply()
+    window.addEventListener('resize', onResize)
     return () => {
       if (anim) anim.cancel()
-      window.removeEventListener('resize', apply)
+      window.removeEventListener('resize', onResize)
     }
   }, [])
 
