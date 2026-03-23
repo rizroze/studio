@@ -3431,6 +3431,21 @@ main {
   margin-bottom: 32px;
 }
 
+.project-page-tags .project-tag {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50px;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.01em;
+}
+
+.project-page-tags .project-tag-timeline {
+  font-family: 'Fragment Mono', monospace;
+  color: rgba(255, 255, 255, 0.5);
+}
+
 .project-page-gallery {
   columns: 2;
   column-gap: 12px;

@@ -71,6 +71,9 @@ export function ProjectPage({ project, onClose, onSelectProject }: ProjectPagePr
           {project.tags.map(tag => (
             <span key={tag} className="project-tag">{tag}</span>
           ))}
+          {project.timeline && (
+            <span className="project-tag project-tag-timeline">{project.timeline}</span>
+          )}
         </div>
 
         <div className="project-page-section">

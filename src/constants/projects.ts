@@ -27,6 +27,7 @@ export interface CaseStudyData {
   stack: string[]
   result: string
   resultMetric: string
+  timeline?: string   // e.g. '2024–2026'
   coverZoom?: number  // CSS scale for card cover (source images must be high-res enough)
 }
 
@@ -198,7 +199,8 @@ export const CASE_STUDIES: CaseStudyData[] = [
     solution: 'Expanded the brand\'s visual language. Created hundreds of social graphics, NFT art, pixel characters, infographics, pitchdecks, memes, motion. Everything RAD.',
     stack: ['Figma', 'Remotion', 'React', 'CSS', 'After Effects', 'Midjourney'],
     result: 'A brand that stays consistent across every touchpoint. From Twitter posts to hackathon booths.',
-    resultMetric: '2+ years Content Direction'
+    resultMetric: '2+ years Content Direction',
+    timeline: 'May 2024 – Feb 2026'
   },
   {
     slug: 'wayy',
