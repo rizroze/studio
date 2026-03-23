@@ -1398,8 +1398,6 @@ main {
   display: flex;
   align-items: center;
   gap: 32px;
-  -webkit-mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent);
-  mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent);
 }
 
 .hero-ticker-proof {
@@ -1425,6 +1423,8 @@ main {
 .ticker-wrap {
   overflow: hidden;
   position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 40px, black calc(100% - 40px), transparent);
+  mask-image: linear-gradient(to right, transparent, black 40px, black calc(100% - 40px), transparent);
 }
 
 
