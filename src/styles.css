@@ -214,11 +214,6 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
 }
-@keyframes pfp-spin-once {
-  0% { transform: scale(1) rotate(0deg); }
-  40% { transform: scale(1.1) rotate(180deg); }
-  100% { transform: scale(1) rotate(360deg); }
-}
 
 /* ===========================
    ACCESSIBILITY — FOCUS STATES
@@ -477,10 +472,7 @@ main {
   height: 32px;
   border-radius: 8px;
   object-fit: cover;
-  transition: transform 0.5s var(--bounce-ease);
 }
-
-.nav-brand:hover .nav-pfp { transform: rotate(360deg) scale(1.1); }
 
 .nav-brand-text {
   font-family: 'Urbanist', sans-serif;
@@ -2342,9 +2334,6 @@ main {
 }
 .about-pfp-large:hover {
   transform: scale(1.05);
-}
-.pfp-spin {
-  animation: pfp-spin-once 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
 }
 
 .about-name-large {
