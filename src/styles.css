@@ -475,9 +475,8 @@ main {
 .nav-pfp {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: 8px;
   object-fit: cover;
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
   transition: transform 0.5s var(--bounce-ease);
 }
 
@@ -2549,9 +2548,8 @@ main {
 .footer-pfp-big {
   width: 112px;
   height: 112px;
-  border-radius: 50%;
+  border-radius: 16px;
   object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .footer-tagline-big {
