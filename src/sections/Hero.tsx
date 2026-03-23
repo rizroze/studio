@@ -138,13 +138,15 @@ export function Hero() {
             <span className="hero-word">features.</span>{' '}
             <span className="hero-word">You</span>{' '}
             <span className="hero-word">need</span>{' '}
-            <span className="hero-word">more</span>{' '}
-            <span className="hero-word hero-accent">conviction</span>{' '}
-            <span className="hero-word hero-accent">in</span>{' '}
-            <span className="hero-word hero-accent">how</span>{' '}
-            <span className="hero-word hero-accent">you</span>{' '}
-            <span className="hero-word hero-accent">present</span>{' '}
-            <span className="hero-word hero-accent">them.</span>
+            <span className="hero-word">more</span>
+            <span className="hero-accent-line">
+              <span className="hero-word hero-accent">conviction</span>{' '}
+              <span className="hero-word hero-accent">in</span>{' '}
+              <span className="hero-word hero-accent">how</span>{' '}
+              <span className="hero-word hero-accent">you</span>{' '}
+              <span className="hero-word hero-accent">present</span>{' '}
+              <span className="hero-word hero-accent">them.</span>
+            </span>
           </h1>
           <p className="hero-subline">
             I turn what you're building into a <strong>brand people remember</strong>. Today.
