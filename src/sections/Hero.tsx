@@ -131,15 +131,17 @@ export function Hero() {
       <div className="hero-split">
         <div className="hero-left">
           <h1 className="hero-headline">
-            <span className="hero-word">You</span>{' '}
-            <span className="hero-word">don't</span>{' '}
-            <span className="hero-word">need</span>{' '}
-            <span className="hero-word">more</span>{' '}
-            <span className="hero-word">features.</span>{' '}
-            <span className="hero-word">You</span>{' '}
-            <span className="hero-word">need</span>
-            <span className="hero-accent-line">
+            <span className="hero-line">
+              <span className="hero-word">You</span>{' '}
+              <span className="hero-word">don't</span>{' '}
+              <span className="hero-word">need</span>{' '}
               <span className="hero-word">more</span>{' '}
+              <span className="hero-word">features.</span>{' '}
+              <span className="hero-word">You</span>{' '}
+              <span className="hero-word">need</span>{' '}
+              <span className="hero-word">more</span>
+            </span>
+            <span className="hero-line">
               <span className="hero-word hero-accent">conviction</span>{' '}
               <span className="hero-word hero-accent">in</span>{' '}
               <span className="hero-word hero-accent">how</span>{' '}

@@ -3,7 +3,7 @@ export const PLAYLIST = [
   { title: "Sand People", artist: "Jon Kennedy", src: "/content/music/Jon Kennedy - Sand people [YPGEsM3cJhk].mp3", cover: "/content/music/covers/sand-people.webp" },
   { title: "Our Dance", artist: "Wax Tailor", src: "/content/music/Wax Tailor - Our Dance.mp3", cover: "/content/music/covers/our-dance.webp" },
   { title: "Dönence", artist: "Barış Manço", src: "/content/music/Barış Manço - Dönence (1982 - TRT).mp3", cover: "/content/music/covers/donence.webp" },
-  { title: "Ana Bashaa El Bahr", artist: "Nagat", src: "/content/music/Nagat - Ana Bashaa El Bahr.mp3", cover: "/content/music/covers/ana-bashaa-el-bahr.webp" },
+  { title: "أنا بعشق البحر", artist: "Najat Al Saghira", src: "/content/music/Nagat - Ana Bashaa El Bahr.mp3", cover: "/content/music/covers/ana-bashaa-el-bahr.webp" },
   { title: "Dance Naked Under Palmtrees", artist: "Mo' Horizons", src: "/content/music/Dance Naked Under Palmtrees.mp3", cover: "/content/music/covers/dance-naked.webp" },
   { title: "Biscayne Bay", artist: "Curren$y & Harry Fraud", src: "/content/music/Currensy - Biscayne Bay.mp3", cover: "/content/music/covers/biscayne-bay.webp" },
   { title: "Culling Voices", artist: "TOOL", src: "/content/music/TOOL - Culling Voices.mp3", cover: "/content/music/covers/culling-voices.webp" },

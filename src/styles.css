@@ -992,7 +992,7 @@ main {
 .hero-headline {
   opacity: 0;
   font-family: 'Urbanist', sans-serif;
-  font-size: clamp(32px, 3.6vw, 65px);
+  font-size: clamp(32px, 2.2vw + 18px, 65px);
   font-weight: 700;
   font-style: italic;
   letter-spacing: -0.04em;
@@ -3948,7 +3948,7 @@ main {
 
 .ipod-track-artist {
   font-family: 'Geist Pixel', monospace;
-  font-size: 9px;
+  font-size: 7px;
   color: rgba(0, 0, 0, 0.15);
   white-space: nowrap;
   overflow: hidden;
@@ -4238,7 +4238,7 @@ main {
   .work-grid { grid-template-columns: 1fr; }
   .work-grid > :last-child:nth-child(odd) .project-card-visual { aspect-ratio: 16 / 9; }
   .work-section { padding: 60px 24px; }
-  .hero-headline { font-size: clamp(33px, 8.5vw, 46px); }
+  .hero-headline { font-size: clamp(28px, 7vw + 2px, 46px); }
   .hero-subline { font-size: 16px; }
   .pricing-cards { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
   .pricing-flip-wrap { height: 420px; }
