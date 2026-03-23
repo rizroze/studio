@@ -140,7 +140,7 @@ export function Hero() {
               <span className="hero-word">You</span>{' '}
               <span className="hero-word">need</span>{' '}
               <span className="hero-word">more</span>
-            </span>
+            </span>{' '}
             <span className="hero-line">
               <span className="hero-word hero-accent">conviction</span>{' '}
               <span className="hero-word hero-accent">in</span>{' '}
