@@ -22,7 +22,7 @@ export function FAQ() {
           <div className="biz-card" data-reveal>
             {/* Top — identity */}
             <div className="biz-card-identity">
-              <img src="/rizzy-avatar.webp" alt="Riz Rose" className="biz-card-pfp" />
+              <img src="/studio-rose.svg" alt="Riz Rose" className="biz-card-pfp" />
               <div>
                 <h3 className="biz-card-name">Riz Rose <VerifiedBadge color="red" /></h3>
               </div>

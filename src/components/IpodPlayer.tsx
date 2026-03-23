@@ -161,7 +161,7 @@ export function IpodPlayer() {
               <div className="ipod-track-counter">10 of 10</div>
               <div className="ipod-album-row">
                 <div className="ipod-album-art" style={{ border: 'none', borderRadius: '50%' }}>
-                  <img src="/rizzy-avatar.webp" alt="Riz" className="ipod-album-img" style={{ opacity: 1, filter: 'none', borderRadius: '50%' }} />
+                  <img src="/studio-rose.svg" alt="Riz" className="ipod-album-img" style={{ opacity: 1, filter: 'none', borderRadius: '8px' }} />
                 </div>
                 <div className="ipod-track-info">
                   <div className="ipod-track-title">
