@@ -998,6 +998,7 @@ main {
   letter-spacing: -0.04em;
   line-height: 1.15;
   margin-bottom: 20px;
+  max-width: 830px;
   overflow: visible;
 }
 
