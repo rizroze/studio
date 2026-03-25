@@ -203,7 +203,7 @@ export function Nav({ onLogoClick, scrollBarRef }: NavProps) {
       }}>
         <div className="nav-inner">
           <a href="#" className="nav-brand" onClick={scrollToTop}>
-            <img src="/studio-rose.svg" alt="Rizzy Studio" className="nav-pfp" />
+            <img src="/studio-rose.webp" alt="Rizzy Studio" className="nav-pfp" />
             <span className={`nav-brand-text ${atFooter ? 'hide' : ''}`}>Rizzy Studio</span>
           </a>
 
@@ -252,7 +252,7 @@ export function Nav({ onLogoClick, scrollBarRef }: NavProps) {
         <div className={`nav-mobile-menu ${menuClosing ? 'closing' : ''}`}>
           <div className="nav-mobile-header">
             <a href="#" className="nav-brand" onClick={(e) => { scrollToTop(e); navStore.close() }}>
-              <img src="/studio-rose.svg" alt="Rizzy Studio" className="nav-pfp" />
+              <img src="/studio-rose.webp" alt="Rizzy Studio" className="nav-pfp" />
               <span className="nav-brand-text">Rizzy Studio</span>
             </a>
             <button className="nav-mobile-toggle open" onClick={() => navStore.close()} aria-label="Close menu">

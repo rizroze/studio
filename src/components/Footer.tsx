@@ -130,7 +130,7 @@ export function Footer() {
       <div className="footer-inner">
         <div className="footer-main">
           <a href="#" className="footer-brand-big" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
-            <img src="/studio-rose.svg" alt="Rizzy Studio" className="footer-pfp-big" />
+            <img src="/studio-rose.webp" alt="Rizzy Studio" className="footer-pfp-big" />
             <span>Rizzy Studio</span>
           </a>
           <p className="footer-tagline-big">The rizz your brand's been missing.</p>
