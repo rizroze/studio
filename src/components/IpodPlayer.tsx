@@ -165,7 +165,7 @@ export function IpodPlayer() {
                 </div>
                 <div className="ipod-track-info">
                   <div className="ipod-track-title">
-                    <span className="ipod-track-title-text" style={{ animation: 'none', color: '#222' }}>Riz Rose</span>
+                    <span className="ipod-track-title-text" style={{ animation: 'none', color: '#222' }}>Riz Roze</span>
                   </div>
                   <div className="ipod-track-artist" style={{ color: '#5aadee' }}>
                     <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>@rizzytoday</a>

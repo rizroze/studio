@@ -6,7 +6,7 @@
 
 ## What This Project Actually Is
 
-Rizzy Studio is a client-facing portfolio site for Riz Rose — a full-stack creative working in the Solana ecosystem. The site's job is simple: make someone think "I want this person to build my thing" within 10 seconds of landing. Every design decision, every animation, every section exists to convert a visitor into a booked call on Cal.com.
+Rizzy Studio is a client-facing portfolio site for Riz Roze — a full-stack creative working in the Solana ecosystem. The site's job is simple: make someone think "I want this person to build my thing" within 10 seconds of landing. Every design decision, every animation, every section exists to convert a visitor into a booked call on Cal.com.
 
 It's not a blog. It's not a playground. It's a business tool dressed in liquid glass.
 

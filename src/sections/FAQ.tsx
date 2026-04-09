@@ -22,9 +22,9 @@ export function FAQ() {
           <div className="biz-card" data-reveal>
             {/* Top — identity */}
             <div className="biz-card-identity">
-              <img src="/studio-rose.webp" alt="Riz Rose" className="biz-card-pfp" />
+              <img src="/studio-rose.webp" alt="Riz Roze" className="biz-card-pfp" />
               <div>
-                <h3 className="biz-card-name">Riz Rose <VerifiedBadge color="red" /></h3>
+                <h3 className="biz-card-name">Riz Roze <VerifiedBadge color="red" /></h3>
               </div>
             </div>
 

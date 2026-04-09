@@ -38,7 +38,7 @@ export function About() {
             />
             <div className="about-identity">
               <h2 className="about-name-large">
-                Riz Rose
+                Riz Roze
                 <VerifiedBadge color="red" />
               </h2>
               <p className="about-role">Creative Direction & Code</p>
