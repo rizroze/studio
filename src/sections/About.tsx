@@ -42,6 +42,7 @@ export function About() {
                 <VerifiedBadge color="red" />
               </h2>
               <p className="about-role">Creative Direction & Code</p>
+              <p className="about-location-text">10+ years in creative environments</p>
               <p className="about-location-text">4+ years in the Solana ecosystem</p>
             </div>
           </div>
