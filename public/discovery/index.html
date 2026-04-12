@@ -684,7 +684,7 @@
 
     <div style="margin-top: 32px; padding: 20px 24px; background: rgba(202,35,35,0.06); border: 1px solid rgba(202,35,35,0.12); border-radius: 12px;">
       <div style="font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 6px;">Got it all.</div>
-      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">I\'ve captured every detail \u2014 your vision, priorities, and aesthetic direction. I\'m now putting together a tailored creative strategy based on everything you shared. Expect to hear from me within 24 hours.</div>
+      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">I've captured every detail — your vision, priorities, and aesthetic direction. I'm now putting together a tailored creative strategy based on everything you shared. Expect to hear from me within 24 hours.</div>
       <a href="https://cal.com/rizzytoday" target="_blank" style="display: inline-block; padding: 10px 24px; background: var(--brand-red); color: #fff; font-weight: 600; font-size: 13px; text-decoration: none; border-radius: 100px;">Book a kickoff call</a>
     </div>
   </div>
@@ -1016,10 +1016,15 @@
     if (specEntries.length) {
       let vis = specEntries.map(([key, val]) => {
         const [left, right] = specLabels[key] || [key, key]
-        const label = val < 35 ? left : val > 65 ? right : `${left}/${right} mix`
-        return `<span class="summary-tag">${label}</span>`
+        return `<div style="display:flex;align-items:center;gap:8px;margin:6px 0;">
+          <span style="font-size:11px;color:var(--text-muted);width:65px;text-align:right;">${left}</span>
+          <div style="flex:1;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;position:relative;">
+            <div style="position:absolute;left:0;top:0;height:4px;width:${val}%;background:var(--brand-red);border-radius:2px;"></div>
+          </div>
+          <span style="font-size:11px;color:var(--text-muted);width:65px;">${right}</span>
+        </div>`
       }).join('')
-      html += `<div class="summary-section"><div class="summary-label">Visual fingerprint</div><div class="summary-value"><div class="summary-tags">${vis}</div></div></div>`
+      html += `<div class="summary-section"><div class="summary-label">Visual fingerprint</div><div class="summary-value">${vis}</div></div>`
     }
 
     // Generate directions for email only (not shown to client)
