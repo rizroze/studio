@@ -174,7 +174,12 @@ function buildEmail(data: QuestionnaireData): string {
       ${rows}
     </table>
 
-    <p style="margin:24px 0 0;font-size:11px;color:#444;text-align:center;">Rizzy Studio &middot; rizzy.today/discovery</p>
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top:20px;">
+      <tr><td style="text-align:center;padding:16px 0;">
+        <a href="https://rizzy.today/discovery/exploration.html#${Buffer.from(JSON.stringify(data)).toString("base64")}" target="_blank" style="display:inline-block;padding:12px 28px;background:#CA2323;color:#fff;font-weight:600;font-size:13px;text-decoration:none;border-radius:100px;">Open Visual Exploration</a>
+      </td></tr>
+    </table>
+    <p style="margin:12px 0 0;font-size:11px;color:#444;text-align:center;">Rizzy Studio &middot; rizzy.today/discovery</p>
   </div>
 </body>
 </html>`;

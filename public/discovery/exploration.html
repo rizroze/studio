@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Exploration — Rizzy Studio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,300;0,400;0,600;0,700;0,800;1,700&family=Inter+Tight:wght@100;300;400;500;600;700;800&family=Fragment+Mono&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    padding: 40px 48px 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .header-label {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #CA2323;
+    margin-bottom: 8px;
+  }
+  .header-title {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    max-width: 700px;
+    line-height: 1.5;
+  }
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    margin-top: 16px;
+    font-family: 'Fragment Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+  }
+  .header-meta span { color: rgba(255,255,255,0.6); }
+
+  .header-services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .header-svc-tag {
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 500;
+    background: rgba(202,35,35,0.1);
+    border: 1px solid rgba(202,35,35,0.2);
+    color: rgba(255,255,255,0.6);
+  }
+
+  .header-fingerprint {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .fp-item {}
+  .fp-label {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 4px;
+  }
+  .fp-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    position: relative;
+    margin-bottom: 3px;
+  }
+  .fp-fill {
+    position: absolute;
+    left: 0; top: 0;
+    height: 3px;
+    background: #CA2323;
+    border-radius: 2px;
+  }
+  .fp-value {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .direction {
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    min-height: 85vh;
+  }
+
+  .dir-header {
+    padding: 32px 36px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .dir-number {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .dir-match {
+    display: inline-block;
+    font-family: 'Fragment Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #CA2323;
+    background: rgba(202,35,35,0.12);
+    padding: 2px 8px;
+    border-radius: 100px;
+    margin-left: 8px;
+  }
+  .dir-name {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .dir-vibe {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+  }
+
+  .dir-sample {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 340px;
+  }
+
+  /* ── SPECS BAR ── */
+  .dir-specs {
+    padding: 20px 36px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .spec-label {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 4px;
+  }
+  .spec-value {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+  }
+  .palette {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* ── EMPTY STATE ── */
+  .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    flex-direction: column;
+    gap: 12px;
+    padding: 48px;
+  }
+  .empty-title {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .empty-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    max-width: 400px;
+    line-height: 1.5;
+  }
+
+  /* ═══════════════════════════════════════
+     DIRECTION SAMPLE STYLES
+     Each direction gets unique visual treatment
+     ═══════════════════════════════════════ */
+
+  /* Shared sample base */
+  .sample { width: 100%; height: 100%; display: flex; flex-direction: column; }
+
+  /* ── MIDNIGHT PREMIUM ── */
+  .sample-midnight {
+    background: #000;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 36px;
+    text-align: center;
+    gap: 0;
+  }
+  .sample-midnight .s-label {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(184,160,128,0.5);
+    margin-bottom: 24px;
+  }
+  .sample-midnight .s-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(180deg, rgba(184,160,128,0.4), transparent);
+    margin-bottom: 20px;
+  }
+  .sample-midnight .s-headline {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 100;
+    font-size: 48px;
+    letter-spacing: -0.03em;
+    color: #FAFAF5;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .sample-midnight .s-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(250,250,245,0.3);
+    margin-bottom: 32px;
+  }
+  .sample-midnight .s-cta {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #000;
+    background: #B8A080;
+    padding: 10px 28px;
+    border-radius: 100px;
+    border: none;
+  }
+
+  /* ── ELECTRIC BOLD ── */
+  .sample-electric {
+    background: #0D0D0D;
+    padding: 40px 36px;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .sample-electric .s-gradient {
+    position: absolute;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+  }
+  .sample-electric .s-g1 {
+    background: #FF3366;
+    top: -40px; right: -40px;
+  }
+  .sample-electric .s-g2 {
+    background: #00D4FF;
+    bottom: -60px; left: -40px;
+  }
+  .sample-electric .s-headline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 52px;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+  }
+  .sample-electric .s-headline em {
+    font-style: normal;
+    background: linear-gradient(135deg, #FF3366, #FFE500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .sample-electric .s-bottom {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .sample-electric .s-tags {
+    display: flex;
+    gap: 6px;
+  }
+  .sample-electric .s-tag {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    background: rgba(255,51,102,0.15);
+    border: 1px solid rgba(255,51,102,0.3);
+    color: #FF3366;
+  }
+  .sample-electric .s-cta {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: #000;
+    background: #FFE500;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+  }
+
+  /* ── WARM ORGANIC ── */
+  .sample-warm {
+    background: #FFFBF5;
+    padding: 48px 36px;
+    justify-content: space-between;
+  }
+  .sample-warm .s-label {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #C17D3A;
+    margin-bottom: 24px;
+  }
+  .sample-warm .s-headline {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 40px;
+    color: #2D2418;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .sample-warm .s-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: rgba(45,36,24,0.5);
+    line-height: 1.7;
+    max-width: 280px;
+  }
+  .sample-warm .s-bottom {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 32px;
+  }
+  .sample-warm .s-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 10px 24px;
+    border-radius: 100px;
+    border: none;
+  }
+  .sample-warm .s-btn-primary {
+    background: #2D2418;
+    color: #FFFBF5;
+  }
+  .sample-warm .s-btn-secondary {
+    background: transparent;
+    color: #2D2418;
+    border: 1px solid rgba(45,36,24,0.2);
+  }
+
+  /* ── NEO MINIMAL ── */
+  .sample-neo {
+    background: #FFFFFF;
+    padding: 48px 36px;
+    justify-content: center;
+    gap: 0;
+  }
+  .sample-neo .s-overline {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(0,0,0,0.25);
+    margin-bottom: 16px;
+  }
+  .sample-neo .s-headline {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    letter-spacing: -0.04em;
+    color: #000;
+    line-height: 1.0;
+    margin-bottom: 12px;
+  }
+  .sample-neo .s-rule {
+    width: 32px;
+    height: 2px;
+    background: #3B82F6;
+    margin: 16px 0;
+  }
+  .sample-neo .s-body {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(0,0,0,0.4);
+    line-height: 1.6;
+    max-width: 260px;
+  }
+
+  /* ── GLASS FUTURISM ── */
+  .sample-glass {
+    background: #000;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 36px;
+    position: relative;
+  }
+  .sample-glass .s-glow {
+    position: absolute;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(10,132,255,0.15), transparent 70%);
+    top: 25%; left: 50%;
+    transform: translateX(-50%);
+    filter: blur(40px);
+  }
+  .sample-glass .s-card {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 260px;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 22px;
+  }
+  .sample-glass .s-card-title {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+  .sample-glass .s-card-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 14px;
+  }
+  .sample-glass .s-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    font-size: 12px;
+  }
+  .sample-glass .s-row-label { color: rgba(255,255,255,0.5); font-family: 'DM Sans', sans-serif; }
+  .sample-glass .s-row-value { color: #0A84FF; font-family: 'Fragment Mono', monospace; }
+  .sample-glass .s-chip {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: rgba(10,132,255,0.12);
+    border: 1px solid rgba(10,132,255,0.2);
+    font-size: 11px;
+    font-weight: 500;
+    color: #0A84FF;
+  }
+
+  /* ── RETRO CRAFT ── */
+  .sample-retro {
+    background: #F4E8D1;
+    padding: 44px 36px;
+    justify-content: space-between;
+    position: relative;
+  }
+  .sample-retro .s-stamp {
+    position: absolute;
+    top: 24px; right: 24px;
+    width: 48px; height: 48px;
+    border: 3px solid #C4553A;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-12deg);
+  }
+  .sample-retro .s-stamp-text {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #C4553A;
+    font-weight: 700;
+  }
+  .sample-retro .s-headline {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 44px;
+    color: #1A1A1A;
+    line-height: 1.0;
+    margin-bottom: 12px;
+  }
+  .sample-retro .s-sub {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 11px;
+    color: rgba(26,26,26,0.4);
+    letter-spacing: 0.02em;
+  }
+  .sample-retro .s-divider {
+    height: 3px;
+    background: #1A1A1A;
+    margin: 20px 0;
+    width: 100%;
+  }
+  .sample-retro .s-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: rgba(26,26,26,0.6);
+    line-height: 1.7;
+  }
+  .sample-retro .s-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+    padding-top: 24px;
+  }
+  .sample-retro .s-cta {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #F4E8D1;
+    background: #1A1A1A;
+    padding: 10px 20px;
+    border: none;
+  }
+  .sample-retro .s-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    color: rgba(26,26,26,0.06);
+    line-height: 1;
+  }
+
+  /* ── EDITORIAL SHARP ── */
+  .sample-editorial {
+    background: #FAFAFA;
+    padding: 0;
+  }
+  .sample-editorial .s-top {
+    padding: 40px 36px 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .sample-editorial .s-category {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #DC2626;
+    margin-bottom: 20px;
+  }
+  .sample-editorial .s-headline {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 42px;
+    color: #111;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .sample-editorial .s-deck {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    color: rgba(17,17,17,0.45);
+    line-height: 1.6;
+    max-width: 280px;
+    margin-bottom: auto;
+  }
+  .sample-editorial .s-bar {
+    background: #111;
+    padding: 16px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+  }
+  .sample-editorial .s-bar-label {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff;
+  }
+  .sample-editorial .s-bar-link {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ── SWISS MACHINE ── */
+  .sample-swiss {
+    background: #000;
+    padding: 0;
+  }
+  .sample-swiss .s-white {
+    background: #fff;
+    color: #000;
+    padding: 40px 36px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .sample-swiss .s-overline {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(0,0,0,0.3);
+    margin-bottom: 20px;
+  }
+  .sample-swiss .s-headline {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    color: #000;
+    margin-bottom: 12px;
+  }
+  .sample-swiss .s-body {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: rgba(0,0,0,0.4);
+    line-height: 1.6;
+    max-width: 240px;
+    margin-top: auto;
+  }
+  .sample-swiss .s-stats {
+    background: #000;
+    padding: 20px 36px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+  }
+  .sample-swiss .s-stat { text-align: center; }
+  .sample-swiss .s-stat-num {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+  .sample-swiss .s-stat-label {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ── PLAYFUL DIGITAL ── */
+  .sample-playful {
+    background: #FEF3C7;
+    padding: 40px 36px;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
+  }
+  .sample-playful .s-emoji { font-size: 48px; margin-bottom: 4px; }
+  .sample-playful .s-headline {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: #1A1A1A;
+    line-height: 1.1;
+  }
+  .sample-playful .s-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: rgba(26,26,26,0.5);
+    line-height: 1.6;
+    max-width: 250px;
+  }
+  .sample-playful .s-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .sample-playful .s-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 10px 20px;
+    border-radius: 14px;
+    border: none;
+  }
+  .sample-playful .s-btn-primary {
+    background: #7C3AED;
+    color: #fff;
+  }
+  .sample-playful .s-btn-ghost {
+    background: rgba(26,26,26,0.06);
+    color: #1A1A1A;
+  }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+    .direction { min-height: 75vh; }
+    .header { padding: 28px 20px 24px; }
+    .header-fingerprint { grid-template-columns: repeat(3, 1fr); }
+    .dir-header { padding: 24px 20px; }
+    .dir-specs { padding: 16px 20px; grid-template-columns: 1fr; }
+    .sample-midnight .s-headline,
+    .sample-electric .s-headline { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+// ═══════════════════════════════════════
+// DIRECTION ARCHETYPES
+// ═══════════════════════════════════════
+const archetypes = [
+  {
+    id: 'midnight-premium',
+    name: 'Midnight Premium',
+    vibe: 'Dark, refined, high-end. Luxury tech meets editorial design. Every pixel earns its place.',
+    palette: ['#000000', '#0A0A0A', '#FAFAF5', '#B8A080', '#1A1A1A'],
+    typography: 'Ultra-thin sans headlines\nSerif italic body\nMono for data',
+    motion: 'Gravity-based. Objects fall with mass. No bounce, no elasticity.',
+    sampleClass: 'sample-midnight',
+    conditions: { tone: [0, 40], finish: [0, 50], mood: [40, 100] },
+    personalityMatch: ['premium', 'sophisticated', 'minimal', 'luxury', 'serious', 'calm'],
+    priorityMatch: ['level-up', 'standout', 'convert']
+  },
+  {
+    id: 'electric-bold',
+    name: 'Electric Bold',
+    vibe: 'High energy, unapologetic, attention-grabbing. Your brand walks into a room and everyone notices.',
+    palette: ['#0D0D0D', '#FF3366', '#00D4FF', '#FFE500', '#FFFFFF'],
+    typography: 'Oversized geometric sans\nTight letter-spacing\nMixed weights for tension',
+    motion: 'Snappy transitions, elastic bounces, animated gradients. Everything alive.',
+    sampleClass: 'sample-electric',
+    conditions: { volume: [0, 40], mood: [0, 45], density: [0, 50] },
+    personalityMatch: ['bold', 'energetic', 'rebellious', 'edgy', 'fun'],
+    priorityMatch: ['launch', 'standout', 'from-zero']
+  },
+  {
+    id: 'warm-organic',
+    name: 'Warm Organic',
+    vibe: 'Approachable, human, earthy. Like a well-designed coffee shop — inviting but intentional.',
+    palette: ['#FFFBF5', '#2D2418', '#C17D3A', '#5E8C61', '#E8DDD0'],
+    typography: 'Humanist serif headlines\nRounded sans body\nWarm, generous spacing',
+    motion: 'Gentle reveals, soft scaling. Movements feel like breathing.',
+    sampleClass: 'sample-warm',
+    conditions: { tone: [50, 100], mood: [0, 55], era: [40, 100] },
+    personalityMatch: ['warm', 'friendly', 'organic', 'trustworthy', 'calm'],
+    priorityMatch: ['convert', 'consistency', 'level-up']
+  },
+  {
+    id: 'neo-minimal',
+    name: 'Neo Minimal',
+    vibe: 'Stripped to the essential. Maximum clarity, zero noise. Swiss-influenced, forward-looking.',
+    palette: ['#FFFFFF', '#000000', '#E5E5E5', '#3B82F6', '#F8F8F8'],
+    typography: 'One typeface, strict hierarchy\nNumbers in monospace\nSize does the talking',
+    motion: 'Micro-interactions only. Quick, functional. No decoration.',
+    sampleClass: 'sample-neo',
+    conditions: { density: [55, 100], finish: [0, 55], volume: [50, 100] },
+    personalityMatch: ['minimal', 'clean', 'calm', 'sophisticated', 'techy'],
+    priorityMatch: ['convert', 'consistency', 'level-up']
+  },
+  {
+    id: 'retro-craft',
+    name: 'Retro Craft',
+    vibe: 'Nostalgic but not outdated. A modern take on a vintage poster. Character over perfection.',
+    palette: ['#F4E8D1', '#1A1A1A', '#C4553A', '#2B5F83', '#E8C547'],
+    typography: 'Serif headlines with personality\nMonospace details\nTextured, lived-in feel',
+    motion: 'Slight wobble, film grain, imperfect edges. Handmade energy.',
+    sampleClass: 'sample-retro',
+    conditions: { era: [60, 100], finish: [45, 100] },
+    personalityMatch: ['retro', 'quirky', 'warm', 'organic', 'rebellious'],
+    priorityMatch: ['standout', 'from-zero', 'launch']
+  },
+  {
+    id: 'glass-futurism',
+    name: 'Glass Futurism',
+    vibe: 'Translucent layers, depth, light play. A device from 5 years in the future.',
+    palette: ['#000000', '#0A0A0A', '#A78BFA', '#0A84FF', '#111111'],
+    typography: 'Thin sans-serif UI\nFrosted labels, glowing accents\nMonospace for data',
+    motion: 'Backdrop-blur transitions. Cards materialize blur to sharp. Layered depth.',
+    sampleClass: 'sample-glass',
+    conditions: { tone: [0, 45], finish: [0, 45], era: [0, 45] },
+    personalityMatch: ['techy', 'premium', 'bold', 'sophisticated', 'edgy'],
+    priorityMatch: ['standout', 'level-up', 'launch']
+  },
+  {
+    id: 'editorial-sharp',
+    name: 'Editorial Sharp',
+    vibe: 'Magazine-level polish. Strong grid, clear hierarchy, confident whitespace.',
+    palette: ['#FAFAFA', '#111111', '#1A1A1A', '#DC2626', '#F5F5F5'],
+    typography: 'High-contrast serif/sans pairing\nLarge display sizes\nStrict baseline grid',
+    motion: 'Clip-path reveals, text masks, scroll-driven type. Cinematic but controlled.',
+    sampleClass: 'sample-editorial',
+    conditions: { mood: [50, 100], volume: [40, 100], finish: [0, 55] },
+    personalityMatch: ['serious', 'premium', 'sophisticated', 'trustworthy', 'bold'],
+    priorityMatch: ['convert', 'level-up', 'consistency']
+  },
+  {
+    id: 'playful-digital',
+    name: 'Playful Digital',
+    vibe: 'Colorful, interactive, joyful. Every click does something delightful. Users smile.',
+    palette: ['#FEF3C7', '#7C3AED', '#EC4899', '#10B981', '#3B82F6'],
+    typography: 'Rounded sans-serif\nGenerous sizing, emoji-friendly\nPlayful weight contrasts',
+    motion: 'Bouncy springs, particle effects, emoji reactions, satisfying micro-interactions.',
+    sampleClass: 'sample-playful',
+    conditions: { mood: [0, 35], volume: [0, 50], tone: [30, 80] },
+    personalityMatch: ['playful', 'fun', 'quirky', 'friendly', 'energetic'],
+    priorityMatch: ['standout', 'launch', 'from-zero']
+  },
+  {
+    id: 'swiss-machine',
+    name: 'Swiss Machine',
+    vibe: 'Maximum information, minimum noise. Black and white only. Color in product photography only.',
+    palette: ['#000000', '#FFFFFF'],
+    typography: 'Strict 4-size scale\n12 / 16 / 24 / 48px only\nUppercase mono labels',
+    motion: 'Almost none. Instant state changes. 200ms crossfade only.',
+    sampleClass: 'sample-swiss',
+    conditions: { density: [0, 45], finish: [0, 35], mood: [55, 100], volume: [55, 100] },
+    personalityMatch: ['minimal', 'serious', 'clean', 'sophisticated', 'trustworthy'],
+    priorityMatch: ['convert', 'consistency', 'level-up']
+  }
+]
+
+const specLabels = {
+  tone: ['Dark', 'Light'],
+  volume: ['Loud', 'Quiet'],
+  finish: ['Polished', 'Raw'],
+  era: ['Modern', 'Nostalgic'],
+  mood: ['Playful', 'Serious'],
+  density: ['Dense', 'Spacious']
+}
+
+// ═══ SCORING ═══
+function scoreDirection(arch, spectrums, personality, priorities) {
+  let score = 0
+  for (const [key, [min, max]] of Object.entries(arch.conditions)) {
+    const val = spectrums[key]
+    if (val !== undefined) {
+      if (val >= min && val <= max) {
+        const center = (min + max) / 2
+        const dist = Math.abs(val - center) / ((max - min) / 2)
+        score += (1 - dist * 0.5) * 20
+      } else {
+        const dist = val < min ? min - val : val - max
+        score -= dist * 0.15
+      }
+    }
+  }
+  for (const p of personality) {
+    if (arch.personalityMatch.includes(p)) score += 8
+  }
+  for (const p of priorities) {
+    if (arch.priorityMatch.includes(p)) score += 6
+  }
+  return score
+}
+
+function getTopDirections(data, count = 4) {
+  const scored = archetypes.map(a => ({
+    ...a,
+    score: scoreDirection(a, data.spectrums || {}, data.personality || [], data.priorities || [])
+  }))
+  scored.sort((a, b) => b.score - a.score)
+  scored[0].recommended = true
+  return scored.slice(0, count)
+}
+
+// ═══ SAMPLE RENDERERS ═══
+function renderSample(dir, data) {
+  const company = data.fields?.company || data.fields?.name || 'Brand'
+  const oneliner = data.fields?.oneliner || 'Building something remarkable'
+
+  const samples = {
+    'sample-midnight': `
+      <div class="sample sample-midnight">
+        <div class="s-label">Introducing</div>
+        <div class="s-line"></div>
+        <div class="s-headline">${company}</div>
+        <div class="s-sub">${oneliner}</div>
+        <div class="s-cta">Experience</div>
+      </div>`,
+    'sample-electric': `
+      <div class="sample sample-electric">
+        <div class="s-gradient s-g1"></div>
+        <div class="s-gradient s-g2"></div>
+        <div class="s-headline"><em>${company}</em><br>is here.</div>
+        <div class="s-bottom">
+          <div class="s-tags">
+            <div class="s-tag">New</div>
+            <div class="s-tag">Bold</div>
+          </div>
+          <div class="s-cta">Let's go</div>
+        </div>
+      </div>`,
+    'sample-warm': `
+      <div class="sample sample-warm">
+        <div class="s-label">${company}</div>
+        <div class="s-headline">Made with<br>intention.</div>
+        <div class="s-body">${oneliner}</div>
+        <div class="s-bottom">
+          <div class="s-btn s-btn-primary">Get started</div>
+          <div class="s-btn s-btn-secondary">Learn more</div>
+        </div>
+      </div>`,
+    'sample-neo': `
+      <div class="sample sample-neo">
+        <div class="s-overline">${company}</div>
+        <div class="s-headline">Less, but<br>better.</div>
+        <div class="s-rule"></div>
+        <div class="s-body">${oneliner}</div>
+      </div>`,
+    'sample-glass': `
+      <div class="sample sample-glass">
+        <div class="s-glow"></div>
+        <div class="s-card">
+          <div class="s-card-title">${company}</div>
+          <div class="s-card-sub">${oneliner}</div>
+          <div class="s-row"><span class="s-row-label">Status</span><span class="s-row-value">Live</span></div>
+          <div class="s-row"><span class="s-row-label">Quality</span><span class="s-row-value">Premium</span></div>
+          <div class="s-row"><span class="s-row-label">Focus</span><span class="s-row-value">Design</span></div>
+          <div class="s-chip">Explore &rarr;</div>
+        </div>
+      </div>`,
+    'sample-retro': `
+      <div class="sample sample-retro">
+        <div class="s-stamp"><div class="s-stamp-text">Est.<br>2026</div></div>
+        <div class="s-headline">${company}</div>
+        <div class="s-sub">${oneliner}</div>
+        <div class="s-divider"></div>
+        <div class="s-body">Crafted with care. Built to last. Not just another product — a statement.</div>
+        <div class="s-footer">
+          <div class="s-cta">Enter</div>
+          <div class="s-year">26</div>
+        </div>
+      </div>`,
+    'sample-editorial': `
+      <div class="sample sample-editorial">
+        <div class="s-top">
+          <div class="s-category">Featured</div>
+          <div class="s-headline">${company}</div>
+          <div class="s-deck">${oneliner}</div>
+        </div>
+        <div class="s-bar">
+          <div class="s-bar-label">Read More</div>
+          <div class="s-bar-link">${(data.fields?.website || company.toLowerCase() + '.com')}</div>
+        </div>
+      </div>`,
+    'sample-swiss': `
+      <div class="sample sample-swiss">
+        <div class="s-white">
+          <div class="s-overline">${company} — 2026</div>
+          <div class="s-headline">${company}</div>
+          <div class="s-body">${oneliner}</div>
+        </div>
+        <div class="s-stats">
+          <div class="s-stat"><div class="s-stat-num">01</div><div class="s-stat-label">Focus</div></div>
+          <div class="s-stat"><div class="s-stat-num">∞</div><div class="s-stat-label">Quality</div></div>
+          <div class="s-stat"><div class="s-stat-num">24h</div><div class="s-stat-label">Support</div></div>
+        </div>
+      </div>`,
+    'sample-playful': `
+      <div class="sample sample-playful">
+        <div class="s-emoji">✨</div>
+        <div class="s-headline">Hey, it's<br>${company}!</div>
+        <div class="s-body">${oneliner}</div>
+        <div class="s-buttons">
+          <div class="s-btn s-btn-primary">Try it free</div>
+          <div class="s-btn s-btn-ghost">Watch demo</div>
+        </div>
+      </div>`
+  }
+
+  return samples[dir.sampleClass] || '<div class="sample" style="display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.2);">Preview</div>'
+}
+
+// ═══ RENDER PAGE ═══
+function render(data) {
+  const directions = getTopDirections(data)
+  const fields = data.fields || {}
+  const company = fields.company || fields.name || 'Client'
+  const spectrums = data.spectrums || {}
+  const services = data.services || []
+  const extras = data.extras || []
+
+  // Header
+  let fpHtml = ''
+  for (const [key, val] of Object.entries(spectrums)) {
+    const [left, right] = specLabels[key] || [key, key]
+    fpHtml += `<div class="fp-item">
+      <div class="fp-label">${left} / ${right}</div>
+      <div class="fp-bar"><div class="fp-fill" style="width:${val}%"></div></div>
+      <div class="fp-value">${val}%</div>
+    </div>`
+  }
+
+  const allServices = [...services, ...extras]
+  const svcTags = allServices.map(s => `<span class="header-svc-tag">${s.replace(/-/g, ' ')}</span>`).join('')
+
+  let metaHtml = ''
+  if (fields.name) metaHtml += `<div>Client: <span>${fields.name}${fields.company ? ', ' + fields.company : ''}</span></div>`
+  if (fields.budget) metaHtml += `<div>Budget: <span>${fields.budget}</span></div>`
+  if (fields.deadline) metaHtml += `<div>Deadline: <span>${fields.deadline}</span></div>`
+
+  // Directions
+  let dirHtml = ''
+  directions.forEach((dir, i) => {
+    const swatches = dir.palette.map(c => `<div class="swatch" style="background:${c}"></div>`).join('')
+    const matchBadge = dir.recommended ? `<span class="dir-match">Best Match</span>` : ''
+
+    dirHtml += `
+    <div class="direction">
+      <div class="dir-header">
+        <div class="dir-number">Direction 0${i + 1} ${matchBadge}</div>
+        <div class="dir-name">${dir.name}</div>
+        <div class="dir-vibe">${dir.vibe}</div>
+      </div>
+      <div class="dir-sample">${renderSample(dir, data)}</div>
+      <div class="dir-specs">
+        <div class="spec-group">
+          <div class="spec-label">Palette</div>
+          <div class="palette">${swatches}</div>
+        </div>
+        <div class="spec-group">
+          <div class="spec-label">Typography</div>
+          <div class="spec-value">${dir.typography.replace(/\n/g, '<br>')}</div>
+        </div>
+        <div class="spec-group">
+          <div class="spec-label">Motion</div>
+          <div class="spec-value">${dir.motion}</div>
+        </div>
+      </div>
+    </div>`
+  })
+
+  document.getElementById('app').innerHTML = `
+    <div class="header">
+      <div class="header-label">Brand Exploration</div>
+      <div class="header-title">${company} — 4 Directions</div>
+      <div class="header-sub">Each direction is generated from the questionnaire data: slider positions, personality tags, priorities, and service scope. Different creative bets, same foundation.</div>
+      <div class="header-meta">${metaHtml}</div>
+      ${svcTags ? '<div class="header-services">' + svcTags + '</div>' : ''}
+      ${fpHtml ? '<div class="header-fingerprint">' + fpHtml + '</div>' : ''}
+    </div>
+    <div class="grid">${dirHtml}</div>`
+
+  document.title = 'Brand Exploration — ' + company
+}
+
+// ═══ LOAD DATA ═══
+function init() {
+  const hash = window.location.hash.slice(1)
+  if (hash) {
+    try {
+      const json = atob(hash)
+      const data = JSON.parse(json)
+      render(data)
+      return
+    } catch (e) {
+      console.error('Failed to parse exploration data:', e)
+    }
+  }
+
+  // Empty state
+  document.getElementById('app').innerHTML = `
+    <div class="empty">
+      <div class="empty-title">No data loaded</div>
+      <div class="empty-sub">This page renders from questionnaire data. Submit a questionnaire or open an exploration link from your email.</div>
+    </div>`
+}
+
+init()
+</script>
+
+</body>
+</html>
