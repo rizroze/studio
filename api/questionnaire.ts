@@ -1,6 +1,17 @@
 import { Resend } from "resend";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
+interface Direction {
+  name: string;
+  vibe: string;
+  palette: string[];
+  typography: string;
+  motion: string;
+  references: string[];
+  recommended: boolean;
+  score: number;
+}
+
 interface QuestionnaireData {
   fields: Record<string, string>;
   services: string[];
@@ -8,6 +19,7 @@ interface QuestionnaireData {
   priorities: string[];
   personality: string[];
   spectrums: Record<string, number>;
+  directions: Direction[];
 }
 
 const specLabels: Record<string, [string, string]> = {
@@ -94,6 +106,32 @@ function buildEmail(data: QuestionnaireData): string {
 
   if (fields.anything)
     rows += section("Anything Else", escapeHtml(fields.anything));
+
+  // Creative Directions
+  const { directions } = data;
+  if (directions && directions.length) {
+    let dirHtml = directions.map(d => {
+      const badge = d.recommended ? `<span style="display:inline-block;background:rgba(202,35,35,0.2);color:#CA2323;font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px;margin-left:6px;text-transform:uppercase;letter-spacing:0.05em;">Best Match</span>` : '';
+      const swatches = d.palette.map(c =>
+        `<span style="display:inline-block;width:16px;height:16px;border-radius:3px;background:${escapeHtml(c)};border:1px solid rgba(255,255,255,0.1);"></span>`
+      ).join('');
+      const refs = d.references.map(r =>
+        `<span style="display:inline-block;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:100px;padding:2px 8px;font-size:10px;color:#aaa;">${escapeHtml(r)}</span>`
+      ).join(' ');
+      return `<div style="background:rgba(255,255,255,0.04);border:1px solid ${d.recommended ? '#CA2323' : 'rgba(255,255,255,0.08)'};border-radius:10px;padding:14px;margin-bottom:8px;">
+        <div style="font-weight:700;font-size:14px;color:#fff;margin-bottom:4px;">${escapeHtml(d.name)}${badge}</div>
+        <div style="font-size:11px;color:#999;margin-bottom:10px;line-height:1.5;">${escapeHtml(d.vibe)}</div>
+        <div style="display:flex;gap:4px;margin-bottom:8px;">${swatches}</div>
+        <div style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.08em;margin-top:8px;">Typography</div>
+        <div style="font-size:11px;color:#bbb;margin:2px 0 6px;">${escapeHtml(d.typography)}</div>
+        <div style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.08em;">Motion</div>
+        <div style="font-size:11px;color:#bbb;margin:2px 0 6px;">${escapeHtml(d.motion)}</div>
+        <div style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.08em;">References</div>
+        <div style="margin-top:4px;">${refs}</div>
+      </div>`;
+    }).join('');
+    rows += section("Creative Directions", dirHtml);
+  }
 
   const clientName = fields.name || fields.company || "Unknown";
   const date = new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
