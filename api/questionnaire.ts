@@ -55,27 +55,48 @@ function buildEmail(data: QuestionnaireData): string {
 
   let rows = "";
 
+  // ── SCREEN 1: About You ──
   if (fields.name || fields.company)
-    rows += section("Client", `${escapeHtml(fields.name || "")}${fields.company ? `, ${escapeHtml(fields.company)}` : ""}${fields.email ? `<br><span style="color:#888;">${escapeHtml(fields.email)}</span>` : ""}`);
+    rows += section("Client", `${escapeHtml(fields.name || "")}${fields.company ? `, ${escapeHtml(fields.company)}` : ""}`);
 
   if (fields.website)
     rows += section("Website", escapeHtml(fields.website));
 
+  if (fields.oneliner)
+    rows += section("What They Do", escapeHtml(fields.oneliner));
+
+  // ── SCREEN 2: Services ──
   if (services.length)
     rows += section("Services", services.map((s) => tag(s.replace(/-/g, " "))).join(""));
 
   if (extras.length)
     rows += section("Extras", extras.map((s) => tag(s)).join(""));
 
+  // ── SCREEN 3: The Gap ──
   if (fields.problem)
     rows += section("The Problem", escapeHtml(fields.problem));
 
   if (priorities.length)
     rows += section("Top Priorities", priorities.map((p, i) => `<div style="margin:2px 0;"><span style="color:#CA2323;font-weight:600;">${i + 1}.</span> ${escapeHtml(p.replace(/-/g, " "))}</div>`).join(""));
 
+  // ── SCREEN 4: Audience ──
+  if (fields.audience)
+    rows += section("Ideal Customer", escapeHtml(fields.audience));
+
+  if (fields.audience_pain)
+    rows += section("Their Pain Points", escapeHtml(fields.audience_pain));
+
+  if (fields.audience_channels)
+    rows += section("Where They Hang Out", escapeHtml(fields.audience_channels));
+
+  // ── SCREEN 5: Brand Personality ──
   if (personality.length)
     rows += section("Brand Personality", personality.map((s) => tag(s)).join(""));
 
+  if (fields.brand_feeling)
+    rows += section("Desired Feeling", escapeHtml(fields.brand_feeling));
+
+  // ── SCREEN 6: Visual Direction ──
   const specEntries = Object.entries(spectrums);
   if (specEntries.length) {
     const vis = specEntries
@@ -95,17 +116,28 @@ function buildEmail(data: QuestionnaireData): string {
     rows += section("Visual Fingerprint", vis);
   }
 
-  if (fields.timeline)
-    rows += section("Timeline", escapeHtml(fields.timeline));
+  if (fields.visual_inspo)
+    rows += section("Visual Inspiration", escapeHtml(fields.visual_inspo));
+
+  // ── SCREEN 7: Competitors ──
+  if (fields.competitors)
+    rows += section("Competitors", escapeHtml(fields.competitors));
+
+  if (fields.competitor_good)
+    rows += section("What Competitors Do Well", escapeHtml(fields.competitor_good));
+
+  if (fields.competitor_bad)
+    rows += section("What Competitors Get Wrong", escapeHtml(fields.competitor_bad));
+
+  // ── SCREEN 8: Timeline & Final ──
+  if (fields.deadline)
+    rows += section("Deadline", escapeHtml(fields.deadline));
 
   if (fields.budget)
     rows += section("Budget", escapeHtml(fields.budget));
 
-  if (fields.inspiration)
-    rows += section("Inspiration / References", escapeHtml(fields.inspiration));
-
-  if (fields.anything)
-    rows += section("Anything Else", escapeHtml(fields.anything));
+  if (fields.anything_else)
+    rows += section("Anything Else", escapeHtml(fields.anything_else));
 
   // Creative Directions
   const { directions } = data;
