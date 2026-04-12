@@ -153,10 +153,10 @@
     display: flex; align-items: center; justify-content: center;
     overflow: hidden; position: relative;
     border: 1px solid rgba(255,255,255,0.08);
-    transition: background 0.4s var(--smooth), border-radius 0.4s var(--smooth),
-                border-color 0.4s var(--smooth), box-shadow 0.4s var(--smooth);
+    transition: background 0.12s linear, border-radius 0.12s linear,
+                border-color 0.12s linear, box-shadow 0.12s linear;
   }
-  .q-spectrum-canvas * { transition: all 0.35s var(--smooth); }
+  .q-spectrum-canvas * { transition: all 0.12s linear; }
   .q-spectrum-track { flex: 1; position: relative; display: flex; flex-direction: column; gap: 4px; }
   .q-spectrum-labels { display: flex; justify-content: space-between; align-items: center; }
   .q-spectrum-left, .q-spectrum-right { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
@@ -890,19 +890,23 @@
       const cv = document.getElementById('cv-density')
       const lines = document.getElementById('cv-den-lines')
       if (!cv) return
-      cv.style.background = lerpRGB(13,13,13, 250,250,250, t)
+      // Dense: dark terminal with green data rows → Spacious: clean dark with single dim line
+      cv.style.background = lerpRGB(13,13,13, 24,24,24, t)
+      cv.style.padding = lerp(6, 20, t) + 'px'
       const rows = lines.querySelectorAll('.den-line')
       const visible = Math.max(1, Math.round(lerp(5, 1, t)))
       rows.forEach((r, i) => {
-        r.style.opacity = i < visible ? '1' : '0'
+        r.style.opacity = i < visible ? lerp(1, 0.4, t) : '0'
         r.style.height = i < visible ? 'auto' : '0'
         r.style.overflow = 'hidden'
       })
-      lines.style.fontSize = lerp(7, 14, t) + 'px'
-      lines.style.color = t < 0.3 ? '#4ade80' : t < 0.6 ? lerpRGB(74,222,128, 40,40,40, (t-0.3)/0.3) : lerpRGB(40,40,40, 120,120,120, (t-0.6)/0.4)
+      lines.style.fontSize = lerp(7, 11, t) + 'px'
+      lines.style.lineHeight = lerp(1.4, 2.2, t)
+      lines.style.color = t < 0.4 ? '#4ade80' : lerpRGB(74,222,128, 100,100,100, (t-0.4)/0.6)
       lines.style.textAlign = t > 0.7 ? 'center' : 'left'
-      cv.style.justifyContent = t > 0.7 ? 'center' : 'flex-start'
-      cv.style.alignItems = t > 0.7 ? 'center' : 'flex-start'
+      cv.style.justifyContent = t > 0.5 ? 'center' : 'flex-start'
+      cv.style.alignItems = t > 0.5 ? 'center' : 'flex-start'
+      cv.style.borderColor = 'rgba(255,255,255,' + lerp(0.08, 0.06, t) + ')'
     }
   }
 
