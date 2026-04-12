@@ -51,7 +51,7 @@ function buildEmail(data: QuestionnaireData): string {
     </tr>`;
 
   const tag = (text: string) =>
-    `<span style="display:inline-block;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:4px 10px;margin:2px 4px 2px 0;font-size:12px;color:#fff;">${escapeHtml(text)}</span>`;
+    `<span style="display:inline-block;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:4px 10px;margin:3px 6px 3px 0;font-size:12px;color:#fff;">${escapeHtml(text)}</span> `;
 
   let rows = "";
 
@@ -103,17 +103,17 @@ function buildEmail(data: QuestionnaireData): string {
       .map(([key, val]) => {
         const [left, right] = specLabels[key] || [key, key];
         const pct = val as number;
-        const label = pct < 35 ? left : pct > 65 ? right : `${left}/${right} mix`;
-        return `<div style="margin:4px 0;display:flex;align-items:center;gap:8px;">
-          <span style="font-size:11px;color:#888;width:60px;">${left}</span>
-          <div style="flex:1;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;position:relative;">
-            <div style="position:absolute;left:0;top:0;height:4px;width:${pct}%;background:#CA2323;border-radius:2px;"></div>
+        const leaning = pct < 30 ? `strong ${left.toLowerCase()}` : pct < 45 ? `leaning ${left.toLowerCase()}` : pct > 70 ? `strong ${right.toLowerCase()}` : pct > 55 ? `leaning ${right.toLowerCase()}` : "neutral";
+        return `<div style="margin:6px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px;">
+            <span style="font-size:12px;color:#e0e0e0;font-weight:600;">${left} / ${right}</span>
+            <span style="font-size:11px;color:#CA2323;font-weight:600;">${pct}%</span>
           </div>
-          <span style="font-size:11px;color:#888;width:60px;text-align:right;">${right}</span>
+          <div style="font-size:11px;color:#888;margin-bottom:2px;">${leaning} &mdash; 0% = full ${left.toLowerCase()}, 100% = full ${right.toLowerCase()}</div>
         </div>`;
       })
       .join("");
-    rows += section("Visual Fingerprint", vis);
+    rows += section("Visual Fingerprint (Raw Data)", vis);
   }
 
   if (fields.visual_inspo)
@@ -139,30 +139,19 @@ function buildEmail(data: QuestionnaireData): string {
   if (fields.anything_else)
     rows += section("Anything Else", escapeHtml(fields.anything_else));
 
-  // Creative Directions
+  // Creative Directions — compact summary, not the main event
   const { directions } = data;
   if (directions && directions.length) {
-    let dirHtml = directions.map(d => {
-      const badge = d.recommended ? `<span style="display:inline-block;background:rgba(202,35,35,0.2);color:#CA2323;font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px;margin-left:6px;text-transform:uppercase;letter-spacing:0.05em;">Best Match</span>` : '';
-      const swatches = d.palette.map(c =>
-        `<span style="display:inline-block;width:16px;height:16px;border-radius:3px;background:${escapeHtml(c)};border:1px solid rgba(255,255,255,0.1);"></span>`
-      ).join('');
-      const refs = d.references.map(r =>
-        `<span style="display:inline-block;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:100px;padding:2px 8px;font-size:10px;color:#aaa;">${escapeHtml(r)}</span>`
-      ).join(' ');
-      return `<div style="background:rgba(255,255,255,0.04);border:1px solid ${d.recommended ? '#CA2323' : 'rgba(255,255,255,0.08)'};border-radius:10px;padding:14px;margin-bottom:8px;">
-        <div style="font-weight:700;font-size:14px;color:#fff;margin-bottom:4px;">${escapeHtml(d.name)}${badge}</div>
-        <div style="font-size:11px;color:#999;margin-bottom:10px;line-height:1.5;">${escapeHtml(d.vibe)}</div>
-        <div style="display:flex;gap:4px;margin-bottom:8px;">${swatches}</div>
-        <div style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.08em;margin-top:8px;">Typography</div>
-        <div style="font-size:11px;color:#bbb;margin:2px 0 6px;">${escapeHtml(d.typography)}</div>
-        <div style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.08em;">Motion</div>
-        <div style="font-size:11px;color:#bbb;margin:2px 0 6px;">${escapeHtml(d.motion)}</div>
-        <div style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.08em;">References</div>
-        <div style="margin-top:4px;">${refs}</div>
+    const dirHtml = directions.map(d => {
+      const marker = d.recommended ? " ★" : "";
+      const score = Math.round(d.score);
+      return `<div style="margin:4px 0;font-size:12px;color:#bbb;">
+        <span style="color:#e0e0e0;font-weight:600;">${escapeHtml(d.name)}${marker}</span>
+        <span style="color:#666;"> — score: ${score} — </span>
+        <span style="color:#888;">${d.references.join(", ")}</span>
       </div>`;
     }).join('');
-    rows += section("Creative Directions", dirHtml);
+    rows += section("Auto-Suggested Directions (starting points)", `<div style="font-size:11px;color:#666;margin-bottom:6px;">Algorithm-generated from slider + personality data. Use as reference, not prescription.</div>${dirHtml}`);
   }
 
   const clientName = fields.name || fields.company || "Unknown";
