@@ -79,24 +79,17 @@ function buildEmail(data: QuestionnaireData): string {
   if (priorities.length)
     rows += section("Top Priorities", priorities.map((p, i) => `<div style="margin:2px 0;"><span style="color:#CA2323;font-weight:600;">${i + 1}.</span> ${escapeHtml(p.replace(/-/g, " "))}</div>`).join(""));
 
-  // ── SCREEN 4: Audience ──
+  // ── Audience & Competitors ──
   if (fields.audience)
-    rows += section("Ideal Customer", escapeHtml(fields.audience));
+    rows += section("Who It's For", escapeHtml(fields.audience));
 
-  if (fields.audience_pain)
-    rows += section("Their Pain Points", escapeHtml(fields.audience_pain));
+  if (fields.competitors)
+    rows += section("Competitors", escapeHtml(fields.competitors));
 
-  if (fields.audience_channels)
-    rows += section("Where They Hang Out", escapeHtml(fields.audience_channels));
-
-  // ── SCREEN 5: Brand Personality ──
+  // ── Visual Direction ──
   if (personality.length)
     rows += section("Brand Personality", personality.map((s) => tag(s)).join(""));
 
-  if (fields.brand_feeling)
-    rows += section("Desired Feeling", escapeHtml(fields.brand_feeling));
-
-  // ── SCREEN 6: Visual Direction ──
   const specEntries = Object.entries(spectrums);
   if (specEntries.length) {
     const vis = specEntries
@@ -119,17 +112,7 @@ function buildEmail(data: QuestionnaireData): string {
   if (fields.visual_inspo)
     rows += section("Visual Inspiration", escapeHtml(fields.visual_inspo));
 
-  // ── SCREEN 7: Competitors ──
-  if (fields.competitors)
-    rows += section("Competitors", escapeHtml(fields.competitors));
-
-  if (fields.competitor_good)
-    rows += section("What Competitors Do Well", escapeHtml(fields.competitor_good));
-
-  if (fields.competitor_bad)
-    rows += section("What Competitors Get Wrong", escapeHtml(fields.competitor_bad));
-
-  // ── SCREEN 8: Timeline & Final ──
+  // ── Wrap Up ──
   if (fields.deadline)
     rows += section("Deadline", escapeHtml(fields.deadline));
 

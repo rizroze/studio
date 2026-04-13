@@ -305,16 +305,16 @@
     <img src="/studio-rose.webp" alt="Rizzy Studio" class="q-avatar" />
     <span class="q-name">Rizzy Studio</span>
   </div>
-  <span class="q-step" id="stepLabel">1 of 8</span>
+  <span class="q-step" id="stepLabel">1 of 6</span>
 </div>
 
 <div class="q-container">
 
-  <!-- ═══ SCREEN 1: WELCOME ═══ -->
+  <!-- ═══ SCREEN 1: WHO ARE YOU ═══ -->
   <div class="screen active" data-step="1">
     <div class="q-label">Let's start</div>
     <div class="q-title">Tell me about you.</div>
-    <div class="q-subtitle">Basic stuff so I know who I'm working with.</div>
+    <div class="q-subtitle">Just the basics so I know who I'm talking to.</div>
 
     <div class="q-field">
       <div class="q-field-label">Your name</div>
@@ -324,6 +324,19 @@
       <div class="q-field-label">Email</div>
       <input class="q-input" type="email" placeholder="steve@apple.com" data-key="email" />
     </div>
+
+    <div class="q-nav">
+      <div></div>
+      <button class="q-btn q-btn-next" onclick="next()">Continue</button>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN 2: YOUR PROJECT ═══ -->
+  <div class="screen" data-step="2">
+    <div class="q-label">Your project</div>
+    <div class="q-title">What are we working on?</div>
+    <div class="q-subtitle">Tell me about what you're building.</div>
+
     <div class="q-field">
       <div class="q-field-label">Company / project name</div>
       <input class="q-input" type="text" placeholder="Apple" data-key="company" />
@@ -338,13 +351,13 @@
     </div>
 
     <div class="q-nav">
-      <div></div>
+      <button class="q-btn q-btn-back" onclick="prev()">Back</button>
       <button class="q-btn q-btn-next" onclick="next()">Continue</button>
     </div>
   </div>
 
-  <!-- ═══ SCREEN 2: WHAT DO YOU NEED ═══ -->
-  <div class="screen" data-step="2">
+  <!-- ═══ SCREEN 3: SERVICES ═══ -->
+  <div class="screen" data-step="3">
     <div class="q-label">Services</div>
     <div class="q-title">What do you need help with?</div>
     <div class="q-subtitle">Pick everything that applies. We'll figure out the details together.</div>
@@ -388,7 +401,7 @@
     <div class="q-checkbox-grid" data-group="extras">
       <div class="q-check-item" data-value="cms">
         <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">CMS Integration</div><div class="q-check-desc">Content management system you can grow with</div></div>
+        <div><div class="q-check-label">CMS Integration</div><div class="q-check-desc">Custom admin panel you can grow with</div></div>
       </div>
       <div class="q-check-item" data-value="seo">
         <div class="q-check-box">&#10003;</div>
@@ -398,18 +411,10 @@
         <div class="q-check-box">&#10003;</div>
         <div><div class="q-check-label">Ongoing Support</div><div class="q-check-desc">Monthly retainer for updates</div></div>
       </div>
-      <div class="q-check-item" data-value="extra-motion">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">Extra Motion</div><div class="q-check-desc">Additional motion pieces beyond scope</div></div>
-      </div>
       <div class="q-check-item" data-value="illustrations">
         <div class="q-check-box">&#10003;</div>
         <div><div class="q-check-label">Illustrations</div><div class="q-check-desc">Custom illustrations for brand/product</div></div>
       </div>
-      <div class="q-check-item" data-value="memes">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">Meme &amp; Viral Content</div><div class="q-check-desc">Internet-native brand voice from a meme veteran</div></div>
-      </div>
     </div>
 
     <div class="q-nav">
@@ -418,27 +423,37 @@
     </div>
   </div>
 
-  <!-- ═══ SCREEN 3: THE GAP ═══ -->
-  <div class="screen" data-step="3">
-    <div class="q-label">The gap</div>
-    <div class="q-title">What feels off right now?</div>
-    <div class="q-subtitle">No wrong answers. The more we understand, the sharper the solution.</div>
+  <!-- ═══ SCREEN 4: THE PROBLEM ═══ -->
+  <div class="screen" data-step="4">
+    <div class="q-label">The problem</div>
+    <div class="q-title">What are we solving?</div>
+    <div class="q-subtitle">The more context you give, the sharper the solution.</div>
 
     <div class="q-field">
-      <div class="q-field-label">What are you trying to solve with your project?</div>
+      <div class="q-field-label">What's the main problem you're trying to solve?</div>
       <textarea class="q-textarea" placeholder="People love our product but our website doesn't reflect the quality. First impressions matter and ours isn't cutting it..." data-key="problem"></textarea>
     </div>
-    <div class="q-field">
-      <div class="q-field-label">Pick your top 3. What matters most right now?</div>
-    </div>
 
+    <div class="q-field">
+      <div class="q-field-label">Pick your top 3 priorities</div>
+    </div>
     <div class="q-rank-list" data-group="priorities" data-max="3">
-      <div class="q-rank-item" data-value="from-zero"><div class="q-rank-num"></div><div class="q-rank-text">We don't have a brand yet, starting from scratch</div></div>
-      <div class="q-rank-item" data-value="level-up"><div class="q-rank-num"></div><div class="q-rank-text">We have something but it looks amateur. Our product deserves better</div></div>
-      <div class="q-rank-item" data-value="convert"><div class="q-rank-num"></div><div class="q-rank-text">We look fine but people aren't converting. The experience isn't working</div></div>
-      <div class="q-rank-item" data-value="consistency"><div class="q-rank-num"></div><div class="q-rank-text">Our brand is all over the place, different on every platform</div></div>
-      <div class="q-rank-item" data-value="standout"><div class="q-rank-num"></div><div class="q-rank-text">We look like everyone else. Need something that's unmistakably us</div></div>
-      <div class="q-rank-item" data-value="launch"><div class="q-rank-num"></div><div class="q-rank-text">We're launching soon and need to come out loud</div></div>
+      <div class="q-rank-item" data-value="from-zero"><div class="q-rank-num"></div><div class="q-rank-text">Starting from scratch — no brand yet</div></div>
+      <div class="q-rank-item" data-value="level-up"><div class="q-rank-num"></div><div class="q-rank-text">We have something but it looks amateur</div></div>
+      <div class="q-rank-item" data-value="convert"><div class="q-rank-num"></div><div class="q-rank-text">People aren't converting — the experience isn't working</div></div>
+      <div class="q-rank-item" data-value="consistency"><div class="q-rank-num"></div><div class="q-rank-text">Our brand is all over the place</div></div>
+      <div class="q-rank-item" data-value="standout"><div class="q-rank-num"></div><div class="q-rank-text">We look like everyone else</div></div>
+      <div class="q-rank-item" data-value="launch"><div class="q-rank-num"></div><div class="q-rank-text">Launching soon — need to come out loud</div></div>
+    </div>
+
+    <div class="q-field">
+      <div class="q-field-label">Who is this for? (your customers, not your investors)</div>
+      <input class="q-input" type="text" placeholder="Creative professionals, 25-45, who value design and want products that just work" data-key="audience" />
+    </div>
+
+    <div class="q-field">
+      <div class="q-field-label">Who are you up against?</div>
+      <input class="q-input" type="text" placeholder="Stripe, Linear, or just 'every generic agency site out there'" data-key="competitors" />
     </div>
 
     <div class="q-nav">
@@ -447,78 +462,13 @@
     </div>
   </div>
 
-  <!-- ═══ SCREEN 4: YOUR AUDIENCE ═══ -->
-  <div class="screen" data-step="4">
-    <div class="q-label">Your audience</div>
-    <div class="q-title">Who are you building this for?</div>
-    <div class="q-subtitle">Not your investors. Your actual users/customers.</div>
-
-    <div class="q-field">
-      <div class="q-field-label">Describe your ideal customer in 2-3 sentences</div>
-      <textarea class="q-textarea" placeholder="Creative professionals and tech enthusiasts, 25-45, who value design and want products that just work..." data-key="audience"></textarea>
-    </div>
-    <div class="q-field">
-      <div class="q-field-label">What do they care about most? What keeps them up at night?</div>
-      <textarea class="q-textarea" placeholder="Standing out in a crowded market, looking credible to investors, making a strong first impression online..." data-key="audience_pain"></textarea>
-    </div>
-    <div class="q-field">
-      <div class="q-field-label">Where do they hang out online?</div>
-      <input class="q-input" type="text" placeholder="Twitter, Reddit, YouTube, Hacker News..." data-key="audience_channels" />
-    </div>
-
-    <div class="q-nav">
-      <button class="q-btn q-btn-back" onclick="prev()">Back</button>
-      <button class="q-btn q-btn-next" onclick="next()">Continue</button>
-    </div>
-  </div>
-
-  <!-- ═══ SCREEN 5: BRAND PERSONALITY ═══ -->
+  <!-- ═══ SCREEN 5: VISUAL DIRECTION ═══ -->
   <div class="screen" data-step="5">
-    <div class="q-label">Brand personality</div>
-    <div class="q-title">If your brand was a person, how would they talk?</div>
-    <div class="q-subtitle">Pick 4-6 words that feel right. No wrong answers.</div>
-
-    <div class="q-tags" data-group="personality">
-      <div class="q-tag" data-value="bold">Bold</div>
-      <div class="q-tag" data-value="minimal">Minimal</div>
-      <div class="q-tag" data-value="playful">Playful</div>
-      <div class="q-tag" data-value="premium">Premium</div>
-      <div class="q-tag" data-value="friendly">Friendly</div>
-      <div class="q-tag" data-value="serious">Serious</div>
-      <div class="q-tag" data-value="rebellious">Rebellious</div>
-      <div class="q-tag" data-value="warm">Warm</div>
-      <div class="q-tag" data-value="techy">Techy</div>
-      <div class="q-tag" data-value="organic">Organic</div>
-      <div class="q-tag" data-value="luxury">Luxury</div>
-      <div class="q-tag" data-value="quirky">Quirky</div>
-      <div class="q-tag" data-value="trustworthy">Trustworthy</div>
-      <div class="q-tag" data-value="edgy">Edgy</div>
-      <div class="q-tag" data-value="calm">Calm</div>
-      <div class="q-tag" data-value="energetic">Energetic</div>
-      <div class="q-tag" data-value="sophisticated">Sophisticated</div>
-      <div class="q-tag" data-value="fun">Fun</div>
-      <div class="q-tag" data-value="clean">Clean</div>
-      <div class="q-tag" data-value="retro">Retro</div>
-    </div>
-
-    <div class="q-field">
-      <div class="q-field-label">What should people FEEL when they see your brand?</div>
-      <input class="q-input" type="text" placeholder="'This looks legit, I want to be part of this'" data-key="brand_feeling" />
-    </div>
-
-    <div class="q-nav">
-      <button class="q-btn q-btn-back" onclick="prev()">Back</button>
-      <button class="q-btn q-btn-next" onclick="next()">Continue</button>
-    </div>
-  </div>
-
-  <!-- ═══ SCREEN 6: VISUAL DIRECTION ═══ -->
-  <div class="screen" data-step="6">
     <div class="q-label">Visual direction</div>
-    <div class="q-title">Drag each slider to where it feels right.</div>
-    <div class="q-subtitle">No wrong positions. This gives us your visual fingerprint.</div>
+    <div class="q-title">Show me your taste.</div>
+    <div class="q-subtitle">Drag each slider to where it feels right. This gives us your visual fingerprint.</div>
 
-    <!-- TONE: Dark ↔ Light — single morphing canvas -->
+    <!-- TONE -->
     <div class="q-spectrum">
       <div class="q-spectrum-row">
         <div class="q-spectrum-canvas" id="cv-tone" style="background:#333; flex-direction:column;">
@@ -533,7 +483,7 @@
       </div>
     </div>
 
-    <!-- VOLUME: Loud ↔ Quiet — gradient orb morphs to flat dot -->
+    <!-- VOLUME -->
     <div class="q-spectrum">
       <div class="q-spectrum-row">
         <div class="q-spectrum-canvas" id="cv-volume" style="background:linear-gradient(135deg,#4a1a8a,#1a3a6a);">
@@ -547,7 +497,7 @@
       </div>
     </div>
 
-    <!-- FINISH: Polished ↔ Raw — glass card morphs to brutalist block -->
+    <!-- FINISH -->
     <div class="q-spectrum">
       <div class="q-spectrum-row">
         <div class="q-spectrum-canvas" id="cv-finish" style="background:#15192a; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.4); flex-direction:column; gap:5px;">
@@ -563,7 +513,7 @@
       </div>
     </div>
 
-    <!-- ERA: Modern ↔ Nostalgic — font + color morph -->
+    <!-- ERA -->
     <div class="q-spectrum">
       <div class="q-spectrum-row">
         <div class="q-spectrum-canvas" id="cv-era" style="background:#0a0a0a; flex-direction:column;">
@@ -578,7 +528,7 @@
       </div>
     </div>
 
-    <!-- MOOD: Playful ↔ Serious — shapes morph from circles to rectangles -->
+    <!-- MOOD -->
     <div class="q-spectrum">
       <div class="q-spectrum-row">
         <div class="q-spectrum-canvas" id="cv-mood" style="background:#fef3c7; border-radius:20px; border-color:#fde68a;">
@@ -597,7 +547,7 @@
       </div>
     </div>
 
-    <!-- DENSITY: Dense ↔ Spacious — data fills/empties -->
+    <!-- DENSITY -->
     <div class="q-spectrum">
       <div class="q-spectrum-row">
         <div class="q-spectrum-canvas" id="cv-density" style="background:#0d0d0d; padding:10px; align-items:flex-start; justify-content:flex-start; flex-direction:column;">
@@ -622,29 +572,20 @@
       <textarea class="q-textarea" placeholder="Linear, Notion, Apple, Vercel, anything that inspires you" data-key="visual_inspo" style="min-height: 60px;"></textarea>
     </div>
 
-    <div class="q-nav">
-      <button class="q-btn q-btn-back" onclick="prev()">Back</button>
-      <button class="q-btn q-btn-next" onclick="next()">Continue</button>
-    </div>
-  </div>
-
-  <!-- ═══ SCREEN 7: COMPETITORS ═══ -->
-  <div class="screen" data-step="7">
-    <div class="q-label">Competitors</div>
-    <div class="q-title">Who are you up against?</div>
-    <div class="q-subtitle">Not just direct competitors, anyone your audience might choose instead of you.</div>
-
-    <div class="q-field">
-      <div class="q-field-label">Name 2-3 competitors or alternatives</div>
-      <textarea class="q-textarea" placeholder="Microsoft (bigger, more established)&#10;Samsung (hardware competitor)&#10;Google (similar vibe but different model)" data-key="competitors" style="min-height: 80px;"></textarea>
-    </div>
-    <div class="q-field">
-      <div class="q-field-label">What do they do well that you admire?</div>
-      <textarea class="q-textarea" placeholder="Google's search is fast and reliable. Samsung's hardware quality is impressive..." data-key="competitor_good" style="min-height: 70px;"></textarea>
-    </div>
-    <div class="q-field">
-      <div class="q-field-label">What do they get wrong that you want to avoid?</div>
-      <textarea class="q-textarea" placeholder="Most feel cluttered, too many options, no clear design vision..." data-key="competitor_bad" style="min-height: 70px;"></textarea>
+    <div class="q-tags" data-group="personality" style="margin-top: 20px;">
+      <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; font-weight: 500;">Pick a few words that feel like your brand</div>
+      <div class="q-tag" data-value="bold">Bold</div>
+      <div class="q-tag" data-value="minimal">Minimal</div>
+      <div class="q-tag" data-value="playful">Playful</div>
+      <div class="q-tag" data-value="premium">Premium</div>
+      <div class="q-tag" data-value="friendly">Friendly</div>
+      <div class="q-tag" data-value="rebellious">Rebellious</div>
+      <div class="q-tag" data-value="warm">Warm</div>
+      <div class="q-tag" data-value="techy">Techy</div>
+      <div class="q-tag" data-value="quirky">Quirky</div>
+      <div class="q-tag" data-value="edgy">Edgy</div>
+      <div class="q-tag" data-value="clean">Clean</div>
+      <div class="q-tag" data-value="retro">Retro</div>
     </div>
 
     <div class="q-nav">
@@ -653,11 +594,11 @@
     </div>
   </div>
 
-  <!-- ═══ SCREEN 8: TIMELINE + SUMMARY ═══ -->
-  <div class="screen" data-step="8">
+  <!-- ═══ SCREEN 6: WRAP UP ═══ -->
+  <div class="screen" data-step="6">
     <div class="q-label">Almost done</div>
-    <div class="q-title">Timeline &amp; final thoughts.</div>
-    <div class="q-subtitle">Last few questions, then I'll review everything and get to work.</div>
+    <div class="q-title">Last few details.</div>
+    <div class="q-subtitle">This helps me scope things out before our call.</div>
 
     <div class="q-field">
       <div class="q-field-label">Any hard deadlines?</div>
@@ -665,7 +606,7 @@
     </div>
     <div class="q-field">
       <div class="q-field-label">Budget range (if you have one in mind)</div>
-      <input class="q-input" type="text" placeholder="Already discussed on our call, or give me a range" data-key="budget" />
+      <input class="q-input" type="text" placeholder="$5k-10k, $15k+, not sure yet..." data-key="budget" />
     </div>
     <div class="q-field">
       <div class="q-field-label">How did you find Rizzy Studio?</div>
@@ -673,7 +614,7 @@
     </div>
     <div class="q-field">
       <div class="q-field-label">Anything else I should know?</div>
-      <textarea class="q-textarea" placeholder="Existing assets, brand history, strong opinions, things you've tried before, pet peeves..." data-key="anything_else" style="min-height: 80px;"></textarea>
+      <textarea class="q-textarea" placeholder="Existing assets, brand history, strong opinions, things you've tried before..." data-key="anything_else" style="min-height: 80px;"></textarea>
     </div>
 
     <div class="q-nav">
@@ -682,11 +623,11 @@
     </div>
   </div>
 
-  <!-- ═══ SCREEN 9: DONE ═══ -->
-  <div class="screen" data-step="9">
+  <!-- ═══ SCREEN 7: DONE ═══ -->
+  <div class="screen" data-step="7">
     <div class="q-label">Done</div>
     <div class="q-title">You're all set.</div>
-    <div class="q-subtitle">I'll review your answers and reach out within 24 hours. Here's a summary of what you told me:</div>
+    <div class="q-subtitle">Here's what you told me:</div>
 
     <div id="summaryContent"></div>
 
@@ -702,7 +643,7 @@
 <script>
   const state = {
     step: 1,
-    total: 8,
+    total: 6,
     fields: {},
     services: new Set(),
     extras: new Set(),
@@ -962,7 +903,7 @@
 
   async function submit() {
     buildSummary()
-    goTo(9)
+    goTo(7)
     document.getElementById('progress').style.width = '100%'
     document.getElementById('stepLabel').textContent = 'Done'
 
@@ -1037,7 +978,6 @@
 
     // Generate directions for email only (not shown to client)
     const directions = generateDirections()
-    html += '</div>'
 
     // Store directions for email
     state.directions = directions.map(d => ({
