@@ -171,6 +171,12 @@ export function Footer() {
               <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="footer-link footer-privacy-mobile">Privacy</a>
             </div>
           </div>
+          <div className="footer-connect">
+            <h4 className="footer-heading">Projects</h4>
+            <div className="footer-connect-links">
+              <a href="/liquid-glass/" className="footer-link">Liquid Glass</a>
+            </div>
+          </div>
           <div className="footer-ipod-wrap">
             <IpodPlayer />
             <svg className="ipod-cable" viewBox="0 0 800 400">
