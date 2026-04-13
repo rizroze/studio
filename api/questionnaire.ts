@@ -57,7 +57,7 @@ function buildEmail(data: QuestionnaireData): string {
 
   // ── SCREEN 1: About You ──
   if (fields.name || fields.company)
-    rows += section("Client", `${escapeHtml(fields.name || "")}${fields.company ? `, ${escapeHtml(fields.company)}` : ""}`);
+    rows += section("Client", `${escapeHtml(fields.name || "")}${fields.company ? `, ${escapeHtml(fields.company)}` : ""}${fields.email ? `<br><span style="color:#888;">${escapeHtml(fields.email)}</span>` : ""}`);
 
   if (fields.website)
     rows += section("Website", escapeHtml(fields.website));
@@ -135,6 +135,9 @@ function buildEmail(data: QuestionnaireData): string {
 
   if (fields.budget)
     rows += section("Budget", escapeHtml(fields.budget));
+
+  if (fields.referral)
+    rows += section("How They Found Us", escapeHtml(fields.referral));
 
   if (fields.anything_else)
     rows += section("Anything Else", escapeHtml(fields.anything_else));
