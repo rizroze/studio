@@ -190,6 +190,35 @@ body {
   transform: scale(1) translateX(0);
 }
 
+/* ---- Back link ---- */
+
+.back-link {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 0.2s var(--smooth);
+}
+
+.back-link:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.back-link svg {
+  transition: transform 0.2s var(--smooth);
+}
+
+.back-link:hover svg {
+  transform: translateX(-2px);
+}
+
 /* ---- Glass element ---- */
 
 .glass-container {
