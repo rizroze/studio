@@ -2,36 +2,31 @@ import { useState, useRef, useCallback } from 'react'
 import { track } from '@vercel/analytics'
 import type { PricingTier } from '../constants/services'
 
-// Clean line SVG icons
+// Modern line icons (hugeicons-inspired)
 function StartIcon({ color }: { color: string }) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M11.5 3.5c.6 4.4 1.1 5.9 5.5 6.5-4.4.6-4.9 2.1-5.5 6.5-.6-4.4-1.1-5.9-5.5-6.5 4.4-.6 4.9-2.1 5.5-6.5Z"/>
+      <path d="M18.5 14.5c.25 1.8.5 2.4 2.3 2.6-1.8.25-2.05.85-2.3 2.65-.25-1.8-.5-2.4-2.3-2.65 1.8-.2 2.05-.85 2.3-2.6Z"/>
     </svg>
   )
 }
 
 function BuildIcon({ color }: { color: string }) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="16 18 22 12 16 6"/>
-      <polyline points="8 6 2 12 8 18"/>
-      <line x1="14" y1="4" x2="10" y2="20" opacity="0.4"/>
+    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M15.5 6.5 21 12l-5.5 5.5"/>
+      <path d="M8.5 6.5 3 12l5.5 5.5"/>
     </svg>
   )
 }
 
 function StudioIcon({ color }: { color: string }) {
-  // Gem with flat top like 💎
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <polygon points="6,3 18,3 22,10 12,22 2,10"/>
-      <line x1="2" y1="10" x2="22" y2="10"/>
-      <line x1="6" y1="3" x2="8" y2="10"/>
-      <line x1="18" y1="3" x2="16" y2="10"/>
-      <line x1="8" y1="10" x2="12" y2="22"/>
-      <line x1="16" y1="10" x2="12" y2="22"/>
-      <line x1="12" y1="3" x2="12" y2="10" opacity="0.3"/>
+    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3.5 9.5 7 4h10l3.5 5.5L12 21 3.5 9.5Z"/>
+      <path d="M3.5 9.5h17"/>
+      <path d="M8 9.5 12 21l4-11.5"/>
     </svg>
   )
 }
