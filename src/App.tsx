@@ -18,11 +18,13 @@ import { FAQ } from './sections/FAQ'
 import { ProjectPage } from './sections/ProjectPage'
 import { AllProjects } from './sections/AllProjects'
 import { CASE_STUDIES } from './constants/projects'
+import { V2Root } from './v2/V2Root'
 import { Agentation } from 'agentation'
 
-type View = { type: 'home' } | { type: 'project'; slug: string } | { type: 'all-projects' }
+type View = { type: 'home' } | { type: 'project'; slug: string } | { type: 'all-projects' } | { type: 'v2' }
 
 function viewFromPath(path: string): View {
+  if (path.startsWith('/v2')) return { type: 'v2' }
   if (path.startsWith('/work/')) {
     const slug = path.slice(6)
     if (CASE_STUDIES.some(p => p.slug === slug)) return { type: 'project', slug }
@@ -32,6 +34,7 @@ function viewFromPath(path: string): View {
 }
 
 function pathFromView(v: View): string {
+  if (v.type === 'v2') return '/v2'
   if (v.type === 'project') return `/work/${v.slug}`
   if (v.type === 'all-projects') return '/work'
   return '/'
@@ -134,6 +137,8 @@ export function App() {
   const currentProject = view.type === 'project'
     ? CASE_STUDIES.find(p => p.slug === view.slug)
     : null
+
+  if (view.type === 'v2') return <V2Root />
 
   return (
     <>
