@@ -1,4 +1,6 @@
-import { useRef, useState, useLayoutEffect } from 'react'
+import { useRef, useLayoutEffect } from 'react'
+import { IMAGE_DIMS } from './imageDims'
+import { med } from './disciplines'
 
 interface V2BentoProps {
   gallery: string[]
@@ -8,11 +10,23 @@ interface V2BentoProps {
 
 const GAP = 6
 
-// Bento grid: square base cells, but wide images span 2 cols and tall images
-// span 2 rows so content keeps its native shape instead of being cropped square.
+// span is decided up front from precomputed ratios — no reflow as images load
+function spanClass(src: string): string {
+  const d = IMAGE_DIMS[src]
+  if (!d) return ''
+  const r = d[0] / d[1]
+  return r > 1.4 ? 'wide' : r < 0.72 ? 'tall' : ''
+}
+
+const markIn = (e: React.SyntheticEvent<HTMLImageElement>) => e.currentTarget.classList.add('in')
+const refIn = (img: HTMLImageElement | null) => {
+  // already-cached images: defer two frames so the transparent state paints and they fade too
+  if (img?.complete) requestAnimationFrame(() => requestAnimationFrame(() => img.classList.add('in')))
+}
+
+// Bento grid: square base cells; wide images span 2 cols, tall span 2 rows.
 export function V2Bento({ gallery, cols = 4, onOpenImage }: V2BentoProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const [spans, setSpans] = useState<Record<number, 'wide' | 'tall'>>({})
 
   // keep row height == column width (square base), responsive
   useLayoutEffect(() => {
@@ -31,35 +45,23 @@ export function V2Bento({ gallery, cols = 4, onOpenImage }: V2BentoProps) {
     return () => ro.disconnect()
   }, [cols])
 
-  const onLoad = (i: number, e: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = e.currentTarget
-    const r = img.naturalWidth / img.naturalHeight
-    const s: 'wide' | 'tall' | undefined = r > 1.4 ? 'wide' : r < 0.72 ? 'tall' : undefined
-    setSpans(prev => {
-      if (prev[i] === s) return prev
-      const next = { ...prev }
-      if (s) next[i] = s
-      else delete next[i]
-      return next
-    })
-  }
-
   return (
     <div className="v2-bento" ref={ref}>
       {gallery.map((src, i) => (
         <button
           key={src}
-          className={`v2-bento-item ${spans[i] ?? ''}`}
-          style={{ '--i': i } as React.CSSProperties}
+          className={`v2-bento-item ${spanClass(src)}`}
           onClick={() => onOpenImage(gallery, i)}
         >
           <img
-            src={src}
+            className="v2-fadeimg"
+            ref={refIn}
+            onLoad={markIn}
+            src={med(src)}
             alt=""
             loading="lazy"
             decoding="async"
             draggable={false}
-            onLoad={(e) => onLoad(i, e)}
           />
         </button>
       ))}

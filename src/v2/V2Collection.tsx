@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import type { ProjectSection } from '../constants/projects'
 import { V2Bento } from './V2Bento'
+import { IMAGE_DIMS } from './imageDims'
+import { med } from './disciplines'
 
 interface V2CollectionProps {
   section: ProjectSection
@@ -23,19 +25,36 @@ export function V2Collection({ section, grid = 'ratio', cols, onOpenImage }: V2C
   return <RatioGrid section={section} onOpenImage={onOpenImage} />
 }
 
+const markIn = (e: React.SyntheticEvent<HTMLImageElement>) => e.currentTarget.classList.add('in')
+const refIn = (img: HTMLImageElement | null) => {
+  if (img?.complete) requestAnimationFrame(() => requestAnimationFrame(() => img.classList.add('in')))
+}
+
 function RatioGrid({ section, onOpenImage }: V2CollectionProps) {
   return (
     <div className="v2-grid v2-grid-ratio">
-      {section.gallery.map((src, i) => (
-        <button
-          key={src}
-          className="v2-grid-item"
-          style={{ '--i': i } as React.CSSProperties}
-          onClick={() => onOpenImage(section.gallery, i)}
-        >
-          <img src={src} alt="" loading="lazy" draggable={false} />
-        </button>
-      ))}
+      {section.gallery.map((src, i) => {
+        const d = IMAGE_DIMS[src]
+        return (
+          <button
+            key={src}
+            className="v2-grid-item"
+            onClick={() => onOpenImage(section.gallery, i)}
+          >
+            <img
+              className="v2-fadeimg"
+              ref={refIn}
+              onLoad={markIn}
+              src={med(src)}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              draggable={false}
+              style={d ? { aspectRatio: `${d[0]} / ${d[1]}` } : undefined}
+            />
+          </button>
+        )
+      })}
     </div>
   )
 }

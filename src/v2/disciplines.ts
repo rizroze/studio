@@ -61,7 +61,7 @@ export const DISCIPLINES: Discipline[] = [
       sec('radiants', 'Brand Art', 'dense', 4),
       sec('radiants', 'PFP Art', 'dense', 8),
       { ...sec('hydex', 'Hydex'), label: 'Pitch Deck' },
-      { ...sec('hydex', 'Hydex Router'), label: 'Pitch Deck — Router' },
+      { ...sec('hydex', 'Hydex Router'), label: 'Pitch Deck', project: 'Hydex Router' },
       sec('wayy', 'Pitch Deck'),
       sec('fullport', 'Pitch Deck'),
     ],
@@ -95,6 +95,12 @@ export function findDiscipline(id: string): Discipline | undefined {
 // Falls back to the original for gif/svg (no thumbnail generated).
 export function thumb(src: string): string {
   return src.replace(/\.(webp|png|jpe?g)$/i, '.thumb.jpg')
+}
+
+// Medium variant (640px .med.jpg) for grid display — fast decode, sharp enough.
+// Full-res original is still used in the lightbox. Animated gifs kept as-is.
+export function med(src: string): string {
+  return src.replace(/\.webp$/i, '.med.jpg')
 }
 
 // Spread of images across a discipline's collections — for the homepage hover mosaic.

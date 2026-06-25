@@ -368,16 +368,13 @@
   background: var(--v2-hover);
   cursor: pointer;
   padding: 0;
-  animation: v2-pop 0.5s both cubic-bezier(0.22, 1, 0.36, 1);
-  animation-delay: calc(var(--i, 0) * 0.025s);
 }
-.v2-grid-item img { display: block; transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.v2-grid-item img { display: block; }
 .v2-grid-item:hover img { opacity: 0.82; }
 
-@keyframes v2-pop {
-  from { opacity: 0; transform: scale(0.94); }
-  to { opacity: 1; transform: scale(1); }
-}
+/* images fade in once loaded — cells already hold correct space (precomputed dims) */
+.v2-fadeimg { opacity: 0; transition: opacity 0.4s ease-out; }
+.v2-fadeimg.in { opacity: 1; }
 
 /* ratio: masonry columns, full native ratio */
 .v2-grid-ratio {
@@ -404,8 +401,6 @@
   background: var(--v2-hover);
   cursor: pointer;
   padding: 0;
-  animation: v2-pop 0.5s both cubic-bezier(0.22, 1, 0.36, 1);
-  animation-delay: calc(var(--i, 0) * 0.02s);
 }
 .v2-bento-item.wide { grid-column: span 2; }
 .v2-bento-item.tall { grid-row: span 2; }
@@ -413,7 +408,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .v2-bento-item:hover img { opacity: 0.85; }
 
@@ -481,7 +475,9 @@
 /* ============================================
    DISCIPLINE PAGE — grouped collection blocks
    ============================================ */
-.v2-disc-block { margin-bottom: clamp(48px, 6vw, 88px); }
+.v2-disc-block {
+  margin-bottom: clamp(48px, 6vw, 88px);
+}
 
 .v2-disc-label {
   display: flex;
@@ -531,26 +527,31 @@
 /* ============================================
    LIGHTBOX
    ============================================ */
+/* lightbox is portaled to <body>, outside #v2-root — use literal colors/fonts
+   so it doesn't depend on the scoped CSS variables */
 .v2-lightbox {
   position: fixed; inset: 0; z-index: 1000;
   background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(8px);
   display: flex; align-items: center; justify-content: center;
   padding: 5vh 6vw;
-  font-family: var(--v2-mono);
+  font-family: 'Fragment Mono', ui-monospace, 'SF Mono', monospace;
 }
 .v2-lightbox img {
   max-width: 100%; max-height: 90vh; object-fit: contain;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
 }
 .v2-lb-close, .v2-lb-counter, .v2-lb-nav {
-  position: fixed; font-family: var(--v2-mono); font-size: 11px;
-  letter-spacing: 0.04em; text-transform: uppercase; color: var(--v2-ink);
+  position: fixed;
+  font-family: 'Fragment Mono', ui-monospace, 'SF Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em; text-transform: uppercase; color: #0a0a0a;
+  background: none; border: none; cursor: pointer;
 }
 .v2-lb-close { top: 26px; right: 30px; }
-.v2-lb-counter { bottom: 26px; left: 50%; transform: translateX(-50%); color: var(--v2-muted); }
-.v2-lb-nav { top: 50%; transform: translateY(-50%); font-size: 14px; padding: 16px; color: var(--v2-muted); transition: color 0.2s ease; }
-.v2-lb-nav:hover { color: var(--v2-ink); }
+.v2-lb-counter { bottom: 26px; left: 50%; transform: translateX(-50%); color: #8a8a8a; }
+.v2-lb-nav { top: 50%; transform: translateY(-50%); font-size: 14px; padding: 16px; color: #8a8a8a; transition: color 0.2s ease; }
+.v2-lb-nav:hover { color: #0a0a0a; }
 .v2-lb-prev { left: 14px; }
 .v2-lb-next { right: 14px; }
 
@@ -561,6 +562,25 @@
   display: flex;
   align-items: center;
   gap: 18px;
+}
+
+.v2-sound {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--v2-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--v2-muted);
+  transition: color 0.2s ease;
+}
+.v2-sound:hover { color: var(--v2-ink); }
+.v2-sound-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--v2-faint);
 }
 
 .v2-ipod {

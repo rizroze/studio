@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 import { PLAYLIST } from '../constants/music'
 
 export function V2Music() {
+  const [open, setOpen] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [track, setTrack] = useState(0)
   const audioRef = useRef<HTMLAudioElement | null>(null)
@@ -27,6 +28,19 @@ export function V2Music() {
   const toggle = useCallback(() => setPlaying(p => !p), [])
   const next = useCallback(() => { setTrack(t => (t + 1) % PLAYLIST.length); setPlaying(true) }, [])
   const prev = useCallback(() => { setTrack(t => (t - 1 + PLAYLIST.length) % PLAYLIST.length); setPlaying(true) }, [])
+
+  if (!open) {
+    return (
+      <button
+        className="v2-sound"
+        onClick={() => { setOpen(true); setPlaying(true) }}
+        aria-label="Play sound"
+      >
+        <span className="v2-sound-dot" />
+        Sound
+      </button>
+    )
+  }
 
   const t = PLAYLIST[track]
 

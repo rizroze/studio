@@ -9,7 +9,7 @@ interface V2DisciplineProps {
 
 export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplineProps) {
   return (
-    <div className="v2-fade">
+    <div>
       <div className="v2-crumb">
         <button onClick={onHome}>Work</button>
         <span className="v2-crumb-sep">/</span>
