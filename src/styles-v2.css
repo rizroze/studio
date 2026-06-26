@@ -393,8 +393,14 @@
 .v2-grid-item:hover img { opacity: 0.82; }
 
 /* images fade in once loaded — cells already hold correct space (precomputed dims) */
-.v2-fadeimg { opacity: 0; transition: opacity 0.4s ease-out; }
-.v2-fadeimg.in { opacity: 1; }
+/* grid reveal: fade + subtle rise/scale, GPU-composited for smoothness */
+.v2-fadeimg {
+  opacity: 0;
+  transform: translateY(12px) scale(1.015);
+  transition: opacity 0.55s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.v2-fadeimg.in { opacity: 1; transform: none; }
 
 /* ratio: masonry columns, full native ratio */
 .v2-grid-ratio {
@@ -754,22 +760,24 @@ button.v2-lab-row { background: none; border: none; font: inherit; text-align: l
 }
 .lab-wheel-center:hover { color: #cf2222; }
 
-/* draggable liquid-glass slab — refracts the page behind it */
+/* draggable liquid-glass slab — exact parity with the /liquid-glass/ demo:
+   transparent (no tint), subtle border, displacement-only backdrop-filter,
+   shadow on hover only */
 .lab-glass-slab {
   position: absolute; top: 0; left: 0;
   pointer-events: auto; cursor: grab; touch-action: none;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 1px 1px rgba(255, 255, 255, 0.7) inset, 0 10px 34px rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+.lab-glass-slab:hover { border-color: rgba(255, 255, 255, 0.35); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
 .lab-glass-slab:active { cursor: grabbing; }
 .lab-glass-slab.has-displace {
-  -webkit-backdrop-filter: url(#lab-glass-displacement) blur(1px) saturate(1.5);
-  backdrop-filter: url(#lab-glass-displacement) blur(1px) saturate(1.5);
+  -webkit-backdrop-filter: url(#lab-glass-displacement) saturate(1);
+  backdrop-filter: url(#lab-glass-displacement) saturate(1);
 }
 .lab-glass-slab:not(.has-displace) {
-  -webkit-backdrop-filter: blur(10px) saturate(1.4);
-  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .lab-glass-config {

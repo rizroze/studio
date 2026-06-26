@@ -103,12 +103,20 @@ export function med(src: string): string {
   return src.replace(/\.webp$/i, '.med.jpg')
 }
 
-// Spread of images across a discipline's collections — for the homepage hover mosaic.
+// Poster still for a video (a frame grabbed at build time) so motion can
+// appear in the image-only previews.
+export function videoPoster(src: string): string {
+  return src.replace(/\.mp4$/i, '-poster.webp')
+}
+
+// Spread of images across a discipline's collections — for the homepage hover
+// mosaic. Includes motion via poster stills so the videos show up too.
 export function disciplineMosaic(d: Discipline, max = 12): string[] {
   const perCollection = Math.max(1, Math.ceil(max / d.collections.length))
   const picked: string[] = []
   d.collections.forEach(c => {
     picked.push(...c.section.gallery.slice(0, perCollection))
   })
+  d.videos.forEach(v => picked.push(videoPoster(v.src)))
   return picked.slice(0, max)
 }

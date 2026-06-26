@@ -9,7 +9,8 @@ interface GlassCfg {
   scale: number; border: number; blur: number
 }
 
-const DEFAULT: GlassCfg = { width: 340, height: 230, radius: 28, scale: -150, border: 0.07, blur: 11 }
+// matches the perfected nav-filter reference (scale -180, border 0.07, blur 11)
+const DEFAULT: GlassCfg = { width: 340, height: 230, radius: 28, scale: -180, border: 0.07, blur: 11 }
 
 // Build the displacement map on a Canvas (feImage can't apply blur/blend to SVG
 // data URIs, but Canvas does it natively). Padded with neutral gray so feImage
@@ -73,9 +74,10 @@ export function V2LabGlass({ onClose }: { onClose: () => void }) {
       f.setAttribute('width', `${100 + px * 2}%`); f.setAttribute('height', `${100 + py * 2}%`)
     }
     feImageRef.current?.setAttribute('href', uri)
+    // chromatic aberration offsets [0, 10, 20] — exact reference values
     rRef.current?.setAttribute('scale', String(cfg.scale))
-    gRef.current?.setAttribute('scale', String(cfg.scale + 12))
-    bRef.current?.setAttribute('scale', String(cfg.scale + 24))
+    gRef.current?.setAttribute('scale', String(cfg.scale + 10))
+    bRef.current?.setAttribute('scale', String(cfg.scale + 20))
   }, [cfg])
 
   const onDown = useCallback((e: React.PointerEvent) => {
