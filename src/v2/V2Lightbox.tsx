@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 interface V2LightboxProps {
@@ -27,6 +27,25 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose, prev, next])
 
+  // touch swipe (mobile): drag left/right to go next/prev. Tracks a swipe so
+  // the subsequent click doesn't also fire (which would close the lightbox).
+  const touch = useRef<{ x: number; y: number } | null>(null)
+  const swiped = useRef(false)
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+    swiped.current = false
+  }, [])
+  const onTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touch.current) return
+    const dx = e.changedTouches[0].clientX - touch.current.x
+    const dy = e.changedTouches[0].clientY - touch.current.y
+    touch.current = null
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+      swiped.current = true
+      if (dx < 0) next(); else prev()
+    }
+  }, [next, prev])
+
   // when the active image changes: preload neighbors (instant left/right) and
   // scroll the page so the matching grid tile tracks the image — keeps you
   // oriented within the page while the grid shows through the sheer backdrop
@@ -40,7 +59,12 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
   }, [index, images])
 
   return createPortal(
-    <div className="v2-lightbox" onClick={onClose}>
+    <div
+      className="v2-lightbox"
+      onClick={() => { if (swiped.current) { swiped.current = false; return } onClose() }}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       <button className="v2-lb-close" onClick={onClose}>Close ✕</button>
 
       {images.length > 1 && (

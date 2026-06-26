@@ -222,7 +222,6 @@ export const CASE_STUDIES: CaseStudyData[] = [
           '/content/seeker/meme-2.webp',
           '/content/seeker/meme-3.webp',
           '/content/seeker/meme-4.webp',
-          '/content/seeker/meme-5.webp',
         ],
       },
       {

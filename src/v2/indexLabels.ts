@@ -117,7 +117,6 @@ export const INDEX_LABELS: Record<string, string> = {
   '/content/seeker/meme-2.webp': 'Community Meme II',
   '/content/seeker/meme-3.webp': 'Community Meme III',
   '/content/seeker/meme-4.webp': 'Community Meme IV',
-  '/content/seeker/meme-5.webp': 'Community Meme V',
 }
 
 // Fallback: strip path + extension, hyphens/underscores → spaces, Title Case,

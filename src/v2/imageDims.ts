@@ -262,7 +262,6 @@ export const IMAGE_DIMS: Record<string, [number, number]> = {
   "/content/seeker/meme-2.webp": [1400,933],
   "/content/seeker/meme-3.webp": [1154,1400],
   "/content/seeker/meme-4.webp": [1024,1024],
-  "/content/seeker/meme-5.webp": [1400,933],
   "/content/seeker/announcement-2.webp": [1400,1400],
   "/content/seeker/tips-1.webp": [1400,1400],
   "/content/seeker/faq-3.webp": [1400,1400],

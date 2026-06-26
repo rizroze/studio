@@ -129,7 +129,10 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
 
       <div className="v2-index-preview-col">
         <div className="v2-index-preview" style={{ backgroundImage: `url("${med(section.gallery[active])}")` }}>
-          <img src={section.gallery[active]} alt="" decoding="async" />
+          {/* key per src so it remounts (transparent) instead of holding the
+              previous full-res while the new one loads — the med backdrop fills
+              the gap instantly, so the swap feels immediate */}
+          <img key={section.gallery[active]} src={section.gallery[active]} alt="" decoding="async" />
         </div>
         <div className="v2-index-caption">{indexLabel(section.gallery[active])}</div>
       </div>
