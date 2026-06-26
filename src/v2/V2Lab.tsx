@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 
-type Toy = 'ipod' | 'glass'
+type Toy = 'ipod' | 'glass' | 'pet'
 
 interface LabItem {
   year: string
@@ -14,7 +14,8 @@ interface LabItem {
 
 // The lab — experiments and design toys. Newest first; grouped by year.
 const LAB: LabItem[] = [
-  { year: '2026', title: 'Liquid Glass', date: '13/04', note: 'Displacement glass — drag it over the page', spawn: 'glass', badge: 'New' },
+  { year: '2026', title: 'Tamagotchi', date: '27/06', note: 'An octopus that lives here — feed, play, pet', spawn: 'pet', badge: 'New' },
+  { year: '2026', title: 'Liquid Glass', date: '13/04', note: 'Displacement glass — drag it over the page', spawn: 'glass' },
   { year: '2026', title: 'iPod', date: '24/03', note: 'Grab it, fling it, press play', spawn: 'ipod' },
 ]
 

@@ -8,9 +8,10 @@ import { V2References } from './V2References'
 import { V2Lab } from './V2Lab'
 import { V2LabIpod } from './V2LabIpod'
 import { V2LabGlass } from './V2LabGlass'
+import { V2LabPet } from './V2LabPet'
 import '../styles-v2.css'
 
-type Toy = 'ipod' | 'glass'
+type Toy = 'ipod' | 'glass' | 'pet'
 
 type V2View =
   | { view: 'home' }
@@ -148,6 +149,7 @@ export function V2Root() {
       {lab && <V2Lab onClose={() => setLab(false)} onSpawn={(toy) => { setLabToy(toy); setLab(false) }} />}
       {labToy === 'ipod' && <V2LabIpod onClose={() => setLabToy(null)} />}
       {labToy === 'glass' && <V2LabGlass onClose={() => setLabToy(null)} />}
+      {labToy === 'pet' && <V2LabPet onClose={() => setLabToy(null)} />}
     </div>
   )
 }
