@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { ProjectSection } from '../constants/projects'
 import { V2Bento } from './V2Bento'
 import { IMAGE_DIMS } from './imageDims'
@@ -64,7 +64,39 @@ function RatioGrid({ section, onOpenImage }: V2CollectionProps) {
 function IndexView({ section, onOpenImage }: V2CollectionProps) {
   const isMobile = useIsMobile()
   const [hovered, setHovered] = useState<number | null>(null)
-  const active = hovered ?? 0
+  const [scrolledIdx, setScrolledIdx] = useState(0)
+  const listRef = useRef<HTMLDivElement>(null)
+  // hover wins when you point at a row; otherwise the preview tracks the scroll
+  const active = hovered ?? scrolledIdx
+
+  // scroll-spy: as the names scroll past a read line, the preview follows the
+  // nearest one — so scrolling (not just hovering) updates the right side
+  useEffect(() => {
+    if (isMobile) return
+    const main = document.querySelector('.v2-main')
+    let ticking = false
+    const update = () => {
+      ticking = false
+      const rows = Array.from(listRef.current?.children ?? []) as HTMLElement[]
+      if (!rows.length) return
+      const line = window.innerHeight * 0.42
+      let best = 0, bestDist = Infinity
+      rows.forEach((r, i) => {
+        const rect = r.getBoundingClientRect()
+        const d = Math.abs(rect.top + rect.height / 2 - line)
+        if (d < bestDist) { bestDist = d; best = i }
+      })
+      setScrolledIdx(best)
+    }
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update) } }
+    update()
+    main?.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      main?.removeEventListener('scroll', onScroll)
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [isMobile, section.gallery.length])
 
   // on mobile the side-preview can't hover — show the work directly as an image grid
   if (isMobile) {
@@ -73,7 +105,7 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
 
   return (
     <div className="v2-index-layout">
-      <div className={`v2-index ${hovered !== null ? 'has-hover' : ''}`}>
+      <div className={`v2-index ${hovered !== null ? 'has-hover' : ''}`} ref={listRef}>
         {section.gallery.map((src, i) => (
           <button
             key={src}

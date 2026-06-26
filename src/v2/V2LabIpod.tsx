@@ -4,10 +4,8 @@ import { PLAYLIST } from '../constants/music'
 
 const DEVICE_W = 196
 const DEVICE_H = 326
-const REST_DROP = 300          // how far the iPod hangs below the anchor at rest
-const K = 0.055                 // spring stiffness toward rest
+const K = 0.05                  // spring stiffness toward rest
 const DAMP = 0.9                // velocity damping (swing decay)
-const REST_LEN = REST_DROP      // cable natural length
 
 // A draggable iPod hanging from a springy cable. Fling it and it swings and
 // settles; the cable sags when slack and pulls taut when stretched.
@@ -23,6 +21,7 @@ export function V2LabIpod({ onClose }: { onClose: () => void }) {
   const pos = useRef({ x: 0, y: 0 })        // device center
   const vel = useRef({ x: 0, y: 0 })
   const rest = useRef({ x: 0, y: 0 })
+  const restLen = useRef(0)                 // slack cable length (kept loose & sloppy)
   const dragRef = useRef<{ ox: number; oy: number; px: number; py: number } | null>(null)
 
   // audio — same engine as the rail player
@@ -50,8 +49,13 @@ export function V2LabIpod({ onClose }: { onClose: () => void }) {
   // set up anchor/rest from viewport and run the physics loop
   useEffect(() => {
     const setAnchor = () => {
-      anchor.current = { x: window.innerWidth * 0.62, y: 24 }
-      rest.current = { x: anchor.current.x, y: anchor.current.y + REST_DROP }
+      const W = window.innerWidth, H = window.innerHeight
+      // hung from the top-right, resting down in the bottom-right corner
+      anchor.current = { x: W - 90, y: 16 }
+      rest.current = { x: W - DEVICE_W / 2 - 54, y: H - DEVICE_H / 2 - 40 }
+      const restTopY = rest.current.y - DEVICE_H / 2 + 6
+      // keep the cable ~30% longer than the straight-line distance → always slack & sloppy
+      restLen.current = Math.hypot(rest.current.x - anchor.current.x, restTopY - anchor.current.y) * 1.3
     }
     setAnchor()
     pos.current = { ...rest.current }
@@ -71,14 +75,22 @@ export function V2LabIpod({ onClose }: { onClose: () => void }) {
       const dev = deviceRef.current
       if (dev) dev.style.transform = `translate3d(${pos.current.x - DEVICE_W / 2}px, ${pos.current.y - DEVICE_H / 2}px, 0)`
 
-      // cable: anchor → top of device, sagging when slack
-      const bx = pos.current.x
-      const by = pos.current.y - DEVICE_H / 2 + 6
-      const dist = Math.hypot(bx - anchor.current.x, by - anchor.current.y)
-      const sag = Math.max(0, REST_LEN - dist) * 0.5 + 10
-      const mx = (anchor.current.x + bx) / 2
-      const my = (anchor.current.y + by) / 2 + sag
-      cableRef.current?.setAttribute('d', `M ${anchor.current.x} ${anchor.current.y} Q ${mx} ${my} ${bx} ${by}`)
+      // cable: a loose, S-shaped headphone cord from anchor → top of device.
+      // two control points pushed to opposite sides (perpendicular) make the S;
+      // slack adds sideways wobble + downward droop, so it swings sloppily
+      const ax = anchor.current.x, ay = anchor.current.y
+      const bx = pos.current.x, by = pos.current.y - DEVICE_H / 2 + 6
+      const dx = bx - ax, dy = by - ay
+      const dist = Math.hypot(dx, dy) || 1
+      const slack = Math.max(0, restLen.current - dist)
+      const ux = -dy / dist, uy = dx / dist          // perpendicular unit
+      const amp = 24 + slack * 0.4                    // sideways bow of the S
+      const droop = slack * 0.22
+      const p1x = ax + dx * 0.33 + ux * amp
+      const p1y = ay + dy * 0.33 + uy * amp + droop
+      const p2x = ax + dx * 0.66 - ux * amp
+      const p2y = ay + dy * 0.66 - uy * amp + droop
+      cableRef.current?.setAttribute('d', `M ${ax} ${ay} C ${p1x} ${p1y} ${p2x} ${p2y} ${bx} ${by}`)
 
       raf = requestAnimationFrame(tick)
     }

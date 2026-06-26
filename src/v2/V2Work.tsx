@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { DISCIPLINES, disciplineMosaic, thumb } from './disciplines'
 import { V2Mosaic } from './V2Mosaic'
 import { useIsMobile } from './useMobile'
@@ -11,6 +11,15 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
   const isMobile = useIsMobile()
   const [active, setActive] = useState(0)
   const discipline = DISCIPLINES[active]
+
+  // preload every discipline's thumbnails once so hover-swaps are instant
+  // (no flash of an empty/old tile while the new branch's images decode)
+  useEffect(() => {
+    const idle = (window as any).requestIdleCallback || ((fn: () => void) => setTimeout(fn, 200))
+    idle(() => {
+      DISCIPLINES.forEach(d => disciplineMosaic(d, Infinity).map(thumb).forEach(src => { new Image().src = src }))
+    })
+  }, [])
 
   // desktop: hover shifts the preview, click opens.
   // touch: there's no hover — first tap shifts the preview, second tap on the

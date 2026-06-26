@@ -66,8 +66,10 @@ export function V2Mosaic({ images, runKey, cols = 6, onOpen }: V2MosaicProps) {
         style={{ '--mcols': cols, '--mcols-big': Math.ceil(cols / 2) } as React.CSSProperties}
       >
         {images.map((src, i) => (
-          <button key={i} className="v2-mosaic-item" onClick={onOpen}>
-            <img src={src} alt="" loading="lazy" decoding="async" draggable={false} />
+          // key per discipline+slot: hovering a new branch remounts fresh tiles
+          // instead of swapping src on a reused <img> (which flashed the stale image)
+          <button key={`${runKey}-${i}`} className="v2-mosaic-item" onClick={onOpen}>
+            <img src={src} alt="" decoding="async" draggable={false} />
           </button>
         ))}
       </div>
