@@ -64,8 +64,13 @@ export function V2Root() {
       requestAnimationFrame(update)
     }
     update()
+    // desktop scrolls the content pane; mobile scrolls the window
     main.addEventListener('scroll', onScroll, { passive: true })
-    return () => main.removeEventListener('scroll', onScroll)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      main.removeEventListener('scroll', onScroll)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [state])
 
   const goHome = useCallback(() => navigate({ view: 'home' }), [navigate])

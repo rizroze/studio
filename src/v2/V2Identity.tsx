@@ -66,7 +66,7 @@ export function V2Identity({ onHome, nav, navTitle, activeNav = 0, onJump }: V2I
               <a href="https://x.com/rizroze" target="_blank" rel="noopener noreferrer">X</a>,{' '}
               <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer">book a call</a>,
               {' '}or reach me by{' '}
-              <a href="mailto:hello@rizzy.today">email</a>.
+              <a href="mailto:rizzy2day@gmail.com">email</a>.
             </p>
             <div className="v2-rail-status">
               <span className="v2-rail-open">Available to work.</span>

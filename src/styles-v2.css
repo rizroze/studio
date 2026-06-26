@@ -658,7 +658,9 @@
    RESPONSIVE (yeezy mobile)
    ============================================ */
 @media (max-width: 820px) {
-  #v2-root { flex-direction: column; position: absolute; min-height: 100vh; }
+  /* static so the root flows with content (height grows, white bg covers all,
+     page scrolls on body) — absolute + inset:0 would clip to one viewport */
+  #v2-root { flex-direction: column; position: static; min-height: 100vh; }
   .v2-rail {
     width: 100%; height: auto; border-right: none;
     border-bottom: 1px solid var(--v2-line);
@@ -666,15 +668,16 @@
   }
   .v2-main { height: auto; padding: 40px 28px 100px; }
 
-  .v2-index-layout { grid-template-columns: 1fr; }
-  .v2-index-preview { display: none; }
-  .v2-index.has-hover .v2-index-row:not(.active) { opacity: 1; }
+  /* arrows would crowd the image on narrow screens — tap outside / close instead */
+  .v2-lb-nav { display: none; }
+
+  /* index renders as a bento image grid on mobile (no hover side-preview) */
 
   .v2-grid-ratio { --v2-cell: 150px !important; }
 
-  /* home: stack names then preview */
+  /* home: stack names then preview. tap a discipline to shift the preview
+     (active row stays lit, others dim), tap again to open it. */
   .v2-home-split { grid-template-columns: 1fr; gap: 32px; }
   .v2-home-preview { position: static; }
-  .v2-work .v2-work-row:not(.active) { opacity: 1; }
   .v2-home-mosaic { grid-template-columns: repeat(4, 1fr); }
 }

@@ -3,6 +3,7 @@ import type { ProjectSection } from '../constants/projects'
 import { V2Bento } from './V2Bento'
 import { IMAGE_DIMS } from './imageDims'
 import { med } from './disciplines'
+import { useIsMobile } from './useMobile'
 
 interface V2CollectionProps {
   section: ProjectSection
@@ -60,8 +61,14 @@ function RatioGrid({ section, onOpenImage }: V2CollectionProps) {
 }
 
 function IndexView({ section, onOpenImage }: V2CollectionProps) {
+  const isMobile = useIsMobile()
   const [hovered, setHovered] = useState<number | null>(null)
   const active = hovered ?? 0
+
+  // on mobile the side-preview can't hover — show the work directly as an image grid
+  if (isMobile) {
+    return <V2Bento gallery={section.gallery} cols={4} onOpenImage={onOpenImage} />
+  }
 
   return (
     <div className="v2-index-layout">

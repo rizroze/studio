@@ -1,14 +1,27 @@
 import { useState } from 'react'
 import { DISCIPLINES, disciplineMosaic, thumb } from './disciplines'
 import { V2Mosaic } from './V2Mosaic'
+import { useIsMobile } from './useMobile'
 
 interface V2WorkProps {
   onOpenDiscipline: (id: string) => void
 }
 
 export function V2Work({ onOpenDiscipline }: V2WorkProps) {
+  const isMobile = useIsMobile()
   const [active, setActive] = useState(0)
   const discipline = DISCIPLINES[active]
+
+  // desktop: hover shifts the preview, click opens.
+  // touch: there's no hover — first tap shifts the preview, second tap on the
+  // already-active row opens the discipline.
+  const handleRow = (i: number) => {
+    if (isMobile && active !== i) {
+      setActive(i)
+      return
+    }
+    onOpenDiscipline(DISCIPLINES[i].id)
+  }
   // every image in the discipline, served as low-res thumbnails for fast loading
   const mosaic = disciplineMosaic(discipline, Infinity).map(thumb)
 
@@ -26,9 +39,9 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
             <button
               key={d.id}
               className={`v2-work-row ${active === i ? 'active' : ''}`}
-              onMouseEnter={() => setActive(i)}
-              onFocus={() => setActive(i)}
-              onClick={() => onOpenDiscipline(d.id)}
+              onMouseEnter={() => !isMobile && setActive(i)}
+              onFocus={() => !isMobile && setActive(i)}
+              onClick={() => handleRow(i)}
             >
               <span className="v2-work-name">{d.label}</span>
               <span className="v2-arrow">→</span>
