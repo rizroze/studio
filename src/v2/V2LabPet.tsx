@@ -91,36 +91,56 @@ const thoughtFor = (p: Pet) => {
   return pool[Math.floor(Math.random() * pool.length)]
 }
 
-// Faithful pixel-art reconstruction of the hatch octopus (tan dome, gold crown,
-// dark eyes w/ highlights, checkered tan/cream tentacles). Vector so it stays
-// crisp; parts animate via CSS. (Original sprite sheets were lost.)
+// The real hatch octopus — DRAW_ADULT.octopus ported verbatim from creature.html.
+// It's procedural canvas pixel art (not a sprite file), which is why the desktop
+// app renders it with no image assets. Crown, eyes that drift, 7 waving tentacles.
+function drawOctopus(px: (x: number, y: number, c: string) => void, S: number, f: number, eyeX: number) {
+  const c1 = '#E8A070', c2 = '#FFD4A8', c3 = '#C08050', c4 = '#2D1B00', c5 = '#FFE8C0'
+  const ox = -7 * S, oy = -6 * S
+  const eo = Math.floor(eyeX * 0.3)
+  for (let c = 4; c < 10; c++) px(ox + c * S, oy - S, c2)
+  for (let c = 3; c < 11; c++) px(ox + c * S, oy, c1)
+  for (let r = 1; r < 5; r++) for (let c = 2; c < 12; c++) px(ox + c * S, oy + r * S, (c === 2) ? c2 : (c === 11) ? c3 : c1)
+  px(ox + 5 * S, oy - 2 * S, '#FFD700'); px(ox + 6 * S, oy - 3 * S, '#FFD700'); px(ox + 7 * S, oy - 3 * S, '#FFD700'); px(ox + 8 * S, oy - 2 * S, '#FFD700')
+  px(ox + 6 * S, oy - 2 * S, '#FFF'); px(ox + 7 * S, oy - 2 * S, '#FF4444')
+  px(ox + 4 * S + eo, oy + 2 * S, c4); px(ox + 5 * S + eo, oy + 2 * S, c4); px(ox + 4 * S + eo, oy + 3 * S, c4); px(ox + 5 * S + eo, oy + 3 * S, c4)
+  px(ox + 8 * S + eo, oy + 2 * S, c4); px(ox + 9 * S + eo, oy + 2 * S, c4); px(ox + 8 * S + eo, oy + 3 * S, c4); px(ox + 9 * S + eo, oy + 3 * S, c4)
+  px(ox + 4 * S + eo, oy + 2 * S, 'rgba(255,255,255,0.5)'); px(ox + 8 * S + eo, oy + 2 * S, 'rgba(255,255,255,0.5)')
+  px(ox + 5 * S, oy + 4 * S, c3); px(ox + 6 * S, oy + 4 * S, c3); px(ox + 7 * S, oy + 4 * S, c3); px(ox + 8 * S, oy + 4 * S, c3)
+  const tw = Math.floor(Math.sin(f * 0.06) * 1)
+  for (let i = 0; i < 7; i++) {
+    const tx = ox + S + i * S * 1.7, ty = oy + 5 * S
+    px(tx + tw, ty, c3); px(tx - tw, ty + S, c1); px(tx + tw, ty + 2 * S, c3); px(tx - tw, ty + 3 * S, c1)
+    px(tx + tw, ty + 4 * S, c3); px(tx, ty + 5 * S, c1)
+    px(tx + S / 2, ty + S, c5); px(tx + S / 2, ty + 3 * S, c5)
+  }
+}
+
 function Octo() {
-  const T = '#d9b38a', t = '#c2925f', C = '#f3e7d1', F = '#b07d49'
-  const E = '#1c1c1c', H = '#a9c9d4', G = '#f3c12e', R = '#d63b3b', W = '#ffffff'
-  const px = (c: number, r: number, w: number, h: number, f: string, k: string) =>
-    <rect key={k} x={c * 4} y={r * 4} width={w * 4} height={h * 4} fill={f} />
-  const tent: React.ReactNode[] = []
-  for (let r = 9; r <= 11; r++) for (let c = 2; c <= 13; c++) tent.push(px(c, r, 1, 1, (c + r) % 2 ? C : T, `t${c}-${r}`))
-  for (let c = 2; c <= 13; c += 2) tent.push(px(c, 12, 1, 1, F, `f${c}`))
-  return (
-    <svg className="octo-svg" viewBox="0 0 64 56" shapeRendering="crispEdges" aria-hidden="true">
-      {/* crown */}
-      {px(6, 0, 1, 1, G, 'cl')}{px(7, 0, 1, 1, R, 'cm')}{px(8, 0, 1, 1, G, 'cr')}
-      {px(5, 1, 6, 1, G, 'cb')}{px(7, 1, 1, 1, W, 'cw')}
-      {/* head */}
-      {px(4, 2, 8, 1, T, 'h0')}
-      {px(3, 3, 10, 1, T, 'h1')}
-      {px(2, 4, 12, 5, T, 'h2')}
-      {px(2, 4, 1, 5, t, 'hl')}{px(13, 4, 1, 5, t, 'hr')}
-      {/* eyes */}
-      {px(4, 5, 2, 2, E, 'el')}{px(4, 5, 1, 1, H, 'elh')}
-      {px(9, 5, 2, 2, E, 'er')}{px(9, 5, 1, 1, H, 'erh')}
-      {/* mouth */}
-      {px(7, 7, 2, 1, t, 'mo')}
-      {/* tentacles */}
-      {tent}
-    </svg>
-  )
+  const ref = useRef<HTMLCanvasElement>(null)
+  useEffect(() => {
+    const cv = ref.current
+    if (!cv) return
+    const ctx = cv.getContext('2d')!
+    const dpr = Math.min(2, window.devicePixelRatio || 1)
+    const W = 132, H = 140, S = 8
+    cv.width = W * dpr; cv.height = H * dpr
+    ctx.scale(dpr, dpr)
+    const px = (x: number, y: number, c: string) => { ctx.fillStyle = c; ctx.fillRect(Math.floor(x), Math.floor(y), S, S) }
+    let raf = 0, f = 0
+    const loop = () => {
+      ctx.clearRect(0, 0, W, H)
+      ctx.save()
+      ctx.translate(Math.round(W / 2 + S), Math.round(H / 2 + 2.5 * S))
+      drawOctopus(px, S, f, Math.sin(f * 0.018) * 9)
+      ctx.restore()
+      f++
+      raf = requestAnimationFrame(loop)
+    }
+    loop()
+    return () => cancelAnimationFrame(raf)
+  }, [])
+  return <canvas ref={ref} className="octo-cv" style={{ width: 116, height: 123 }} aria-hidden="true" />
 }
 
 const STATS: { key: keyof Pet; label: string; invert?: boolean }[] = [
