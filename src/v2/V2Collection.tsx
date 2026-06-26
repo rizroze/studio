@@ -4,16 +4,13 @@ import { V2Bento } from './V2Bento'
 import { IMAGE_DIMS } from './imageDims'
 import { med } from './disciplines'
 import { useIsMobile } from './useMobile'
+import { indexLabel } from './indexLabels'
 
 interface V2CollectionProps {
   section: ProjectSection
   grid?: 'dense' | 'ratio'
   cols?: number
   onOpenImage: (images: string[], index: number) => void
-}
-
-function fileName(path: string): string {
-  return (path.split('/').pop() || path).toUpperCase()
 }
 
 export function V2Collection({ section, grid = 'ratio', cols, onOpenImage }: V2CollectionProps) {
@@ -125,7 +122,7 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
             onClick={() => onOpenImage(section.gallery, i)}
           >
             <span className="v2-index-num">{String(i + 1).padStart(3, '0')}</span>
-            <span className="v2-index-file">{fileName(src)}</span>
+            <span className="v2-index-file">{indexLabel(src)}</span>
           </button>
         ))}
       </div>
@@ -134,7 +131,7 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
         <div className="v2-index-preview" style={{ backgroundImage: `url("${med(section.gallery[active])}")` }}>
           <img src={section.gallery[active]} alt="" decoding="async" />
         </div>
-        <div className="v2-index-caption">{fileName(section.gallery[active])}</div>
+        <div className="v2-index-caption">{indexLabel(section.gallery[active])}</div>
       </div>
     </div>
   )

@@ -460,7 +460,7 @@
 .v2-index-num { font-family: var(--v2-mono); font-size: 10px; color: var(--v2-faint); }
 .v2-index-file {
   font-family: var(--v2-mono); font-size: 11px; letter-spacing: 0.01em; line-height: 1.4;
-  text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
 /* big sticky preview pinned to the side — respects native ratio, takes the room */
@@ -492,7 +492,6 @@
   font-family: var(--v2-mono);
   font-size: 11px;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
   color: var(--v2-muted);
 }
 

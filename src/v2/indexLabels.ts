@@ -1,0 +1,121 @@
+// Human-readable labels for the editorial index sections (Direction).
+// Keyed by full src path because basenames collide across sections
+// (e.g. faq-1 exists under both monolith and seeker).
+// Anything not listed falls back to prettify() below.
+
+export const INDEX_LABELS: Record<string, string> = {
+  // ---- Radiants — Community & Events (RadSpaces episodes + community) ----
+  '/content/radiants/community/ts.webp': 'Teaser',
+  '/content/radiants/community/image-1.webp': 'Community Post',
+  '/content/radiants/community/image.webp': 'Event Graphic',
+  '/content/radiants/community/57now.webp': 'RadSpaces #57 — Live',
+  '/content/radiants/community/rad57upcoming.webp': 'RadSpaces #57 — Upcoming',
+  '/content/radiants/community/rad56.webp': 'RadSpaces #56',
+  '/content/radiants/community/rad55.webp': 'RadSpaces #55',
+  '/content/radiants/community/dela.webp': 'Community Update',
+  '/content/radiants/community/this.webp': 'Promo',
+  '/content/radiants/community/rad522.webp': 'RadSpaces #52 — Recap',
+  '/content/radiants/community/rad52.webp': 'RadSpaces #52',
+  '/content/radiants/community/rad51-now.webp': 'RadSpaces #51 — Live',
+  '/content/radiants/community/rad-51.webp': 'RadSpaces #51',
+  '/content/radiants/community/dolero50-2.webp': 'Community Post',
+  '/content/radiants/community/rad50.webp': 'RadSpaces #50',
+  '/content/radiants/community/49.webp': 'RadSpaces #49',
+  '/content/radiants/community/rad48-1hr.webp': 'RadSpaces #48 — 1 Hour',
+  '/content/radiants/community/radspaces48.webp': 'RadSpaces #48',
+  '/content/radiants/community/1231231.webp': 'Event Graphic',
+  '/content/radiants/community/frame-1000005468.webp': 'Community Update',
+  '/content/radiants/community/frame-1000005467.webp': 'Promo',
+  '/content/radiants/community/11422.webp': 'Community Post',
+  '/content/radiants/community/private-event.webp': 'Private Event',
+  '/content/radiants/community/rad-dinner.webp': 'Community Dinner',
+
+  // ---- Monolith 2026 ----
+  '/content/monolith/announcement-1.webp': 'Announcement Thread 1',
+  '/content/monolith/monolith-announce-2.webp': 'Announcement Thread 2',
+  '/content/monolith/announcement-3.webp': 'Announcement Thread 3',
+  '/content/monolith/announcement-4.webp': 'Announcement Thread 4',
+  '/content/monolith/monolith-announce-5.webp': 'Announcement Thread 5',
+  '/content/monolith/announcement-6.webp': 'Announcement Thread 6',
+  '/content/monolith/announcement-7.webp': 'Announcement Thread 7',
+  '/content/monolith/announcement-8.webp': 'Announcement Thread 8',
+  '/content/monolith/announcement-9.webp': 'Announcement Thread 9',
+  '/content/monolith/announcement-10.webp': 'Announcement Thread 10',
+  '/content/monolith/announcement-11.webp': 'Announcement Thread 11',
+  '/content/monolith/announcement-12.webp': 'Announcement Thread 12',
+  '/content/monolith/faq-1.webp': 'FAQ Thread 1',
+  '/content/monolith/faq-1-1.webp': 'FAQ Thread 1 — Part 2',
+  '/content/monolith/faq-1-2.webp': 'FAQ Thread 1 — Part 3',
+  '/content/monolith/monolith-faq-2.webp': 'FAQ Thread 2',
+  '/content/monolith/faq-3.webp': 'FAQ Thread 3',
+  '/content/monolith/faq-4.webp': 'FAQ Thread 4',
+  '/content/monolith/faq-5.webp': 'FAQ Thread 5',
+  '/content/monolith/faq-6.webp': 'FAQ Thread 6',
+  '/content/monolith/content-1.webp': 'Event Content 1',
+  '/content/monolith/monolith-content-2.webp': 'Event Content 2',
+  '/content/monolith/share-thumbnail.webp': 'Share Card',
+  '/content/monolith/vibecoding-1.webp': 'Vibecoding Recap 1',
+  '/content/monolith/monolith-vibecoding-2.webp': 'Vibecoding Recap 2',
+  '/content/monolith/monolith-vibecoding-5.webp': 'Vibecoding Recap 3',
+  '/content/monolith/workshop.webp': 'Workshop Recap',
+  '/content/monolith/monolith-workshop-1.webp': 'Workshop Recap 1',
+  '/content/monolith/monolith-workshop-2.webp': 'Workshop Recap 2',
+  '/content/monolith/monolith-space.webp': 'Twitter Space',
+  '/content/monolith/todo-1.webp': 'Event Schedule',
+
+  // ---- Seeker Hackathon ----
+  '/content/seeker/prize.webp': 'Grand Prize',
+  '/content/seeker/new-prize.webp': 'Prize Update',
+  '/content/seeker/saga-prize.webp': 'Saga Prize',
+  '/content/seeker/faq-1.webp': 'FAQ 1',
+  '/content/seeker/seeker-faq-2.webp': 'FAQ 2',
+  '/content/seeker/faq-3.webp': 'FAQ 3',
+  '/content/seeker/500-signups.webp': '500 Signups',
+  '/content/seeker/seeker-100-signups.webp': '100 Signups',
+  '/content/seeker/submissions.webp': 'Submissions Open',
+  '/content/seeker/seeker-subs-3.webp': 'Submissions Update',
+  '/content/seeker/seeker-closed.webp': 'Submissions Closed',
+  '/content/seeker/seeker-judging.webp': 'Judging',
+  '/content/seeker/extension.webp': 'Deadline Extended',
+  '/content/seeker/10-hours.webp': '10 Hours Left',
+  '/content/seeker/reminder.webp': 'Reminder',
+  '/content/seeker/hackathon-duration.webp': 'Hackathon Duration',
+  '/content/seeker/categories.webp': 'Tracks & Categories',
+  '/content/seeker/sponsors.webp': 'Sponsors',
+  '/content/seeker/ty-sponsors-1.webp': 'Sponsor Thank-You I',
+  '/content/seeker/ty-sponsors-2.webp': 'Sponsor Thank-You II',
+  '/content/seeker/seeker-bonk.webp': 'BONK Partner',
+  '/content/seeker/solblaze.webp': 'SolBlaze Partner',
+  '/content/seeker/hylo.webp': 'Hylo Partner',
+  '/content/seeker/stake-pool.webp': 'Stake Pool',
+  '/content/seeker/seeker-github.webp': 'GitHub Repo',
+  '/content/seeker/seeker-come.webp': 'Join the Hackathon',
+  '/content/seeker/showus.webp': 'Show Us What You Built',
+  '/content/seeker/makebreak.webp': 'Make or Break',
+  '/content/seeker/greatness.webp': 'Greatness',
+  '/content/seeker/seeker-rise.webp': 'Rally Call',
+  '/content/seeker/teams-of-the-week.webp': 'Teams of the Week',
+  '/content/seeker/spaces-36.webp': 'RadSpaces #36',
+  '/content/seeker/announcement-2.webp': 'Announcement',
+  '/content/seeker/tips-1.webp': 'Builder Tips',
+  '/content/seeker/seeker-worldwide.webp': 'Mr. Worldwide',
+  '/content/seeker/seeker-3123.webp': 'Promo',
+  '/content/seeker/meme-1.webp': 'Community Meme I',
+  '/content/seeker/meme-2.webp': 'Community Meme II',
+  '/content/seeker/meme-3.webp': 'Community Meme III',
+  '/content/seeker/meme-4.webp': 'Community Meme IV',
+  '/content/seeker/meme-5.webp': 'Community Meme V',
+}
+
+// Fallback: strip path + extension, hyphens/underscores → spaces, Title Case,
+// fix the FAQ acronym. Keeps anything unlabeled at least tidy.
+export function indexLabel(src: string): string {
+  const mapped = INDEX_LABELS[src]
+  if (mapped) return mapped
+  const base = (src.split('/').pop() || src).replace(/\.(webp|jpe?g|png|gif)$/i, '')
+  return base
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase())
+    .replace(/\bFaq\b/g, 'FAQ')
+    .trim()
+}
