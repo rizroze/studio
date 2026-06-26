@@ -12,8 +12,8 @@ interface LabItem {
 
 // The lab — experiments and design toys. Newest first; grouped by year.
 const LAB: LabItem[] = [
-  { year: '2026', title: 'iPod', date: '25/06', note: 'Minimal player — lives in the rail', badge: 'New' },
-  { year: '2026', title: 'Liquid Glass', date: '11/04', note: 'SVG displacement glass, no WebGL', href: '/liquid-glass/' },
+  { year: '2026', title: 'Liquid Glass', date: '13/04', note: 'SVG displacement glass, no WebGL', href: '/liquid-glass/', badge: 'New' },
+  { year: '2026', title: 'iPod', date: '24/03', note: 'Minimal player — lives in the rail' },
 ]
 
 export function V2Lab({ onClose }: { onClose: () => void }) {
