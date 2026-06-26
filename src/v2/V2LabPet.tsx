@@ -91,6 +91,38 @@ const thoughtFor = (p: Pet) => {
   return pool[Math.floor(Math.random() * pool.length)]
 }
 
+// Faithful pixel-art reconstruction of the hatch octopus (tan dome, gold crown,
+// dark eyes w/ highlights, checkered tan/cream tentacles). Vector so it stays
+// crisp; parts animate via CSS. (Original sprite sheets were lost.)
+function Octo() {
+  const T = '#d9b38a', t = '#c2925f', C = '#f3e7d1', F = '#b07d49'
+  const E = '#1c1c1c', H = '#a9c9d4', G = '#f3c12e', R = '#d63b3b', W = '#ffffff'
+  const px = (c: number, r: number, w: number, h: number, f: string, k: string) =>
+    <rect key={k} x={c * 4} y={r * 4} width={w * 4} height={h * 4} fill={f} />
+  const tent: React.ReactNode[] = []
+  for (let r = 9; r <= 11; r++) for (let c = 2; c <= 13; c++) tent.push(px(c, r, 1, 1, (c + r) % 2 ? C : T, `t${c}-${r}`))
+  for (let c = 2; c <= 13; c += 2) tent.push(px(c, 12, 1, 1, F, `f${c}`))
+  return (
+    <svg className="octo-svg" viewBox="0 0 64 56" shapeRendering="crispEdges" aria-hidden="true">
+      {/* crown */}
+      {px(6, 0, 1, 1, G, 'cl')}{px(7, 0, 1, 1, R, 'cm')}{px(8, 0, 1, 1, G, 'cr')}
+      {px(5, 1, 6, 1, G, 'cb')}{px(7, 1, 1, 1, W, 'cw')}
+      {/* head */}
+      {px(4, 2, 8, 1, T, 'h0')}
+      {px(3, 3, 10, 1, T, 'h1')}
+      {px(2, 4, 12, 5, T, 'h2')}
+      {px(2, 4, 1, 5, t, 'hl')}{px(13, 4, 1, 5, t, 'hr')}
+      {/* eyes */}
+      {px(4, 5, 2, 2, E, 'el')}{px(4, 5, 1, 1, H, 'elh')}
+      {px(9, 5, 2, 2, E, 'er')}{px(9, 5, 1, 1, H, 'erh')}
+      {/* mouth */}
+      {px(7, 7, 2, 1, t, 'mo')}
+      {/* tentacles */}
+      {tent}
+    </svg>
+  )
+}
+
 const STATS: { key: keyof Pet; label: string; invert?: boolean }[] = [
   { key: 'hunger', label: 'Full', invert: true },
   { key: 'energy', label: 'Energy' },
@@ -201,7 +233,7 @@ export function V2LabPet({ onClose }: { onClose: () => void }) {
           {thought && <div className="pet-thought">{thought}</div>}
           {pet.isSleeping && <div className="pet-zzz">z z z</div>}
           <div className={cls}>
-            <img src="/pet/octopus.webp" alt="" draggable={false} />
+            <Octo />
           </div>
           <div className="pet-shadow" />
         </div>

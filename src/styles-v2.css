@@ -830,17 +830,16 @@ button.v2-lab-row { background: none; border: none; font: inherit; text-align: l
   background: rgba(0,0,0,0.14); filter: blur(3px);
 }
 .pet-octo { position: relative; z-index: 2; margin-bottom: 18px; animation: pet-bob 2.6s ease-in-out infinite; }
-.pet-octo img {
-  display: block; width: 104px; height: 104px;
-  image-rendering: pixelated;
+.pet-octo .octo-svg {
+  display: block; width: 112px; height: auto;
   transform-origin: 50% 100%;
 }
 .pet-octo.is-happy { animation: pet-bob 1.4s ease-in-out infinite; }
 .pet-octo.is-sleep { animation: pet-breathe 3.6s ease-in-out infinite; opacity: 0.85; }
-.pet-octo.is-sick img { filter: saturate(0.5) hue-rotate(55deg) brightness(0.95); }
-.pet-octo.react-feed img { animation: pet-squash 0.5s ease; }
-.pet-octo.react-play img { animation: pet-hop 0.6s cubic-bezier(0.34,1.56,0.64,1); }
-.pet-octo.react-pet img { animation: pet-wiggle 0.55s ease; }
+.pet-octo.is-sick .octo-svg { filter: saturate(0.55) hue-rotate(60deg) brightness(0.96); }
+.pet-octo.react-feed .octo-svg { animation: pet-squash 0.5s ease; }
+.pet-octo.react-play .octo-svg { animation: pet-hop 0.6s cubic-bezier(0.34,1.56,0.64,1); }
+.pet-octo.react-pet .octo-svg { animation: pet-wiggle 0.55s ease; }
 
 @keyframes pet-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-7px) } }
 @keyframes pet-breathe { 0%,100% { transform: scale(1) } 50% { transform: scale(1.03) } }
