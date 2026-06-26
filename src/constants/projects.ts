@@ -4,6 +4,7 @@ export interface ProjectSection {
   gallery: string[]
   layout?: 'grid' | 'squares' | 'squares-small' | 'landscape' | 'deck'  // grid = default columns, squares = 1:1 grid, squares-small = smaller 1:1, landscape = 2-col grid, deck = 3-col grid
   wideIndices?: number[]  // gallery item indices that span full row width
+  display?: 'grid' | 'index'  // v2 redesign: how the collection renders — visual grid vs editorial index. Defaults to grid.
 }
 
 export interface CaseStudyData {
@@ -56,6 +57,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
         title: 'Community & Events',
         description: 'Weekly branded content, event graphics, and community moments. From RadSpaces podcast posts to the first-ever Burn Event, co-working days, and vibecoding sessions.',
         layout: 'deck',
+        display: 'index',
         gallery: [
           // 2026
           '/content/radiants/community/ts.webp',               // Jan 2026
@@ -126,6 +128,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
         title: 'Monolith 2026',
         description: 'Full content campaign for Solana Mobile\'s flagship event. Announcement threads, FAQ graphics, social cards, and post-event recaps covering the workshops.',
         layout: 'landscape',
+        display: 'index',
         gallery: [
           '/content/monolith/announcement-1.webp',
           '/content/monolith/announcement-3.webp',
@@ -149,6 +152,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
         title: 'Seeker Hackathon',
         description: 'Ran the entire content campaign graphics — stayed in the audience\'s feed and mind throughout. Prize announcements, FAQ threads, countdowns, milestone celebrations, and sponsor shoutouts. 500+ signups.',
         layout: 'squares',
+        display: 'index',
         gallery: [
           '/content/seeker/prize.webp',
           '/content/seeker/faq-1.webp',
