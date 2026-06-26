@@ -668,11 +668,6 @@
 .v2-lab-row.is-link:hover { padding-left: 10px; }
 .v2-lab-row:not(.is-link) .v2-lab-title { color: #6a6a6a; }
 
-.v2-lab-foot {
-  margin-top: 40px; font-size: 12px; letter-spacing: 0.02em; color: #b0b0b0;
-}
-.v2-lab-sleepy { color: #cfcfcf; }
-
 /* ============================================
    MUSIC — minimal inline player (lives in the rail, next to the loader)
    ============================================ */

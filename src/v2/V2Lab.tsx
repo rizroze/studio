@@ -56,10 +56,6 @@ export function V2Lab({ onClose }: { onClose: () => void }) {
             )
           })}
         </div>
-
-        <div className="v2-lab-foot">
-          Istanbul, Türkiye <span className="v2-lab-sleepy">{'(-_-) zZ'}</span>
-        </div>
       </div>
     </div>,
     document.body,
