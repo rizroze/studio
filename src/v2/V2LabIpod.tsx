@@ -4,8 +4,9 @@ import { PLAYLIST } from '../constants/music'
 
 const DEVICE_W = 196
 const DEVICE_H = 326
-const K = 0.05                  // spring stiffness toward rest
+const K = 0.05                  // spring stiffness toward rest (per 60fps-frame)
 const DAMP = 0.9                // velocity damping (swing decay)
+const MAXV = 20                 // speed cap (px per 60fps-frame) — drop reads as a fall
 
 // A draggable iPod hanging from a springy cable. Fling it and it swings and
 // settles; the cable sags when slack and pulls taut when stretched.
@@ -58,19 +59,33 @@ export function V2LabIpod({ onClose }: { onClose: () => void }) {
       restLen.current = Math.hypot(rest.current.x - anchor.current.x, restTopY - anchor.current.y) * 1.3
     }
     setAnchor()
-    pos.current = { ...rest.current }
+    // start up at the hook and let the spring drop it into the bottom-right —
+    // it falls in and swings to a settle on the cable
+    pos.current = { x: anchor.current.x, y: anchor.current.y + 12 }
     vel.current = { x: 0, y: 0 }
     window.addEventListener('resize', setAnchor)
 
     let raf = 0
-    const tick = () => {
+    let last = 0
+    const tick = (now: number) => {
+      // delta-time in 60fps-frame units, so the fall/swing is the same speed
+      // on 60Hz and 120Hz displays (was twice as fast — looked instant — on 120Hz)
+      if (!last) last = now
+      let dt = (now - last) / 16.667
+      last = now
+      if (dt > 3) dt = 3
       const d = dragRef.current
       if (!d) {
-        // spring toward rest + damping → swingy settle
-        vel.current.x = (vel.current.x + (rest.current.x - pos.current.x) * K) * DAMP
-        vel.current.y = (vel.current.y + (rest.current.y - pos.current.y) * K) * DAMP
-        pos.current.x += vel.current.x
-        pos.current.y += vel.current.y
+        // spring toward rest + damping → swingy settle (integrated with dt)
+        vel.current.x += (rest.current.x - pos.current.x) * K * dt
+        vel.current.y += (rest.current.y - pos.current.y) * K * dt
+        vel.current.x *= Math.pow(DAMP, dt)
+        vel.current.y *= Math.pow(DAMP, dt)
+        // cap speed so the entrance drop reads as a fall, not an instant snap
+        const sp = Math.hypot(vel.current.x, vel.current.y)
+        if (sp > MAXV) { vel.current.x = vel.current.x / sp * MAXV; vel.current.y = vel.current.y / sp * MAXV }
+        pos.current.x += vel.current.x * dt
+        pos.current.y += vel.current.y * dt
       }
       const dev = deviceRef.current
       if (dev) dev.style.transform = `translate3d(${pos.current.x - DEVICE_W / 2}px, ${pos.current.y - DEVICE_H / 2}px, 0)`

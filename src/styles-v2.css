@@ -766,10 +766,16 @@ button.v2-lab-row { background: none; border: none; font: inherit; text-align: l
 .lab-glass-slab {
   position: absolute; top: 0; left: 0;
   pointer-events: auto; cursor: grab; touch-action: none;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* demo-accurate refraction, but with visible edges for our light page:
+     brighter rim, an inset highlight, and a soft drop shadow */
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 1px 1px rgba(255, 255, 255, 0.6) inset, 0 12px 36px rgba(0, 0, 0, 0.18);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.lab-glass-slab:hover { border-color: rgba(255, 255, 255, 0.35); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+.lab-glass-slab:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 1px 1px rgba(255, 255, 255, 0.6) inset, 0 16px 46px rgba(0, 0, 0, 0.26);
+}
 .lab-glass-slab:active { cursor: grabbing; }
 .lab-glass-slab.has-displace {
   -webkit-backdrop-filter: url(#lab-glass-displacement) saturate(1);
