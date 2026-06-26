@@ -131,8 +131,8 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
       </div>
 
       <div className="v2-index-preview-col">
-        <div className="v2-index-preview">
-          <img src={med(section.gallery[active])} alt="" decoding="async" />
+        <div className="v2-index-preview" style={{ backgroundImage: `url("${med(section.gallery[active])}")` }}>
+          <img src={section.gallery[active]} alt="" decoding="async" />
         </div>
         <div className="v2-index-caption">{fileName(section.gallery[active])}</div>
       </div>

@@ -472,9 +472,13 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  background: var(--v2-hover);
   max-height: 84vh;
   overflow: hidden;
+  /* the med variant shows instantly as a backdrop while the full-res <img>
+     loads sharply on top — no gray box, no lag, no soft preview */
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: left top;
 }
 .v2-index-preview img {
   max-width: 100%;

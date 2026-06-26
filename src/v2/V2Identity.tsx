@@ -86,12 +86,11 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
         <div className="v2-rail-links">
           <button className="v2-rail-link" onClick={onOpenReferences}>References</button>
           <button className="v2-rail-link" onClick={onOpenLab}>
-            <svg className="v2-lab-icon" viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M6.4 2.2v8.2a1.6 1.6 0 0 0 3.2 0V2.2" />
-              <path d="M5.6 2.2h4.8" />
-              <path d="M6.4 7.4h3.2" />
-            </svg>
             Lab
+            <svg className="v2-lab-icon" viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M6.7 2.3h2.6L9.1 5.4l3.2 6.8H3.7l3.2-6.8z" />
+              <path d="M5.1 10h5.8" />
+            </svg>
           </button>
         </div>
       </div>
