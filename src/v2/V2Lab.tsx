@@ -6,14 +6,15 @@ interface LabItem {
   title: string
   date: string        // DD/MM
   note?: string
-  href?: string       // present = opens; absent = lives in the rail / not a page
+  href?: string       // present = opens a page
+  action?: 'music'    // present = triggers an in-app action instead of navigating
   badge?: string      // e.g. 'New'
 }
 
 // The lab — experiments and design toys. Newest first; grouped by year.
 const LAB: LabItem[] = [
   { year: '2026', title: 'Liquid Glass', date: '13/04', note: 'SVG displacement glass, no WebGL', href: '/liquid-glass/', badge: 'New' },
-  { year: '2026', title: 'iPod', date: '24/03', note: 'Minimal player — lives in the rail' },
+  { year: '2026', title: 'iPod', date: '24/03', note: 'Minimal player — press to play', action: 'music' },
 ]
 
 export function V2Lab({ onClose }: { onClose: () => void }) {
@@ -49,11 +50,21 @@ export function V2Lab({ onClose }: { onClose: () => void }) {
                 <span className="v2-lab-date">{it.date}</span>
               </>
             )
-            return it.href ? (
-              <a key={it.title} className="v2-lab-row is-link" href={it.href}>{inner}</a>
-            ) : (
-              <div key={it.title} className="v2-lab-row">{inner}</div>
-            )
+            if (it.href) {
+              return <a key={it.title} className="v2-lab-row is-link" href={it.href}>{inner}</a>
+            }
+            if (it.action === 'music') {
+              return (
+                <button
+                  key={it.title}
+                  className="v2-lab-row is-link"
+                  onClick={() => { window.dispatchEvent(new Event('v2-music-play')); onClose() }}
+                >
+                  {inner}
+                </button>
+              )
+            }
+            return <div key={it.title} className="v2-lab-row">{inner}</div>
           })}
         </div>
       </div>

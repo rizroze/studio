@@ -667,6 +667,8 @@
 .v2-lab-row.is-link { transition: padding-left 0.3s cubic-bezier(0.22, 1, 0.36, 1); cursor: pointer; }
 .v2-lab-row.is-link:hover { padding-left: 10px; }
 .v2-lab-row:not(.is-link) .v2-lab-title { color: #6a6a6a; }
+/* portaled outside #v2-root, so reset native button styling here */
+button.v2-lab-row { background: none; border: none; font: inherit; text-align: left; width: 100%; }
 
 /* ============================================
    MUSIC — minimal inline player (lives in the rail, next to the loader)
