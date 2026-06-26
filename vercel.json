@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/work", "destination": "/", "permanent": true },
+    { "source": "/work/:slug*", "destination": "/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/discovery", "destination": "/discovery/index.html" },
