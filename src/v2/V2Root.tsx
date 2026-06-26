@@ -31,24 +31,28 @@ function buildPath(v: V2View): string {
   return v.view === 'discipline' ? `/${v.id}` : '/'
 }
 
+// the Lab is its own URL: /lab (and legacy /?lab from older links)
+function isLabPath(): boolean {
+  return window.location.pathname === '/lab' || new URLSearchParams(window.location.search).has('lab')
+}
+
 export function V2Root() {
   const [state, setState] = useState<V2View>(() => parsePath())
   const [lightbox, setLightbox] = useState<Lightbox>(null)
   const [references, setReferences] = useState(false)
-  // open straight into the Lab when returning from a lab page (e.g. /?lab from liquid-glass)
-  const [lab, setLab] = useState(() => new URLSearchParams(window.location.search).has('lab'))
+  const [lab, setLab] = useState(() => isLabPath())
   const [labToy, setLabToy] = useState<Toy | null>(null)
   const [activeBlock, setActiveBlock] = useState(0)
 
-  // drop the ?lab flag from the URL once consumed
+  // canonicalize the legacy /?lab to /lab
   useEffect(() => {
     if (new URLSearchParams(window.location.search).has('lab')) {
-      window.history.replaceState(null, '', window.location.pathname)
+      window.history.replaceState(null, '', '/lab')
     }
   }, [])
 
   useEffect(() => {
-    const onPop = () => setState(parsePath())
+    const onPop = () => { setState(parsePath()); setLab(isLabPath()) }
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [])
@@ -56,9 +60,16 @@ export function V2Root() {
   const navigate = useCallback((next: V2View) => {
     window.history.pushState(null, '', buildPath(next))
     setState(next)
+    setLab(false)
     setActiveBlock(0)
     document.querySelector('.v2-main')?.scrollTo({ top: 0 })
   }, [])
+
+  const openLab = useCallback(() => { window.history.pushState(null, '', '/lab'); setLab(true) }, [])
+  const closeLab = useCallback(() => {
+    window.history.pushState(null, '', buildPath(state))
+    setLab(false)
+  }, [state])
 
   // scroll-spy: highlight the block currently under the top of the content pane
   useEffect(() => {
@@ -119,7 +130,7 @@ export function V2Root() {
       <V2Identity
         onHome={goHome}
         onOpenReferences={() => setReferences(true)}
-        onOpenLab={() => setLab(true)}
+        onOpenLab={openLab}
         nav={nav}
         navTitle={discipline?.label}
         activeNav={activeBlock}
@@ -146,7 +157,7 @@ export function V2Root() {
       )}
 
       {references && <V2References onClose={() => setReferences(false)} />}
-      {lab && <V2Lab onClose={() => setLab(false)} onSpawn={(toy) => { setLabToy(toy); setLab(false) }} />}
+      {lab && <V2Lab onClose={closeLab} onSpawn={(toy) => { setLabToy(toy); closeLab() }} />}
       {labToy === 'ipod' && <V2LabIpod onClose={() => setLabToy(null)} />}
       {labToy === 'glass' && <V2LabGlass onClose={() => setLabToy(null)} />}
       {labToy === 'pet' && <V2LabPet onClose={() => setLabToy(null)} />}
