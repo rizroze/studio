@@ -671,6 +671,119 @@
 button.v2-lab-row { background: none; border: none; font: inherit; text-align: left; width: 100%; }
 
 /* ============================================
+   LAB TOYS — draggable widgets floating over the site (portaled to body)
+   ============================================ */
+.lab-layer {
+  position: fixed; inset: 0; z-index: 1100;
+  pointer-events: none;   /* the site behind stays scrollable; only toys catch input */
+  font-family: 'Fragment Mono', ui-monospace, 'SF Mono', monospace;
+}
+.lab-dismiss {
+  position: fixed; top: 26px; right: 30px;
+  pointer-events: auto; cursor: pointer;
+  background: none; border: none;
+  font: inherit; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
+  color: #0a0a0a;
+}
+
+.lab-cable { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.lab-cable-line { stroke: #2b2b2b; stroke-width: 3; stroke-linecap: round; }
+.lab-cable-pin { fill: #2b2b2b; }
+
+/* classic skeuomorphic iPod */
+.lab-ipod {
+  position: absolute; top: 0; left: 0;
+  pointer-events: auto; cursor: grab;
+  border-radius: 20px;
+  padding: 16px 16px 0;
+  background: linear-gradient(155deg, #fdfdfd 0%, #e9e9ec 55%, #d6d6db 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.9) inset,
+    0 26px 50px rgba(0,0,0,0.28),
+    0 4px 12px rgba(0,0,0,0.18);
+  border: 1px solid rgba(0,0,0,0.08);
+  touch-action: none;
+  user-select: none;
+}
+.lab-ipod:active { cursor: grabbing; }
+
+.lab-ipod-screen {
+  background: #0c0c0e; border-radius: 7px; overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5) inset;
+  aspect-ratio: 4 / 3;
+  display: flex; flex-direction: column;
+}
+.lab-ipod-cover { width: 100%; flex: 1; object-fit: cover; min-height: 0; }
+.lab-ipod-meta {
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 7px 9px 9px; background: #0c0c0e;
+}
+.lab-ipod-title { font-size: 11px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lab-ipod-artist { font-size: 10px; color: #8b8b90; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.lab-ipod-wheel {
+  position: relative;
+  width: 132px; height: 132px; margin: 18px auto 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, #f4f4f6, #dcdce1);
+  box-shadow: 0 1px 2px rgba(255,255,255,0.8) inset, 0 2px 5px rgba(0,0,0,0.18);
+}
+.lab-wheel-btn {
+  position: absolute; background: none; border: none; cursor: pointer;
+  color: #6b6b70; font-size: 12px; letter-spacing: 0.05em;
+  transition: color 0.15s ease;
+}
+.lab-wheel-btn:hover { color: #1a1a1a; }
+.lab-wheel-menu { top: 9px; left: 50%; transform: translateX(-50%); font-size: 9px; }
+.lab-wheel-prev { left: 11px; top: 50%; transform: translateY(-50%); }
+.lab-wheel-next { right: 11px; top: 50%; transform: translateY(-50%); }
+.lab-wheel-center {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer;
+  background: radial-gradient(circle at 50% 40%, #ffffff, #e6e6ea);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.22), 0 1px 0 rgba(255,255,255,0.9) inset;
+  color: #4a4a4f; font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.lab-wheel-center:hover { color: #cf2222; }
+
+/* draggable liquid-glass slab — refracts the page behind it */
+.lab-glass-slab {
+  position: absolute; top: 0; left: 0;
+  pointer-events: auto; cursor: grab; touch-action: none;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 1px 1px rgba(255, 255, 255, 0.7) inset, 0 10px 34px rgba(0, 0, 0, 0.16);
+}
+.lab-glass-slab:active { cursor: grabbing; }
+.lab-glass-slab.has-displace {
+  -webkit-backdrop-filter: url(#lab-glass-displacement) blur(1px) saturate(1.5);
+  backdrop-filter: url(#lab-glass-displacement) blur(1px) saturate(1.5);
+}
+.lab-glass-slab:not(.has-displace) {
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  backdrop-filter: blur(10px) saturate(1.4);
+}
+
+.lab-glass-config {
+  position: fixed; left: 30px; bottom: 30px; pointer-events: auto;
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 16px 18px; border-radius: 12px;
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  font-family: 'Fragment Mono', ui-monospace, monospace; font-size: 11px; color: #0a0a0a;
+}
+.lab-glass-title { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #8a8a8a; margin-bottom: 2px; }
+.lab-glass-config label {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  letter-spacing: 0.04em; text-transform: uppercase; color: #6a6a6a;
+}
+.lab-glass-config input[type='range'] { width: 132px; accent-color: #cf2222; }
+.lab-glass-note { font-size: 10px; color: #cf2222; max-width: 210px; text-transform: none; }
+
+/* ============================================
    MUSIC — minimal inline player (lives in the rail, next to the loader)
    ============================================ */
 .v2-rail-aux {

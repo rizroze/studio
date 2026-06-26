@@ -25,13 +25,6 @@ export function V2Music() {
     return () => a.removeEventListener('ended', onEnded)
   }, [])
 
-  // let other parts of the app (e.g. the Lab index) open + start the player
-  useEffect(() => {
-    const onPlay = () => { setOpen(true); setPlaying(true) }
-    window.addEventListener('v2-music-play', onPlay)
-    return () => window.removeEventListener('v2-music-play', onPlay)
-  }, [])
-
   const toggle = useCallback(() => setPlaying(p => !p), [])
   const next = useCallback(() => { setTrack(t => (t + 1) % PLAYLIST.length); setPlaying(true) }, [])
   const prev = useCallback(() => { setTrack(t => (t - 1 + PLAYLIST.length) % PLAYLIST.length); setPlaying(true) }, [])

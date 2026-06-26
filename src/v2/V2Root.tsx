@@ -6,7 +6,11 @@ import { V2Discipline } from './V2Discipline'
 import { V2Lightbox } from './V2Lightbox'
 import { V2References } from './V2References'
 import { V2Lab } from './V2Lab'
+import { V2LabIpod } from './V2LabIpod'
+import { V2LabGlass } from './V2LabGlass'
 import '../styles-v2.css'
+
+type Toy = 'ipod' | 'glass'
 
 type V2View =
   | { view: 'home' }
@@ -32,6 +36,7 @@ export function V2Root() {
   const [references, setReferences] = useState(false)
   // open straight into the Lab when returning from a lab page (e.g. /?lab from liquid-glass)
   const [lab, setLab] = useState(() => new URLSearchParams(window.location.search).has('lab'))
+  const [labToy, setLabToy] = useState<Toy | null>(null)
   const [activeBlock, setActiveBlock] = useState(0)
 
   // drop the ?lab flag from the URL once consumed
@@ -140,7 +145,9 @@ export function V2Root() {
       )}
 
       {references && <V2References onClose={() => setReferences(false)} />}
-      {lab && <V2Lab onClose={() => setLab(false)} />}
+      {lab && <V2Lab onClose={() => setLab(false)} onSpawn={(toy) => { setLabToy(toy); setLab(false) }} />}
+      {labToy === 'ipod' && <V2LabIpod onClose={() => setLabToy(null)} />}
+      {labToy === 'glass' && <V2LabGlass onClose={() => setLabToy(null)} />}
     </div>
   )
 }

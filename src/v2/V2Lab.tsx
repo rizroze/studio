@@ -1,23 +1,24 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 
+type Toy = 'ipod' | 'glass'
+
 interface LabItem {
   year: string
   title: string
   date: string        // DD/MM
   note?: string
-  href?: string       // present = opens a page
-  action?: 'music'    // present = triggers an in-app action instead of navigating
+  spawn?: Toy         // present = spawns an interactive toy over the page
   badge?: string      // e.g. 'New'
 }
 
 // The lab — experiments and design toys. Newest first; grouped by year.
 const LAB: LabItem[] = [
-  { year: '2026', title: 'Liquid Glass', date: '13/04', note: 'SVG displacement glass, no WebGL', href: '/liquid-glass/', badge: 'New' },
-  { year: '2026', title: 'iPod', date: '24/03', note: 'Minimal player — press to play', action: 'music' },
+  { year: '2026', title: 'Liquid Glass', date: '13/04', note: 'Displacement glass — drag it over the page', spawn: 'glass', badge: 'New' },
+  { year: '2026', title: 'iPod', date: '24/03', note: 'Grab it, fling it, press play', spawn: 'ipod' },
 ]
 
-export function V2Lab({ onClose }: { onClose: () => void }) {
+export function V2Lab({ onClose, onSpawn }: { onClose: () => void; onSpawn: (toy: Toy) => void }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKey)
@@ -50,16 +51,10 @@ export function V2Lab({ onClose }: { onClose: () => void }) {
                 <span className="v2-lab-date">{it.date}</span>
               </>
             )
-            if (it.href) {
-              return <a key={it.title} className="v2-lab-row is-link" href={it.href}>{inner}</a>
-            }
-            if (it.action === 'music') {
+            if (it.spawn) {
+              const toy = it.spawn
               return (
-                <button
-                  key={it.title}
-                  className="v2-lab-row is-link"
-                  onClick={() => { window.dispatchEvent(new Event('v2-music-play')); onClose() }}
-                >
+                <button key={it.title} className="v2-lab-row is-link" onClick={() => onSpawn(toy)}>
                   {inner}
                 </button>
               )

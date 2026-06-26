@@ -1,0 +1,153 @@
+import { useRef, useEffect, useState, useCallback } from 'react'
+import { createPortal } from 'react-dom'
+import { PLAYLIST } from '../constants/music'
+
+const DEVICE_W = 196
+const DEVICE_H = 326
+const REST_DROP = 300          // how far the iPod hangs below the anchor at rest
+const K = 0.055                 // spring stiffness toward rest
+const DAMP = 0.9                // velocity damping (swing decay)
+const REST_LEN = REST_DROP      // cable natural length
+
+// A draggable iPod hanging from a springy cable. Fling it and it swings and
+// settles; the cable sags when slack and pulls taut when stretched.
+export function V2LabIpod({ onClose }: { onClose: () => void }) {
+  const [track, setTrack] = useState(0)
+  const [playing, setPlaying] = useState(true)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const deviceRef = useRef<HTMLDivElement>(null)
+  const cableRef = useRef<SVGPathElement>(null)
+
+  // physics (in refs — the rAF loop writes the DOM directly, no re-render)
+  const anchor = useRef({ x: 0, y: 0 })
+  const pos = useRef({ x: 0, y: 0 })        // device center
+  const vel = useRef({ x: 0, y: 0 })
+  const rest = useRef({ x: 0, y: 0 })
+  const dragRef = useRef<{ ox: number; oy: number; px: number; py: number } | null>(null)
+
+  // audio — same engine as the rail player
+  useEffect(() => {
+    if (!audioRef.current) audioRef.current = new Audio()
+    const a = audioRef.current
+    if (a.src !== window.location.origin + encodeURI(PLAYLIST[track].src)) a.src = PLAYLIST[track].src
+    if (playing) a.play().catch(() => setPlaying(false))
+    else a.pause()
+  }, [track, playing])
+
+  useEffect(() => {
+    const a = audioRef.current
+    return () => { a?.pause() }
+  }, [])
+
+  useEffect(() => {
+    const a = audioRef.current
+    if (!a) return
+    const onEnded = () => setTrack(t => (t + 1) % PLAYLIST.length)
+    a.addEventListener('ended', onEnded)
+    return () => a.removeEventListener('ended', onEnded)
+  }, [])
+
+  // set up anchor/rest from viewport and run the physics loop
+  useEffect(() => {
+    const setAnchor = () => {
+      anchor.current = { x: window.innerWidth * 0.62, y: 24 }
+      rest.current = { x: anchor.current.x, y: anchor.current.y + REST_DROP }
+    }
+    setAnchor()
+    pos.current = { ...rest.current }
+    vel.current = { x: 0, y: 0 }
+    window.addEventListener('resize', setAnchor)
+
+    let raf = 0
+    const tick = () => {
+      const d = dragRef.current
+      if (!d) {
+        // spring toward rest + damping → swingy settle
+        vel.current.x = (vel.current.x + (rest.current.x - pos.current.x) * K) * DAMP
+        vel.current.y = (vel.current.y + (rest.current.y - pos.current.y) * K) * DAMP
+        pos.current.x += vel.current.x
+        pos.current.y += vel.current.y
+      }
+      const dev = deviceRef.current
+      if (dev) dev.style.transform = `translate3d(${pos.current.x - DEVICE_W / 2}px, ${pos.current.y - DEVICE_H / 2}px, 0)`
+
+      // cable: anchor → top of device, sagging when slack
+      const bx = pos.current.x
+      const by = pos.current.y - DEVICE_H / 2 + 6
+      const dist = Math.hypot(bx - anchor.current.x, by - anchor.current.y)
+      const sag = Math.max(0, REST_LEN - dist) * 0.5 + 10
+      const mx = (anchor.current.x + bx) / 2
+      const my = (anchor.current.y + by) / 2 + sag
+      cableRef.current?.setAttribute('d', `M ${anchor.current.x} ${anchor.current.y} Q ${mx} ${my} ${bx} ${by}`)
+
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', setAnchor) }
+  }, [])
+
+  // drag the device body
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    e.preventDefault()
+    ;(e.target as HTMLElement).setPointerCapture?.(e.pointerId)
+    dragRef.current = { ox: e.clientX - pos.current.x, oy: e.clientY - pos.current.y, px: e.clientX, py: e.clientY }
+  }, [])
+
+  const onPointerMove = useCallback((e: React.PointerEvent) => {
+    const d = dragRef.current
+    if (!d) return
+    pos.current.x = e.clientX - d.ox
+    pos.current.y = e.clientY - d.oy
+    vel.current.x = e.clientX - d.px
+    vel.current.y = e.clientY - d.py
+    d.px = e.clientX
+    d.py = e.clientY
+  }, [])
+
+  const onPointerUp = useCallback(() => { dragRef.current = null }, [])
+
+  const t = PLAYLIST[track]
+  const toggle = () => setPlaying(p => !p)
+  const next = () => { setTrack(t => (t + 1) % PLAYLIST.length); setPlaying(true) }
+  const prev = () => { setTrack(t => (t - 1 + PLAYLIST.length) % PLAYLIST.length); setPlaying(true) }
+  const stop = (e: React.PointerEvent) => e.stopPropagation()
+
+  return createPortal(
+    <div className="lab-layer">
+      <button className="lab-dismiss" onClick={onClose} aria-label="Close lab">Close ✕</button>
+
+      <svg className="lab-cable" width="100%" height="100%">
+        <circle className="lab-cable-pin" r="5" cx={anchor.current.x} cy={anchor.current.y} />
+        <path ref={cableRef} className="lab-cable-line" fill="none" />
+      </svg>
+
+      <div
+        ref={deviceRef}
+        className={`lab-ipod ${playing ? 'playing' : ''}`}
+        style={{ width: DEVICE_W, height: DEVICE_H }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+      >
+        <div className="lab-ipod-screen">
+          <img className="lab-ipod-cover" src={t.cover} alt="" draggable={false} />
+          <div className="lab-ipod-meta">
+            <span className="lab-ipod-title">{t.title}</span>
+            <span className="lab-ipod-artist">{t.artist}</span>
+          </div>
+        </div>
+
+        <div className="lab-ipod-wheel" onPointerDown={stop}>
+          <button className="lab-wheel-btn lab-wheel-prev" onClick={prev} aria-label="Previous">⏮</button>
+          <button className="lab-wheel-btn lab-wheel-next" onClick={next} aria-label="Next">⏭</button>
+          <button className="lab-wheel-btn lab-wheel-menu" aria-label="Menu" onClick={onClose}>MENU</button>
+          <button className="lab-wheel-center" onClick={toggle} aria-label={playing ? 'Pause' : 'Play'}>
+            {playing ? '❚❚' : '▶'}
+          </button>
+        </div>
+      </div>
+    </div>,
+    document.body,
+  )
+}
