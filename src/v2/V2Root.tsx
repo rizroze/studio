@@ -63,7 +63,10 @@ export function V2Root() {
     const update = () => {
       ticking = false
       const blocks = Array.from(main.querySelectorAll('[id^="block-"]')) as HTMLElement[]
-      const line = main.getBoundingClientRect().top + 140
+      // trigger line at ~38% of the viewport (resolution-independent) — a section
+      // activates as its heading reaches the upper-third, not once it's scrolled
+      // almost to the very top (which felt late on tall screens)
+      const line = window.innerHeight * 0.38
       let active = 0
       blocks.forEach((b, i) => {
         if (b.getBoundingClientRect().top <= line) active = i
