@@ -3,3 +3,16 @@ dist/
 .DS_Store
 .vercel
 .env*
+tsconfig.tsbuildinfo
+
+# personal / source / scratch — never commit to this public repo
+*resume*
+phantom-*
+Studio-Works-src/
+templates/
+Icon?
+folder-icon.*
+/ogthumb.png
+measure_*.html
+Frame *.png
+Frame *.svg
