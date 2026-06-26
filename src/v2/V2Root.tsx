@@ -30,8 +30,16 @@ export function V2Root() {
   const [state, setState] = useState<V2View>(() => parsePath())
   const [lightbox, setLightbox] = useState<Lightbox>(null)
   const [references, setReferences] = useState(false)
-  const [lab, setLab] = useState(false)
+  // open straight into the Lab when returning from a lab page (e.g. /?lab from liquid-glass)
+  const [lab, setLab] = useState(() => new URLSearchParams(window.location.search).has('lab'))
   const [activeBlock, setActiveBlock] = useState(0)
+
+  // drop the ?lab flag from the URL once consumed
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).has('lab')) {
+      window.history.replaceState(null, '', window.location.pathname)
+    }
+  }, [])
 
   useEffect(() => {
     const onPop = () => setState(parsePath())
