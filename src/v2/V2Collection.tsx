@@ -98,6 +98,12 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
     }
   }, [isMobile, section.gallery.length])
 
+  // preload the medium preview images so hovering a row is instant (no decode lag)
+  useEffect(() => {
+    if (isMobile) return
+    section.gallery.forEach(src => { new Image().src = med(src) })
+  }, [isMobile, section.gallery])
+
   // on mobile the side-preview can't hover — show the work directly as an image grid
   if (isMobile) {
     return <V2Bento gallery={section.gallery} cols={4} onOpenImage={onOpenImage} />
@@ -105,14 +111,17 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
 
   return (
     <div className="v2-index-layout">
-      <div className={`v2-index ${hovered !== null ? 'has-hover' : ''}`} ref={listRef}>
+      <div
+        className={`v2-index ${hovered !== null ? 'has-hover' : ''}`}
+        ref={listRef}
+        onMouseLeave={() => setHovered(null)}
+      >
         {section.gallery.map((src, i) => (
           <button
             key={src}
             className={`v2-index-row ${active === i ? 'active' : ''}`}
             data-lbsrc={src}
             onMouseEnter={() => setHovered(i)}
-            onMouseLeave={() => setHovered(null)}
             onClick={() => onOpenImage(section.gallery, i)}
           >
             <span className="v2-index-num">{String(i + 1).padStart(3, '0')}</span>
@@ -123,7 +132,7 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
 
       <div className="v2-index-preview-col">
         <div className="v2-index-preview">
-          <img src={section.gallery[active]} alt="" />
+          <img src={med(section.gallery[active])} alt="" decoding="async" />
         </div>
         <div className="v2-index-caption">{fileName(section.gallery[active])}</div>
       </div>

@@ -191,6 +191,9 @@
   gap: 16px;
 }
 .v2-rail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-family: var(--v2-mono);
   font-size: 10.5px;
   letter-spacing: 0.04em;
@@ -200,6 +203,7 @@
   transition: color 0.2s ease;
 }
 .v2-rail-link:hover { color: var(--v2-ink); }
+.v2-lab-icon { flex: none; margin-top: -1px; }
 
 .v2-rail-open {
   font-family: var(--v2-mono);
