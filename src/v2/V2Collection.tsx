@@ -40,6 +40,7 @@ function RatioGrid({ section, onOpenImage }: V2CollectionProps) {
           <button
             key={src}
             className="v2-grid-item"
+            data-lbsrc={src}
             onClick={() => onOpenImage(section.gallery, i)}
           >
             <img
@@ -77,6 +78,7 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
           <button
             key={src}
             className={`v2-index-row ${active === i ? 'active' : ''}`}
+            data-lbsrc={src}
             onMouseEnter={() => setHovered(i)}
             onMouseLeave={() => setHovered(null)}
             onClick={() => onOpenImage(section.gallery, i)}

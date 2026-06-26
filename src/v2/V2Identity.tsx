@@ -9,13 +9,14 @@ interface V2NavItem {
 interface V2IdentityProps {
   onHome: () => void
   onOpenReferences: () => void
+  onOpenLab: () => void
   nav?: V2NavItem[]
   navTitle?: string
   activeNav?: number
   onJump?: (index: number) => void
 }
 
-export function V2Identity({ onHome, onOpenReferences, nav, navTitle, activeNav = 0, onJump }: V2IdentityProps) {
+export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle, activeNav = 0, onJump }: V2IdentityProps) {
   return (
     <aside className="v2-rail">
       <div className="v2-rail-top">
@@ -84,7 +85,7 @@ export function V2Identity({ onHome, onOpenReferences, nav, navTitle, activeNav 
         </div>
         <div className="v2-rail-links">
           <button className="v2-rail-link" onClick={onOpenReferences}>References</button>
-          <a className="v2-rail-link" href="/liquid-glass/">Lab ↗</a>
+          <button className="v2-rail-link" onClick={onOpenLab}>Lab</button>
         </div>
       </div>
     </aside>

@@ -51,6 +51,7 @@ export function V2Bento({ gallery, cols = 4, onOpenImage }: V2BentoProps) {
         <button
           key={src}
           className={`v2-bento-item ${spanClass(src)}`}
+          data-lbsrc={src}
           onClick={() => onOpenImage(gallery, i)}
         >
           <img

@@ -547,15 +547,17 @@
    so it doesn't depend on the scoped CSS variables */
 .v2-lightbox {
   position: fixed; inset: 0; z-index: 1000;
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(8px);
+  /* sheer so the grid stays visible behind — the page scrolls to track the
+     active image, keeping you oriented within the collection */
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(2px);
   display: flex; align-items: center; justify-content: center;
   padding: 5vh 6vw;
   font-family: 'Fragment Mono', ui-monospace, 'SF Mono', monospace;
 }
 .v2-lightbox img {
   max-width: 100%; max-height: 90vh; object-fit: contain;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.28), 0 8px 24px rgba(0, 0, 0, 0.14);
 }
 .v2-lb-close, .v2-lb-counter, .v2-lb-nav {
   position: fixed;
@@ -610,6 +612,66 @@
 }
 .v2-ref-name:hover { color: #cf2222; }
 .v2-ref-role, .v2-ref-work { font-size: 11px; letter-spacing: 0.02em; color: #8a8a8a; }
+
+/* ============================================
+   LAB — experiments index (portaled to body, literal colors)
+   ============================================ */
+.v2-lab-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: flex-start; justify-content: center;
+  overflow-y: auto;
+  padding: 12vh 6vw;
+  font-family: 'Fragment Mono', ui-monospace, 'SF Mono', monospace;
+}
+.v2-lab-panel { width: 100%; max-width: 720px; }
+.v2-lab-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.v2-lab-label, .v2-lab-close {
+  font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #8a8a8a;
+}
+.v2-lab-close { background: none; border: none; cursor: pointer; transition: color 0.2s ease; }
+.v2-lab-close:hover { color: #0a0a0a; }
+
+.v2-lab-list { display: flex; flex-direction: column; }
+.v2-lab-row {
+  display: grid;
+  grid-template-columns: 84px 1fr auto;
+  align-items: baseline;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  color: inherit;
+}
+.v2-lab-year { font-size: 12px; color: #b0b0b0; }
+.v2-lab-mid { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; }
+.v2-lab-title {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(20px, 2.4vw, 26px); font-weight: 500;
+  letter-spacing: -0.02em; color: #0a0a0a;
+}
+.v2-lab-new {
+  font-size: 11px; letter-spacing: 0.02em; color: #cf2222;
+  border: 1px solid #cf2222; border-radius: 100px; padding: 2px 9px;
+  transform: translateY(-2px);
+}
+.v2-lab-note { font-size: 11px; letter-spacing: 0.02em; color: #9a9a9a; }
+.v2-lab-date { font-size: 13px; color: #b0b0b0; }
+
+/* links lift on hover; static rows (no page yet) stay muted */
+.v2-lab-row.is-link { transition: padding-left 0.3s cubic-bezier(0.22, 1, 0.36, 1); cursor: pointer; }
+.v2-lab-row.is-link:hover { padding-left: 10px; }
+.v2-lab-row:not(.is-link) .v2-lab-title { color: #6a6a6a; }
+
+.v2-lab-foot {
+  margin-top: 40px; font-size: 12px; letter-spacing: 0.02em; color: #b0b0b0;
+}
+.v2-lab-sleepy { color: #cfcfcf; }
 
 /* ============================================
    MUSIC — minimal inline player (lives in the rail, next to the loader)

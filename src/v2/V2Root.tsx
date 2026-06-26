@@ -5,6 +5,7 @@ import { V2Work } from './V2Work'
 import { V2Discipline } from './V2Discipline'
 import { V2Lightbox } from './V2Lightbox'
 import { V2References } from './V2References'
+import { V2Lab } from './V2Lab'
 import '../styles-v2.css'
 
 type V2View =
@@ -29,6 +30,7 @@ export function V2Root() {
   const [state, setState] = useState<V2View>(() => parsePath())
   const [lightbox, setLightbox] = useState<Lightbox>(null)
   const [references, setReferences] = useState(false)
+  const [lab, setLab] = useState(false)
   const [activeBlock, setActiveBlock] = useState(0)
 
   useEffect(() => {
@@ -100,6 +102,7 @@ export function V2Root() {
       <V2Identity
         onHome={goHome}
         onOpenReferences={() => setReferences(true)}
+        onOpenLab={() => setLab(true)}
         nav={nav}
         navTitle={discipline?.label}
         activeNav={activeBlock}
@@ -126,6 +129,7 @@ export function V2Root() {
       )}
 
       {references && <V2References onClose={() => setReferences(false)} />}
+      {lab && <V2Lab onClose={() => setLab(false)} />}
     </div>
   )
 }

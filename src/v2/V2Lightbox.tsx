@@ -27,6 +27,18 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose, prev, next])
 
+  // when the active image changes: preload neighbors (instant left/right) and
+  // scroll the page so the matching grid tile tracks the image — keeps you
+  // oriented within the page while the grid shows through the sheer backdrop
+  useEffect(() => {
+    for (const i of [index - 1, index + 1]) {
+      const img = new Image()
+      img.src = images[(i + images.length) % images.length]
+    }
+    const tile = document.querySelector(`[data-lbsrc="${CSS.escape(images[index])}"]`)
+    tile?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [index, images])
+
   return createPortal(
     <div className="v2-lightbox" onClick={onClose}>
       <button className="v2-lb-close" onClick={onClose}>Close ✕</button>
