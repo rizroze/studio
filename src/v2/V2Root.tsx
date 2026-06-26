@@ -4,6 +4,7 @@ import { V2Identity } from './V2Identity'
 import { V2Work } from './V2Work'
 import { V2Discipline } from './V2Discipline'
 import { V2Lightbox } from './V2Lightbox'
+import { V2References } from './V2References'
 import '../styles-v2.css'
 
 type V2View =
@@ -12,21 +13,22 @@ type V2View =
 
 type Lightbox = { images: string[]; index: number } | null
 
-// /v2 → home, /v2/<branchId> → discipline
+// / → home, /<branchId> → discipline
 function parsePath(): V2View {
-  const parts = window.location.pathname.split('/').filter(Boolean) // ['v2', id?]
-  const id = parts[1]
+  const parts = window.location.pathname.split('/').filter(Boolean) // [id?]
+  const id = parts[0]
   if (id && findDiscipline(id)) return { view: 'discipline', id }
   return { view: 'home' }
 }
 
 function buildPath(v: V2View): string {
-  return v.view === 'discipline' ? `/v2/${v.id}` : '/v2'
+  return v.view === 'discipline' ? `/${v.id}` : '/'
 }
 
 export function V2Root() {
   const [state, setState] = useState<V2View>(() => parsePath())
   const [lightbox, setLightbox] = useState<Lightbox>(null)
+  const [references, setReferences] = useState(false)
   const [activeBlock, setActiveBlock] = useState(0)
 
   useEffect(() => {
@@ -97,6 +99,7 @@ export function V2Root() {
     <div id="v2-root">
       <V2Identity
         onHome={goHome}
+        onOpenReferences={() => setReferences(true)}
         nav={nav}
         navTitle={discipline?.label}
         activeNav={activeBlock}
@@ -121,6 +124,8 @@ export function V2Root() {
           onNavigate={(index) => setLightbox(lb => (lb ? { ...lb, index } : lb))}
         />
       )}
+
+      {references && <V2References onClose={() => setReferences(false)} />}
     </div>
   )
 }
