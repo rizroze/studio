@@ -95,10 +95,21 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
     }
   }, [isMobile, section.gallery.length])
 
-  // preload the medium preview images so hovering a row is instant (no decode lag)
+  // Make hover previews instant AND sharp: preload the med immediately (cheap —
+  // it's the instant backdrop), then preload the full-res on idle so the sharp
+  // image is already cached by the time you hover. Desktop only; mobile uses the
+  // bento and shouldn't burn data on previews it never shows.
   useEffect(() => {
     if (isMobile) return
-    section.gallery.forEach(src => { new Image().src = med(src) })
+    const gallery = section.gallery
+    gallery.forEach(src => { new Image().src = med(src) })
+    const w = window as unknown as {
+      requestIdleCallback?: (cb: () => void) => number
+      cancelIdleCallback?: (id: number) => void
+    }
+    const run = () => gallery.forEach(src => { const im = new Image(); im.decoding = 'async'; im.src = src })
+    const id = w.requestIdleCallback ? w.requestIdleCallback(run) : window.setTimeout(run, 300)
+    return () => { if (w.cancelIdleCallback) w.cancelIdleCallback(id); else clearTimeout(id) }
   }, [isMobile, section.gallery])
 
   // on mobile the side-preview can't hover — show the work directly as an image grid
