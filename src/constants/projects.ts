@@ -139,7 +139,6 @@ export const CASE_STUDIES: CaseStudyData[] = [
           '/content/monolith/share-thumbnail.webp',
           '/content/monolith/content-1.webp',
           '/content/monolith/monolith-content-2.webp',
-          '/content/monolith/vibecoding-1.webp',
           '/content/monolith/monolith-vibecoding-2.webp',
           '/content/monolith/monolith-vibecoding-5.webp',
           '/content/monolith/workshop.webp',
