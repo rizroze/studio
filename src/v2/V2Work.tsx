@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { DISCIPLINES, disciplineMosaic, thumb } from './disciplines'
 import { V2Mosaic } from './V2Mosaic'
 import { useIsMobile } from './useMobile'
+import { HOMEPAGE_CLIENTS } from './clientLogos'
 
 interface V2WorkProps {
   onOpenDiscipline: (id: string) => void
@@ -56,6 +57,22 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
               <span className="v2-arrow">→</span>
             </button>
           ))}
+        </div>
+
+        <div className="v2-clients">
+          <span className="v2-clients-head">Worked with</span>
+          <div className="v2-clients-row">
+            {HOMEPAGE_CLIENTS.map((c) => (
+              <img
+                key={c.alt}
+                className={`v2-client-logo${c.invert ? ' invert' : ''}${c.wordmark ? ' wordmark' : ''}${c.smaller ? ' smaller' : ''}`}
+                src={c.src}
+                alt={c.alt}
+                title={c.alt}
+                loading="lazy"
+              />
+            ))}
+          </div>
         </div>
       </div>
 

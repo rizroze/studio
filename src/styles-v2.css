@@ -379,6 +379,47 @@
 .v2-arrow { opacity: 0; transform: translateX(-6px); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .v2-work-row:hover .v2-arrow { opacity: 1; transform: translateX(0); }
 
+/* homepage "worked with" strip — label left, client logos right (split row) */
+.v2-clients {
+  margin-top: clamp(28px, 4vw, 52px);
+  padding-top: 22px;
+  border-top: 1px solid var(--v2-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.v2-clients-head {
+  font-family: var(--v2-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--v2-faint);
+  white-space: nowrap;
+}
+.v2-clients-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 40px);
+  flex-wrap: wrap;
+}
+.v2-client-logo {
+  height: 13px; /* icon marks — sized to match the wordmark's cap-height */
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(1) opacity(0.5);
+  transition: filter 0.3s ease;
+}
+.v2-client-logo.wordmark { height: 22px; }
+.v2-client-logo.smaller { height: 11px; }
+.v2-client-logo.invert { filter: invert(1) grayscale(1) opacity(0.5); }
+/* dim the rest of the row while one is hovered — logos stay put, no lift */
+.v2-clients-row:hover .v2-client-logo { filter: grayscale(1) opacity(0.25); }
+.v2-clients-row:hover .v2-client-logo.invert { filter: invert(1) grayscale(1) opacity(0.25); }
+.v2-clients-row .v2-client-logo:hover { filter: grayscale(0) opacity(1); }
+.v2-clients-row .v2-client-logo.invert:hover { filter: invert(1) grayscale(0) opacity(1); }
+
 /* ============================================
    COLLECTION — grids
    ratio = masonry (native ratio) · dense = small yeezy squares
@@ -510,7 +551,7 @@
 
 .v2-disc-label {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
   margin-bottom: 20px;
   font-family: var(--v2-mono);
@@ -518,6 +559,19 @@
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
+.v2-disc-logo {
+  height: 16px;
+  width: auto;
+  max-width: 34px;
+  object-fit: contain;
+  filter: grayscale(1) opacity(0.75);
+  margin-right: -2px;
+  transition: filter 0.3s ease;
+}
+.v2-disc-logo.invert { filter: invert(1) grayscale(1) opacity(0.75); }
+/* colorize back to the brand's real colors on section hover */
+.v2-disc-block:hover .v2-disc-logo { filter: grayscale(0) opacity(1); }
+.v2-disc-block:hover .v2-disc-logo.invert { filter: invert(1) opacity(1); }
 .v2-disc-project { color: var(--v2-ink); }
 .v2-disc-sep { color: var(--v2-faint); }
 .v2-disc-title { color: var(--v2-muted); }

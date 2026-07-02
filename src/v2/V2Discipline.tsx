@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react'
 import type { Discipline } from './disciplines'
 import { V2Collection } from './V2Collection'
+import { projectLogo } from './clientLogos'
 
 interface V2DisciplineProps {
   discipline: Discipline
@@ -40,9 +41,19 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
         <p className="v2-head-desc">{discipline.blurb}</p>
       </div>
 
-      {discipline.collections.map(({ project, section, grid, cols, label }, i) => (
+      {discipline.collections.map(({ project, section, grid, cols, label }, i) => {
+        const logo = projectLogo(project)
+        return (
         <section key={`${project}-${section.title}`} id={`block-${i}`} className="v2-disc-block">
           <div className="v2-disc-label">
+            {logo && (
+              <img
+                className={`v2-disc-logo${logo.invert ? ' invert' : ''}`}
+                src={logo.src}
+                alt={logo.alt}
+                loading="lazy"
+              />
+            )}
             <span className="v2-disc-project">{project}</span>
             <span className="v2-disc-sep">—</span>
             <span className="v2-disc-title">{label ?? section.title}</span>
@@ -50,7 +61,8 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
           <p className="v2-disc-desc">{section.description}</p>
           <V2Collection section={section} grid={grid} cols={cols} onOpenImage={onOpenImage} />
         </section>
-      ))}
+        )
+      })}
 
       {discipline.videos.length > 0 && (
         <section id="block-motion" className="v2-disc-block">
