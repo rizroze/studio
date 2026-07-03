@@ -27,8 +27,11 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose, prev, next])
 
-  // touch swipe (mobile): drag left/right to go next/prev. Tracks a swipe so
-  // the subsequent click doesn't also fire (which would close the lightbox).
+  // touch swipe (mobile): left/right steps next/prev, and vertical scroll
+  // gestures page through too (swipe up → next, down → prev, feed-style) —
+  // the grid behind tracks along via the scrollIntoView effect below.
+  // Tracks a swipe so the subsequent click doesn't also fire (which would
+  // close the lightbox).
   const touch = useRef<{ x: number; y: number } | null>(null)
   const swiped = useRef(false)
   const onTouchStart = useCallback((e: React.TouchEvent) => {
@@ -43,7 +46,32 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
     if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
       swiped.current = true
       if (dx < 0) next(); else prev()
+    } else if (Math.abs(dy) > 45 && Math.abs(dy) > Math.abs(dx)) {
+      swiped.current = true
+      if (dy < 0) next(); else prev()
     }
+  }, [next, prev])
+
+  // wheel/trackpad: scrolling flips through images. Deltas accumulate until a
+  // threshold, then step once and cool down — so one trackpad flick advances a
+  // single image instead of momentum skipping through five.
+  useEffect(() => {
+    let acc = 0
+    let lockedUntil = 0
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault() // lightbox owns the scroll — page tracks via scrollIntoView below
+      const now = performance.now()
+      if (now < lockedUntil) { acc = 0; return }
+      const d = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX
+      acc += d
+      if (Math.abs(acc) > 90) {
+        if (acc > 0) next(); else prev()
+        acc = 0
+        lockedUntil = now + 500 // swallow trailing momentum
+      }
+    }
+    window.addEventListener('wheel', onWheel, { passive: false })
+    return () => window.removeEventListener('wheel', onWheel)
   }, [next, prev])
 
   // when the active image changes: preload neighbors (instant left/right) and

@@ -621,6 +621,10 @@
   display: flex; align-items: center; justify-content: center;
   padding: 5vh 6vw;
   font-family: 'Fragment Mono', ui-monospace, 'SF Mono', monospace;
+  /* swipes belong to the lightbox (h = next/prev, v = next/prev feed-style);
+     without this a vertical swipe would also rubber-band the page behind.
+     pinch-zoom stays native. */
+  touch-action: pinch-zoom;
 }
 .v2-lightbox img {
   max-width: 100%; max-height: 90vh; object-fit: contain;
