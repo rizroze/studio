@@ -50,10 +50,10 @@ export function V2LabIpod({ onClose }: { onClose: () => void }) {
   // set up anchor/rest from viewport and run the physics loop
   useEffect(() => {
     const setAnchor = () => {
-      const W = window.innerWidth, H = window.innerHeight
-      // hung from the top-right, resting down in the bottom-right corner
-      anchor.current = { x: W - 90, y: 16 }
-      rest.current = { x: W - DEVICE_W / 2 - 54, y: H - DEVICE_H / 2 - 40 }
+      const H = window.innerHeight
+      // hung from the top-left, resting down in the bottom-left corner
+      anchor.current = { x: 90, y: 16 }
+      rest.current = { x: DEVICE_W / 2 + 54, y: H - DEVICE_H / 2 - 40 }
       const restTopY = rest.current.y - DEVICE_H / 2 + 6
       // keep the cable ~30% longer than the straight-line distance → always slack & sloppy
       restLen.current = Math.hypot(rest.current.x - anchor.current.x, restTopY - anchor.current.y) * 1.3
