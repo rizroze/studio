@@ -71,8 +71,16 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
               <a href="mailto:rizzy2day@gmail.com">email</a>.
             </p>
             <div className="v2-rail-status">
-              <span className="v2-rail-open">Available to work.</span>
-              <span className="v2-rail-updated">Updated Jun 25, 2026</span>
+              <a
+                className="v2-rail-open"
+                href="https://cal.com/rizzytoday"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="v2-avail-dot" aria-hidden="true" />
+                Available to work.
+              </a>
+              <span className="v2-rail-updated">Updated Jul 3, 2026</span>
             </div>
           </>
         )}

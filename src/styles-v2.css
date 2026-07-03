@@ -206,12 +206,33 @@
 .v2-lab-icon { flex: none; margin-top: -1px; }
 
 .v2-rail-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-family: var(--v2-mono);
   font-size: 10.5px;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--v2-muted);
   line-height: 1.5;
+  text-decoration: none;
+  width: fit-content;
+  transition: color 0.2s ease;
+}
+a.v2-rail-open:hover { color: var(--v2-ink); }
+
+/* quiet green pulse — the only color moment in the rail, it earns it */
+.v2-avail-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34c759;
+  flex: none;
+  animation: v2-avail-pulse 2.4s ease-in-out infinite;
+}
+@keyframes v2-avail-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.45); }
+  50% { box-shadow: 0 0 0 4px rgba(52, 199, 89, 0); }
 }
 
 .v2-rail-updated {
@@ -378,6 +399,24 @@
 /* work-list hover arrow */
 .v2-arrow { opacity: 0; transform: translateX(-6px); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .v2-work-row:hover .v2-arrow { opacity: 1; transform: translateX(0); }
+
+/* mobile mosaic teaser → the full wall lives on the discipline page */
+.v2-mosaic-more {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 0;
+  border: 1px solid var(--v2-line);
+  background: none;
+  font-family: var(--v2-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--v2-muted);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.v2-mosaic-more:hover { color: var(--v2-ink); border-color: var(--v2-faint); }
 
 /* homepage "worked with" strip — label left, client logos right (split row) */
 .v2-clients {
@@ -583,6 +622,17 @@
   line-height: 1.5;
   letter-spacing: -0.01em;
   color: var(--v2-muted);
+}
+
+/* outcome line — the numbers under each collection, quiet mono */
+.v2-disc-stats {
+  margin: -14px 0 22px;
+  font-family: var(--v2-mono);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--v2-ink);
+  opacity: 0.7;
 }
 
 /* big autoplay motion */

@@ -7,6 +7,7 @@ export interface DisciplineCollection {
   grid: 'dense' | 'ratio'         // dense = fixed yeezy squares; ratio = masonry (native ratio)
   cols?: number                   // dense grids: columns across (default 4)
   label?: string                  // override the displayed collection title
+  stats?: string                  // outcome line — verifiable numbers only, ' · ' separated
 }
 
 export interface DisciplineVideo {
@@ -47,9 +48,9 @@ export const DISCIPLINES: Discipline[] = [
     label: 'Direction',
     blurb: 'Content · Campaigns · Social',
     collections: [
-      sec('radiants', 'Community & Events'),
-      sec('radiants', 'Monolith 2026'),
-      sec('radiants', 'Seeker Hackathon'),
+      { ...sec('radiants', 'Community & Events'), stats: '2024–2026 · weekly cadence · RadSpaces to ep. 57 · one cohesive brand' },
+      { ...sec('radiants', 'Monolith 2026'), stats: 'Solana Mobile flagship event · $125K+ prize pool · +132 pieces end-to-end' },
+      { ...sec('radiants', 'Seeker Hackathon'), stats: '+500 signups · +230 pieces, launch to end' },
     ],
     videos: [],
   },
@@ -58,8 +59,8 @@ export const DISCIPLINES: Discipline[] = [
     label: 'Design',
     blurb: 'Brand · Illustration · Decks',
     collections: [
-      sec('radiants', 'Brand Art', 'dense', 4),
-      sec('radiants', 'PFP Art', 'dense', 8),
+      { ...sec('radiants', 'Brand Art', 'dense', 4), stats: '2+ years · hundreds of pieces across every format' },
+      { ...sec('radiants', 'PFP Art', 'dense', 8), stats: '16 hand-drawn pixel portraits' },
       { ...sec('hydex', 'Hydex'), label: 'Pitch Deck' },
       { ...sec('hydex', 'Hydex Router'), label: 'Pitch Deck', project: 'Hydex Router' },
       sec('wayy', 'Pitch Deck'),
@@ -78,8 +79,8 @@ export const DISCIPLINES: Discipline[] = [
     blurb: 'Interfaces · Apps · Shipped',
     previewCols: 4,
     collections: [
-      sec('wayy', 'Website UI'),
-      sec('whatsfordinner', 'Landing Page'),
+      { ...sec('wayy', 'Website UI'), stats: 'Solana prediction market · design to deployment' },
+      { ...sec('whatsfordinner', 'Landing Page'), stats: 'Live SaaS · designed, built & run solo · 11 languages' },
       sec('whatsfordinner', 'Onboarding Flow'),
       sec('whatsfordinner', 'Meal Plan Dashboard'),
     ],

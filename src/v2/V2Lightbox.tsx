@@ -17,11 +17,34 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
     onNavigate((index + 1) % images.length)
   }, [index, images.length, onNavigate])
 
+  // dialog focus management: move focus in on open, return it on close, and
+  // keep Tab cycling inside the lightbox while it's up
+  const rootRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const previouslyFocused = document.activeElement as HTMLElement | null
+    rootRef.current?.querySelector<HTMLElement>('.v2-lb-close')?.focus()
+    return () => previouslyFocused?.focus()
+  }, [])
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
       else if (e.key === 'ArrowLeft') prev()
       else if (e.key === 'ArrowRight') next()
+      else if (e.key === 'Tab') {
+        const focusables = Array.from(
+          rootRef.current?.querySelectorAll<HTMLElement>('button') ?? [],
+        )
+        if (!focusables.length) return
+        const first = focusables[0]
+        const last = focusables[focusables.length - 1]
+        const active = document.activeElement
+        if (e.shiftKey && (active === first || !rootRef.current?.contains(active))) {
+          e.preventDefault(); last.focus()
+        } else if (!e.shiftKey && (active === last || !rootRef.current?.contains(active))) {
+          e.preventDefault(); first.focus()
+        }
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -88,7 +111,11 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
 
   return createPortal(
     <div
+      ref={rootRef}
       className="v2-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Image ${index + 1} of ${images.length}`}
       onClick={() => { if (swiped.current) { swiped.current = false; return } onClose() }}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
@@ -99,12 +126,14 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
         <>
           <button
             className="v2-lb-nav v2-lb-prev"
+            aria-label="Previous image"
             onClick={(e) => { e.stopPropagation(); prev() }}
           >
             ←
           </button>
           <button
             className="v2-lb-nav v2-lb-next"
+            aria-label="Next image"
             onClick={(e) => { e.stopPropagation(); next() }}
           >
             →

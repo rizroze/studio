@@ -51,19 +51,28 @@ export function V2Root() {
     }
   }, [])
 
+  // every view starts at the top — desktop scrolls .v2-main, mobile scrolls
+  // the window, and the browser's own back/forward scroll restoration would
+  // otherwise drop you mid-page
+  const scrollTop = useCallback(() => {
+    document.querySelector('.v2-main')?.scrollTo({ top: 0 })
+    window.scrollTo({ top: 0 })
+  }, [])
+
   useEffect(() => {
-    const onPop = () => { setState(parsePath()); setLab(isLabPath()) }
+    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
+    const onPop = () => { setState(parsePath()); setLab(isLabPath()); setActiveBlock(0); scrollTop() }
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
-  }, [])
+  }, [scrollTop])
 
   const navigate = useCallback((next: V2View) => {
     window.history.pushState(null, '', buildPath(next))
     setState(next)
     setLab(false)
     setActiveBlock(0)
-    document.querySelector('.v2-main')?.scrollTo({ top: 0 })
-  }, [])
+    scrollTop()
+  }, [scrollTop])
 
   const openLab = useCallback(() => { window.history.pushState(null, '', '/lab'); setLab(true) }, [])
   const closeLab = useCallback(() => {

@@ -41,7 +41,7 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
         <p className="v2-head-desc">{discipline.blurb}</p>
       </div>
 
-      {discipline.collections.map(({ project, section, grid, cols, label }, i) => {
+      {discipline.collections.map(({ project, section, grid, cols, label, stats }, i) => {
         const logo = projectLogo(project)
         return (
         <section key={`${project}-${section.title}`} id={`block-${i}`} className="v2-disc-block">
@@ -59,6 +59,7 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
             <span className="v2-disc-title">{label ?? section.title}</span>
           </div>
           <p className="v2-disc-desc">{section.description}</p>
+          {stats && <p className="v2-disc-stats">{stats}</p>}
           <V2Collection section={section} grid={grid} cols={cols} onOpenImage={onOpenImage} />
         </section>
         )

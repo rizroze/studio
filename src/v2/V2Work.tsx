@@ -13,14 +13,18 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
   const [active, setActive] = useState(0)
   const discipline = DISCIPLINES[active]
 
+  // mobile shows a capped teaser (the full wall is a discipline-page thing);
+  // desktop keeps the everything-mosaic as the live preview pane
+  const mosaicMax = isMobile ? 16 : Infinity
+
   // preload every discipline's thumbnails once so hover-swaps are instant
   // (no flash of an empty/old tile while the new branch's images decode)
   useEffect(() => {
     const idle = (window as any).requestIdleCallback || ((fn: () => void) => setTimeout(fn, 200))
     idle(() => {
-      DISCIPLINES.forEach(d => disciplineMosaic(d, Infinity).map(thumb).forEach(src => { new Image().src = src }))
+      DISCIPLINES.forEach(d => disciplineMosaic(d, mosaicMax).map(thumb).forEach(src => { new Image().src = src }))
     })
-  }, [])
+  }, [mosaicMax])
 
   // desktop: hover shifts the preview, click opens.
   // touch: there's no hover — first tap shifts the preview, second tap on the
@@ -32,8 +36,9 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
     }
     onOpenDiscipline(DISCIPLINES[i].id)
   }
-  // every image in the discipline, served as low-res thumbnails for fast loading
-  const mosaic = disciplineMosaic(discipline, Infinity).map(thumb)
+  // every image in the discipline (capped on mobile), low-res thumbs for speed
+  const mosaic = disciplineMosaic(discipline, mosaicMax).map(thumb)
+  const total = discipline.collections.reduce((n, c) => n + c.section.gallery.length, 0) + discipline.videos.length
 
   return (
     <div className="v2-home-split v2-fade">
@@ -49,7 +54,10 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
             <button
               key={d.id}
               className={`v2-work-row ${active === i ? 'active' : ''}`}
-              onMouseEnter={() => !isMobile && setActive(i)}
+              // mousemove, not mouseenter: scrolling slides rows under a
+              // stationary cursor and re-hit-tests as enter, which used to
+              // flip the preview mid-scroll — real pointer movement only
+              onMouseMove={() => !isMobile && active !== i && setActive(i)}
               onFocus={() => !isMobile && setActive(i)}
               onClick={() => handleRow(i)}
             >
@@ -87,6 +95,11 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
           cols={discipline.previewCols ?? 6}
           onOpen={() => onOpenDiscipline(discipline.id)}
         />
+        {isMobile && total > mosaic.length && (
+          <button className="v2-mosaic-more" onClick={() => onOpenDiscipline(discipline.id)}>
+            All {total} pieces →
+          </button>
+        )}
       </div>
     </div>
   )
