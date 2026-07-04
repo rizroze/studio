@@ -62,8 +62,10 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
               being inside it. Two years as content lead for a Solana-native
               DAO. Campaign hosting and content direction for two{' '}
               <a href="https://solanamobile.com/" target="_blank" rel="noopener noreferrer">Solana Mobile</a>{' '}
-              hackathons — the Solana Seeker Hackathon and the $125K+{' '}
-              <a href="https://blog.solanamobile.com/post/the-monolith-solana-mobile-hackathon" target="_blank" rel="noopener noreferrer">Monolith Hackathon</a>.
+              hackathons,{' '}
+              <a href="https://x.com/RadiantsDAO/status/1967983306047393960" target="_blank" rel="noopener noreferrer">Seeker</a>{' '}
+              and the $125K+{' '}
+              <a href="https://blog.solanamobile.com/post/the-monolith-solana-mobile-hackathon" target="_blank" rel="noopener noreferrer">Monolith</a>.
               {' '}Pitch decks and content for crypto teams like Hydex and WeSplit.
             </p>
             <p className="v2-rail-find">
