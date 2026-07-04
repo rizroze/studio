@@ -258,7 +258,8 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   letter-spacing: -0.01em;
   color: #3a3a3a;
 }
-.v2-rail-find a {
+.v2-rail-find a,
+.v2-rail-statement a {
   color: var(--v2-ink);
   text-decoration: underline;
   text-decoration-color: rgba(10, 10, 10, 0.3);
@@ -266,7 +267,8 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   text-decoration-thickness: 1px;
   transition: text-decoration-color 0.2s ease;
 }
-.v2-rail-find a:hover { text-decoration-color: rgba(10, 10, 10, 0.7); }
+.v2-rail-find a:hover,
+.v2-rail-statement a:hover { text-decoration-color: rgba(10, 10, 10, 0.7); }
 
 /* ============================================
    MAIN CONTENT (swapping right pane)
