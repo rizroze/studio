@@ -60,7 +60,7 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
             <p className="v2-rail-statement">
               The work was here before any title. Not from briefs, but from
               being inside it. Two years as content lead for a Solana-native
-              DAO. Campaign hosting and content direction for two{' '}
+              DAO, hosting campaigns and directing content for two{' '}
               <a href="https://solanamobile.com/" target="_blank" rel="noopener noreferrer">Solana Mobile</a>{' '}
               hackathons,{' '}
               <a href="https://x.com/RadiantsDAO/status/1967983306047393960" target="_blank" rel="noopener noreferrer">Seeker</a>{' '}
