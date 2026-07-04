@@ -681,10 +681,27 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
 }
 @keyframes v2-lb-fade { from { opacity: 0; } }
 .v2-lightbox.closing { opacity: 0; pointer-events: none; }
-.v2-lightbox img {
-  max-width: 100%; max-height: 90vh; object-fit: contain;
+/* the ghost takes over on close — the centered frame must vanish at once or
+   it lingers behind the flight while the backdrop fades (!important beats the
+   inline entered-opacity) */
+.v2-lightbox.closing .v2-lb-frame { opacity: 0 !important; transition: none; }
+/* the frame shrink-wraps the med layer; the keyed full-res stacks on top and
+   remounts transparent per image, so hard-scrolling flips instantly on the
+   cached med instead of waiting for each high-res to load */
+.v2-lb-frame {
+  position: relative;
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.28), 0 8px 24px rgba(0, 0, 0, 0.14);
   transition: opacity 0.25s ease; /* reveal under the ghost once the flight lands */
+}
+/* viewport units (not %) — the frame's own width derives from this image, so
+   a percentage cap would be circular. 88vw/90vh match the lightbox padding box. */
+.v2-lb-med {
+  display: block;
+  max-width: 88vw; max-height: 90vh; object-fit: contain;
+}
+.v2-lb-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: contain;
 }
 /* the flying image (FLIP open/close) — portaled to body, above the lightbox.
    cover-fit: starts with the tile's exact crop, lands uncropped since the

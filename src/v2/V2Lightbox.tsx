@@ -142,7 +142,7 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
     const root = rootRef.current
     root?.classList.add('closing')
     const src = images[index]
-    const live = root?.querySelector<HTMLImageElement>('.v2-lb-img')
+    const live = root?.querySelector<HTMLElement>('.v2-lb-frame')
     const from = enteredRef.current && live ? live.getBoundingClientRect() : null
     const to = sourceRect(src)
     if (reducedMotion() || !from || !to || from.width < 4) {
@@ -255,8 +255,11 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
   // oriented within the page while the grid shows through the sheer backdrop
   useEffect(() => {
     for (const i of [index - 1, index + 1]) {
-      const img = new Image()
-      img.src = images[(i + images.length) % images.length]
+      const src = images[(i + images.length) % images.length]
+      new Image().src = src
+      // med too — off-screen grid tiles are lazy, so it may not be cached yet,
+      // and it's what makes the next hard-scroll step switch instantly
+      new Image().src = med(src)
     }
     const tile = document.querySelector(`[data-lbsrc="${CSS.escape(images[index])}"]`)
     tile?.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -294,19 +297,28 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
         </>
       )}
 
-      <img
-        className="v2-lb-img"
-        src={images[index]}
-        alt=""
-        // after a flight the img appears at once beneath the still-opaque ghost
-        // (invisible switch); only the ghost fades. Transitioning both layers at
-        // once would dip to translucent and let the backdrop bleed through.
+      {/* med (cached by the grid) sizes the frame and switches instantly on
+          hard scroll; the keyed full-res remounts transparent on top and drops
+          in when decoded — so flicking through never waits on high-res loads */}
+      <div
+        className="v2-lb-frame"
+        // after a flight the frame appears at once beneath the still-opaque
+        // ghost (invisible switch); only the ghost fades. Transitioning both
+        // layers at once would dip to translucent and bleed the backdrop through.
         style={{ opacity: entered ? 1 : 0, transition: flewRef.current ? 'none' : undefined }}
-        onLoad={onFullLoaded}
-        ref={(el) => { if (el?.complete && el.naturalWidth) onFullLoaded() }}
         onClick={(e) => e.stopPropagation()}
-        draggable={false}
-      />
+      >
+        <img className="v2-lb-med" src={med(images[index])} alt="" aria-hidden="true" draggable={false} />
+        <img
+          key={images[index]}
+          className="v2-lb-img"
+          src={images[index]}
+          alt=""
+          onLoad={onFullLoaded}
+          ref={(el) => { if (el?.complete && el.naturalWidth) onFullLoaded() }}
+          draggable={false}
+        />
+      </div>
 
       {images.length > 1 && (
         <span className="v2-lb-counter">
