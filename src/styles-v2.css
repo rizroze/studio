@@ -675,10 +675,25 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
      without this a vertical swipe would also rubber-band the page behind.
      pinch-zoom stays native. */
   touch-action: pinch-zoom;
+  /* backdrop + chrome fade in while the ghost image flies from its grid tile */
+  animation: v2-lb-fade 0.3s ease both;
+  transition: opacity 0.24s ease;
 }
+@keyframes v2-lb-fade { from { opacity: 0; } }
+.v2-lightbox.closing { opacity: 0; pointer-events: none; }
 .v2-lightbox img {
   max-width: 100%; max-height: 90vh; object-fit: contain;
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.28), 0 8px 24px rgba(0, 0, 0, 0.14);
+  transition: opacity 0.25s ease; /* reveal under the ghost once the flight lands */
+}
+/* the flying image (FLIP open/close) — portaled to body, above the lightbox.
+   cover-fit: starts with the tile's exact crop, lands uncropped since the
+   final rect matches the image's native ratio. Rect + shadow are animated
+   by WAAPI in V2Lightbox. */
+.v2-lb-ghost {
+  position: fixed; left: 0; top: 0; z-index: 1001;
+  object-fit: cover;
+  pointer-events: none;
 }
 .v2-lb-close, .v2-lb-counter, .v2-lb-nav {
   position: fixed;

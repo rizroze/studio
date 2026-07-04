@@ -1,5 +1,7 @@
-import { useEffect, useCallback, useRef } from 'react'
+import { useEffect, useLayoutEffect, useState, useCallback, useRef } from 'react'
 import { createPortal } from 'react-dom'
+import { IMAGE_DIMS } from './imageDims'
+import { med } from './disciplines'
 
 interface V2LightboxProps {
   images: string[]
@@ -8,18 +10,169 @@ interface V2LightboxProps {
   onNavigate: (index: number) => void
 }
 
+// ---- FLIP flight: the image travels between its grid tile and its final
+// centered rect, instead of the lightbox just fading in over the page ----
+
+const FLIGHT_MS = 440
+const FLIGHT_EASE = 'cubic-bezier(0.32, 0.72, 0, 1)' // Apple sheet ease — fast start, long settle
+// must match .v2-lightbox img box-shadow; zero-size twin so WAAPI can interpolate
+const SHADOW_FULL = '0 40px 100px rgba(0, 0, 0, 0.28), 0 8px 24px rgba(0, 0, 0, 0.14)'
+const SHADOW_NONE = '0 0px 0px rgba(0, 0, 0, 0), 0 0px 0px rgba(0, 0, 0, 0)'
+
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+// where the image sits in the page: the grid tile's <img> (bento/ratio grids),
+// or the index view's side preview when it's showing this src
+function sourceRect(src: string): DOMRect | null {
+  const sel = `[data-lbsrc="${CSS.escape(src)}"] img`
+  const el =
+    document.querySelector<HTMLElement>(sel) ??
+    (document.querySelector<HTMLImageElement>('.v2-index-preview img')?.getAttribute('src') === src
+      ? document.querySelector<HTMLElement>('.v2-index-preview img')
+      : null)
+  if (!el) return null
+  const r = el.getBoundingClientRect()
+  // a collapsed or off-screen tile can't anchor a flight — fall back to fade
+  if (r.width < 4 || r.height < 4 || r.bottom < 0 || r.top > window.innerHeight) return null
+  return r
+}
+
+// where the image will land: contain-fit into the lightbox padding box
+// (5vh 6vw, max-height 90vh), centered — computed from precomputed dims so the
+// flight doesn't wait for the full-res to load
+function finalRect(src: string): DOMRect | null {
+  const d = IMAGE_DIMS[src]
+  if (!d) return null
+  const vw = window.innerWidth
+  const vh = window.innerHeight
+  const scale = Math.min((vw * 0.88) / d[0], (vh * 0.9) / d[1], 1) // never upscale past natural size
+  const w = d[0] * scale
+  const h = d[1] * scale
+  return new DOMRect((vw - w) / 2, (vh - h) / 2, w, h)
+}
+
+const rectFrame = (r: { left: number; top: number; width: number; height: number }, boxShadow: string) => ({
+  left: `${r.left}px`,
+  top: `${r.top}px`,
+  width: `${r.width}px`,
+  height: `${r.height}px`,
+  boxShadow,
+})
+
+// the flying element: the med thumbnail (already cached by the grid), cover-fit
+// so it starts with the tile's exact crop and ends uncropped (rect == native ratio)
+function makeGhost(src: string): HTMLImageElement {
+  const ghost = document.createElement('img')
+  ghost.className = 'v2-lb-ghost'
+  ghost.src = med(src)
+  ghost.draggable = false
+  document.body.appendChild(ghost)
+  return ghost
+}
+
 export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxProps) {
+  // entered = open flight done (or skipped) → real img may show
+  const [entered, setEntered] = useState(false)
+  const enteredRef = useRef(false)
+  const flewRef = useRef(false) // flight ran → reveal img instantly under the ghost (no double-fade dip)
+  const loadedRef = useRef(false) // full-res of the opening image decoded
+  const ghostRef = useRef<HTMLImageElement | null>(null)
+  const closingRef = useRef(false)
+
+  const clearGhost = useCallback((fade = false) => {
+    const g = ghostRef.current
+    if (!g) return
+    ghostRef.current = null
+    if (fade) {
+      g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: 'ease', fill: 'forwards' })
+        .onfinish = () => g.remove()
+    } else {
+      g.remove()
+    }
+  }, [])
+
+  const markEntered = useCallback(() => {
+    enteredRef.current = true
+    setEntered(true)
+  }, [])
+
+  // open flight — runs once on mount, before paint so the ghost starts on the tile
+  useLayoutEffect(() => {
+    const src = images[index]
+    const from = sourceRect(src)
+    const to = finalRect(src)
+    if (reducedMotion() || !from || !to) {
+      markEntered()
+      return
+    }
+    const ghost = makeGhost(src)
+    ghostRef.current = ghost
+    flewRef.current = true
+    const anim = ghost.animate(
+      [rectFrame(from, SHADOW_NONE), rectFrame(to, SHADOW_FULL)],
+      { duration: FLIGHT_MS, easing: FLIGHT_EASE, fill: 'forwards' },
+    )
+    anim.onfinish = () => {
+      markEntered()
+      // full-res already there → crossfade the ghost away; otherwise it stays
+      // as a sharp-enough placeholder until onLoad clears it
+      if (loadedRef.current) clearGhost(true)
+    }
+    return () => {
+      if (ghostRef.current === ghost) ghostRef.current = null
+      ghost.remove()
+    }
+    // mount-only: the flight belongs to the image that was clicked
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const onFullLoaded = useCallback(() => {
+    loadedRef.current = true
+    if (enteredRef.current) clearGhost(true)
+  }, [clearGhost])
+
+  // close flight — the image flies back into its tile while the backdrop fades.
+  // scrollIntoView (below) has kept the current tile in view, so there's a
+  // landing spot even after wheeling through the collection.
+  const rootRef = useRef<HTMLDivElement>(null)
+  const close = useCallback(() => {
+    if (closingRef.current) return
+    closingRef.current = true
+    clearGhost()
+    const root = rootRef.current
+    root?.classList.add('closing')
+    const src = images[index]
+    const live = root?.querySelector<HTMLImageElement>('.v2-lb-img')
+    const from = enteredRef.current && live ? live.getBoundingClientRect() : null
+    const to = sourceRect(src)
+    if (reducedMotion() || !from || !to || from.width < 4) {
+      window.setTimeout(onClose, 200) // let the fade play out
+      return
+    }
+    const ghost = makeGhost(src)
+    ghost.animate(
+      [rectFrame(from, SHADOW_FULL), rectFrame(to, SHADOW_NONE)],
+      { duration: FLIGHT_MS, easing: FLIGHT_EASE, fill: 'forwards' },
+    ).onfinish = () => {
+      ghost.remove()
+      onClose()
+    }
+  }, [images, index, onClose, clearGhost])
+
   const prev = useCallback(() => {
+    clearGhost()
+    markEntered()
     onNavigate((index - 1 + images.length) % images.length)
-  }, [index, images.length, onNavigate])
+  }, [index, images.length, onNavigate, clearGhost, markEntered])
 
   const next = useCallback(() => {
+    clearGhost()
+    markEntered()
     onNavigate((index + 1) % images.length)
-  }, [index, images.length, onNavigate])
+  }, [index, images.length, onNavigate, clearGhost, markEntered])
 
   // dialog focus management: move focus in on open, return it on close, and
   // keep Tab cycling inside the lightbox while it's up
-  const rootRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const previouslyFocused = document.activeElement as HTMLElement | null
     rootRef.current?.querySelector<HTMLElement>('.v2-lb-close')?.focus()
@@ -28,7 +181,7 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') close()
       else if (e.key === 'ArrowLeft') prev()
       else if (e.key === 'ArrowRight') next()
       else if (e.key === 'Tab') {
@@ -48,7 +201,7 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [onClose, prev, next])
+  }, [close, prev, next])
 
   // touch swipe (mobile): left/right steps next/prev, and vertical scroll
   // gestures page through too (swipe up → next, down → prev, feed-style) —
@@ -116,11 +269,11 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
       role="dialog"
       aria-modal="true"
       aria-label={`Image ${index + 1} of ${images.length}`}
-      onClick={() => { if (swiped.current) { swiped.current = false; return } onClose() }}
+      onClick={() => { if (swiped.current) { swiped.current = false; return } close() }}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      <button className="v2-lb-close" onClick={onClose}>Close ✕</button>
+      <button className="v2-lb-close" onClick={close}>Close ✕</button>
 
       {images.length > 1 && (
         <>
@@ -142,8 +295,15 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
       )}
 
       <img
+        className="v2-lb-img"
         src={images[index]}
         alt=""
+        // after a flight the img appears at once beneath the still-opaque ghost
+        // (invisible switch); only the ghost fades. Transitioning both layers at
+        // once would dip to translucent and let the backdrop bleed through.
+        style={{ opacity: entered ? 1 : 0, transition: flewRef.current ? 'none' : undefined }}
+        onLoad={onFullLoaded}
+        ref={(el) => { if (el?.complete && el.naturalWidth) onFullLoaded() }}
         onClick={(e) => e.stopPropagation()}
         draggable={false}
       />
