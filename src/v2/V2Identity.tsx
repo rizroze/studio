@@ -59,9 +59,10 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
             </p>
             <p className="v2-rail-statement">
               The work was here before any title. Not from briefs, but from
-              being inside it. It's the intersection of everything I've been
-              doing my whole life. I was just following my heart, and realized
-              they call that “Creative Director” these days.
+              being inside it. Two years as content lead for a Solana-native
+              DAO. Campaign hosting for two Solana Seeker hackathons, with
+              content direction for Monolith and its $125K+ prize pool. Pitch
+              decks and content for crypto teams like Hydex and WeSplit.
             </p>
             <p className="v2-rail-find">
               Find me on{' '}
