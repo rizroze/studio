@@ -60,12 +60,11 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
             <p className="v2-rail-statement">
               The work was here before any title. Not from briefs, but from
               being inside it. Two years as content lead for a Solana-native
-              DAO. Campaign hosting for two{' '}
-              <a href="https://solanamobile.com/" target="_blank" rel="noopener noreferrer">Solana Seeker</a>{' '}
-              hackathons, with content direction for{' '}
-              <a href="https://blog.solanamobile.com/post/the-monolith-solana-mobile-hackathon" target="_blank" rel="noopener noreferrer">Monolith</a>{' '}
-              and its $125K+ prize pool. Pitch decks and content for crypto
-              teams like Hydex and WeSplit.
+              DAO. Campaign hosting and content direction for two{' '}
+              <a href="https://solanamobile.com/" target="_blank" rel="noopener noreferrer">Solana Mobile</a>{' '}
+              hackathons — the Solana Seeker Hackathon and the $125K+{' '}
+              <a href="https://blog.solanamobile.com/post/the-monolith-solana-mobile-hackathon" target="_blank" rel="noopener noreferrer">Monolith Hackathon</a>.
+              {' '}Pitch decks and content for crypto teams like Hydex and WeSplit.
             </p>
             <p className="v2-rail-find">
               Find me on{' '}
