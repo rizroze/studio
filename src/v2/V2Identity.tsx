@@ -65,7 +65,7 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
               <a href="https://x.com/RadiantsDAO/status/1967983306047393960" target="_blank" rel="noopener noreferrer">Seeker</a>{' '}
               and the $125K+{' '}
               <a href="https://blog.solanamobile.com/post/the-monolith-solana-mobile-hackathon" target="_blank" rel="noopener noreferrer">Monolith</a>.
-              {' '}Pitch decks and content for crypto teams like Hydex and WeSplit.
+              {' '}Pitch decks and content for crypto teams.
             </p>
             <p className="v2-rail-find">
               Find me on{' '}
