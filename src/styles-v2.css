@@ -695,6 +695,10 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.28), 0 8px 24px rgba(0, 0, 0, 0.14);
   transition: opacity 0.25s ease; /* reveal under the ghost once the flight lands */
   cursor: zoom-in;
+  /* always clip — if this only applied while .zoomed, removing the class on
+     zoom-out would unclip the still-scaled image for the 300ms shrink
+     transition and flash it full-size over the page */
+  overflow: hidden;
 }
 /* viewport units (not %) — the frame's own width derives from this image, so
    a percentage cap would be circular. 88vw/90vh match the lightbox padding box. */
@@ -721,7 +725,6 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
 }
 .v2-lb-frame.zoomed {
-  overflow: hidden;
   cursor: zoom-out;
 }
 /* the flying image (FLIP open/close) — portaled to body, above the lightbox.
