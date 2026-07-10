@@ -475,14 +475,15 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
 .v2-grid-item:hover img { opacity: 0.82; }
 
 /* images fade in once loaded — cells already hold correct space (precomputed dims) */
-/* grid reveal: fade + subtle rise/scale, GPU-composited for smoothness */
+/* grid reveal: same focus pull as the index preview — images rack from
+   blurred to sharp as they load in, one reveal language across the site */
 .v2-fadeimg {
   opacity: 0;
-  transform: translateY(12px) scale(1.015);
-  transition: opacity 0.55s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
+  filter: blur(14px);
+  transition: opacity 0.3s ease, filter 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, filter;
 }
-.v2-fadeimg.in { opacity: 1; transform: none; }
+.v2-fadeimg.in { opacity: 1; filter: blur(0px); }
 
 /* ratio: masonry columns, full native ratio */
 .v2-grid-ratio {

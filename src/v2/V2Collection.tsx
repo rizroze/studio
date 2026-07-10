@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import type { ProjectSection } from '../constants/projects'
-import { V2Bento } from './V2Bento'
+import { V2Bento, fadeClass } from './V2Bento'
 import { IMAGE_DIMS } from './imageDims'
 import { med } from './disciplines'
 import { useIsMobile } from './useMobile'
@@ -41,7 +41,7 @@ function RatioGrid({ section, onOpenImage }: V2CollectionProps) {
             onClick={() => onOpenImage(section.gallery, i)}
           >
             <img
-              className="v2-fadeimg"
+              className={fadeClass(src)}
               ref={refIn}
               onLoad={markIn}
               src={med(src)}
@@ -106,7 +106,7 @@ function PreviewLayer({ src, entering }: { src: string; entering: boolean }) {
     <div className={`v2-ip-layer${visible ? ' in' : ''}`}>
       <img className="v2-ip-med" src={med(src)} alt="" aria-hidden="true" draggable={false} />
       <img
-        className="v2-ip-full"
+        className={/\.gif$/i.test(src) ? 'v2-ip-full in' : 'v2-ip-full'}
         src={src}
         alt=""
         decoding="async"
