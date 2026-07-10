@@ -563,7 +563,20 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   height: min(78vh, 720px);
   overflow: hidden;
 }
-/* med layer (preloaded, ~instant) underneath; keyed full-res fades in on top */
+/* focus pull: each image on its own opaque layer that racks from blurred to
+   sharp while fading in — the white background means the outgoing image is
+   fully covered the instant the fade lands, whatever shape it was */
+.v2-ip-layer {
+  position: absolute;
+  inset: 0;
+  background: var(--v2-bg);
+  opacity: 0;
+  filter: blur(14px);
+  transition: opacity 0.3s ease, filter 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, filter;
+}
+.v2-ip-layer.in { opacity: 1; filter: blur(0px); }
+/* med layer (preloaded, ~instant) underneath; full-res fades in on top */
 .v2-ip-med,
 .v2-ip-full {
   position: absolute;

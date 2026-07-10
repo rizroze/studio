@@ -68,6 +68,56 @@ function shapeGroup(src: string): number {
   return r > 1.3 ? 0 : r < 0.77 ? 2 : 1
 }
 
+// layered preview: each src gets its own opaque white-backed layer, the new
+// layer focus-pulls in (blur → sharp + fade) over the old one, and the old
+// layer is pruned right after — a previous image can never linger or peek
+// out around a differently-shaped incoming one
+function PreviewStack({ src }: { src: string }) {
+  const [stack, setStack] = useState<string[]>([src])
+  useEffect(() => {
+    setStack(s => (s[s.length - 1] === src ? s : [s[s.length - 1], src]))
+  }, [src])
+  // prune on a timer (not transitionend) so a hidden tab or interrupted
+  // transition can't leave stale layers stacked up
+  useEffect(() => {
+    if (stack.length < 2) return
+    const t = window.setTimeout(() => setStack(s => [s[s.length - 1]]), 550)
+    return () => window.clearTimeout(t)
+  }, [stack])
+  return (
+    <div className="v2-index-preview">
+      {stack.map((s, i) => (
+        <PreviewLayer key={s} src={s} entering={i > 0} />
+      ))}
+    </div>
+  )
+}
+
+function PreviewLayer({ src, entering }: { src: string; entering: boolean }) {
+  const [visible, setVisible] = useState(!entering)
+  useEffect(() => {
+    if (visible) return
+    // double rAF so the layer paints once at blur/transparent, then transitions
+    let id2 = 0
+    const id1 = requestAnimationFrame(() => { id2 = requestAnimationFrame(() => setVisible(true)) })
+    return () => { cancelAnimationFrame(id1); cancelAnimationFrame(id2) }
+  }, [visible])
+  return (
+    <div className={`v2-ip-layer${visible ? ' in' : ''}`}>
+      <img className="v2-ip-med" src={med(src)} alt="" aria-hidden="true" draggable={false} />
+      <img
+        className="v2-ip-full"
+        src={src}
+        alt=""
+        decoding="async"
+        draggable={false}
+        onLoad={markIn}
+        ref={(el) => { if (el?.complete && el.naturalWidth) el.classList.add('in') }}
+      />
+    </div>
+  )
+}
+
 function IndexView({ section, onOpenImage }: V2CollectionProps) {
   const isMobile = useIsMobile()
   const [hovered, setHovered] = useState<number | null>(null)
@@ -99,7 +149,13 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
       })
       setScrolledIdx(best)
     }
-    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update) } }
+    const onScroll = () => {
+      // hover events don't re-fire while scrolling (only on mouse move), so a
+      // stale hover would pin the preview to the last-touched row until the
+      // mouse twitches — scrolling hands control back to the scroll-spy
+      setHovered(null)
+      if (!ticking) { ticking = true; requestAnimationFrame(update) }
+    }
     update()
     main?.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -153,21 +209,8 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
 
       <div className="v2-index-preview-col">
         {/* fixed-height box — swapping images can never resize the section or
-            push the blocks below. med layer (preloaded) swaps instantly, the
-            keyed full-res fades in over it once decoded. */}
-        <div className="v2-index-preview">
-          <img className="v2-ip-med" src={med(gallery[active])} alt="" aria-hidden="true" draggable={false} />
-          <img
-            key={gallery[active]}
-            className="v2-ip-full"
-            src={gallery[active]}
-            alt=""
-            decoding="async"
-            draggable={false}
-            onLoad={markIn}
-            ref={(el) => { if (el?.complete && el.naturalWidth) el.classList.add('in') }}
-          />
-        </div>
+            push the blocks below */}
+        <PreviewStack src={gallery[active]} />
         <div className="v2-index-caption">{indexLabel(gallery[active])}</div>
       </div>
     </div>
