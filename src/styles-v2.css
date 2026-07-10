@@ -694,6 +694,7 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   position: relative;
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.28), 0 8px 24px rgba(0, 0, 0, 0.14);
   transition: opacity 0.25s ease; /* reveal under the ghost once the flight lands */
+  cursor: zoom-in;
 }
 /* viewport units (not %) — the frame's own width derives from this image, so
    a percentage cap would be circular. 88vw/90vh match the lightbox padding box. */
@@ -701,9 +702,27 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   display: block;
   max-width: 88vw; max-height: 90vh; object-fit: contain;
 }
+/* when V2Lightbox sets an explicit frame size from full-res dims, the med
+   layer fills it — otherwise its 640px natural size would shrink-wrap the
+   frame down to thumbnail scale on desktop */
+.v2-lb-frame.sized .v2-lb-med {
+  width: 100%; height: 100%;
+  max-width: none; max-height: none;
+}
 .v2-lb-img {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: contain;
+}
+/* click-to-zoom: both layers scale toward the cursor (--zx/--zy set by JS),
+   mouse move pans by shifting the origin, scale change itself is eased */
+.v2-lb-med, .v2-lb-img {
+  transform: scale(var(--zs, 1));
+  transform-origin: var(--zx, 50%) var(--zy, 50%);
+  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.v2-lb-frame.zoomed {
+  overflow: hidden;
+  cursor: zoom-out;
 }
 /* the flying image (FLIP open/close) — portaled to body, above the lightbox.
    cover-fit: starts with the tile's exact crop, lands uncropped since the

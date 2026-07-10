@@ -37,18 +37,30 @@ function sourceRect(src: string): DOMRect | null {
   return r
 }
 
-// where the image will land: contain-fit into the lightbox padding box
-// (5vh 6vw, max-height 90vh), centered — computed from precomputed dims so the
-// flight doesn't wait for the full-res to load
-function finalRect(src: string): DOMRect | null {
+// contain-fit into the lightbox padding box (5vh 6vw, max-height 90vh) —
+// computed from precomputed dims. Sizes both the flight target and the frame
+// itself: the med layer is only 640px wide, so shrink-wrapping the frame to it
+// would land the flight big and then snap down to thumbnail size.
+function fitSize(src: string): { width: number; height: number } | null {
   const d = IMAGE_DIMS[src]
   if (!d) return null
-  const vw = window.innerWidth
-  const vh = window.innerHeight
-  const scale = Math.min((vw * 0.88) / d[0], (vh * 0.9) / d[1], 1) // never upscale past natural size
-  const w = d[0] * scale
-  const h = d[1] * scale
-  return new DOMRect((vw - w) / 2, (vh - h) / 2, w, h)
+  const scale = Math.min(
+    (window.innerWidth * 0.88) / d[0],
+    (window.innerHeight * 0.9) / d[1],
+    1, // never upscale past natural size
+  )
+  return { width: d[0] * scale, height: d[1] * scale }
+}
+
+function finalRect(src: string): DOMRect | null {
+  const s = fitSize(src)
+  if (!s) return null
+  return new DOMRect(
+    (window.innerWidth - s.width) / 2,
+    (window.innerHeight - s.height) / 2,
+    s.width,
+    s.height,
+  )
 }
 
 const rectFrame = (r: { left: number; top: number; width: number; height: number }, boxShadow: string) => ({
@@ -73,6 +85,17 @@ function makeGhost(src: string): HTMLImageElement {
 export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxProps) {
   // entered = open flight done (or skipped) → real img may show
   const [entered, setEntered] = useState(false)
+
+  // explicit frame size from full-res dims — the med layer that shrink-wraps
+  // the frame is only ~640px, so without this the flight lands large and the
+  // revealed frame snaps down to thumbnail size on big screens
+  const [frameSize, setFrameSize] = useState(() => fitSize(images[index]))
+  useEffect(() => {
+    const update = () => setFrameSize(fitSize(images[index]))
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [images, index])
   const enteredRef = useRef(false)
   const flewRef = useRef(false) // flight ran → reveal img instantly under the ghost (no double-fade dip)
   const loadedRef = useRef(false) // full-res of the opening image decoded
@@ -159,15 +182,45 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
     }
   }, [images, index, onClose, clearGhost])
 
+  // ---- zoom: click zooms toward the cursor (toward natural resolution),
+  // moving the mouse pans, click again zooms out. Trackpad pinch (ctrl+wheel)
+  // zooms continuously. Resets on navigation. ----
+  const frameRef = useRef<HTMLDivElement>(null)
+  const [zoomScale, setZoomScale] = useState(0) // 0 = not zoomed
+
+  const setZoomOrigin = useCallback((e: { clientX: number; clientY: number }) => {
+    const f = frameRef.current
+    if (!f) return
+    const r = f.getBoundingClientRect()
+    f.style.setProperty('--zx', `${((e.clientX - r.left) / r.width) * 100}%`)
+    f.style.setProperty('--zy', `${((e.clientY - r.top) / r.height) * 100}%`)
+  }, [])
+
+  const toggleZoom = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (zoomScale) {
+      setZoomScale(0)
+      return
+    }
+    const d = IMAGE_DIMS[images[index]]
+    const w = frameRef.current?.getBoundingClientRect().width ?? 0
+    // aim for 1:1 pixels; clamp so small images still zoom and huge decks stay usable
+    const s = Math.min(Math.max(d && w ? d[0] / w : 2, 1.75), 4)
+    setZoomOrigin(e)
+    setZoomScale(s)
+  }, [zoomScale, images, index, setZoomOrigin])
+
   const prev = useCallback(() => {
     clearGhost()
     markEntered()
+    setZoomScale(0)
     onNavigate((index - 1 + images.length) % images.length)
   }, [index, images.length, onNavigate, clearGhost, markEntered])
 
   const next = useCallback(() => {
     clearGhost()
     markEntered()
+    setZoomScale(0)
     onNavigate((index + 1) % images.length)
   }, [index, images.length, onNavigate, clearGhost, markEntered])
 
@@ -181,7 +234,13 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') close()
+      if (e.key === 'Escape') {
+        // first Escape backs out of zoom, second closes
+        setZoomScale((z) => {
+          if (!z) close()
+          return 0
+        })
+      }
       else if (e.key === 'ArrowLeft') prev()
       else if (e.key === 'ArrowRight') next()
       else if (e.key === 'Tab') {
@@ -236,6 +295,15 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
     let lockedUntil = 0
     const onWheel = (e: WheelEvent) => {
       e.preventDefault() // lightbox owns the scroll — page tracks via scrollIntoView below
+      // trackpad pinch arrives as ctrl+wheel — zoom toward the cursor instead of navigating
+      if (e.ctrlKey) {
+        setZoomOrigin(e)
+        setZoomScale((z) => {
+          const s = (z || 1) * Math.exp(-e.deltaY * 0.01)
+          return s <= 1.05 ? 0 : Math.min(s, 4)
+        })
+        return
+      }
       const now = performance.now()
       if (now < lockedUntil) { acc = 0; return }
       const d = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX
@@ -248,7 +316,7 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
     }
     window.addEventListener('wheel', onWheel, { passive: false })
     return () => window.removeEventListener('wheel', onWheel)
-  }, [next, prev])
+  }, [next, prev, setZoomOrigin])
 
   // when the active image changes: preload neighbors (instant left/right) and
   // scroll the page so the matching grid tile tracks the image — keeps you
@@ -301,12 +369,22 @@ export function V2Lightbox({ images, index, onClose, onNavigate }: V2LightboxPro
           hard scroll; the keyed full-res remounts transparent on top and drops
           in when decoded — so flicking through never waits on high-res loads */}
       <div
-        className="v2-lb-frame"
+        ref={frameRef}
+        className={`v2-lb-frame${frameSize ? ' sized' : ''}${zoomScale ? ' zoomed' : ''}`}
         // after a flight the frame appears at once beneath the still-opaque
         // ghost (invisible switch); only the ghost fades. Transitioning both
         // layers at once would dip to translucent and bleed the backdrop through.
-        style={{ opacity: entered ? 1 : 0, transition: flewRef.current ? 'none' : undefined }}
-        onClick={(e) => e.stopPropagation()}
+        style={{
+          opacity: entered ? 1 : 0,
+          transition: flewRef.current ? 'none' : undefined,
+          ...(frameSize ?? {}),
+          ['--zs' as string]: zoomScale || 1,
+        }}
+        onClick={(e) => {
+          if (swiped.current) { swiped.current = false; return }
+          toggleZoom(e)
+        }}
+        onMouseMove={zoomScale ? setZoomOrigin : undefined}
       >
         <img className="v2-lb-med" src={med(images[index])} alt="" aria-hidden="true" draggable={false} />
         <img
