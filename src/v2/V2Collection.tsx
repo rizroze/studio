@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import type { ProjectSection } from '../constants/projects'
 import { V2Bento } from './V2Bento'
 import { IMAGE_DIMS } from './imageDims'
@@ -58,11 +58,25 @@ function RatioGrid({ section, onOpenImage }: V2CollectionProps) {
   )
 }
 
+// group by shape so walking down the list doesn't jump between random
+// aspect ratios: wide/banner pieces first, then squares, then tall ones
+// (stable sort — original order kept within each group)
+function shapeGroup(src: string): number {
+  const d = IMAGE_DIMS[src]
+  if (!d) return 1
+  const r = d[0] / d[1]
+  return r > 1.3 ? 0 : r < 0.77 ? 2 : 1
+}
+
 function IndexView({ section, onOpenImage }: V2CollectionProps) {
   const isMobile = useIsMobile()
   const [hovered, setHovered] = useState<number | null>(null)
   const [scrolledIdx, setScrolledIdx] = useState(0)
   const listRef = useRef<HTMLDivElement>(null)
+  const gallery = useMemo(
+    () => [...section.gallery].sort((a, b) => shapeGroup(a) - shapeGroup(b)),
+    [section.gallery],
+  )
   // hover wins when you point at a row; otherwise the preview tracks the scroll
   const active = hovered ?? scrolledIdx
 
@@ -101,7 +115,6 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
   // bento and shouldn't burn data on previews it never shows.
   useEffect(() => {
     if (isMobile) return
-    const gallery = section.gallery
     gallery.forEach(src => { new Image().src = med(src) })
     const w = window as unknown as {
       requestIdleCallback?: (cb: () => void) => number
@@ -110,11 +123,11 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
     const run = () => gallery.forEach(src => { const im = new Image(); im.decoding = 'async'; im.src = src })
     const id = w.requestIdleCallback ? w.requestIdleCallback(run) : window.setTimeout(run, 300)
     return () => { if (w.cancelIdleCallback) w.cancelIdleCallback(id); else clearTimeout(id) }
-  }, [isMobile, section.gallery])
+  }, [isMobile, gallery])
 
   // on mobile the side-preview can't hover — show the work directly as an image grid
   if (isMobile) {
-    return <V2Bento gallery={section.gallery} cols={4} onOpenImage={onOpenImage} />
+    return <V2Bento gallery={gallery} cols={4} onOpenImage={onOpenImage} />
   }
 
   return (
@@ -124,13 +137,13 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
         ref={listRef}
         onMouseLeave={() => setHovered(null)}
       >
-        {section.gallery.map((src, i) => (
+        {gallery.map((src, i) => (
           <button
             key={src}
             className={`v2-index-row ${active === i ? 'active' : ''}`}
             data-lbsrc={src}
             onMouseEnter={() => setHovered(i)}
-            onClick={() => onOpenImage(section.gallery, i)}
+            onClick={() => onOpenImage(gallery, i)}
           >
             <span className="v2-index-num">{String(i + 1).padStart(3, '0')}</span>
             <span className="v2-index-file">{indexLabel(src)}</span>
@@ -139,13 +152,23 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
       </div>
 
       <div className="v2-index-preview-col">
-        <div className="v2-index-preview" style={{ backgroundImage: `url("${med(section.gallery[active])}")` }}>
-          {/* key per src so it remounts (transparent) instead of holding the
-              previous full-res while the new one loads — the med backdrop fills
-              the gap instantly, so the swap feels immediate */}
-          <img key={section.gallery[active]} src={section.gallery[active]} alt="" decoding="async" />
+        {/* fixed-height box — swapping images can never resize the section or
+            push the blocks below. med layer (preloaded) swaps instantly, the
+            keyed full-res fades in over it once decoded. */}
+        <div className="v2-index-preview">
+          <img className="v2-ip-med" src={med(gallery[active])} alt="" aria-hidden="true" draggable={false} />
+          <img
+            key={gallery[active]}
+            className="v2-ip-full"
+            src={gallery[active]}
+            alt=""
+            decoding="async"
+            draggable={false}
+            onLoad={markIn}
+            ref={(el) => { if (el?.complete && el.naturalWidth) el.classList.add('in') }}
+          />
         </div>
-        <div className="v2-index-caption">{indexLabel(section.gallery[active])}</div>
+        <div className="v2-index-caption">{indexLabel(gallery[active])}</div>
       </div>
     </div>
   )

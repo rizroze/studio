@@ -27,8 +27,8 @@ function sourceRect(src: string): DOMRect | null {
   const sel = `[data-lbsrc="${CSS.escape(src)}"] img`
   const el =
     document.querySelector<HTMLElement>(sel) ??
-    (document.querySelector<HTMLImageElement>('.v2-index-preview img')?.getAttribute('src') === src
-      ? document.querySelector<HTMLElement>('.v2-index-preview img')
+    (document.querySelector<HTMLImageElement>('.v2-index-preview .v2-ip-full')?.getAttribute('src') === src
+      ? document.querySelector<HTMLElement>('.v2-index-preview .v2-ip-full')
       : null)
   if (!el) return null
   const r = el.getBoundingClientRect()
