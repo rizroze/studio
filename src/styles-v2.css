@@ -1223,4 +1223,6 @@ button.v2-lab-row { background: none; border: none; font: inherit; text-align: l
   .v2-home-split { grid-template-columns: 1fr; gap: 32px; }
   .v2-home-preview { position: static; }
   .v2-home-mosaic { grid-template-columns: repeat(4, 1fr); }
+  /* ratio (masonry) mosaic: fewer columns on a phone so tiles aren't hairline-thin */
+  .v2-home-mosaic.ratio { columns: 3; }
 }

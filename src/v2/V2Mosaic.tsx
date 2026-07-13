@@ -27,6 +27,12 @@ export function V2Mosaic({ images, runKey, cols = 6, ratio = false, onOpen }: V2
     const items = Array.from(grid.children) as HTMLElement[]
     if (!items.length) return
 
+    // Mobile ratio (masonry) mosaic: skip the big→dense FLIP. On a narrow screen
+    // the parked "big" state reads as tiles starting in a shifted/weird position
+    // before they settle, and there's no hover here for the resize delight to
+    // belong to. Just render the final layout. (Square mosaics keep their FLIP.)
+    if (ratio && window.matchMedia('(max-width: 820px)').matches) return
+
     const timers: number[] = []
 
     // measure dense (final 6-col), then big (3-col)
