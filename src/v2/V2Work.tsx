@@ -36,9 +36,8 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
     }
     onOpenDiscipline(DISCIPLINES[i].id)
   }
-  // every image in the discipline (capped on mobile); V2Mosaic thumbs for
-  // display and reads dims from the raw src for ratio-aware layout
-  const mosaic = disciplineMosaic(discipline, mosaicMax)
+  // every image in the discipline (capped on mobile), low-res thumbs for speed
+  const mosaic = disciplineMosaic(discipline, mosaicMax).map(thumb)
   const total = discipline.collections.reduce((n, c) => n + c.section.gallery.length, 0) + discipline.videos.length
 
   return (
@@ -94,7 +93,6 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
           images={mosaic}
           runKey={discipline.id}
           cols={discipline.previewCols ?? 6}
-          ratio={discipline.previewRatio}
           onOpen={() => onOpenDiscipline(discipline.id)}
         />
         {isMobile && total > mosaic.length && (

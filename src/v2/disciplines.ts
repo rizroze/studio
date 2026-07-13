@@ -25,7 +25,6 @@ export interface Discipline {
   collections: DisciplineCollection[]
   videos: DisciplineVideo[]
   previewCols?: number     // homepage mosaic density (default 6)
-  previewRatio?: boolean   // homepage mosaic respects native ratios (masonry) instead of square crop
 }
 
 // Pull a section out of a project by title
@@ -103,7 +102,6 @@ export const DISCIPLINES: Discipline[] = [
     label: 'Experiments',
     blurb: 'Daily · Studies · Ads',
     description: 'Daily reps. Some become ads. The rest just keep the hand sharp.',
-    previewRatio: true,
     collections: [standalone('Experiments', EXPERIMENTS_GALLERY, 'ratio')],
     videos: [],
   } satisfies Discipline] : []),

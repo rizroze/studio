@@ -379,23 +379,6 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
 .v2-home-mosaic.mosaic-big {
   grid-template-columns: repeat(var(--mcols-big, 3), 1fr);
 }
-/* ratio mode: masonry columns so tiles keep native aspect ratio (no square
-   crop). Same 3→6 column toggle drives the FLIP resize. */
-.v2-home-mosaic.ratio {
-  display: block;
-  columns: var(--mcols, 6);
-  column-gap: 5px;
-}
-.v2-home-mosaic.ratio.mosaic-big {
-  columns: var(--mcols-big, 3);
-}
-.v2-home-mosaic.ratio .v2-mosaic-item {
-  aspect-ratio: auto;         /* real ratio comes from the inline style */
-  width: 100%;
-  margin-bottom: 5px;
-  break-inside: avoid;
-}
-.v2-home-mosaic.ratio .v2-mosaic-item img { object-fit: contain; }
 .v2-mosaic-item {
   aspect-ratio: 1 / 1;
   overflow: hidden;
@@ -1223,6 +1206,4 @@ button.v2-lab-row { background: none; border: none; font: inherit; text-align: l
   .v2-home-split { grid-template-columns: 1fr; gap: 32px; }
   .v2-home-preview { position: static; }
   .v2-home-mosaic { grid-template-columns: repeat(4, 1fr); }
-  /* ratio (masonry) mosaic: fewer columns on a phone so tiles aren't hairline-thin */
-  .v2-home-mosaic.ratio { columns: 3; }
 }
