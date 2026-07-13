@@ -320,6 +320,14 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   color: #3a3a3a;
   max-width: 620px;
 }
+.v2-head-note {
+  margin-top: 12px;
+  font-size: clamp(14px, 1.2vw, 16px);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: #8a8a8a;
+  max-width: 560px;
+}
 
 /* ============================================
    HOME — split: big names (left) + live preview (right)
@@ -371,6 +379,23 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
 .v2-home-mosaic.mosaic-big {
   grid-template-columns: repeat(var(--mcols-big, 3), 1fr);
 }
+/* ratio mode: masonry columns so tiles keep native aspect ratio (no square
+   crop). Same 3→6 column toggle drives the FLIP resize. */
+.v2-home-mosaic.ratio {
+  display: block;
+  columns: var(--mcols, 6);
+  column-gap: 5px;
+}
+.v2-home-mosaic.ratio.mosaic-big {
+  columns: var(--mcols-big, 3);
+}
+.v2-home-mosaic.ratio .v2-mosaic-item {
+  aspect-ratio: auto;         /* real ratio comes from the inline style */
+  width: 100%;
+  margin-bottom: 5px;
+  break-inside: avoid;
+}
+.v2-home-mosaic.ratio .v2-mosaic-item img { object-fit: contain; }
 .v2-mosaic-item {
   aspect-ratio: 1 / 1;
   overflow: hidden;
@@ -519,6 +544,20 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   object-fit: cover;
 }
 .v2-bento-item:hover img { opacity: 0.85; }
+
+/* justified: full-width rows scaled to a shared height, native ratio, no crop.
+   Row widths/heights are computed in V2Justified from precomputed dims. */
+.v2-justified { display: flex; flex-direction: column; }
+.v2-just-row { display: flex; }
+.v2-just-item {
+  overflow: hidden;
+  background: var(--v2-hover);
+  cursor: pointer;
+  padding: 0;
+  flex: 0 0 auto;
+}
+.v2-just-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.v2-just-item:hover img { opacity: 0.82; }
 
 /* ============================================
    COLLECTION — index + big side preview

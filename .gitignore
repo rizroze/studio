@@ -16,3 +16,6 @@ folder-icon.*
 measure_*.html
 Frame *.png
 Frame *.svg
+
+# Experiments source images (converted to .webp by npm run experiments; keep local, ship webp)
+public/content/experiments/*.png

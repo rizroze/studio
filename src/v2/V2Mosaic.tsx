@@ -1,16 +1,24 @@
 import { useRef, useLayoutEffect } from 'react'
+import { IMAGE_DIMS } from './imageDims'
+import { thumb } from './disciplines'
 
 interface V2MosaicProps {
-  images: string[]
-  runKey: string   // discipline id — replay when it changes
-  cols?: number    // dense column count (big layout = half)
+  images: string[]   // raw content srcs (thumbed for display, dims looked up)
+  runKey: string     // discipline id — replay when it changes
+  cols?: number      // dense column count (big layout = half)
+  ratio?: boolean    // respect native aspect ratios (masonry) instead of square crop
   onOpen: () => void
+}
+
+function aspect(src: string): string | undefined {
+  const d = IMAGE_DIMS[src]
+  return d ? `${d[0]} / ${d[1]}` : undefined
 }
 
 // Goal: see the BIG grid (3 per row), then it gets smaller and every tile
 // repositions into the dense grid (6 per row) because the column system
 // changed — a real layout FLIP, held briefly, then a staggered reflow.
-export function V2Mosaic({ images, runKey, cols = 6, onOpen }: V2MosaicProps) {
+export function V2Mosaic({ images, runKey, cols = 6, ratio = false, onOpen }: V2MosaicProps) {
   const gridRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
@@ -61,15 +69,20 @@ export function V2Mosaic({ images, runKey, cols = 6, onOpen }: V2MosaicProps) {
   return (
     <div className="v2-home-mosaic-clip">
       <div
-        className="v2-home-mosaic"
+        className={`v2-home-mosaic${ratio ? ' ratio' : ''}`}
         ref={gridRef}
         style={{ '--mcols': cols, '--mcols-big': Math.ceil(cols / 2) } as React.CSSProperties}
       >
         {images.map((src, i) => (
           // key per discipline+slot: hovering a new branch remounts fresh tiles
           // instead of swapping src on a reused <img> (which flashed the stale image)
-          <button key={`${runKey}-${i}`} className="v2-mosaic-item" onClick={onOpen}>
-            <img src={src} alt="" decoding="async" draggable={false} />
+          <button
+            key={`${runKey}-${i}`}
+            className="v2-mosaic-item"
+            style={ratio ? { aspectRatio: aspect(src) } : undefined}
+            onClick={onOpen}
+          >
+            <img src={thumb(src)} alt="" decoding="async" draggable={false} />
           </button>
         ))}
       </div>

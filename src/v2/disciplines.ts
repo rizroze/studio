@@ -1,10 +1,11 @@
 import { CASE_STUDIES } from '../constants/projects'
 import type { ProjectSection } from '../constants/projects'
+import { EXPERIMENTS_GALLERY } from './experiments'
 
 export interface DisciplineCollection {
-  project: string                 // project title, for the label
+  project: string                 // project title, for the label ('' = standalone, no label row)
   section: ProjectSection         // the resolved section (gallery + display)
-  grid: 'dense' | 'ratio'         // dense = fixed yeezy squares; ratio = masonry (native ratio)
+  grid: 'dense' | 'ratio' | 'justified'  // dense = fixed yeezy squares; ratio = masonry; justified = full-width rows, native ratio, no crop
   cols?: number                   // dense grids: columns across (default 4)
   label?: string                  // override the displayed collection title
   stats?: string                  // outcome line — verifiable numbers only, ' · ' separated
@@ -20,9 +21,11 @@ export interface Discipline {
   id: string
   label: string
   blurb: string            // the range, shown as caption
+  description?: string     // a longer line under the blurb on the discipline page
   collections: DisciplineCollection[]
   videos: DisciplineVideo[]
   previewCols?: number     // homepage mosaic density (default 6)
+  previewRatio?: boolean   // homepage mosaic respects native ratios (masonry) instead of square crop
 }
 
 // Pull a section out of a project by title
@@ -39,6 +42,12 @@ function vid(slug: string): DisciplineVideo {
   const project = CASE_STUDIES.find(p => p.slug === slug)
   if (!project?.video) throw new Error(`disciplines: missing video ${slug}`)
   return { project: project.title, src: project.video, label: project.videoLabel ?? 'Motion' }
+}
+
+// Standalone gallery not tied to a CASE_STUDIES project (e.g. Experiments).
+// project: '' so V2Discipline skips the "Project — Title" label row.
+function standalone(title: string, gallery: string[], grid: 'dense' | 'ratio' | 'justified' = 'justified'): DisciplineCollection {
+  return { project: '', section: { title, description: '', gallery }, grid }
 }
 
 // Taxonomy — reuses existing CASE_STUDIES sections, no new content.
@@ -86,6 +95,18 @@ export const DISCIPLINES: Discipline[] = [
     ],
     videos: [vid('wayy'), vid('fullport'), vid('whatsfordinner')],
   },
+  // Experiments — daily creative output. Self-gating: the tile only appears
+  // once images exist (drop them in public/content/experiments/ + `npm run
+  // experiments`). Justified bento keeps every native ratio, fits them all.
+  ...(EXPERIMENTS_GALLERY.length ? [{
+    id: 'experiments',
+    label: 'Experiments',
+    blurb: 'Daily · Studies · Ads',
+    description: 'Daily reps. Some become ads. The rest just keep the hand sharp.',
+    previewRatio: true,
+    collections: [standalone('Experiments', EXPERIMENTS_GALLERY, 'justified')],
+    videos: [],
+  } satisfies Discipline] : []),
 ]
 
 export function findDiscipline(id: string): Discipline | undefined {
