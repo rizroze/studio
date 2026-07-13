@@ -1,5 +1,4 @@
-import { V2Loader } from './V2Loader'
-import { V2Music } from './V2Music'
+import { V2RailFoot } from './V2RailFoot'
 
 interface V2NavItem {
   label: string
@@ -14,9 +13,10 @@ interface V2IdentityProps {
   navTitle?: string
   activeNav?: number
   onJump?: (index: number) => void
+  isMobile?: boolean   // on mobile the rail foot moves to the page bottom (V2Root)
 }
 
-export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle, activeNav = 0, onJump }: V2IdentityProps) {
+export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle, activeNav = 0, onJump, isMobile = false }: V2IdentityProps) {
   return (
     <aside className="v2-rail">
       <div className="v2-rail-top">
@@ -90,22 +90,9 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
         )}
       </div>
 
-      <div className="v2-rail-bottom">
-        <div className="v2-rail-aux">
-          <V2Loader />
-          <V2Music />
-        </div>
-        <div className="v2-rail-links">
-          <button className="v2-rail-link" onClick={onOpenReferences}>References</button>
-          <button className="v2-rail-link" onClick={onOpenLab}>
-            Lab
-            <svg className="v2-lab-icon" viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M6.7 2.3h2.6L9.1 5.4l3.2 6.8H3.7l3.2-6.8z" />
-              <path d="M5.1 10h5.8" />
-            </svg>
-          </button>
-        </div>
-      </div>
+      {!isMobile && (
+        <V2RailFoot onOpenReferences={onOpenReferences} onOpenLab={onOpenLab} />
+      )}
     </aside>
   )
 }

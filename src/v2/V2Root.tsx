@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { findDiscipline } from './disciplines'
 import { V2Identity } from './V2Identity'
+import { V2RailFoot } from './V2RailFoot'
+import { useIsMobile } from './useMobile'
 import { V2Work } from './V2Work'
 import { V2Discipline } from './V2Discipline'
 import { V2Lightbox } from './V2Lightbox'
@@ -117,6 +119,7 @@ export function V2Root() {
   const goHome = useCallback(() => navigate({ view: 'home' }), [navigate])
 
   const discipline = state.view === 'discipline' ? findDiscipline(state.id) : undefined
+  const isMobile = useIsMobile()
 
   const openImage = useCallback((images: string[], index: number) => {
     setLightbox({ images, index })
@@ -144,6 +147,7 @@ export function V2Root() {
         navTitle={discipline?.label}
         activeNav={activeBlock}
         onJump={jumpTo}
+        isMobile={isMobile}
       />
 
       <main className="v2-main">
@@ -155,6 +159,16 @@ export function V2Root() {
           <V2Discipline discipline={discipline} onHome={goHome} onOpenImage={openImage} />
         )}
       </main>
+
+      {/* mobile: the rail foot lives at the bottom of the page; hide the
+          References/Lab links while inside a discipline */}
+      {isMobile && (
+        <V2RailFoot
+          onOpenReferences={() => setReferences(true)}
+          onOpenLab={openLab}
+          hideLinks={state.view === 'discipline'}
+        />
+      )}
 
       {lightbox && (
         <V2Lightbox

@@ -1206,4 +1206,11 @@ button.v2-lab-row { background: none; border: none; font: inherit; text-align: l
   .v2-home-split { grid-template-columns: 1fr; gap: 32px; }
   .v2-home-preview { position: static; }
   .v2-home-mosaic { grid-template-columns: repeat(4, 1fr); }
+
+  /* mobile: rail foot (loader + Sound + links) sits at the very bottom of the
+     page instead of up in the rail */
+  #v2-root > .v2-rail-bottom {
+    padding: 28px 28px 40px;
+    border-top: 1px solid var(--v2-line);
+  }
 }
