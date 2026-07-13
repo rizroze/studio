@@ -27,11 +27,12 @@ export function V2Mosaic({ images, runKey, cols = 6, ratio = false, onOpen }: V2
     const items = Array.from(grid.children) as HTMLElement[]
     if (!items.length) return
 
-    // Mobile ratio (masonry) mosaic: skip the big→dense FLIP. On a narrow screen
-    // the parked "big" state reads as tiles starting in a shifted/weird position
-    // before they settle, and there's no hover here for the resize delight to
-    // belong to. Just render the final layout. (Square mosaics keep their FLIP.)
-    if (ratio && window.matchMedia('(max-width: 820px)').matches) return
+    // Ratio (masonry) mosaic: skip the big→dense FLIP entirely. That intro parks
+    // every tile zoomed to ~2x, but on ratio-preserving tiles a tall image gets
+    // clipped by the panel edge in that "big" state (reads as "cut"). The FLIP
+    // was built for uniform square grids; masonry just presents clean. Square
+    // disciplines keep their FLIP.
+    if (ratio) return
 
     const timers: number[] = []
 
