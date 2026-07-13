@@ -2,13 +2,13 @@
 // Drop images in public/content/experiments/ then run `npm run experiments`.
 
 export const EXPERIMENTS_GALLERY: string[] = [
+  '/content/experiments/Frame 2085660679.webp',
   '/content/experiments/Frame 2085660627.webp',
   '/content/experiments/Frame 2085660667.webp',
   '/content/experiments/Frame 2085660655.webp',
   '/content/experiments/Frame 2085660656.webp',
   '/content/experiments/Frame 2085660660.webp',
   '/content/experiments/Frame 2085660659.webp',
-  '/content/experiments/Frame 2085660679.webp',
   '/content/experiments/Frame 12 1.webp',
   '/content/experiments/Frame 8 1.webp',
   '/content/experiments/Frame 7 1.webp',
@@ -27,13 +27,13 @@ export const EXPERIMENTS_GALLERY: string[] = [
 ]
 
 export const EXPERIMENTS_DIMS: Record<string, [number, number]> = {
+  '/content/experiments/Frame 2085660679.webp': [1170, 1463],
   '/content/experiments/Frame 2085660627.webp': [960, 657],
   '/content/experiments/Frame 2085660667.webp': [1683, 952],
   '/content/experiments/Frame 2085660655.webp': [700, 400],
   '/content/experiments/Frame 2085660656.webp': [700, 400],
   '/content/experiments/Frame 2085660660.webp': [700, 400],
   '/content/experiments/Frame 2085660659.webp': [700, 400],
-  '/content/experiments/Frame 2085660679.webp': [1170, 1463],
   '/content/experiments/Frame 12 1.webp': [3072, 1536],
   '/content/experiments/Frame 8 1.webp': [2048, 2048],
   '/content/experiments/Frame 7 1.webp': [2048, 2048],

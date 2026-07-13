@@ -21,6 +21,10 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const dir = join(root, 'public', 'content', 'experiments')
 const outFile = join(root, 'src', 'v2', 'experiments.ts')
 
+// Pin these to the front of the gallery (matched by base-name substring), in
+// this order, regardless of date. Everything else follows newest-first.
+const FEATURED = ['Frame 2085660679'] // world. cover — hero of the bento
+
 const sips = (...args) => execFileSync('sips', args, { stdio: ['ignore', 'pipe', 'pipe'] }).toString()
 // sips on macOS can READ webp but not WRITE it — use cwebp for the conversion.
 const toWebp = (src, out) => execFileSync('cwebp', ['-q', '82', src, '-o', out], { stdio: ['ignore', 'ignore', 'pipe'] })
@@ -64,6 +68,14 @@ const dimMap = {}
 
 // newest first
 const ordered = [...bases.entries()].sort((a, b) => b[1].sortKey - a[1].sortKey)
+
+// then pull FEATURED pieces to the front, in listed order; the rest stay
+// newest-first (Node's sort is stable, so date order is preserved for ties)
+const rank = (base) => {
+  const i = FEATURED.findIndex((f) => base.includes(f))
+  return i === -1 ? Infinity : i
+}
+ordered.sort((a, b) => rank(a[0]) - rank(b[0]))
 
 for (const [base, { orig }] of ordered) {
   const webp = join(dir, `${base}.webp`)
