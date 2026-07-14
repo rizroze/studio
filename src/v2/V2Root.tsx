@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { findDiscipline } from './disciplines'
 import { V2Identity } from './V2Identity'
-import { V2RailFoot } from './V2RailFoot'
+import { V2RailFoot, RailStatus } from './V2RailFoot'
 import { useIsMobile } from './useMobile'
 import { V2Work } from './V2Work'
 import { V2Discipline } from './V2Discipline'
@@ -160,14 +160,13 @@ export function V2Root() {
         )}
       </main>
 
-      {/* mobile: the rail foot lives at the bottom of the page; hide the
-          References/Lab links while inside a discipline */}
+      {/* mobile: the rail foot lives at the bottom of the page — Sound plus the
+          availability block on home; just Sound inside a discipline (References/
+          Lab live up in the rail on home only) */}
       {isMobile && (
-        <V2RailFoot
-          onOpenReferences={() => setReferences(true)}
-          onOpenLab={openLab}
-          hideLinks={state.view === 'discipline'}
-        />
+        <V2RailFoot>
+          {state.view === 'home' ? <RailStatus /> : null}
+        </V2RailFoot>
       )}
 
       {lightbox && (
