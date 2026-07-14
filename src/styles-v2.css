@@ -1176,9 +1176,12 @@ button.v2-lab-row { background: none; border: none; font: inherit; text-align: l
   .v2-rail {
     width: 100%; height: auto; border-right: none;
     border-bottom: 1px solid var(--v2-line);
-    gap: 28px; padding: 40px 28px;
+    gap: 24px; padding: 36px 28px 22px;
   }
-  .v2-main { height: auto; padding: 40px 28px 100px; }
+  .v2-main { height: auto; padding: 22px 28px 24px; }
+  /* tighter than desktop so all four disciplines are visible without scrolling
+     past a big empty band under "Selected Work" */
+  .v2-crumb { margin-bottom: 18px; }
 
   /* arrows would crowd the image on narrow screens — tap outside / close instead */
   .v2-lb-nav { display: none; }
