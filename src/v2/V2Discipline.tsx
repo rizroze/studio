@@ -1,30 +1,12 @@
-import { useRef, useEffect } from 'react'
 import type { Discipline } from './disciplines'
 import { V2Collection } from './V2Collection'
+import { V2VideoTile } from './V2VideoTile'
 import { projectLogo } from './clientLogos'
 
 interface V2DisciplineProps {
   discipline: Discipline
   onHome: () => void
   onOpenImage: (images: string[], index: number) => void
-}
-
-// preload="none" + play only while in view: the heavy mp4s don't download
-// until you scroll to them, then autoplay (muted) like before, and pause when
-// they leave the viewport
-function V2Video({ src }: { src: string }) {
-  const ref = useRef<HTMLVideoElement>(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) el.play().catch(() => {}); else el.pause() },
-      { threshold: 0.25 },
-    )
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
-  return <video ref={ref} src={src} loop muted playsInline controls preload="none" />
 }
 
 export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplineProps) {
@@ -76,7 +58,7 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
           <div className="v2-video-stack">
             {discipline.videos.map(v => (
               <figure key={v.src} className="v2-video">
-                <V2Video src={v.src} />
+                <V2VideoTile src={v.src} />
                 <figcaption>{v.project} — {v.label}</figcaption>
               </figure>
             ))}

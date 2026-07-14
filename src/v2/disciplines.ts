@@ -49,6 +49,12 @@ function standalone(title: string, gallery: string[], grid: 'dense' | 'ratio' = 
   return { project: '', section: { title, description: '', gallery }, grid }
 }
 
+// Experiments bento: the "world." cover leads (pinned by the pipeline), its
+// motion companion right after it, then the rest of the daily output.
+const EXPERIMENTS_BENTO = EXPERIMENTS_GALLERY.length
+  ? [EXPERIMENTS_GALLERY[0], '/content/experiments/motion-01.mp4', ...EXPERIMENTS_GALLERY.slice(1)]
+  : []
+
 // Taxonomy — reuses existing CASE_STUDIES sections, no new content.
 export const DISCIPLINES: Discipline[] = [
   {
@@ -101,10 +107,8 @@ export const DISCIPLINES: Discipline[] = [
     label: 'Experiments',
     blurb: 'Daily · Studies · Ads',
     description: 'Daily reps. Some become ads. The rest just keep the hand sharp.',
-    collections: [standalone('Experiments', EXPERIMENTS_GALLERY, 'ratio')],
-    videos: [
-      { project: 'world.', src: '/content/experiments/motion-01.mp4', label: 'Motion' },
-    ],
+    collections: [standalone('Experiments', EXPERIMENTS_BENTO, 'ratio')],
+    videos: [],
   } satisfies Discipline] : []),
 ]
 
@@ -136,7 +140,8 @@ export function disciplineMosaic(d: Discipline, max = 12): string[] {
   const perCollection = Math.max(1, Math.ceil(max / d.collections.length))
   const picked: string[] = []
   d.collections.forEach(c => {
-    picked.push(...c.section.gallery.slice(0, perCollection))
+    // a gallery may hold a video (Experiments) — show its poster still, not the mp4
+    picked.push(...c.section.gallery.slice(0, perCollection).map(s => (/\.mp4$/i.test(s) ? videoPoster(s) : s)))
   })
   d.videos.forEach(v => picked.push(videoPoster(v.src)))
   return picked.slice(0, max)

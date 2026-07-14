@@ -684,6 +684,41 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   color: var(--v2-muted);
 }
 
+/* control-free video tiles (Motion block + Experiments bento) */
+.v2-videotile {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: #000;
+  overflow: hidden;
+}
+.v2-videotile video { width: 100%; display: block; }
+.v2-video .v2-videotile video { max-height: 86vh; }
+/* in the masonry bento the tile keeps its ratio and cover-fills like an image */
+.v2-grid-ratio .v2-videotile {
+  break-inside: avoid;
+  margin-bottom: clamp(8px, 1vw, 16px);
+}
+.v2-grid-ratio .v2-videotile video { height: 100%; object-fit: cover; }
+.v2-videotile:hover video { opacity: 0.9; }
+
+/* click → clean fullscreen, no player chrome */
+.v2-video-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5vh 6vw;
+  animation: v2-fade-in 0.25s ease;
+}
+.v2-video-big { max-width: 90vw; max-height: 90vh; display: block; }
+
 /* ============================================
    LIGHTBOX
    ============================================ */
@@ -1196,8 +1231,12 @@ button.v2-lab-row { background: none; border: none; font: inherit; text-align: l
   .v2-home-preview { position: static; }
   .v2-home-mosaic { grid-template-columns: repeat(4, 1fr); }
 
-  /* mobile: rail foot (loader + Sound + links) sits at the very bottom of the
-     page instead of up in the rail */
+  /* mobile: the in-page jump list and the rail foot (loader + Sound + links)
+     sit at the very bottom of the page instead of up in the rail */
+  #v2-root > .v2-rail-nav {
+    padding: 28px 28px 4px;
+    border-top: 1px solid var(--v2-line);
+  }
   #v2-root > .v2-rail-bottom {
     padding: 28px 28px 40px;
     border-top: 1px solid var(--v2-line);

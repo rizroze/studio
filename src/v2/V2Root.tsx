@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { findDiscipline } from './disciplines'
 import { V2Identity } from './V2Identity'
 import { V2RailFoot, RailStatus } from './V2RailFoot'
+import { V2RailNav } from './V2RailNav'
 import { useIsMobile } from './useMobile'
 import { V2Work } from './V2Work'
 import { V2Discipline } from './V2Discipline'
@@ -160,13 +161,18 @@ export function V2Root() {
         )}
       </main>
 
-      {/* mobile: the rail foot lives at the bottom of the page — Sound plus the
-          availability block on home; just Sound inside a discipline (References/
-          Lab live up in the rail on home only) */}
+      {/* mobile: the in-page jump list (discipline) and the rail foot both live
+          at the bottom of the page — nav first, then Sound (+ availability on
+          home; References/Lab live up in the rail on home only) */}
       {isMobile && (
-        <V2RailFoot>
-          {state.view === 'home' ? <RailStatus /> : null}
-        </V2RailFoot>
+        <>
+          {state.view === 'discipline' && nav && (
+            <V2RailNav nav={nav} navTitle={discipline?.label} activeNav={activeBlock} onJump={jumpTo} />
+          )}
+          <V2RailFoot>
+            {state.view === 'home' ? <RailStatus /> : null}
+          </V2RailFoot>
+        </>
       )}
 
       {lightbox && (

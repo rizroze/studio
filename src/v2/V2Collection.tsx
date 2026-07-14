@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import type { ProjectSection } from '../constants/projects'
 import { V2Bento, fadeClass } from './V2Bento'
+import { V2VideoTile } from './V2VideoTile'
 import { IMAGE_DIMS } from './imageDims'
 import { med } from './disciplines'
 import { useIsMobile } from './useMobile'
@@ -28,17 +29,26 @@ const refIn = (img: HTMLImageElement | null) => {
   if (img?.complete) requestAnimationFrame(() => requestAnimationFrame(() => img.classList.add('in')))
 }
 
+const isVideo = (s: string) => /\.mp4$/i.test(s)
+
 function RatioGrid({ section, onOpenImage }: V2CollectionProps) {
+  // videos are their own control-free tiles (own fullscreen overlay); keep them
+  // out of the image lightbox so image nav indices stay correct
+  const images = section.gallery.filter((s) => !isVideo(s))
   return (
     <div className="v2-grid v2-grid-ratio">
-      {section.gallery.map((src, i) => {
+      {section.gallery.map((src) => {
+        if (isVideo(src)) {
+          return <V2VideoTile key={src} src={src} dims={IMAGE_DIMS[src]} className="v2-grid-item" />
+        }
         const d = IMAGE_DIMS[src]
+        const j = images.indexOf(src)
         return (
           <button
             key={src}
             className="v2-grid-item"
             data-lbsrc={src}
-            onClick={() => onOpenImage(section.gallery, i)}
+            onClick={() => onOpenImage(images, j)}
           >
             <img
               className={fadeClass(src)}

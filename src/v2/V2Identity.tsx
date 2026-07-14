@@ -1,9 +1,5 @@
 import { V2RailFoot, RailLinks, RailStatus } from './V2RailFoot'
-
-interface V2NavItem {
-  label: string
-  project: string
-}
+import { V2RailNav, type V2NavItem } from './V2RailNav'
 
 interface V2IdentityProps {
   onHome: () => void
@@ -34,19 +30,8 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
         </button>
 
         {nav && nav.length > 0 ? (
-          <nav className="v2-rail-nav">
-            <span className="v2-rail-nav-head">On {navTitle ?? 'this'} Page</span>
-            {nav.map((n, i) => (
-              <button
-                key={`${n.project}-${n.label}`}
-                className={`v2-rail-nav-item ${activeNav === i ? 'active' : ''}`}
-                onClick={() => onJump?.(i)}
-              >
-                <span className="v2-rail-nav-title">{n.label}</span>
-                <span className="v2-rail-nav-proj">{n.project}</span>
-              </button>
-            ))}
-          </nav>
+          // mobile moves this jump list to the page bottom (rendered in V2Root)
+          isMobile ? null : <V2RailNav nav={nav} navTitle={navTitle} activeNav={activeNav} onJump={onJump} />
         ) : (
           <>
             <p className="v2-rail-statement">
