@@ -13,9 +13,9 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
   const [active, setActive] = useState(0)
   const discipline = DISCIPLINES[active]
 
-  // both desktop and mobile show a capped teaser of big tiles that fits one
-  // screen; the full wall lives on the discipline page ("All N pieces →")
-  const mosaicMax = isMobile ? 16 : 12
+  // both desktop and mobile show a capped teaser of big tiles; the full wall
+  // lives on the discipline page ("All N pieces →"). Desktop = 4 cols × 6 rows.
+  const mosaicMax = isMobile ? 16 : 24
 
   // preload every discipline's thumbnails once so hover-swaps are instant
   // (no flash of an empty/old tile while the new branch's images decode)
