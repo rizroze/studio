@@ -13,9 +13,9 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
   const [active, setActive] = useState(0)
   const discipline = DISCIPLINES[active]
 
-  // mobile shows a capped teaser (the full wall is a discipline-page thing);
-  // desktop keeps the everything-mosaic as the live preview pane
-  const mosaicMax = isMobile ? 16 : Infinity
+  // both desktop and mobile show a capped teaser of big tiles that fits one
+  // screen; the full wall lives on the discipline page ("All N pieces →")
+  const mosaicMax = isMobile ? 16 : 12
 
   // preload every discipline's thumbnails once so hover-swaps are instant
   // (no flash of an empty/old tile while the new branch's images decode)
@@ -92,10 +92,10 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
         <V2Mosaic
           images={mosaic}
           runKey={discipline.id}
-          cols={discipline.previewCols ?? 6}
+          cols={discipline.previewCols ?? 4}
           onOpen={() => onOpenDiscipline(discipline.id)}
         />
-        {isMobile && total > mosaic.length && (
+        {total > mosaic.length && (
           <button className="v2-mosaic-more" onClick={() => onOpenDiscipline(discipline.id)}>
             All {total} pieces →
           </button>

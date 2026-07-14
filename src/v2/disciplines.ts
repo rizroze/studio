@@ -85,7 +85,6 @@ export const DISCIPLINES: Discipline[] = [
     id: 'product',
     label: 'Product',
     blurb: 'Interfaces · Apps · Shipped',
-    previewCols: 4,
     collections: [
       { ...sec('wayy', 'Website UI'), stats: 'Solana prediction market · design to deployment' },
       { ...sec('whatsfordinner', 'Landing Page'), stats: 'Live SaaS · designed, built & run solo · 11 languages' },
