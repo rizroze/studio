@@ -528,20 +528,6 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
 }
 .v2-bento-item:hover img { opacity: 0.85; }
 
-/* justified: full-width rows scaled to a shared height, native ratio, no crop.
-   Row widths/heights are computed in V2Justified from precomputed dims. */
-.v2-justified { display: flex; flex-direction: column; }
-.v2-just-row { display: flex; }
-.v2-just-item {
-  overflow: hidden;
-  background: var(--v2-hover);
-  cursor: pointer;
-  padding: 0;
-  flex: 0 0 auto;
-}
-.v2-just-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.v2-just-item:hover img { opacity: 0.82; }
-
 /* ============================================
    COLLECTION — index + big side preview
    ============================================ */

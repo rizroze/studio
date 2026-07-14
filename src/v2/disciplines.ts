@@ -5,7 +5,7 @@ import { EXPERIMENTS_GALLERY } from './experiments'
 export interface DisciplineCollection {
   project: string                 // project title, for the label ('' = standalone, no label row)
   section: ProjectSection         // the resolved section (gallery + display)
-  grid: 'dense' | 'ratio' | 'justified'  // dense = fixed yeezy squares; ratio = masonry; justified = full-width rows, native ratio, no crop
+  grid: 'dense' | 'ratio'         // dense = fixed yeezy squares; ratio = masonry (native ratio)
   cols?: number                   // dense grids: columns across (default 4)
   label?: string                  // override the displayed collection title
   stats?: string                  // outcome line — verifiable numbers only, ' · ' separated
@@ -45,7 +45,7 @@ function vid(slug: string): DisciplineVideo {
 
 // Standalone gallery not tied to a CASE_STUDIES project (e.g. Experiments).
 // project: '' so V2Discipline skips the "Project — Title" label row.
-function standalone(title: string, gallery: string[], grid: 'dense' | 'ratio' | 'justified' = 'justified'): DisciplineCollection {
+function standalone(title: string, gallery: string[], grid: 'dense' | 'ratio' = 'ratio'): DisciplineCollection {
   return { project: '', section: { title, description: '', gallery }, grid }
 }
 

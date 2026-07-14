@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import type { ProjectSection } from '../constants/projects'
 import { V2Bento, fadeClass } from './V2Bento'
-import { V2Justified } from './V2Justified'
 import { IMAGE_DIMS } from './imageDims'
 import { med } from './disciplines'
 import { useIsMobile } from './useMobile'
@@ -9,7 +8,7 @@ import { indexLabel } from './indexLabels'
 
 interface V2CollectionProps {
   section: ProjectSection
-  grid?: 'dense' | 'ratio' | 'justified'
+  grid?: 'dense' | 'ratio'
   cols?: number
   onOpenImage: (images: string[], index: number) => void
 }
@@ -17,9 +16,6 @@ interface V2CollectionProps {
 export function V2Collection({ section, grid = 'ratio', cols, onOpenImage }: V2CollectionProps) {
   if (section.display === 'index') {
     return <IndexView section={section} onOpenImage={onOpenImage} />
-  }
-  if (grid === 'justified') {
-    return <V2Justified gallery={section.gallery} onOpenImage={onOpenImage} />
   }
   if (grid === 'dense') {
     return <V2Bento gallery={section.gallery} cols={cols ?? 4} onOpenImage={onOpenImage} />
