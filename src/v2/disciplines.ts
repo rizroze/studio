@@ -102,7 +102,9 @@ export const DISCIPLINES: Discipline[] = [
     blurb: 'Daily · Studies · Ads',
     description: 'Daily reps. Some become ads. The rest just keep the hand sharp.',
     collections: [standalone('Experiments', EXPERIMENTS_GALLERY, 'ratio')],
-    videos: [],
+    videos: [
+      { project: 'world.', src: '/content/experiments/motion-01.mp4', label: 'Motion' },
+    ],
   } satisfies Discipline] : []),
 ]
 
