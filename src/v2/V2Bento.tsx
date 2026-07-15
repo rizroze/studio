@@ -23,11 +23,15 @@ const refIn = (img: HTMLImageElement | null) => {
   // already-cached images: defer two frames so the transparent state paints and they fade too
   if (img?.complete) requestAnimationFrame(() => requestAnimationFrame(() => img.classList.add('in')))
 }
-// animated gifs mount already-revealed: Chromium restarts a CSS transition as
-// gif frames stream in, so a class flip after paint leaves them stuck at the
+// Animated stills (.gif, and .anim.webp — the extension can't tell us a webp
+// moves, so the name has to). Nothing else in the app should sniff for this.
+export const isAnimated = (src: string) => /\.gif$|\.anim\.webp$/i.test(src)
+
+// animated images mount already-revealed: Chromium restarts a CSS transition as
+// their frames stream in, so a class flip after paint leaves them stuck at the
 // transition's start state (invisible) forever
 export const fadeClass = (src: string) =>
-  /\.gif$/i.test(src) ? 'v2-fadeimg in' : 'v2-fadeimg'
+  isAnimated(src) ? 'v2-fadeimg in' : 'v2-fadeimg'
 
 // Bento grid: square base cells; wide images span 2 cols, tall span 2 rows.
 export function V2Bento({ gallery, cols = 4, onOpenImage }: V2BentoProps) {

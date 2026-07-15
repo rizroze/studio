@@ -80,6 +80,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
           '/content/radiants/community/rad48-1hr.webp',         // Oct 2025 — RadSpaces #48
           '/content/radiants/community/radspaces48.webp',       // Oct 2025
           '/content/radiants/community/1231231.webp',           // Sep 2025
+          '/content/radiants/community/rad46.anim.webp',        // Sep 2025 — RadSpaces #46 (animated)
           // 2025
           '/content/radiants/community/frame-1000005468.webp',  // Apr 2025
           '/content/radiants/community/frame-1000005467.webp',  // Apr 2025

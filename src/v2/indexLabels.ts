@@ -24,6 +24,7 @@ export const INDEX_LABELS: Record<string, string> = {
   '/content/radiants/community/rad48-1hr.webp': 'RadSpaces #48 · 1 Hour',
   '/content/radiants/community/radspaces48.webp': 'RadSpaces #48',
   '/content/radiants/community/1231231.webp': 'Community Meme',
+  '/content/radiants/community/rad46.anim.webp': 'RadSpaces #46 · Soul Gate',
   '/content/radiants/community/frame-1000005468.webp': 'RadCast Announcement',
   '/content/radiants/community/frame-1000005467.webp': 'Rad Sessions Launch',
   '/content/radiants/community/11422.webp': 'Burn Event Announcement',

@@ -127,6 +127,7 @@ const RAW: Record<string, [number, number]> = {
   "/content/radiants/brand-art/sprite-00021.gif": [500,281],
   "/content/radiants/community/11422.webp": [1400,1400],
   "/content/radiants/community/1231231.webp": [1130,1400],
+  "/content/radiants/community/rad46.anim.webp": [1080,1080],
   "/content/radiants/community/49.webp": [1400,1394],
   "/content/radiants/community/57now.webp": [1156,1400],
   "/content/radiants/community/dela.webp": [1156,1400],
