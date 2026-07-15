@@ -94,7 +94,10 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
         <V2Mosaic
           images={mosaic}
           runKey={discipline.id}
-          cols={discipline.previewCols ?? 3}
+          // mobile packs one more column into a much narrower box; it lives
+          // here rather than in a media query so the FLIP can size the big
+          // state against the real dense count
+          cols={isMobile ? 4 : (discipline.previewCols ?? 3)}
           onOpen={() => onOpenDiscipline(discipline.id)}
         />
         {total > mosaic.length && (

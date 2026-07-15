@@ -3,14 +3,19 @@ import { useRef, useLayoutEffect } from 'react'
 interface V2MosaicProps {
   images: string[]
   runKey: string   // discipline id — replay when it changes
-  cols?: number    // dense column count (big layout = half)
+  cols?: number    // dense column count (big layout = one column fewer)
   onOpen: () => void
 }
 
-// Goal: see the BIG grid (3 per row), then it gets smaller and every tile
-// repositions into the dense grid (6 per row) because the column system
-// changed — a real layout FLIP, held briefly, then a staggered reflow.
-export function V2Mosaic({ images, runKey, cols = 6, onOpen }: V2MosaicProps) {
+// DESIGN-RULES "Smooth ease": the curve for something moving between two
+// positions. Gentle in, gentle out, and — unlike the overshoot this used to
+// run — it never passes its mark and creeps back, which reads as a snap.
+const EASE = 'cubic-bezier(0.4, 0, 0.2, 1)'
+
+// Goal: see the BIG grid, then it gets smaller and every tile repositions into
+// the dense grid because the column system changed — a real layout FLIP, held
+// briefly, then a staggered reflow.
+export function V2Mosaic({ images, runKey, cols = 3, onOpen }: V2MosaicProps) {
   const gridRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
@@ -41,7 +46,7 @@ export function V2Mosaic({ images, runKey, cols = 6, onOpen }: V2MosaicProps) {
     // hold the big view briefly, then reflow every tile to its dense slot
     const hold = window.setTimeout(() => {
       items.forEach((el, i) => {
-        el.style.transition = `transform 0.6s cubic-bezier(0.34, 1.08, 0.36, 1) ${i * 0.012}s`
+        el.style.transition = `transform 0.6s ${EASE} ${i * 0.012}s`
         el.style.transform = ''
       })
       const cleanup = window.setTimeout(() => {
@@ -63,7 +68,11 @@ export function V2Mosaic({ images, runKey, cols = 6, onOpen }: V2MosaicProps) {
       <div
         className="v2-home-mosaic"
         ref={gridRef}
-        style={{ '--mcols': cols, '--mcols-big': Math.ceil(cols / 2) } as React.CSSProperties}
+        // big = one column fewer, so the jump stays gentle whatever the dense
+        // count is. Halving it made mobile (4 cols) leap 2.06x against
+        // desktop's 1.52x, which threw all but 4 tiles outside the clip box —
+        // you saw them pop in rather than rearrange.
+        style={{ '--mcols': cols, '--mcols-big': Math.max(1, cols - 1) } as React.CSSProperties}
       >
         {images.map((src, i) => (
           // key per discipline+slot: hovering a new branch remounts fresh tiles
