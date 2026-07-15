@@ -121,6 +121,7 @@ export const DISCIPLINES: Discipline[] = [
     // the homepage mosaic spreads subjects/colors and keeps WeSplit to a few
     previewImages: [
       '/content/experiments/Frame 2085660679.webp', // world. — teal globe cover
+      '/content/experiments/motion-01.mp4',         // world. motion companion (poster still)
       '/content/experiments/Frame 2085660639.webp', // Zcash Phoenix +771% — orange
       '/content/experiments/Frame 7 1.webp',        // WeSplit — last supper (green)
       '/content/experiments/Frame 2085660660.webp', // BREAKPOINT — purple
