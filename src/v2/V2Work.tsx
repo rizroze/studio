@@ -14,9 +14,9 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
   const discipline = DISCIPLINES[active]
 
   // both desktop and mobile show a capped teaser of big tiles; the full wall
-  // lives on the discipline page ("All N pieces →"). 3 cols × 5 rows on both —
-  // 15 fills the last row exactly, where 16 left one tile stranded on its own.
-  const mosaicMax = 15
+  // lives on the discipline page ("All N pieces →"). Desktop = 3 cols × 5 rows
+  // (one row trimmed so the whole teaser fits one screen without scrolling).
+  const mosaicMax = isMobile ? 16 : 15
 
   // preload every discipline's thumbnails once so hover-swaps are instant
   // (no flash of an empty/old tile while the new branch's images decode)
@@ -94,10 +94,10 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
         <V2Mosaic
           images={mosaic}
           runKey={discipline.id}
-          // one grid for both: a media query used to pack mobile to 4 columns
-          // behind the JS's back, which left the FLIP sizing its big state
-          // against a dense count that didn't exist
-          cols={discipline.previewCols ?? 3}
+          // mobile packs one more column into a much narrower box; it lives
+          // here rather than in a media query so the FLIP can size the big
+          // state against the real dense count
+          cols={isMobile ? 4 : (discipline.previewCols ?? 3)}
           onOpen={() => onOpenDiscipline(discipline.id)}
         />
         {total > mosaic.length && (
