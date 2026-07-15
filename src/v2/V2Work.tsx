@@ -47,7 +47,7 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
       <div className="v2-home-names">
         <div className="v2-crumb">
           <span>Selected Work</span>
-          <span className="v2-crumb-sep">—</span>
+          <span className="v2-crumb-sep">·</span>
           <span>{DISCIPLINES.length} disciplines</span>
         </div>
 

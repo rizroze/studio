@@ -39,7 +39,7 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
                 />
               )}
               <span className="v2-disc-project">{project}</span>
-              <span className="v2-disc-sep">—</span>
+              <span className="v2-disc-sep">·</span>
               <span className="v2-disc-title">{label ?? section.title}</span>
             </div>
           )}
@@ -59,7 +59,7 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
             {discipline.videos.map(v => (
               <figure key={v.src} className="v2-video">
                 <V2VideoTile src={v.src} />
-                <figcaption>{v.project} — {v.label}</figcaption>
+                <figcaption>{v.project} · {v.label}</figcaption>
               </figure>
             ))}
           </div>

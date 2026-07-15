@@ -133,7 +133,7 @@ export function V2LabGlass({ onClose }: { onClose: () => void }) {
         <label>Radius <input type="range" min={0} max={120} value={cfg.radius} onChange={set('radius')} /></label>
         <label>Size <input type="range" min={180} max={520} value={cfg.width}
           onChange={e => setCfg(c => ({ ...c, width: Number(e.target.value), height: Math.round(Number(e.target.value) * 0.68) }))} /></label>
-        {!isChromium && <span className="lab-glass-note">Displacement is Chromium-only — showing clean frost.</span>}
+        {!isChromium && <span className="lab-glass-note">Displacement is Chromium-only, showing clean frost.</span>}
       </div>
     </div>,
     document.body,

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brand Exploration — Rizzy Studio</title>
+<title>Brand Exploration · Rizzy Studio</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,300;0,400;0,600;0,700;0,800;1,700&family=Inter+Tight:wght@100;300;400;500;600;700;800&family=Fragment+Mono&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap');
 
@@ -795,7 +795,7 @@ const archetypes = [
   {
     id: 'warm-organic',
     name: 'Warm Organic',
-    vibe: 'Approachable, human, earthy. Like a well-designed coffee shop — inviting but intentional.',
+    vibe: 'Approachable, human, earthy. Like a well-designed coffee shop, inviting but intentional.',
     palette: ['#FFFBF5', '#2D2418', '#C17D3A', '#5E8C61', '#E8DDD0'],
     typography: 'Humanist serif headlines\nRounded sans body\nWarm, generous spacing',
     motion: 'Gentle reveals, soft scaling. Movements feel like breathing.',
@@ -984,7 +984,7 @@ function renderSample(dir, data) {
         <div class="s-headline">${company}</div>
         <div class="s-sub">${oneliner}</div>
         <div class="s-divider"></div>
-        <div class="s-body">Crafted with care. Built to last. Not just another product — a statement.</div>
+        <div class="s-body">Crafted with care. Built to last. Not just another product. A statement.</div>
         <div class="s-footer">
           <div class="s-cta">Enter</div>
           <div class="s-year">26</div>
@@ -1005,7 +1005,7 @@ function renderSample(dir, data) {
     'sample-swiss': `
       <div class="sample sample-swiss">
         <div class="s-white">
-          <div class="s-overline">${company} — 2026</div>
+          <div class="s-overline">${company} · 2026</div>
           <div class="s-headline">${company}</div>
           <div class="s-body">${oneliner}</div>
         </div>
@@ -1092,7 +1092,7 @@ function render(data) {
   document.getElementById('app').innerHTML = `
     <div class="header">
       <div class="header-label">Brand Exploration</div>
-      <div class="header-title">${company} — 4 Directions</div>
+      <div class="header-title">${company} · 4 Directions</div>
       <div class="header-sub">Each direction is generated from the questionnaire data: slider positions, personality tags, priorities, and service scope. Different creative bets, same foundation.</div>
       <div class="header-meta">${metaHtml}</div>
       ${svcTags ? '<div class="header-services">' + svcTags + '</div>' : ''}
@@ -1100,7 +1100,7 @@ function render(data) {
     </div>
     <div class="grid">${dirHtml}</div>`
 
-  document.title = 'Brand Exploration — ' + company
+  document.title = 'Brand Exploration · ' + company
 }
 
 // ═══ LOAD DATA ═══

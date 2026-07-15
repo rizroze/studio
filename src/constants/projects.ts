@@ -417,7 +417,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
   {
     slug: 'fullport',
     title: 'Fullport',
-    client: 'Solana Portfolio Tracker — Mobile App',
+    client: 'Solana Portfolio Tracker · Mobile App',
     tags: ['Mobile App'],
     thumbnail: '/content/logos/fullport-briefcase.svg',
     color: '#1a1a2e',
@@ -528,8 +528,8 @@ export const CASE_STUDIES: CaseStudyData[] = [
     category: 'web',
     description: 'AI-powered meal planner that generates personalized weekly meal plans based on dietary preferences, budget, and household size.',
     brief: 'Build an AI meal planning SaaS that takes the daily stress out of deciding what to eat.',
-    challenge: 'Everyone asks "what\'s for dinner?" and nobody has a good answer. Meal planning is tedious, generic apps don\'t know your budget or allergies, and meal kits cost a fortune. The goal: make it so simple that a 2-minute onboarding gives you a full week of personalized meals, recipes, and a grocery list — food you actually want to eat.',
-    solution: 'Built a full AI meal planning SaaS from scratch. 5-step onboarding captures household size, budget, dietary needs, and preferences — then Claude generates a complete weekly plan with recipes, calorie counts, cook times, and a consolidated grocery list with estimated cost. Warm minimal UI keeps the experience friendly and approachable, not clinical.',
+    challenge: 'Everyone asks "what\'s for dinner?" and nobody has a good answer. Meal planning is tedious, generic apps don\'t know your budget or allergies, and meal kits cost a fortune. The goal: make it so simple that a 2-minute onboarding gives you a full week of personalized meals, recipes, and a grocery list. Food you actually want to eat.',
+    solution: 'Built a full AI meal planning SaaS from scratch. 5-step onboarding captures household size, budget, dietary needs, and preferences. Claude then generates a complete weekly plan with recipes, calorie counts, cook times, and a consolidated grocery list with estimated cost. Warm minimal UI keeps the experience friendly and approachable, not clinical.',
     stack: ['Next.js', 'React', 'Supabase', 'Claude API', 'Tailwind', 'Resend', 'Lemon Squeezy'],
     result: 'A warm, intuitive meal planner that makes weekly planning feel effortless.',
     resultMetric: 'AI-powered meal planning SaaS with personalized weekly plans.'

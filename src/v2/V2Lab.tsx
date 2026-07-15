@@ -14,8 +14,8 @@ interface LabItem {
 
 // The lab — experiments and design toys. Newest first; grouped by year.
 const LAB: LabItem[] = [
-  { year: '2026', title: 'Tamagotchi', date: '27/06', note: 'An octopus that lives here — feed, play, pet', spawn: 'pet', badge: 'New' },
-  { year: '2026', title: 'Liquid Glass', date: '13/04', note: 'Displacement glass — drag it over the page', spawn: 'glass' },
+  { year: '2026', title: 'Tamagotchi', date: '27/06', note: 'An octopus that lives here. Feed, play, pet', spawn: 'pet', badge: 'New' },
+  { year: '2026', title: 'Liquid Glass', date: '13/04', note: 'Displacement glass. Drag it over the page', spawn: 'glass' },
   { year: '2026', title: 'iPod', date: '24/03', note: 'Grab it, fling it, press play', spawn: 'ipod' },
 ]
 

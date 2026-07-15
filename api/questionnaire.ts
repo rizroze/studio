@@ -133,7 +133,7 @@ function buildEmail(data: QuestionnaireData): string {
       const score = Math.round(d.score);
       return `<div style="margin:4px 0;font-size:12px;color:#bbb;">
         <span style="color:#e0e0e0;font-weight:600;">${escapeHtml(d.name)}${marker}</span>
-        <span style="color:#666;"> — score: ${score} — </span>
+        <span style="color:#666;"> · score: ${score} · </span>
         <span style="color:#888;">${d.references.join(", ")}</span>
       </div>`;
     }).join('');
