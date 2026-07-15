@@ -699,9 +699,14 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
 }
 .v2-videotile video { width: 100%; display: block; }
 .v2-video .v2-videotile video { max-height: 86vh; }
-/* in the masonry bento the tile keeps its ratio and cover-fills like an image */
+/* in the masonry bento the video breaks out of the columns as a full-width
+   band — it leads the gallery, so nothing balances awkwardly above it.
+   max-height keeps a 16:9 band from eating the screen on ultrawide monitors
+   (cover crops instead of growing) */
 .v2-grid-ratio .v2-videotile {
   break-inside: avoid;
+  column-span: all;
+  max-height: 70vh;
   margin-bottom: clamp(8px, 1vw, 16px);
 }
 .v2-grid-ratio .v2-videotile video { height: 100%; object-fit: cover; }

@@ -51,10 +51,12 @@ function standalone(title: string, gallery: string[], grid: 'dense' | 'ratio' = 
   return { project: '', section: { title, description: '', gallery }, grid }
 }
 
-// Experiments bento: the "world." cover leads (pinned by the pipeline), its
-// motion companion right after it, then the rest of the daily output.
+// Experiments bento: the "world." motion piece leads as a full-width band
+// (column-span: all breaks it out of the masonry columns — it has to come
+// first or the cover would balance alone above it), then the "world." cover
+// pinned by the pipeline, then the rest of the daily output.
 const EXPERIMENTS_BENTO = EXPERIMENTS_GALLERY.length
-  ? [EXPERIMENTS_GALLERY[0], '/content/experiments/motion-01.mp4', ...EXPERIMENTS_GALLERY.slice(1)]
+  ? ['/content/experiments/motion-01.mp4', ...EXPERIMENTS_GALLERY]
   : []
 
 // Taxonomy — reuses existing CASE_STUDIES sections, no new content.
@@ -65,8 +67,8 @@ export const DISCIPLINES: Discipline[] = [
     blurb: 'Content · Campaigns · Social',
     collections: [
       { ...sec('radiants', 'Community & Events'), stats: '2024–2026 · weekly cadence · RadSpaces to ep. 57 · one cohesive brand' },
-      { ...sec('radiants', 'Monolith 2026'), stats: 'Solana Mobile flagship event · $125K+ prize pool · +132 pieces end-to-end' },
-      { ...sec('radiants', 'Seeker Hackathon'), stats: '+500 signups · +230 pieces, launch to end' },
+      { ...sec('radiants', 'Monolith 2026'), stats: 'Solana Mobile flagship event · $125K+ prize pool · +70 pieces end-to-end' },
+      { ...sec('radiants', 'Seeker Hackathon'), stats: '+500 signups · +110 pieces, launch to end' },
     ],
     videos: [],
   },
