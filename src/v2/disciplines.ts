@@ -9,6 +9,7 @@ export interface DisciplineCollection {
   cols?: number                   // dense grids: columns across (default 4)
   label?: string                  // override the displayed collection title
   stats?: string                  // outcome line — verifiable numbers only, ' · ' separated
+  previewImages?: string[]        // homepage-mosaic picks for this collection (else section.gallery)
 }
 
 export interface DisciplineVideo {
@@ -25,6 +26,7 @@ export interface Discipline {
   collections: DisciplineCollection[]
   videos: DisciplineVideo[]
   previewCols?: number     // homepage mosaic density (default 6)
+  previewImages?: string[] // hand-picked homepage mosaic (overrides the auto per-collection spread)
 }
 
 // Pull a section out of a project by title
@@ -75,7 +77,13 @@ export const DISCIPLINES: Discipline[] = [
     collections: [
       { ...sec('radiants', 'Brand Art', 'dense', 4), stats: '2+ years · hundreds of pieces across every format' },
       { ...sec('radiants', 'PFP Art', 'dense', 8), stats: '16 hand-drawn pixel portraits' },
-      { ...sec('hydex', 'Hydex'), label: 'Pitch Deck' },
+      // mosaic leads with the "How Hydex Works" 3-layer architecture slide
+      // (deck-06) instead of the bridge cover — the deck page order is untouched
+      { ...sec('hydex', 'Hydex'), label: 'Pitch Deck', previewImages: [
+        '/content/hydex-brand/deck-06.webp',
+        '/content/hydex-brand/deck-02.webp',
+        '/content/hydex-brand/deck-03.webp',
+      ] },
       { ...sec('hydex', 'Hydex Router'), label: 'Pitch Deck', project: 'Hydex Router' },
       sec('wayy', 'Pitch Deck'),
       sec('fullport', 'Pitch Deck'),
@@ -109,6 +117,26 @@ export const DISCIPLINES: Discipline[] = [
     description: 'Daily reps. Some become ads. The rest just keep the hand sharp.',
     collections: [standalone('Experiments', EXPERIMENTS_BENTO, 'ratio')],
     videos: [],
+    // hand-picked teaser: the full daily wall clusters the WeSplit campaign, so
+    // the homepage mosaic spreads subjects/colors and keeps WeSplit to a few
+    previewImages: [
+      '/content/experiments/Frame 2085660679.webp', // world. — teal globe cover
+      '/content/experiments/Frame 2085660639.webp', // Zcash Phoenix +771% — orange
+      '/content/experiments/Frame 7 1.webp',        // WeSplit — last supper (green)
+      '/content/experiments/Frame 2085660660.webp', // BREAKPOINT — purple
+      '/content/experiments/Frame 2085660648.webp', // Early is a state of mind — sunset
+      '/content/experiments/Frame 2085660667.webp', // Palantir — b&w
+      '/content/experiments/Frame 2085660633.webp', // Phantom — trading tools (purple)
+      '/content/experiments/Frame 2085660627.webp', // Breakpoint London — crowd
+      '/content/experiments/Frame 4 1.webp',        // WeSplit — collage (b&w)
+      '/content/experiments/Frame 2085660642.webp', // sunrise — phone cases (color)
+      '/content/experiments/Frame 2085660631.webp', // TIME / Helius — b&w
+      '/content/experiments/Frame 2085660656.webp', // Breakpoint pass — red
+      '/content/experiments/Frame 2085660646.webp', // sunrise — keychain (pink)
+      '/content/experiments/Frame 2085660659.webp', // I ♥ London VIP — purple
+      '/content/experiments/Frame 2085660643.webp', // sunrise — pink cap
+      '/content/experiments/Frame 3 1.webp',        // WeSplit — split easy (green food)
+    ],
   } satisfies Discipline] : []),
 ]
 
@@ -137,11 +165,16 @@ export function videoPoster(src: string): string {
 // Spread of images across a discipline's collections — for the homepage hover
 // mosaic. Includes motion via poster stills so the videos show up too.
 export function disciplineMosaic(d: Discipline, max = 12): string[] {
+  // hand-curated override (kept separate from the deck/gallery narrative order)
+  if (d.previewImages?.length) {
+    return d.previewImages.slice(0, max).map(s => (/\.mp4$/i.test(s) ? videoPoster(s) : s))
+  }
   const perCollection = Math.max(1, Math.ceil(max / d.collections.length))
   const picked: string[] = []
   d.collections.forEach(c => {
     // a gallery may hold a video (Experiments) — show its poster still, not the mp4
-    picked.push(...c.section.gallery.slice(0, perCollection).map(s => (/\.mp4$/i.test(s) ? videoPoster(s) : s)))
+    const src = c.previewImages ?? c.section.gallery
+    picked.push(...src.slice(0, perCollection).map(s => (/\.mp4$/i.test(s) ? videoPoster(s) : s)))
   })
   d.videos.forEach(v => picked.push(videoPoster(v.src)))
   return picked.slice(0, max)
