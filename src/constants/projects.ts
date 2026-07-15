@@ -55,7 +55,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     sections: [
       {
         title: 'Community & Events',
-        description: 'Weekly branded content, event graphics, and community moments. From RadSpaces podcast posts to the first-ever Burn Event, co-working days, and vibecoding sessions.',
+        description: 'Weekly branded content, event graphics, and community moments. Two years, hundreds of pieces, every format the brand needed. All of it built to read as one brand, not a pile of one-offs.',
         layout: 'deck',
         display: 'index',
         gallery: [
