@@ -183,7 +183,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       },
       {
         title: 'Seeker Hackathon',
-        description: 'Ran the entire content campaign graphics — stayed in the audience\'s feed and mind throughout. Prize announcements, FAQ threads, countdowns, milestone celebrations, and sponsor shoutouts. 500+ signups.',
+        description: 'Ran the graphics for the entire content campaign. Prize announcements, FAQ threads, countdowns, milestone celebrations, and sponsor shoutouts, timed to keep the hackathon in the audience\'s feed from open to close.',
         layout: 'squares',
         display: 'index',
         gallery: [
@@ -306,7 +306,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     sections: [
       {
         title: 'Pitch Deck',
-        description: 'Investor deck telling the WAYY story — from problem to product to vision.',
+        description: 'Investor deck telling the WAYY story, from problem to product to vision.',
         layout: 'deck',
         gallery: [
           '/content/wayy/deck-01.webp',
@@ -507,7 +507,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       },
       {
         title: 'Onboarding Flow',
-        description: '5-step visual onboarding with emoji grids, interactive progress circles, and personalization — household size, budget, dietary needs, preferences, and delivery schedule.',
+        description: '5-step visual onboarding with emoji grids, interactive progress circles, and personalization for household size, budget, dietary needs, preferences, and delivery schedule.',
         gallery: [
           '/content/whatsfordinner/onboarding-1.webp',
           '/content/whatsfordinner/onboarding-2.webp',
