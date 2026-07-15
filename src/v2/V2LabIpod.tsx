@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { PLAYLIST } from '../constants/music'
+import { onAudioFocus } from './audioFocus'
 
 const DEVICE_W = 196
 const DEVICE_H = 326
@@ -38,6 +39,9 @@ export function V2LabIpod({ onClose }: { onClose: () => void }) {
     const a = audioRef.current
     return () => { a?.pause() }
   }, [])
+
+  // step aside while a video plays with sound, pick back up after
+  useEffect(() => onAudioFocus(() => !!audioRef.current && !audioRef.current.paused, setPlaying), [])
 
   useEffect(() => {
     const a = audioRef.current

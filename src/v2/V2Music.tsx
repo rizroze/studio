@@ -1,11 +1,15 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { PLAYLIST } from '../constants/music'
+import { onAudioFocus } from './audioFocus'
 
 export function V2Music() {
   const [open, setOpen] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [track, setTrack] = useState(0)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  // step aside while a video plays with sound, pick back up after
+  useEffect(() => onAudioFocus(() => !!audioRef.current && !audioRef.current.paused, setPlaying), [])
 
   useEffect(() => {
     if (!audioRef.current) audioRef.current = new Audio()

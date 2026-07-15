@@ -133,9 +133,13 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
   const [hovered, setHovered] = useState<number | null>(null)
   const [scrolledIdx, setScrolledIdx] = useState(0)
   const listRef = useRef<HTMLDivElement>(null)
+  // a curated section is already in the order it should be read in; shape
+  // grouping would override that (one odd ratio can hop the whole list)
   const gallery = useMemo(
-    () => [...section.gallery].sort((a, b) => shapeGroup(a) - shapeGroup(b)),
-    [section.gallery],
+    () => section.keepOrder
+      ? section.gallery
+      : [...section.gallery].sort((a, b) => shapeGroup(a) - shapeGroup(b)),
+    [section.gallery, section.keepOrder],
   )
   // hover wins when you point at a row; otherwise the preview tracks the scroll
   const active = hovered ?? scrolledIdx

@@ -5,6 +5,7 @@ export interface ProjectSection {
   layout?: 'grid' | 'squares' | 'squares-small' | 'landscape' | 'deck'  // grid = default columns, squares = 1:1 grid, squares-small = smaller 1:1, landscape = 2-col grid, deck = 3-col grid
   wideIndices?: number[]  // gallery item indices that span full row width
   display?: 'grid' | 'index'  // v2 redesign: how the collection renders — visual grid vs editorial index. Defaults to grid.
+  keepOrder?: boolean  // index view: render gallery exactly as written, skipping the shape grouping (for sections whose order is curated)
 }
 
 export interface CaseStudyData {
@@ -186,6 +187,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
         description: 'Ran the graphics for the entire content campaign. Prize announcements, FAQ threads, countdowns, milestone celebrations, and sponsor shoutouts, timed to keep the hackathon in the audience\'s feed from open to close.',
         layout: 'squares',
         display: 'index',
+        keepOrder: true,  // campaign runs launch -> close, memes are the coda
         gallery: [
           '/content/seeker/prize.webp',
           '/content/seeker/faq-1.webp',
@@ -226,9 +228,9 @@ export const CASE_STUDIES: CaseStudyData[] = [
           '/content/seeker/ty-sponsors-3.webp',
           '/content/seeker/ty-sponsors-4.webp',
           '/content/seeker/meme-1.webp',
-          '/content/seeker/meme-2.webp',
           '/content/seeker/meme-3.webp',
           '/content/seeker/meme-4.webp',
+          '/content/seeker/meme-2.webp',
         ],
       },
       {
