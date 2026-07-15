@@ -63,11 +63,7 @@ export function V2Mosaic({ images, runKey, cols = 6, onOpen }: V2MosaicProps) {
       <div
         className="v2-home-mosaic"
         ref={gridRef}
-        style={{
-          '--mcols': cols,
-          '--mcols-big': Math.ceil(cols / 2),
-          '--mrows': Math.ceil(images.length / cols),
-        } as React.CSSProperties}
+        style={{ '--mcols': cols, '--mcols-big': Math.ceil(cols / 2) } as React.CSSProperties}
       >
         {images.map((src, i) => (
           // key per discipline+slot: hovering a new branch remounts fresh tiles
