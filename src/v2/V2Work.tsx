@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { DISCIPLINES, disciplineMosaic, thumb } from './disciplines'
+import { DISCIPLINES, disciplineMosaic, med } from './disciplines'
 import { V2Mosaic } from './V2Mosaic'
 import { useIsMobile } from './useMobile'
 import { HOMEPAGE_CLIENTS } from './clientLogos'
@@ -22,7 +22,7 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
   useEffect(() => {
     const idle = (window as any).requestIdleCallback || ((fn: () => void) => setTimeout(fn, 200))
     idle(() => {
-      DISCIPLINES.forEach(d => disciplineMosaic(d, mosaicMax).map(thumb).forEach(src => { new Image().src = src }))
+      DISCIPLINES.forEach(d => disciplineMosaic(d, mosaicMax).map(med).forEach(src => { new Image().src = src }))
     })
   }, [mosaicMax])
 
@@ -36,8 +36,9 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
     }
     onOpenDiscipline(DISCIPLINES[i].id)
   }
-  // every image in the discipline (capped on mobile), low-res thumbs for speed
-  const mosaic = disciplineMosaic(discipline, mosaicMax).map(thumb)
+  // every image in the discipline (capped on mobile), 640px mediums — sharp on
+  // the ~190px preview tiles without pulling full-res webp
+  const mosaic = disciplineMosaic(discipline, mosaicMax).map(med)
   const total = discipline.collections.reduce((n, c) => n + c.section.gallery.length, 0) + discipline.videos.length
 
   return (
