@@ -66,7 +66,7 @@ export const DISCIPLINES: Discipline[] = [
     label: 'Direction',
     blurb: 'Content · Campaigns · Social',
     collections: [
-      { ...sec('radiants', 'Community & Events'), stats: '2024–2026 · weekly cadence · RadSpaces to ep. 57 · one cohesive brand' },
+      { ...sec('radiants', 'Community & Events'), stats: '2024–2026 · weekly cadence · one cohesive brand' },
       { ...sec('radiants', 'Monolith 2026'), stats: 'Solana Mobile flagship event · $125K+ prize pool · +70 pieces end-to-end' },
       { ...sec('radiants', 'Seeker Hackathon'), stats: '+500 signups · +110 pieces, launch to end' },
     ],
