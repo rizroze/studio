@@ -120,14 +120,18 @@ export const DISCIPLINES: Discipline[] = [
     collections: [standalone('Experiments', EXPERIMENTS_BENTO, 'ratio')],
     videos: [],
     // hand-picked teaser: the full daily wall clusters the WeSplit campaign, so
-    // the homepage mosaic spreads subjects/colors and keeps WeSplit to a few
+    // the homepage mosaic spreads subjects/colors and keeps WeSplit to a few.
+    // The two coinbase pieces (laptop mockup + "Everything") sit up top as the
+    // blue anchors; capped at 15 desktop / 16 mobile, so both always land inside.
     previewImages: [
       '/content/experiments/Frame 2085660679.webp', // world. — teal globe cover
       '/content/experiments/motion-01.mp4',         // world. motion companion (poster still)
+      '/content/experiments/Frame 2085660700.webp', // coinbase — laptop mockup (blue)
       '/content/experiments/Frame 2085660639.webp', // Zcash Phoenix +771% — orange
       '/content/experiments/Frame 7 1.webp',        // WeSplit — last supper (green)
       '/content/experiments/Frame 2085660660.webp', // BREAKPOINT — purple
       '/content/experiments/Frame 2085660648.webp', // Early is a state of mind — sunset
+      '/content/experiments/Frame 2085660694.webp', // coinbase — Everything (blue)
       '/content/experiments/Frame 2085660667.webp', // Palantir — b&w
       '/content/experiments/Frame 2085660633.webp', // Phantom — trading tools (purple)
       '/content/experiments/Frame 2085660627.webp', // Breakpoint London — crowd
@@ -137,8 +141,6 @@ export const DISCIPLINES: Discipline[] = [
       '/content/experiments/Frame 2085660656.webp', // Breakpoint pass — red
       '/content/experiments/Frame 2085660646.webp', // sunrise — keychain (pink)
       '/content/experiments/Frame 2085660659.webp', // I ♥ London VIP — purple
-      '/content/experiments/Frame 2085660643.webp', // sunrise — pink cap
-      '/content/experiments/Frame 3 1.webp',        // WeSplit — split easy (green food)
     ],
   } satisfies Discipline] : []),
 ]
