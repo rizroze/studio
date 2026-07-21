@@ -3,6 +3,14 @@
 
 export const EXPERIMENTS_GALLERY: string[] = [
   '/content/experiments/Frame 2085660679.webp',
+  '/content/experiments/Frame 2085660701.webp',
+  '/content/experiments/Frame 2085660700.webp',
+  '/content/experiments/Frame 2085660697.webp',
+  '/content/experiments/Frame 2085660694.webp',
+  '/content/experiments/Frame 2085660692.webp',
+  '/content/experiments/Frame 2085660689.webp',
+  '/content/experiments/Frame 2085660687.webp',
+  '/content/experiments/motion-01-poster.webp',
   '/content/experiments/Frame 2085660627.webp',
   '/content/experiments/Frame 2085660667.webp',
   '/content/experiments/Frame 2085660655.webp',
@@ -28,6 +36,14 @@ export const EXPERIMENTS_GALLERY: string[] = [
 
 export const EXPERIMENTS_DIMS: Record<string, [number, number]> = {
   '/content/experiments/Frame 2085660679.webp': [1170, 1463],
+  '/content/experiments/Frame 2085660701.webp': [1586, 880],
+  '/content/experiments/Frame 2085660700.webp': [1122, 1402],
+  '/content/experiments/Frame 2085660697.webp': [1586, 992],
+  '/content/experiments/Frame 2085660694.webp': [1170, 1463],
+  '/content/experiments/Frame 2085660692.webp': [1170, 1463],
+  '/content/experiments/Frame 2085660689.webp': [1170, 1463],
+  '/content/experiments/Frame 2085660687.webp': [1170, 1463],
+  '/content/experiments/motion-01-poster.webp': [1916, 1080],
   '/content/experiments/Frame 2085660627.webp': [960, 657],
   '/content/experiments/Frame 2085660667.webp': [1683, 952],
   '/content/experiments/Frame 2085660655.webp': [700, 400],
