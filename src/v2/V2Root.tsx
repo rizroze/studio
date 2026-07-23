@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { findDiscipline } from './disciplines'
 import { V2Identity } from './V2Identity'
-import { V2RailFoot, RailStatus } from './V2RailFoot'
+import { V2RailFoot, RailQuote } from './V2RailFoot'
 import { V2RailNav } from './V2RailNav'
 import { useIsMobile } from './useMobile'
 import { V2Work } from './V2Work'
@@ -39,10 +39,17 @@ function isLabPath(): boolean {
   return window.location.pathname === '/lab' || new URLSearchParams(window.location.search).has('lab')
 }
 
+// References gets its own URL too, so opening it registers as a pageview in
+// analytics — as a pure state toggle it was invisible, and it's the one click
+// that signals a visitor is actually doing diligence. Also makes it linkable.
+function isRefsPath(): boolean {
+  return window.location.pathname === '/references'
+}
+
 export function V2Root() {
   const [state, setState] = useState<V2View>(() => parsePath())
   const [lightbox, setLightbox] = useState<Lightbox>(null)
-  const [references, setReferences] = useState(false)
+  const [references, setReferences] = useState(() => isRefsPath())
   const [lab, setLab] = useState(() => isLabPath())
   const [labToy, setLabToy] = useState<Toy | null>(null)
   const [activeBlock, setActiveBlock] = useState(0)
@@ -64,7 +71,7 @@ export function V2Root() {
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
-    const onPop = () => { setState(parsePath()); setLab(isLabPath()); setActiveBlock(0); scrollTop() }
+    const onPop = () => { setState(parsePath()); setLab(isLabPath()); setReferences(isRefsPath()); setActiveBlock(0); scrollTop() }
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [scrollTop])
@@ -73,6 +80,7 @@ export function V2Root() {
     window.history.pushState(null, '', buildPath(next))
     setState(next)
     setLab(false)
+    setReferences(false)
     setActiveBlock(0)
     scrollTop()
   }, [scrollTop])
@@ -81,6 +89,15 @@ export function V2Root() {
   const closeLab = useCallback(() => {
     window.history.pushState(null, '', buildPath(state))
     setLab(false)
+  }, [state])
+
+  const openReferences = useCallback(() => {
+    window.history.pushState(null, '', '/references')
+    setReferences(true)
+  }, [])
+  const closeReferences = useCallback(() => {
+    window.history.pushState(null, '', buildPath(state))
+    setReferences(false)
   }, [state])
 
   // scroll-spy: highlight the block currently under the top of the content pane
@@ -142,7 +159,7 @@ export function V2Root() {
     <div id="v2-root">
       <V2Identity
         onHome={goHome}
-        onOpenReferences={() => setReferences(true)}
+        onOpenReferences={openReferences}
         onOpenLab={openLab}
         nav={nav}
         navTitle={discipline?.label}
@@ -162,7 +179,7 @@ export function V2Root() {
       </main>
 
       {/* mobile: the in-page jump list (discipline) and the rail foot both live
-          at the bottom of the page — nav first, then Sound (+ availability on
+          at the bottom of the page — nav first, then Sound (+ the pull-quote on
           home; References/Lab live up in the rail on home only) */}
       {isMobile && (
         <>
@@ -170,7 +187,8 @@ export function V2Root() {
             <V2RailNav nav={nav} navTitle={discipline?.label} activeNav={activeBlock} onJump={jumpTo} />
           )}
           <V2RailFoot>
-            {state.view === 'home' ? <RailStatus /> : null}
+            {/* same as desktop: the pull-quote anchors the very bottom */}
+            {state.view === 'home' ? <RailQuote /> : null}
           </V2RailFoot>
         </>
       )}
@@ -184,7 +202,7 @@ export function V2Root() {
         />
       )}
 
-      {references && <V2References onClose={() => setReferences(false)} />}
+      {references && <V2References onClose={closeReferences} />}
       {lab && <V2Lab onClose={closeLab} onSpawn={(toy) => { setLabToy(toy); closeLab() }} />}
       {labToy === 'ipod' && <V2LabIpod onClose={() => setLabToy(null)} />}
       {labToy === 'glass' && <V2LabGlass onClose={() => setLabToy(null)} />}

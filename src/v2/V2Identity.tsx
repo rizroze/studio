@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { V2RailFoot, RailLinks, RailStatus, RailQuote } from './V2RailFoot'
+import { V2RailFoot, RailLinks, RailQuote } from './V2RailFoot'
 import { V2RailNav, type V2NavItem } from './V2RailNav'
 
 const EMAIL = 'rizzy2day@gmail.com'
@@ -112,20 +112,18 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
                 </span>
               </button>
             </p>
-            {/* mobile swaps these: links move up here, status drops to the
-                bottom foot with Sound */}
-            {isMobile
-              ? <RailLinks onOpenReferences={onOpenReferences} onOpenLab={onOpenLab} />
-              : <RailStatus />}
+            {/* mobile pulls the links up here; desktop keeps them in the foot */}
+            {isMobile && <RailLinks onOpenReferences={onOpenReferences} onOpenLab={onOpenLab} />}
           </>
         )}
       </div>
 
       {!isMobile && (
-        // the pull-quote rides with the bio, so it's home-only — a discipline
-        // view shows the jump nav instead and doesn't need the pitch
-        <V2RailFoot lead={nav && nav.length > 0 ? undefined : <RailQuote />}>
+        <V2RailFoot>
           <RailLinks onOpenReferences={onOpenReferences} onOpenLab={onOpenLab} />
+          {/* the pull-quote rides with the bio, so it's home-only — a
+              discipline view shows the jump nav and doesn't need the pitch */}
+          {!(nav && nav.length > 0) && <RailQuote />}
         </V2RailFoot>
       )}
     </aside>

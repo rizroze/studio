@@ -208,43 +208,6 @@
 .v2-rail-link:hover { color: var(--v2-ink); }
 .v2-lab-icon { flex: none; margin-top: -1px; }
 
-.v2-rail-open {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-family: var(--v2-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--v2-muted);
-  line-height: 1.5;
-  text-decoration: none;
-  width: fit-content;
-  transition: color 0.2s ease;
-}
-a.v2-rail-open:hover { color: var(--v2-ink); }
-
-/* quiet green pulse — the only color moment in the rail, it earns it */
-.v2-avail-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #34c759;
-  flex: none;
-  animation: v2-avail-pulse 2.4s ease-in-out infinite;
-}
-@keyframes v2-avail-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.45); }
-  50% { box-shadow: 0 0 0 4px rgba(52, 199, 89, 0); }
-}
-
-.v2-rail-status {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 22px;
-}
-
 /* inline contact sentence in the bio — underlined links */
 .v2-rail-find {
   margin-top: 16px;
@@ -487,13 +450,13 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   white-space: nowrap;
 }
 
-/* single pull-quote above the rail's bottom cluster — the only social proof on
-   the homepage; the rest stays behind References directly below, so this reads
-   as a citation rather than a testimonial wall */
+/* single pull-quote anchoring the bottom of the rail — the only social proof
+   on the homepage; the rest stays behind the References link just above, so
+   this reads as a citation rather than a testimonial wall */
 .v2-rail-quote {
   margin: 0;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--v2-line);
+  padding-top: 16px;
+  border-top: 1px solid var(--v2-line);
 }
 .v2-rail-quote blockquote {
   margin: 0;

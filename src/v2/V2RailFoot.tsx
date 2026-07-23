@@ -19,22 +19,9 @@ export function RailLinks({ onOpenReferences, onOpenLab }: { onOpenReferences: (
   )
 }
 
-// "Available to work" + last-updated. Desktop: in the rail top (home). Mobile:
-// down in the page-bottom foot with Sound.
-export function RailStatus() {
-  return (
-    <div className="v2-rail-status">
-      <a className="v2-rail-open" href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer">
-        <span className="v2-avail-dot" aria-hidden="true" />
-        Available to work.
-      </a>
-    </div>
-  )
-}
-
-// One line of third-party proof, sitting above the rail's bottom cluster. The
-// full set stays behind References directly below it, so this is the teaser
-// that makes anyone go look rather than a testimonial wall.
+// One line of third-party proof, anchoring the very bottom of the rail. The
+// full set stays behind the References link just above it, so this is the
+// teaser that makes anyone go look rather than a testimonial wall.
 export function RailQuote() {
   return (
     <figure className="v2-rail-quote">
@@ -48,13 +35,12 @@ export function RailQuote() {
 }
 
 // The rail's bottom cluster: an optional lead block, then loader + Sound, then
-// whatever trailing block the caller passes (RailLinks on desktop, RailStatus
-// on mobile home). Rendered inside the rail on desktop; at the bottom of the
-// page on mobile (single instance — V2Music owns audio state).
-export function V2RailFoot({ children, lead }: { children?: ReactNode; lead?: ReactNode }) {
+// whatever trailing blocks the caller passes (RailLinks + RailQuote on desktop,
+// RailQuote on mobile home). Rendered inside the rail on desktop; at the bottom
+// of the page on mobile (single instance — V2Music owns audio state).
+export function V2RailFoot({ children }: { children?: ReactNode }) {
   return (
     <div className="v2-rail-bottom">
-      {lead}
       <div className="v2-rail-aux">
         <V2Loader />
         <V2Music />
