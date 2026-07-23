@@ -10,6 +10,7 @@ export interface DisciplineCollection {
   label?: string                  // override the displayed collection title
   stats?: string                  // outcome line — verifiable numbers only, ' · ' separated
   previewImages?: string[]        // homepage-mosaic picks for this collection (else section.gallery)
+  video?: DisciplineVideo         // plays directly under this collection, instead of the trailing block
 }
 
 export interface DisciplineVideo {
@@ -111,19 +112,44 @@ export const DISCIPLINES: Discipline[] = [
       sec('wayy', 'Pitch Deck'),
       sec('fullport', 'Pitch Deck'),
     ],
+    videosLabel: 'Motion Design',
     videos: [
-      { project: 'Radiants', src: '/content/motion/radiants-twitter.mp4', label: 'Social Motion' },
-      { project: 'WE', src: '/content/motion/we-split.mp4', label: 'Split Animation' },
-      { project: 'Cloak', src: '/content/motion/cloak-socials.mp4', label: 'Social Motion' },
-      vid('hydex'),
+      {
+        project: 'Radiants',
+        src: '/content/motion/radiants-twitter.mp4',
+        label: 'Brand Introduction',
+        note: 'The identity introduced in motion: mark, type and palette assembled into one opening statement, cut for social.',
+      },
+      {
+        project: 'WeSplit',
+        src: '/content/motion/we-split.mp4',
+        label: 'Logo Animation',
+        note: 'The WeSplit mark building and splitting, the product idea carried by the logo itself.',
+      },
+      {
+        project: 'Cloak',
+        src: '/content/motion/cloak-socials.mp4',
+        label: 'Launch Teaser',
+        note: 'Launch teaser cut for social, holding the reveal until the last beat.',
+      },
+      {
+        ...vid('hydex', 'Logo animation for the Hydex mark, built to open decks and social posts.'),
+        label: 'Logo Animation', // overrides the project's default 'Brand Motion'
+      },
     ],
   },
   {
     id: 'product',
     label: 'Product',
     blurb: 'Interfaces · Apps · Shipped',
+    // each project's walkthrough plays right under its own screens; only
+    // Fullport, which has no stills here, falls through to the trailing block
     collections: [
-      { ...sec('wayy', 'Website UI'), stats: 'Solana prediction market · design to deployment' },
+      {
+        ...sec('wayy', 'Website UI'),
+        stats: 'Solana prediction market · design to deployment',
+        video: vid('wayy', 'Designed and built end to end. Next.js and MongoDB, wallet sign-in, and a two-step signing flow that escrows every bet on-chain and pays the winners back out. Shipped for the Solana Graveyard Hackathon.'),
+      },
       // landing + onboarding + dashboard as one set: split across three
       // collections it read as three separate projects in the list and the nav
       {
@@ -134,14 +160,13 @@ export const DISCIPLINES: Discipline[] = [
           "An AI meal planner that turns a few preferences into a week of meals, recipes and a grocery list. Designed, built and run solo end to end: marketing site, onboarding, dashboard, billing, and a Sunday cron that regenerates every subscriber's plan.",
         ),
         stats: 'Live SaaS · designed, built & run solo · 11 languages',
+        video: vid('whatsfordinner', 'A run through the product: generate a day from the hero, five-step onboarding, then the weekly plan with its grocery list.'),
       },
     ],
     // product walkthroughs, not motion-design work — Design keeps 'Motion'
     videosLabel: 'Walkthroughs',
     videos: [
-      vid('wayy', 'Prediction market for art on Solana, designed and built end to end. Next.js and MongoDB, with bets placed through an escrow wallet and settled on-chain. Shipped for the Solana Graveyard Hackathon.'),
       vid('fullport', 'Solana portfolio tracker for the Seeker phone, built solo in React Native and Expo. Balances, metadata and prices arrive in a single Helius DAS call. Working APK shipped inside the Monolith hackathon deadline.'),
-      vid('whatsfordinner', 'A run through the product: generate a day from the hero, five-step onboarding, then the weekly plan with its grocery list.'),
     ],
   },
   // Experiments — daily creative output. Self-gating: the tile only appears

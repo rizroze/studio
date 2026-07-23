@@ -1,7 +1,19 @@
-import type { Discipline } from './disciplines'
+import type { Discipline, DisciplineVideo } from './disciplines'
 import { V2Collection } from './V2Collection'
 import { V2VideoTile } from './V2VideoTile'
 import { projectLogo } from './clientLogos'
+
+function VideoFigure({ v }: { v: DisciplineVideo }) {
+  return (
+    <figure className="v2-video">
+      <V2VideoTile src={v.src} />
+      <figcaption>
+        {v.project} · {v.label}
+        {v.note && <span className="v2-video-note">{v.note}</span>}
+      </figcaption>
+    </figure>
+  )
+}
 
 interface V2DisciplineProps {
   discipline: Discipline
@@ -24,7 +36,7 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
         {discipline.description && <p className="v2-head-note">{discipline.description}</p>}
       </div>
 
-      {discipline.collections.map(({ project, section, grid, cols, label, stats }, i) => {
+      {discipline.collections.map(({ project, section, grid, cols, label, stats, video }, i) => {
         const logo = projectLogo(project)
         return (
         <section key={`${project}-${section.title}`} id={`block-${i}`} className="v2-disc-block">
@@ -46,6 +58,11 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
           {section.description && <p className="v2-disc-desc">{section.description}</p>}
           {stats && <p className="v2-disc-stats">{stats}</p>}
           <V2Collection section={section} grid={grid} cols={cols} onOpenImage={onOpenImage} />
+          {video && (
+            <div className="v2-video-stack v2-video-inline">
+              <VideoFigure v={video} />
+            </div>
+          )}
         </section>
         )
       })}

@@ -330,7 +330,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
       },
       {
         title: 'Website UI',
-        description: 'The live product interface: contest browsing, sealed betting, leaderboards, artist profiles and real-time battle views. Designed and built end to end on Next.js and MongoDB, with wallet sign-in, bets escrowed and settled on-chain, and payouts claimed back to the winner.',
+        description: 'Polymarket for art. Artists enter weekly contests, anyone can back one, and the pot splits across whoever picked the top three, with the artists taking a cut. Contest browsing, sealed betting, leaderboards, artist profiles and real-time battle views.',
         layout: 'landscape',
         gallery: [
           '/content/wayy/web-01.webp',

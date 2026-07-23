@@ -44,10 +44,14 @@ function sourceRect(src: string): DOMRect | null {
 function fitSize(src: string): { width: number; height: number } | null {
   const d = IMAGE_DIMS[src]
   if (!d) return null
+  // Stills never upscale past native. The gifs are the exception: they're
+  // 500-600px stylised renders, so at 1:1 they sit as a postage stamp in the
+  // middle of a large screen. 2x keeps them legible without turning to mush.
+  const maxScale = /\.gif$/i.test(src) ? 2 : 1
   const scale = Math.min(
     (window.innerWidth * 0.88) / d[0],
     (window.innerHeight * 0.9) / d[1],
-    1, // never upscale past natural size
+    maxScale,
   )
   return { width: d[0] * scale, height: d[1] * scale }
 }
