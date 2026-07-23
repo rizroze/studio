@@ -84,7 +84,8 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
               Tattooed a few straight lines, studied engineering and film, then
               unlearned most of it. Ten years following the work wherever it
               went. Runway shows, fashion design, illustration, motion design,
-              content, brand systems. The last four leading creative in Solana.
+              content, product design, brand systems. The last four leading
+              creative in Solana.
             </p>
             <p className="v2-rail-statement">
               Two years running creative for a Solana-native DAO, including its

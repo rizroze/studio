@@ -56,7 +56,11 @@
    IDENTITY RAIL (persistent left)
    ============================================ */
 .v2-rail {
-  width: clamp(320px, 26vw, 420px);
+  /* min is 340, not 320: the padding below grows with vw while this width is
+     still pinned at its minimum, so between ~1100-1290px the text column got
+     squeezed until "Brand & Creative Direction" wrapped. 340 keeps the label
+     on one line across every desktop width. */
+  width: clamp(340px, 26vw, 420px);
   flex-shrink: 0;
   height: 100vh;
   height: 100svh;
