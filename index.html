@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rizzy Today</title>
-    <meta name="description" content="I design brands that look like they meant it.">
+    <meta name="description" content="I design brands look like they meant it.">
 
     <meta name="theme-color" content="#ffffff">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -18,21 +18,28 @@
     <meta property="og:site_name" content="Rizzy Today">
     <meta property="og:url" content="https://rizzy.today/">
     <meta property="og:title" content="Rizzy Today">
-    <meta property="og:description" content="I design brands that look like they meant it.">
-    <!-- square card for whatever reads og:image (X DMs, WhatsApp, iMessage,
-         Discord), wide card below for the X timeline. Both are 8-bit PNG.
-         Keep them 8-bit: the 16-bit versions failed to decode on some clients. -->
-    <meta property="og:image" content="https://rizzy.today/share-card-square.png">
+    <meta property="og:description" content="I design brands look like they meant it.">
+    <!-- One 1000x1000 card for every surface (the benji.org approach).
+         Chats show the full square. X crops it to 2:1, keeping y 250-750, so
+         the mark is drawn at 38% of the canvas (382px, y 309-690) to clear
+         that crop with ~60px of margin. Shrinking the mark is what makes one
+         file work everywhere, so keep that ratio if the art ever changes.
+         Keep it 8-bit PNG: the old 16-bit files failed to decode on some
+         clients and showed a gray placeholder. -->
+    <meta property="og:image" content="https://rizzy.today/share-card-1000.png">
     <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="1200">
+    <meta property="og:image:width" content="1000">
+    <meta property="og:image:height" content="1000">
     <meta property="og:image:alt" content="Rizzy Today">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://rizzy.today/">
     <meta name="twitter:title" content="Rizzy Today">
-    <meta name="twitter:description" content="I design brands that look like they meant it.">
-    <meta name="twitter:image" content="https://rizzy.today/share-card.png">
+    <meta name="twitter:description" content="I design brands look like they meant it.">
+    <meta name="twitter:image" content="https://rizzy.today/share-card-1000.png">
+    <meta name="twitter:image:type" content="image/png">
+    <meta name="twitter:image:width" content="1000">
+    <meta name="twitter:image:height" content="1000">
     <meta name="twitter:image:alt" content="Rizzy Today">
 
     <link rel="preload" as="image" href="/v2-avatar.jpg" fetchpriority="high">
