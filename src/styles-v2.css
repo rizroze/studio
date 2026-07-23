@@ -270,6 +270,48 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
 .v2-rail-find a:hover,
 .v2-rail-statement a:hover { text-decoration-color: rgba(10, 10, 10, 0.7); }
 
+/* email copies to the clipboard instead of opening a mail client, so it's a
+   button wearing the inline-link look */
+.v2-rail-find .v2-copy {
+  font: inherit;
+  color: var(--v2-ink);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+/* underline hugs the word only, so the sentence-ending period stays clean */
+.v2-copy-u {
+  text-decoration: underline;
+  text-decoration-color: rgba(10, 10, 10, 0.3);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.2s ease;
+}
+.v2-rail-find .v2-copy:hover .v2-copy-u { text-decoration-color: rgba(10, 10, 10, 0.7); }
+
+/* slot-machine swap: both words stack in a reel that rolls up exactly one line
+   on copy. The slot clips to a single line and sizes to the wider word, so the
+   sentence never reflows; vertical-align: bottom keeps the clipped inline box
+   sitting on the surrounding text's baseline. */
+.v2-copy-slot {
+  display: inline-block;
+  overflow: hidden;
+  height: 1.5em;
+  vertical-align: bottom;
+}
+.v2-copy-reel {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.v2-copy-slot.is-copied .v2-copy-reel { transform: translateY(-50%); }
+.v2-copy-word {
+  height: 1.5em;
+  line-height: 1.5em;
+  white-space: nowrap;
+}
+
 /* ============================================
    MAIN CONTENT (swapping right pane)
    ============================================ */

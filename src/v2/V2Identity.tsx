@@ -1,5 +1,34 @@
+import { useEffect, useRef, useState } from 'react'
 import { V2RailFoot, RailLinks, RailStatus } from './V2RailFoot'
 import { V2RailNav, type V2NavItem } from './V2RailNav'
+
+const EMAIL = 'rizzy2day@gmail.com'
+
+// The clipboard API needs a secure context and can still be refused by
+// permissions, so fall back to the old textarea + execCommand trick. Returns
+// false only if both paths fail, which is the caller's cue to hand off to the
+// mail client the way the plain mailto link used to.
+async function copyToClipboard(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text)
+    return true
+  } catch {
+    /* blocked or unavailable — try the legacy path below */
+  }
+  try {
+    const ta = document.createElement('textarea')
+    ta.value = text
+    ta.setAttribute('readonly', '')
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0'
+    document.body.appendChild(ta)
+    ta.select()
+    const ok = document.execCommand('copy')
+    document.body.removeChild(ta)
+    return ok
+  } catch {
+    return false
+  }
+}
 
 interface V2IdentityProps {
   onHome: () => void
@@ -13,6 +42,22 @@ interface V2IdentityProps {
 }
 
 export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle, activeNav = 0, onJump, isMobile = false }: V2IdentityProps) {
+  const [copied, setCopied] = useState(false)
+  const resetTimer = useRef<number | undefined>(undefined)
+
+  // a click landing right before unmount would otherwise set state on a gone node
+  useEffect(() => () => window.clearTimeout(resetTimer.current), [])
+
+  const onCopyEmail = async () => {
+    if (!(await copyToClipboard(EMAIL))) {
+      window.location.href = `mailto:${EMAIL}`
+      return
+    }
+    setCopied(true)
+    window.clearTimeout(resetTimer.current)
+    resetTimer.current = window.setTimeout(() => setCopied(false), 1800)
+  }
+
   return (
     <aside className="v2-rail">
       <div className="v2-rail-top">
@@ -47,7 +92,7 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
               <a href="https://solanamobile.com/" target="_blank" rel="noopener noreferrer">Solana Mobile</a>{' '}
               hackathons:{' '}
               <a href="https://x.com/RadiantsDAO/status/1967983306047393960" target="_blank" rel="noopener noreferrer">Seeker</a>{' '}
-              (500+ signups) and the $125K+{' '}
+              and the $125K+{' '}
               <a href="https://solanamobile.radiant.nexus/" target="_blank" rel="noopener noreferrer">Monolith</a>.
             </p>
             <p className="v2-rail-statement">
@@ -58,7 +103,14 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
               <a href="https://x.com/rizroze" target="_blank" rel="noopener noreferrer">X</a>,{' '}
               <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer">book a call</a>,
               {' '}or reach me by{' '}
-              <a href="mailto:rizzy2day@gmail.com">email</a>.
+              <button type="button" className="v2-copy" onClick={onCopyEmail} title={`Copy ${EMAIL}`}>
+                <span className={`v2-copy-slot${copied ? ' is-copied' : ''}`} aria-live="polite">
+                  <span className="v2-copy-reel">
+                    <span className="v2-copy-word" aria-hidden={copied}><span className="v2-copy-u">email</span>.</span>
+                    <span className="v2-copy-word" aria-hidden={!copied}><span className="v2-copy-u">copied</span>.</span>
+                  </span>
+                </span>
+              </button>
             </p>
             {/* mobile swaps these: links move up here, status drops to the
                 bottom foot with Sound */}
