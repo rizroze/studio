@@ -656,6 +656,19 @@
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
+/* "Live ↗" on shipped products — pushed to the end of the label row so it
+   reads as an action, not another crumb in the project · title path */
+.v2-disc-live {
+  margin-left: auto;
+  color: var(--v2-ink);
+  text-decoration: underline;
+  text-decoration-color: rgba(10, 10, 10, 0.45);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  white-space: nowrap;
+  transition: text-decoration-color 0.2s ease;
+}
+.v2-disc-live:hover { text-decoration-color: rgba(10, 10, 10, 0.9); }
 .v2-disc-logo {
   height: 16px;
   width: auto;

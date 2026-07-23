@@ -11,6 +11,7 @@ export interface DisciplineCollection {
   stats?: string                  // outcome line — verifiable numbers only, ' · ' separated
   previewImages?: string[]        // homepage-mosaic picks for this collection (else section.gallery)
   video?: DisciplineVideo         // plays directly under this collection, instead of the trailing block
+  liveUrl?: string                // the shipped thing, reachable — rendered as a "Live" link
 }
 
 export interface DisciplineVideo {
@@ -148,6 +149,7 @@ export const DISCIPLINES: Discipline[] = [
       {
         ...sec('wayy', 'Website UI'),
         stats: 'Solana prediction market · design to deployment',
+        liveUrl: CASE_STUDIES.find(p => p.slug === 'wayy')?.liveUrl,
         video: vid('wayy', 'Designed and built end to end. Next.js and MongoDB, wallet sign-in, and a two-step signing flow that escrows every bet on-chain and pays the winners back out. Shipped for the Solana Graveyard Hackathon.'),
       },
       // landing + onboarding + dashboard as one set: split across three
@@ -160,6 +162,7 @@ export const DISCIPLINES: Discipline[] = [
           "An AI meal planner that turns a few preferences into a week of meals, recipes and a grocery list. Designed, built and run solo end to end: marketing site, onboarding, dashboard, billing, and a Sunday cron that regenerates every subscriber's plan.",
         ),
         stats: 'Live SaaS · designed, built & run solo · 11 languages',
+        liveUrl: CASE_STUDIES.find(p => p.slug === 'whatsfordinner')?.liveUrl,
         video: vid('whatsfordinner', 'A run through the product: generate a day from the hero, five-step onboarding, then the weekly plan with its grocery list.'),
       },
     ],

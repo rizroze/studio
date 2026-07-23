@@ -29,6 +29,7 @@ export interface CaseStudyData {
   stack: string[]
   result: string
   resultMetric: string
+  liveUrl?: string    // shipped and reachable — surfaced as a "Live" link on the discipline page
   timeline?: string   // e.g. '2024–2026'
   coverZoom?: number  // CSS scale for card cover (source images must be high-res enough)
 }
@@ -272,6 +273,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     slug: 'wayy',
     title: 'WAYY',
     client: 'Art Prediction Market',
+    liveUrl: 'https://wayy-flax.vercel.app',
     tags: ['Product Design'],
     thumbnail: '/content/logos/wayy-logomark-black.webp',
     color: '#F5B731',
@@ -474,6 +476,7 @@ export const CASE_STUDIES: CaseStudyData[] = [
     slug: 'whatsfordinner',
     title: "What's for Dinner",
     client: 'Personal Project',
+    liveUrl: 'https://whatsfordinner.fit',
     tags: ['Web App'],
     thumbnail: '/content/whatsfordinner/logo.webp',
     color: '#F97316',
