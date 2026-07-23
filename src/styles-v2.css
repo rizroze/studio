@@ -7,9 +7,12 @@
 #v2-root {
   --v2-bg: #ffffff;
   --v2-ink: #0a0a0a;
-  --v2-muted: #8a8a8a;
-  --v2-faint: #c9c9c9;
-  --v2-line: #ececec;
+  /* greys are tuned for contrast, not just tone: the old #8a8a8a / #c9c9c9 sat
+     at 3.5:1 and 1.9:1 on white, so small mono labels washed out on a dimmed
+     screen. These clear WCAG AA (4.5:1) while keeping the two-step hierarchy. */
+  --v2-muted: #5e5e5e;
+  --v2-faint: #767676;
+  --v2-line: #e3e3e3;
   --v2-hover: #f5f5f3;
 
   --v2-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -235,14 +238,6 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   50% { box-shadow: 0 0 0 4px rgba(52, 199, 89, 0); }
 }
 
-.v2-rail-updated {
-  font-family: var(--v2-mono);
-  font-size: 10px;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--v2-faint);
-}
-
 .v2-rail-status {
   display: flex;
   flex-direction: column;
@@ -262,7 +257,7 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
 .v2-rail-statement a {
   color: var(--v2-ink);
   text-decoration: underline;
-  text-decoration-color: rgba(10, 10, 10, 0.3);
+  text-decoration-color: rgba(10, 10, 10, 0.45);
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
   transition: text-decoration-color 0.2s ease;
@@ -283,7 +278,7 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
 /* underline hugs the word only, so the sentence-ending period stays clean */
 .v2-copy-u {
   text-decoration: underline;
-  text-decoration-color: rgba(10, 10, 10, 0.3);
+  text-decoration-color: rgba(10, 10, 10, 0.45);
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
   transition: text-decoration-color 0.2s ease;
@@ -490,6 +485,31 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   text-transform: uppercase;
   color: var(--v2-faint);
   white-space: nowrap;
+}
+
+/* single pull-quote above the rail's bottom cluster — the only social proof on
+   the homepage; the rest stays behind References directly below, so this reads
+   as a citation rather than a testimonial wall */
+.v2-rail-quote {
+  margin: 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--v2-line);
+}
+.v2-rail-quote blockquote {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: #3a3a3a;
+  text-wrap: pretty;
+}
+.v2-rail-quote figcaption {
+  margin-top: 8px;
+  font-family: var(--v2-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--v2-muted);
 }
 .v2-clients-row {
   display: flex;
