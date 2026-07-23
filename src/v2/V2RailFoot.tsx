@@ -28,18 +28,33 @@ export function RailStatus() {
         <span className="v2-avail-dot" aria-hidden="true" />
         Available to work.
       </a>
-      <span className="v2-rail-updated">Updated Jul 3, 2026</span>
     </div>
   )
 }
 
-// The rail's bottom cluster: loader + Sound, then whatever trailing block the
-// caller passes (RailLinks on desktop, RailStatus on mobile home). Rendered
-// inside the rail on desktop; at the bottom of the page on mobile (single
-// instance — V2Music owns audio state).
-export function V2RailFoot({ children }: { children?: ReactNode }) {
+// One line of third-party proof, sitting above the rail's bottom cluster. The
+// full set stays behind References directly below it, so this is the teaser
+// that makes anyone go look rather than a testimonial wall.
+export function RailQuote() {
+  return (
+    <figure className="v2-rail-quote">
+      <blockquote>
+        He's not just a designer or content creator, he's someone who actively
+        helps shape how a project is perceived in the market.
+      </blockquote>
+      <figcaption>DEVOUR, CEO at Phase</figcaption>
+    </figure>
+  )
+}
+
+// The rail's bottom cluster: an optional lead block, then loader + Sound, then
+// whatever trailing block the caller passes (RailLinks on desktop, RailStatus
+// on mobile home). Rendered inside the rail on desktop; at the bottom of the
+// page on mobile (single instance — V2Music owns audio state).
+export function V2RailFoot({ children, lead }: { children?: ReactNode; lead?: ReactNode }) {
   return (
     <div className="v2-rail-bottom">
+      {lead}
       <div className="v2-rail-aux">
         <V2Loader />
         <V2Music />

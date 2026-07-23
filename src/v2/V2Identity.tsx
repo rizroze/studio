@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { V2RailFoot, RailLinks, RailStatus } from './V2RailFoot'
+import { V2RailFoot, RailLinks, RailStatus, RailQuote } from './V2RailFoot'
 import { V2RailNav, type V2NavItem } from './V2RailNav'
 
 const EMAIL = 'rizzy2day@gmail.com'
@@ -88,15 +88,15 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
             </p>
             <p className="v2-rail-statement">
               Two years running creative for a Solana-native DAO. Campaigns and
-              creative direction for two{' '}
-              <a href="https://solanamobile.com/" target="_blank" rel="noopener noreferrer">Solana Mobile</a>{' '}
-              hackathons:{' '}
+              creative direction for two hackathons with{' '}
+              <a href="https://solanamobile.com/" target="_blank" rel="noopener noreferrer">Solana Mobile</a>,
+              {' '}the team building Solana's phone:{' '}
               <a href="https://x.com/RadiantsDAO/status/1967983306047393960" target="_blank" rel="noopener noreferrer">Seeker</a>{' '}
               and the $125K+{' '}
               <a href="https://solanamobile.radiant.nexus/" target="_blank" rel="noopener noreferrer">Monolith</a>.
             </p>
             <p className="v2-rail-statement">
-              I make brands look like they meant it.
+              I make brands look like they meant it. Crypto or not.
             </p>
             <p className="v2-rail-find">
               Find me on{' '}
@@ -122,7 +122,9 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
       </div>
 
       {!isMobile && (
-        <V2RailFoot>
+        // the pull-quote rides with the bio, so it's home-only — a discipline
+        // view shows the jump nav instead and doesn't need the pitch
+        <V2RailFoot lead={nav && nav.length > 0 ? undefined : <RailQuote />}>
           <RailLinks onOpenReferences={onOpenReferences} onOpenLab={onOpenLab} />
         </V2RailFoot>
       )}
