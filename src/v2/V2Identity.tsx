@@ -35,22 +35,23 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
         ) : (
           <>
             <p className="v2-rail-statement">
-              Started in guerrilla marketing for underground rock bands,
-              self-taught tattooing, studied engineering and film, then
-              unlearned most of it. Spent ten years following the work wherever
-              it went. Fashion runway shows, illustration, motion design, brand
-              systems, content direction. And the last four leading creative in
-              Solana.
+              Started in guerrilla marketing for underground rock bands.
+              Tattooed a few straight lines, studied engineering and film, then
+              unlearned most of it. Ten years following the work wherever it
+              went. Runway shows, illustration, motion design, brand systems.
+              The last four leading creative in Solana.
             </p>
             <p className="v2-rail-statement">
-              Two years as content lead for a Solana-native DAO. Hosted
-              campaigns and directed content for two{' '}
+              Two years as content lead for a Solana-native DAO. Campaigns and
+              creative direction for two{' '}
               <a href="https://solanamobile.com/" target="_blank" rel="noopener noreferrer">Solana Mobile</a>{' '}
-              hackathons,{' '}
+              hackathons:{' '}
               <a href="https://x.com/RadiantsDAO/status/1967983306047393960" target="_blank" rel="noopener noreferrer">Seeker</a>{' '}
-              and the $125K+{' '}
+              (500+ signups) and the $125K+{' '}
               <a href="https://solanamobile.radiant.nexus/" target="_blank" rel="noopener noreferrer">Monolith</a>.
-              {' '}Pitch decks and content for crypto teams.
+            </p>
+            <p className="v2-rail-statement">
+              I make brands look like they meant it.
             </p>
             <p className="v2-rail-find">
               Find me on{' '}
