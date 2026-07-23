@@ -58,7 +58,10 @@ function standalone(title: string, gallery: string[], grid: 'dense' | 'ratio' = 
 // three sections reads as three separate projects in the list. Galleries are
 // pulled from CASE_STUDIES so projects.ts stays the source of truth — the
 // project page keeps its own finer-grained section breakdown.
-function merge(slug: string, titles: string[], label: string, grid: 'dense' | 'ratio' = 'ratio'): DisciplineCollection {
+// `description` is required rather than optional: the merged section replaces
+// the source sections' own copy, and leaving it empty silently strips the
+// blurb from the discipline page (V2Discipline only renders it when non-empty).
+function merge(slug: string, titles: string[], label: string, description: string, grid: 'dense' | 'ratio' = 'ratio'): DisciplineCollection {
   const project = CASE_STUDIES.find(p => p.slug === slug)
   if (!project) throw new Error(`disciplines: missing ${slug}`)
   const gallery = titles.flatMap(t => {
@@ -66,7 +69,7 @@ function merge(slug: string, titles: string[], label: string, grid: 'dense' | 'r
     if (!section) throw new Error(`disciplines: missing ${slug} / ${t}`)
     return section.gallery
   })
-  return { project: project.title, section: { title: label, description: '', gallery }, grid }
+  return { project: project.title, section: { title: label, description, gallery }, grid }
 }
 
 // Experiments bento: the "world." motion piece leads as a full-width band
@@ -124,16 +127,21 @@ export const DISCIPLINES: Discipline[] = [
       // landing + onboarding + dashboard as one set: split across three
       // collections it read as three separate projects in the list and the nav
       {
-        ...merge('whatsfordinner', ['Landing Page', 'Onboarding Flow', 'Meal Plan Dashboard'], 'Website & App'),
+        ...merge(
+          'whatsfordinner',
+          ['Landing Page', 'Onboarding Flow', 'Meal Plan Dashboard'],
+          'Website & App',
+          "An AI meal planner that turns a few preferences into a week of meals, recipes and a grocery list. Designed, built and run solo end to end: marketing site, onboarding, dashboard, billing, and a Sunday cron that regenerates every subscriber's plan.",
+        ),
         stats: 'Live SaaS · designed, built & run solo · 11 languages',
       },
     ],
     // product walkthroughs, not motion-design work — Design keeps 'Motion'
     videosLabel: 'Walkthroughs',
     videos: [
-      vid('wayy', 'Art prediction market · built and shipped solo for the Solana Graveyard Hackathon'),
-      vid('fullport', 'Solana portfolio tracker dApp · shipped for the Monolith Hackathon'),
-      vid('whatsfordinner', 'Quick tour of the meal planner'),
+      vid('wayy', 'Prediction market for art on Solana, designed and built end to end. Next.js and MongoDB, with bets placed through an escrow wallet and settled on-chain. Shipped for the Solana Graveyard Hackathon.'),
+      vid('fullport', 'Solana portfolio tracker for the Seeker phone, built solo in React Native and Expo. Balances, metadata and prices arrive in a single Helius DAS call. Working APK shipped inside the Monolith hackathon deadline.'),
+      vid('whatsfordinner', 'A run through the product: generate a day from the hero, five-step onboarding, then the weekly plan with its grocery list.'),
     ],
   },
   // Experiments — daily creative output. Self-gating: the tile only appears
