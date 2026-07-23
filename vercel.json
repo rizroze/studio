@@ -12,7 +12,7 @@
   ],
   "headers": [
     {
-      "source": "/share-card.png",
+      "source": "/(share-card|share-card-square).png",
       "headers": [
         {
           "key": "Cache-Control",
