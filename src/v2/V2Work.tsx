@@ -89,7 +89,7 @@ export function V2Work({ onOpenDiscipline }: V2WorkProps) {
       <div className="v2-home-preview">
         <div className="v2-home-caption">
           <span>{discipline.blurb}</span>
-          <span>{discipline.collections.length} sets</span>
+          <span>{discipline.collections.length} set{discipline.collections.length === 1 ? '' : 's'}</span>
         </div>
         <V2Mosaic
           images={mosaic}

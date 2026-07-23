@@ -142,8 +142,8 @@ export const DISCIPLINES: Discipline[] = [
   ...(EXPERIMENTS_GALLERY.length ? [{
     id: 'experiments',
     label: 'Experiments',
-    blurb: 'Daily · Studies · Ads',
-    description: 'Daily reps. Some become ads. The rest just keep the hand sharp.',
+    blurb: 'Self-initiated · Daily · Studies',
+    description: 'Daily reps, no client brief. Some become ads. The rest just keep the hand sharp.',
     collections: [standalone('Experiments', EXPERIMENTS_BENTO, 'ratio')],
     videos: [],
     // hand-picked teaser: the full daily wall clusters the WeSplit campaign, so
