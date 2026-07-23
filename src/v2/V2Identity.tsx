@@ -87,8 +87,8 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
               content, brand systems. The last four leading creative in Solana.
             </p>
             <p className="v2-rail-statement">
-              Two years running creative for a Solana-native DAO. Campaigns and
-              creative direction for two hackathons with{' '}
+              Two years running creative for a Solana-native DAO, including its
+              campaigns for two hackathons run by{' '}
               <a href="https://solanamobile.com/" target="_blank" rel="noopener noreferrer">Solana Mobile</a>,
               {' '}the team building Solana's phone:{' '}
               <a href="https://x.com/RadiantsDAO/status/1967983306047393960" target="_blank" rel="noopener noreferrer">Seeker</a>{' '}
