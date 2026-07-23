@@ -83,8 +83,8 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
               Started in guerrilla marketing for underground rock bands.
               Tattooed a few straight lines, studied engineering and film, then
               unlearned most of it. Ten years following the work wherever it
-              went. Runway shows, illustration, motion design, brand systems.
-              The last four leading creative in Solana.
+              went. Runway shows, illustration, motion design, content, brand
+              systems. The last four leading creative in Solana.
             </p>
             <p className="v2-rail-statement">
               Two years running creative for a Solana-native DAO. Campaigns and
