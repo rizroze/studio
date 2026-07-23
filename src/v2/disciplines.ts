@@ -16,6 +16,7 @@ export interface DisciplineVideo {
   project: string
   src: string
   label: string
+  note?: string            // one-line description under the caption
 }
 
 export interface Discipline {
@@ -25,6 +26,7 @@ export interface Discipline {
   description?: string     // a longer line under the blurb on the discipline page
   collections: DisciplineCollection[]
   videos: DisciplineVideo[]
+  videosLabel?: string     // heading for the video block (default 'Motion')
   previewCols?: number     // homepage mosaic density (default 6)
   previewImages?: string[] // hand-picked homepage mosaic (overrides the auto per-collection spread)
 }
@@ -39,16 +41,32 @@ function sec(slug: string, title: string, grid: 'dense' | 'ratio' = 'ratio', col
   return { project: project.title, section, grid, cols }
 }
 
-function vid(slug: string): DisciplineVideo {
+function vid(slug: string, note?: string): DisciplineVideo {
   const project = CASE_STUDIES.find(p => p.slug === slug)
   if (!project?.video) throw new Error(`disciplines: missing video ${slug}`)
-  return { project: project.title, src: project.video, label: project.videoLabel ?? 'Motion' }
+  return { project: project.title, src: project.video, label: project.videoLabel ?? 'Motion', note }
 }
 
 // Standalone gallery not tied to a CASE_STUDIES project (e.g. Experiments).
 // project: '' so V2Discipline skips the "Project — Title" label row.
 function standalone(title: string, gallery: string[], grid: 'dense' | 'ratio' = 'ratio'): DisciplineCollection {
   return { project: '', section: { title, description: '', gallery }, grid }
+}
+
+// Fold several sections of one project into a single collection. The discipline
+// page prints the project name on every collection, so a project split into
+// three sections reads as three separate projects in the list. Galleries are
+// pulled from CASE_STUDIES so projects.ts stays the source of truth — the
+// project page keeps its own finer-grained section breakdown.
+function merge(slug: string, titles: string[], label: string, grid: 'dense' | 'ratio' = 'ratio'): DisciplineCollection {
+  const project = CASE_STUDIES.find(p => p.slug === slug)
+  if (!project) throw new Error(`disciplines: missing ${slug}`)
+  const gallery = titles.flatMap(t => {
+    const section = project.sections?.find(s => s.title === t)
+    if (!section) throw new Error(`disciplines: missing ${slug} / ${t}`)
+    return section.gallery
+  })
+  return { project: project.title, section: { title: label, description: '', gallery }, grid }
 }
 
 // Experiments bento: the "world." motion piece leads as a full-width band
@@ -103,11 +121,20 @@ export const DISCIPLINES: Discipline[] = [
     blurb: 'Interfaces · Apps · Shipped',
     collections: [
       { ...sec('wayy', 'Website UI'), stats: 'Solana prediction market · design to deployment' },
-      { ...sec('whatsfordinner', 'Landing Page'), stats: 'Live SaaS · designed, built & run solo · 11 languages' },
-      sec('whatsfordinner', 'Onboarding Flow'),
-      sec('whatsfordinner', 'Meal Plan Dashboard'),
+      // landing + onboarding + dashboard as one set: split across three
+      // collections it read as three separate projects in the list and the nav
+      {
+        ...merge('whatsfordinner', ['Landing Page', 'Onboarding Flow', 'Meal Plan Dashboard'], 'Website & App'),
+        stats: 'Live SaaS · designed, built & run solo · 11 languages',
+      },
     ],
-    videos: [vid('wayy'), vid('fullport'), vid('whatsfordinner')],
+    // product walkthroughs, not motion-design work — Design keeps 'Motion'
+    videosLabel: 'Walkthroughs',
+    videos: [
+      vid('wayy', 'Art prediction market · built and shipped solo for the Solana Graveyard Hackathon'),
+      vid('fullport', 'Solana portfolio tracker dApp · shipped for the Monolith Hackathon'),
+      vid('whatsfordinner', 'Quick tour of the meal planner'),
+    ],
   },
   // Experiments — daily creative output. Self-gating: the tile only appears
   // once images exist (drop them in public/content/experiments/ + `npm run

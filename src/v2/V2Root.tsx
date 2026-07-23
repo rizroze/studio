@@ -134,7 +134,7 @@ export function V2Root() {
   const nav = discipline
     ? [
         ...discipline.collections.map(c => ({ label: c.label ?? c.section.title, project: c.project })),
-        ...(discipline.videos.length ? [{ label: 'Motion', project: 'Video' }] : []),
+        ...(discipline.videos.length ? [{ label: discipline.videosLabel ?? 'Motion', project: 'Video' }] : []),
       ]
     : undefined
 

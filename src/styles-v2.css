@@ -685,6 +685,16 @@ a.v2-rail-open:hover { color: var(--v2-ink); }
   text-transform: uppercase;
   color: var(--v2-muted);
 }
+/* description under a video caption — sentence case, because a full line of
+   uppercase mono shouts next to the short meta caption above it */
+.v2-video-note {
+  display: block;
+  margin-top: 5px;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+  opacity: 0.8;
+}
 
 /* control-free video tiles (Motion block + Experiments bento) */
 .v2-videotile {

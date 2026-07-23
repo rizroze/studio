@@ -53,13 +53,16 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
       {discipline.videos.length > 0 && (
         <section id="block-motion" className="v2-disc-block">
           <div className="v2-disc-label">
-            <span className="v2-disc-project">Motion</span>
+            <span className="v2-disc-project">{discipline.videosLabel ?? 'Motion'}</span>
           </div>
           <div className="v2-video-stack">
             {discipline.videos.map(v => (
               <figure key={v.src} className="v2-video">
                 <V2VideoTile src={v.src} />
-                <figcaption>{v.project} · {v.label}</figcaption>
+                <figcaption>
+                  {v.project} · {v.label}
+                  {v.note && <span className="v2-video-note">{v.note}</span>}
+                </figcaption>
               </figure>
             ))}
           </div>
