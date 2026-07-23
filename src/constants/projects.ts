@@ -473,6 +473,50 @@ export const CASE_STUDIES: CaseStudyData[] = [
     resultMetric: 'Shipped working APK at Monolith hackathon.'
   },
   {
+    slug: 'corner',
+    title: 'The Corner',
+    client: 'Open Publishing Platform',
+    liveUrl: 'https://the-corner-pi.vercel.app',
+    tags: ['Web App'],
+    thumbnail: '/content/logos/corner-logo.webp',
+    color: '#BF392B',
+    gallery: [
+      '/content/corner/corner-1.webp',
+      '/content/corner/corner-2.webp',
+      '/content/corner/corner-3.webp',
+      '/content/corner/corner-4.webp',
+      '/content/corner/corner-5.webp',
+    ],
+    previewGallery: [
+      '/content/corner/corner-1.webp',
+      '/content/corner/corner-4.webp',
+      '/content/corner/corner-3.webp',
+      '/content/corner/corner-5.webp',
+    ],
+    sections: [
+      {
+        title: 'Landing Page',
+        description: 'Masthead, manifesto and the promise: AI-verified human writing, no gatekeepers, and writers keeping 85 to 90% of every subscription. Built to read like a newspaper front page rather than a SaaS landing.',
+        gallery: [
+          '/content/corner/corner-1.webp',
+          '/content/corner/corner-2.webp',
+          '/content/corner/corner-3.webp',
+          '/content/corner/corner-4.webp',
+          '/content/corner/corner-5.webp',
+        ],
+        layout: 'deck',
+      },
+    ],
+    category: 'web',
+    description: 'An open publishing platform where every piece is AI-verified as human-written, and readers subscribe to individual writers who keep 85 to 90% of the revenue.',
+    brief: 'Build a publishing platform that can prove its writing is human, and pay writers directly for it.',
+    challenge: 'AI-generated articles passed human-written ones on the web in 2024. "All human" is an easy claim and a hard promise, so verification had to be something a reader can see on the work, not a line the brand asserts about itself.',
+    solution: 'A newspaper masthead identity in blackletter and cream that borrows the authority of print. Verification is the mechanic, not a trust badge: every post passes AI detection before it publishes. Readers pay per writer, by card or crypto.',
+    stack: ['Next.js', 'React', 'Supabase', 'Vercel'],
+    result: 'Founding edition live, collecting waitlist signups ahead of the first issue.',
+    resultMetric: 'Founding edition live, waitlist open.'
+  },
+  {
     slug: 'whatsfordinner',
     title: "What's for Dinner",
     client: 'Personal Project',

@@ -18,6 +18,7 @@ export const PROJECT_LOGOS: Record<string, ClientLogo> = {
   Hydex: { src: '/content/logos/hydex%20logo.webp', alt: 'Hydex' },
   'Hydex Router': { src: '/content/logos/hydex%20logo.webp', alt: 'Hydex Router' },
   Fullport: { src: '/content/logos/fullport-logo.svg', alt: 'Fullport' },
+  'The Corner': { src: '/content/logos/corner-logo.webp', alt: 'The Corner' },
   "What's for Dinner": { src: '/content/logos/wfd-icon.svg', alt: "What's for Dinner", invert: true },
 }
 

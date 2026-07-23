@@ -165,6 +165,11 @@ export const DISCIPLINES: Discipline[] = [
         liveUrl: CASE_STUDIES.find(p => p.slug === 'whatsfordinner')?.liveUrl,
         video: vid('whatsfordinner', 'A run through the product: generate a day from the hero, five-step onboarding, then the weekly plan with its grocery list.'),
       },
+      {
+        ...sec('corner', 'Landing Page'),
+        stats: 'Human-verified publishing · founding edition live',
+        liveUrl: CASE_STUDIES.find(p => p.slug === 'corner')?.liveUrl,
+      },
     ],
     // product walkthroughs, not motion-design work — Design keeps 'Motion'
     videosLabel: 'Walkthroughs',
