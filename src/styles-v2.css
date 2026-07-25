@@ -468,6 +468,7 @@
   line-height: 1.5;
   letter-spacing: -0.01em;
   color: #3a3a3a;
+  font-style: italic;
   text-wrap: pretty;
 }
 .v2-rail-quote figcaption {

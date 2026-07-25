@@ -26,8 +26,8 @@ export function RailQuote() {
   return (
     <figure className="v2-rail-quote">
       <blockquote>
-        He's not just a designer or content creator, he's someone who actively
-        helps shape how a project is perceived in the market.
+        "He's not just a designer or content creator, he's someone who actively
+        helps shape how a project is perceived in the market."
       </blockquote>
       <figcaption>DEVOUR, CEO at Phase</figcaption>
     </figure>
