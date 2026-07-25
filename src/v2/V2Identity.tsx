@@ -102,7 +102,7 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
             <p className="v2-rail-find">
               Find me on{' '}
               <a href="https://x.com/rizroze" target="_blank" rel="noopener noreferrer">X</a>,{' '}
-              <a href="https://cal.com/rizzytoday" target="_blank" rel="noopener noreferrer">book a call</a>,
+              <a href="https://cal.com/riztoday/15min" target="_blank" rel="noopener noreferrer">book a call</a>,
               {' '}or reach me by{' '}
               <button type="button" className="v2-copy" onClick={onCopyEmail} title={`Copy ${EMAIL}`}>
                 <span className={`v2-copy-slot${copied ? ' is-copied' : ''}`} aria-live="polite">
