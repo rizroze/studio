@@ -16,10 +16,9 @@ interface QuestionnaireData {
   fields: Record<string, string>;
   build: string[];
   stage: string[];
-  priorities: string[];
   personality: string[];
-  voice: string[];
-  content_status: string[];
+  copy_status: string[];
+  image_status: string[];
   identity_state: string[];
   name_status: string[];
   brand_surfaces: string[];
@@ -41,16 +40,8 @@ const specLabels: Record<string, [string, string]> = {
 const LABELS: Record<string, Record<string, string>> = {
   build: { website: "Website", brand: "Brand & naming", logo: "Logo", identity: "Visual identity" },
   stage: { idea: "Just an idea", "pre-launch": "Pre-launch", launched: "Launched", scaling: "Scaling" },
-  priorities: {
-    "from-zero": "Starting from scratch, no brand yet",
-    "level-up": "Have something but it looks amateur",
-    convert: "People aren't converting",
-    consistency: "Brand is all over the place",
-    standout: "We look like everyone else",
-    launch: "Launching soon, need to come out loud",
-  },
-  voice: { plainspoken: "Plainspoken", poetic: "Poetic", "bold-voice": "Bold", "warm-voice": "Warm", technical: "Technical", witty: "Witty" },
-  content_status: { "copy-ready": "Copy ready", "images-ready": "Images ready", "need-copy": "Need help with copy", "need-images": "Need help with images" },
+  copy_status: { have: "Have it", "need-help": "Need help writing it" },
+  image_status: { have: "Have them", "need-help": "Need help sourcing them" },
   identity_state: { "from-scratch": "Starting from scratch", evolving: "Evolving what exists", "keep-assets": "Have assets to keep" },
   name_status: { "name-locked": "Name is locked", "open-naming": "Open to naming help", "need-name": "Need a name" },
   brand_surfaces: { digital: "Digital / product", social: "Social", motion: "Motion / video", print: "Print", merch: "Merch", packaging: "Packaging", signage: "Signage" },
@@ -69,8 +60,8 @@ function escapeHtml(str: string): string {
 
 function buildEmail(data: QuestionnaireData): string {
   const {
-    fields, build, stage, priorities, personality,
-    voice, content_status, identity_state, name_status, brand_surfaces, comms, spectrums,
+    fields, build, stage, personality,
+    copy_status, image_status, identity_state, name_status, brand_surfaces, comms, spectrums,
   } = data;
 
   const section = (label: string, content: string) => `
@@ -108,9 +99,6 @@ function buildEmail(data: QuestionnaireData): string {
   if (fields.audience) rows += section("Who It's For", field(fields.audience));
   if (fields.competitors) rows += section("Up Against", field(fields.competitors));
   if (fields.differentiator) rows += section("What Makes Them Different", field(fields.differentiator));
-  if (fields.feeling) rows += section("Wants People To Feel", field(fields.feeling));
-  if (priorities.length)
-    rows += section("What Matters Most", priorities.map((p, i) => `<div style="margin:2px 0;"><span style="color:#CA2323;font-weight:600;">${i + 1}.</span> ${escapeHtml(lab("priorities", p))}</div>`).join(""));
 
   // ── Visual fingerprint ──
   const specEntries = Object.entries(spectrums);
@@ -139,17 +127,16 @@ function buildEmail(data: QuestionnaireData): string {
   if (fields.tagline) rows += section("Current Tagline", field(fields.tagline));
   if (fields.headline) rows += section("Headline Seed", `&ldquo;${field(fields.headline)}&rdquo;`);
   if (fields.not_you) rows += section("Not Them", field(fields.not_you));
-  if (voice.length) rows += section("Voice", tags("voice", voice));
 
   // ── Website (only if relevant) ──
-  const hasWebsite = build.includes("website") || fields.pages || fields.primary_action || fields.features || fields.ref_sites || fields.domain || content_status.length;
+  const hasWebsite = build.includes("website") || fields.pages || fields.primary_action || fields.features || fields.ref_sites || fields.domain || copy_status.length || image_status.length;
   if (hasWebsite) {
     let web = "";
     if (fields.pages) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Pages:</strong> ${field(fields.pages)}</p>`;
     if (fields.primary_action) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Primary action:</strong> ${field(fields.primary_action)}</p>`;
     if (fields.features) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Features / integrations:</strong> ${field(fields.features)}</p>`;
-    if (content_status.length) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Content:</strong><br>${tags("content_status", content_status)}</p>`;
-    if (fields.content_owner) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Copy / images by:</strong> ${field(fields.content_owner)}</p>`;
+    if (copy_status.length) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Copy:</strong> ${tags("copy_status", copy_status)}</p>`;
+    if (image_status.length) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Images:</strong> ${tags("image_status", image_status)}</p>`;
     if (fields.ref_sites) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Reference sites:</strong> ${field(fields.ref_sites)}</p>`;
     if (fields.domain) web += `<p style="margin:0;"><strong style="color:#fff;">Domain / hosting:</strong> ${field(fields.domain)}</p>`;
     if (web) rows += section("Website", web);
@@ -171,7 +158,6 @@ function buildEmail(data: QuestionnaireData): string {
   // ── Logistics ──
   if (fields.approvers) rows += section("Signs Off", field(fields.approvers));
   if (comms.length) rows += section("Comms Preference", tags("comms", comms));
-  if (fields.budget) rows += section("Budget", field(fields.budget));
   if (fields.assets_links) rows += section("Files / References", field(fields.assets_links));
   if (fields.anything_else) rows += section("Anything Else", field(fields.anything_else));
 

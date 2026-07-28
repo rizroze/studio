@@ -177,23 +177,6 @@
   .q-slider::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 3px solid var(--brand-red); cursor: grab; }
   .q-spectrum-hint { font-family: 'Fragment Mono', monospace; font-size: 9px; color: var(--text-muted); display: flex; justify-content: space-between; }
 
-  /* ─── PRIORITY RANKING ─── */
-  .q-rank-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-  .q-rank-item {
-    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px;
-    padding: 14px 18px; display: flex; align-items: center; gap: 14px;
-    cursor: pointer; transition: all 0.3s var(--smooth);
-  }
-  .q-rank-item:hover { background: var(--glass-hover); }
-  .q-rank-item.selected { border-color: var(--brand-red); }
-  .q-rank-num {
-    font-family: 'Fragment Mono', monospace; font-size: 11px; color: var(--text-muted);
-    width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--glass-border);
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .q-rank-item.selected .q-rank-num { background: var(--brand-red); border-color: var(--brand-red); color: #fff; }
-  .q-rank-text { font-size: 13px; color: var(--text-secondary); }
-
   /* ─── NAV BUTTONS ─── */
   .q-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 36px; }
   .q-btn {
@@ -361,21 +344,6 @@
       <div class="q-field-label">The one thing that makes you different</div>
       <input class="q-input" type="text" placeholder="We're the only one who actually ships what we design" data-key="differentiator" />
     </div>
-    <div class="q-field">
-      <div class="q-field-label">How do you want people to feel? (three words)</div>
-      <input class="q-input" type="text" placeholder="Confident, curious, in good hands" data-key="feeling" />
-    </div>
-
-    <div class="q-field-label" style="margin-bottom: 6px;">What matters most for this project? (rank your top 3)</div>
-    <div class="q-rank-list" data-group="priorities" data-max="3">
-      <div class="q-rank-item" data-value="from-zero"><div class="q-rank-num"></div><div class="q-rank-text">Starting from scratch, no brand yet</div></div>
-      <div class="q-rank-item" data-value="level-up"><div class="q-rank-num"></div><div class="q-rank-text">We have something but it looks amateur</div></div>
-      <div class="q-rank-item" data-value="convert"><div class="q-rank-num"></div><div class="q-rank-text">People aren't converting, the experience isn't working</div></div>
-      <div class="q-rank-item" data-value="consistency"><div class="q-rank-num"></div><div class="q-rank-text">Our brand is all over the place</div></div>
-      <div class="q-rank-item" data-value="standout"><div class="q-rank-num"></div><div class="q-rank-text">We look like everyone else</div></div>
-      <div class="q-rank-item" data-value="launch"><div class="q-rank-num"></div><div class="q-rank-text">Launching soon, need to come out loud</div></div>
-    </div>
-
     <div class="q-nav">
       <button class="q-btn q-btn-back" data-prev>Back</button>
       <button class="q-btn q-btn-next" data-next>Continue</button>
@@ -541,16 +509,6 @@
       <input class="q-input" type="text" placeholder="Corporate, cutesy, salesy, 'synergy'..." data-key="not_you" />
     </div>
 
-    <div class="q-field-label" style="margin-bottom: 10px;">How should the voice feel?</div>
-    <div class="q-tags" data-group="voice">
-      <div class="q-tag" data-value="plainspoken">Plainspoken</div>
-      <div class="q-tag" data-value="poetic">Poetic</div>
-      <div class="q-tag" data-value="bold-voice">Bold</div>
-      <div class="q-tag" data-value="warm-voice">Warm</div>
-      <div class="q-tag" data-value="technical">Technical</div>
-      <div class="q-tag" data-value="witty">Witty</div>
-    </div>
-
     <div class="q-nav">
       <button class="q-btn q-btn-back" data-prev>Back</button>
       <button class="q-btn q-btn-next" data-next>Continue</button>
@@ -576,18 +534,18 @@
       <textarea class="q-textarea" placeholder="Booking (Cal.com), payments (Stripe), CMS/blog, newsletter, auth, custom admin..." data-key="features" style="min-height: 60px;"></textarea>
     </div>
 
-    <div class="q-field-label" style="margin-bottom: 10px;">Where does the content stand?</div>
-    <div class="q-tags" data-group="content_status">
-      <div class="q-tag" data-value="copy-ready">Copy ready</div>
-      <div class="q-tag" data-value="images-ready">Images ready</div>
-      <div class="q-tag" data-value="need-copy">Need help with copy</div>
-      <div class="q-tag" data-value="need-images">Need help with images</div>
+    <div class="q-field-label" style="margin-bottom: 10px;">Website copy</div>
+    <div class="q-tags" data-group="copy_status" data-single>
+      <div class="q-tag" data-value="have">We have it</div>
+      <div class="q-tag" data-value="need-help">We need help writing it</div>
     </div>
 
-    <div class="q-field">
-      <div class="q-field-label">Who provides copy and images?</div>
-      <input class="q-input" type="text" placeholder="We'll write copy, you handle photography..." data-key="content_owner" />
+    <div class="q-field-label" style="margin-bottom: 10px;">Images &amp; photography</div>
+    <div class="q-tags" data-group="image_status" data-single>
+      <div class="q-tag" data-value="have">We have them</div>
+      <div class="q-tag" data-value="need-help">We need help sourcing them</div>
     </div>
+
     <div class="q-field">
       <div class="q-field-label">Sites you love, and what you love about them</div>
       <textarea class="q-textarea" placeholder="linear.app for the calm density, stripe.com for the polish..." data-key="ref_sites" style="min-height: 60px;"></textarea>
@@ -674,10 +632,6 @@
     </div>
 
     <div class="q-field">
-      <div class="q-field-label">Budget (confirm what we discussed, if you like)</div>
-      <input class="q-input" type="text" placeholder="As agreed on the call, or a range if it shifted..." data-key="budget" />
-    </div>
-    <div class="q-field">
       <div class="q-field-label">Drop any files, moodboards, or references (links)</div>
       <textarea class="q-textarea" placeholder="Pinterest board, Figma, Google Drive, Notion, brand assets..." data-key="assets_links" style="min-height: 60px;"></textarea>
     </div>
@@ -714,10 +668,9 @@
     fields: {},
     build: new Set(),
     stage: new Set(),
-    priorities: [],
     personality: new Set(),
-    voice: new Set(),
-    content_status: new Set(),
+    copy_status: new Set(),
+    image_status: new Set(),
     identity_state: new Set(),
     name_status: new Set(),
     brand_surfaces: new Set(),
@@ -729,7 +682,6 @@
   // Human-readable labels for coded values (client summary)
   const LABELS = {
     build: { website: 'Website', brand: 'Brand & naming', logo: 'Logo', identity: 'Visual identity' },
-    voice: { plainspoken: 'Plainspoken', poetic: 'Poetic', 'bold-voice': 'Bold', 'warm-voice': 'Warm', technical: 'Technical', witty: 'Witty' },
   }
   const lab = (group, val) => (LABELS[group] && LABELS[group][val]) || String(val).replace(/-/g, ' ')
 
@@ -738,7 +690,8 @@
     el.addEventListener('input', () => { state.fields[el.dataset.key] = el.value })
   })
 
-  // ── Generic multi-select: checkbox items and tags ──
+  // ── Multi-select (checkbox items, tags). Groups marked data-single behave
+  //    as single-select, so mutually exclusive answers can't both be picked. ──
   document.querySelectorAll('.q-check-item, .q-tag').forEach(el => {
     el.addEventListener('click', () => {
       const groupEl = el.closest('[data-group]')
@@ -746,36 +699,19 @@
       const group = groupEl.dataset.group
       if (!(state[group] instanceof Set)) return
       const val = el.dataset.value
-      el.classList.toggle('selected')
-      if (el.classList.contains('selected')) state[group].add(val)
-      else state[group].delete(val)
+      if (groupEl.hasAttribute('data-single')) {
+        const wasSelected = el.classList.contains('selected')
+        groupEl.querySelectorAll('.selected').forEach(s => s.classList.remove('selected'))
+        state[group].clear()
+        if (!wasSelected) { el.classList.add('selected'); state[group].add(val) }
+      } else {
+        el.classList.toggle('selected')
+        if (el.classList.contains('selected')) state[group].add(val)
+        else state[group].delete(val)
+      }
       if (group === 'build') syncBuildGate()
     })
   })
-
-  // ── Priority ranking (ordered, capped) ──
-  document.querySelectorAll('.q-rank-item').forEach(el => {
-    el.addEventListener('click', () => {
-      const val = el.dataset.value
-      const max = parseInt(el.closest('[data-group]').dataset.max) || 99
-      const idx = state.priorities.indexOf(val)
-      if (idx > -1) {
-        state.priorities.splice(idx, 1)
-        el.classList.remove('selected')
-      } else if (state.priorities.length < max) {
-        state.priorities.push(val)
-        el.classList.add('selected')
-      }
-      updateRankNums()
-    })
-  })
-
-  function updateRankNums() {
-    document.querySelectorAll('.q-rank-item').forEach(el => {
-      const idx = state.priorities.indexOf(el.dataset.value)
-      el.querySelector('.q-rank-num').textContent = idx > -1 ? idx + 1 : ''
-    })
-  }
 
   // Require at least one discipline before leaving the scope screen, and keep
   // the step count live as disciplines toggle (each one may add a screen)
@@ -990,10 +926,9 @@
       fields: state.fields,
       build: [...state.build],
       stage: [...state.stage],
-      priorities: state.priorities,
       personality: [...state.personality],
-      voice: [...state.voice],
-      content_status: [...state.content_status],
+      copy_status: [...state.copy_status],
+      image_status: [...state.image_status],
       identity_state: [...state.identity_state],
       name_status: [...state.name_status],
       brand_surfaces: [...state.brand_surfaces],
@@ -1034,9 +969,6 @@
 
     if (f.oneliner)
       html += section('What you do', f.oneliner)
-
-    if (state.priorities.length)
-      html += section('What matters most', state.priorities.map((p, i) => `<div class="summary-scope-item"><span style="color:var(--brand-red);font-weight:600;">${i + 1}.</span> ${lab('priorities', p)}</div>`).join(''))
 
     const specLabels = { tone: ['Dark', 'Light'], volume: ['Loud', 'Quiet'], finish: ['Polished', 'Raw'], era: ['Modern', 'Nostalgic'], mood: ['Playful', 'Serious'], density: ['Dense', 'Spacious'] }
     const specEntries = Object.entries(state.spectrums)
@@ -1155,17 +1087,7 @@
     'editorial-sharp': ['premium', 'bold', 'clean'],
     'playful-digital': ['playful', 'quirky', 'friendly']
   }
-  const priorityMap = {
-    'midnight-premium': ['level-up', 'standout', 'convert'],
-    'electric-bold': ['launch', 'standout', 'from-zero'],
-    'warm-organic': ['convert', 'consistency', 'level-up'],
-    'neo-minimal': ['convert', 'consistency', 'level-up'],
-    'retro-craft': ['standout', 'from-zero', 'launch'],
-    'glass-futurism': ['standout', 'level-up', 'launch'],
-    'editorial-sharp': ['convert', 'level-up', 'consistency'],
-    'playful-digital': ['standout', 'launch', 'from-zero']
-  }
-  function scoreDirection(arch, spectrums, personality, priorities) {
+  function scoreDirection(arch, spectrums, personality) {
     let score = 0
     for (const [key, [min, max]] of Object.entries(arch.conditions)) {
       const val = spectrums[key]
@@ -1181,14 +1103,13 @@
       }
     }
     for (const p of personality) if ((personalityMap[arch.id] || []).includes(p)) score += 8
-    for (const p of priorities) if ((priorityMap[arch.id] || []).includes(p)) score += 6
     return score
   }
 
   function generateDirections() {
     const scored = directionArchetypes.map(arch => ({
       ...arch,
-      score: scoreDirection(arch, state.spectrums, [...state.personality], state.priorities)
+      score: scoreDirection(arch, state.spectrums, [...state.personality])
     }))
     scored.sort((a, b) => b.score - a.score)
     const top4 = scored.slice(0, 4)
