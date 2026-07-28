@@ -17,8 +17,6 @@ interface QuestionnaireData {
   build: string[];
   stage: string[];
   priorities: string[];
-  typeface: string[];
-  palette: string[];
   personality: string[];
   voice: string[];
   content_status: string[];
@@ -51,16 +49,6 @@ const LABELS: Record<string, Record<string, string>> = {
     standout: "We look like everyone else",
     launch: "Launching soon, need to come out loud",
   },
-  typeface: { geometric: "Geometric sans", grotesk: "Neo-grotesk", editorial: "Editorial serif", display: "Display", mono: "Mono / technical" },
-  palette: {
-    "mono-accent": "Monochrome + accent",
-    "warm-neutral": "Warm neutrals",
-    "cool-tech": "Cool & technical",
-    "high-contrast": "High-contrast pop",
-    "muted-soft": "Muted & soft",
-    "dark-neon": "Dark & neon",
-    earthy: "Earthy & organic",
-  },
   voice: { plainspoken: "Plainspoken", poetic: "Poetic", "bold-voice": "Bold", "warm-voice": "Warm", technical: "Technical", witty: "Witty" },
   content_status: { "copy-ready": "Copy ready", "images-ready": "Images ready", "need-copy": "Need help with copy", "need-images": "Need help with images" },
   identity_state: { "from-scratch": "Starting from scratch", evolving: "Evolving what exists", "keep-assets": "Have assets to keep" },
@@ -81,7 +69,7 @@ function escapeHtml(str: string): string {
 
 function buildEmail(data: QuestionnaireData): string {
   const {
-    fields, build, stage, priorities, typeface, palette, personality,
+    fields, build, stage, priorities, personality,
     voice, content_status, identity_state, name_status, brand_surfaces, comms, spectrums,
   } = data;
 
@@ -143,8 +131,6 @@ function buildEmail(data: QuestionnaireData): string {
       .join("");
     rows += section("Visual Fingerprint (Raw Data)", vis);
   }
-  if (typeface.length) rows += section("Type Direction", tags("typeface", typeface));
-  if (palette.length) rows += section("Color Mood", tags("palette", palette));
   if (fields.colors_avoid) rows += section("Colors Off-Limits", field(fields.colors_avoid));
   if (personality.length) rows += section("Brand Personality", personality.map((s) => tag(s)).join(""));
   if (fields.visual_inspo) rows += section("Visual Inspiration", field(fields.visual_inspo));

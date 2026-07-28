@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Project Discovery · Rizzy Today</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,600;0,700;1,700&family=Inter+Tight:wght@400;500;600;700&family=Fragment+Mono&family=Poppins:wght@600;700&family=Fraunces:ital,wght@0,600;1,600&family=Archivo+Black&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,600;0,700;1,700&family=Inter+Tight:wght@400;500;600;700&family=Fragment+Mono&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -145,31 +145,6 @@
     background: rgba(202,35,35,0.12); border-color: var(--brand-red); color: var(--text);
   }
 
-  /* ─── TYPE PERSONALITY + PALETTE PICKERS ─── */
-  .q-opt { cursor: pointer; user-select: none; transition: all 0.25s var(--smooth); }
-  .q-pick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
-
-  .q-type {
-    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px;
-    padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;
-  }
-  .q-type:hover { background: var(--glass-hover); transform: translateY(-1px); }
-  .q-type.selected { border-color: var(--brand-red); background: rgba(202,35,35,0.08); box-shadow: 0 0 20px rgba(202,35,35,0.1); }
-  .q-type-specimen { font-size: 28px; line-height: 1; color: var(--text); }
-  .q-type-name { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
-  .q-type-desc { font-size: 10px; color: var(--text-muted); font-family: 'Fragment Mono', monospace; letter-spacing: 0.03em; }
-
-  .q-pal {
-    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px;
-    padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;
-  }
-  .q-pal:hover { background: var(--glass-hover); transform: translateY(-1px); }
-  .q-pal.selected { border-color: var(--brand-red); background: rgba(202,35,35,0.08); box-shadow: 0 0 20px rgba(202,35,35,0.1); }
-  .q-pal-swatches { display: flex; gap: 0; border-radius: 6px; overflow: hidden; height: 26px; border: 1px solid rgba(255,255,255,0.06); }
-  .q-pal-swatches span { flex: 1; }
-  .q-pal-name { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
-  .q-type.selected .q-type-name, .q-pal.selected .q-pal-name { color: var(--text); }
-
   /* ─── SPECTRUM SLIDERS ─── */
   .q-spectrum { margin-bottom: 22px; }
   .q-spectrum-row { display: flex; align-items: center; gap: 14px; }
@@ -262,7 +237,6 @@
   /* ─── RESPONSIVE ─── */
   @media (max-width: 700px) {
     .q-checkbox-grid { grid-template-columns: 1fr; }
-    .q-pick-grid { grid-template-columns: 1fr; }
     .q-title { font-size: 24px; }
     .q-container { padding: 90px 20px 40px; }
   }
@@ -290,19 +264,19 @@
     <div class="q-subtitle">We're working together now, so this is where I get the raw material to start. The more specific you are, the sharper the first drafts land.</div>
 
     <div class="q-checkbox-grid" data-group="build">
-      <div class="q-check-item q-opt" data-value="website">
+      <div class="q-check-item" data-value="website">
         <div class="q-check-box">&#10003;</div>
         <div><div class="q-check-label">Website</div><div class="q-check-desc">Design + development, the live site</div></div>
       </div>
-      <div class="q-check-item q-opt" data-value="brand">
+      <div class="q-check-item" data-value="brand">
         <div class="q-check-box">&#10003;</div>
         <div><div class="q-check-label">Brand &amp; Naming</div><div class="q-check-desc">Strategy, positioning, the name itself</div></div>
       </div>
-      <div class="q-check-item q-opt" data-value="logo">
+      <div class="q-check-item" data-value="logo">
         <div class="q-check-box">&#10003;</div>
         <div><div class="q-check-label">Logo</div><div class="q-check-desc">Marks, wordmarks, the core identity object</div></div>
       </div>
-      <div class="q-check-item q-opt" data-value="identity">
+      <div class="q-check-item" data-value="identity">
         <div class="q-check-box">&#10003;</div>
         <div><div class="q-check-label">Visual Identity</div><div class="q-check-desc">Color, type, the full system + guidelines</div></div>
       </div>
@@ -412,7 +386,7 @@
   <div class="screen" data-screen="fingerprint">
     <div class="q-label">Visual fingerprint</div>
     <div class="q-title">Show me your taste.</div>
-    <div class="q-subtitle">Drag each slider to where it feels right, then pick the type and color moods that pull you. This is what I actually design from.</div>
+    <div class="q-subtitle">Drag each slider to where it feels right. This is your visual fingerprint, the raw feel I read your taste from. The typeface and palette are my call to make from it.</div>
 
     <!-- TONE -->
     <div class="q-spectrum">
@@ -513,72 +487,7 @@
       </div>
     </div>
 
-    <!-- TYPE PERSONALITY -->
-    <div class="q-extras-label">Type personality</div>
-    <div class="q-field-label" style="margin-bottom: 10px;">Which letterforms feel like you? Pick any that pull.</div>
-    <div class="q-pick-grid" data-group="typeface">
-      <div class="q-type q-opt" data-value="geometric">
-        <div class="q-type-specimen" style="font-family:'Poppins',sans-serif; font-weight:700;">Ag</div>
-        <div class="q-type-name">Geometric sans</div>
-        <div class="q-type-desc">friendly · modern</div>
-      </div>
-      <div class="q-type q-opt" data-value="grotesk">
-        <div class="q-type-specimen" style="font-family:'Inter Tight',sans-serif; font-weight:700; letter-spacing:-0.03em;">Ag</div>
-        <div class="q-type-name">Neo-grotesk</div>
-        <div class="q-type-desc">neutral · clean</div>
-      </div>
-      <div class="q-type q-opt" data-value="editorial">
-        <div class="q-type-specimen" style="font-family:'Fraunces',serif; font-weight:600;">Ag</div>
-        <div class="q-type-name">Editorial serif</div>
-        <div class="q-type-desc">trusted · timeless</div>
-      </div>
-      <div class="q-type q-opt" data-value="display">
-        <div class="q-type-specimen" style="font-family:'Archivo Black',sans-serif;">Ag</div>
-        <div class="q-type-name">Display</div>
-        <div class="q-type-desc">loud · characterful</div>
-      </div>
-      <div class="q-type q-opt" data-value="mono">
-        <div class="q-type-specimen" style="font-family:'Fragment Mono',monospace;">Ag</div>
-        <div class="q-type-name">Mono / technical</div>
-        <div class="q-type-desc">raw · precise</div>
-      </div>
-    </div>
-
-    <!-- PALETTE MOOD -->
-    <div class="q-extras-label">Color mood</div>
-    <div class="q-field-label" style="margin-bottom: 10px;">Which palettes feel right? Pick any, ignore the rest.</div>
-    <div class="q-pick-grid" data-group="palette">
-      <div class="q-pal q-opt" data-value="mono-accent">
-        <div class="q-pal-swatches"><span style="background:#0A0A0A"></span><span style="background:#333"></span><span style="background:#888"></span><span style="background:#E5E5E5"></span><span style="background:#CA2323"></span></div>
-        <div class="q-pal-name">Monochrome + accent</div>
-      </div>
-      <div class="q-pal q-opt" data-value="warm-neutral">
-        <div class="q-pal-swatches"><span style="background:#FFFBF5"></span><span style="background:#E8DDD0"></span><span style="background:#C17D3A"></span><span style="background:#8A5A2B"></span><span style="background:#2D2418"></span></div>
-        <div class="q-pal-name">Warm neutrals</div>
-      </div>
-      <div class="q-pal q-opt" data-value="cool-tech">
-        <div class="q-pal-swatches"><span style="background:#0A0A0F"></span><span style="background:#12203A"></span><span style="background:#1E90FF"></span><span style="background:#34D399"></span><span style="background:#E6F0FF"></span></div>
-        <div class="q-pal-name">Cool &amp; technical</div>
-      </div>
-      <div class="q-pal q-opt" data-value="high-contrast">
-        <div class="q-pal-swatches"><span style="background:#000000"></span><span style="background:#FFFFFF"></span><span style="background:#FF3366"></span><span style="background:#FFE500"></span><span style="background:#00D4FF"></span></div>
-        <div class="q-pal-name">High-contrast pop</div>
-      </div>
-      <div class="q-pal q-opt" data-value="muted-soft">
-        <div class="q-pal-swatches"><span style="background:#F3EEE9"></span><span style="background:#D9C7B8"></span><span style="background:#A9B7A0"></span><span style="background:#C9A7A0"></span><span style="background:#6E6A66"></span></div>
-        <div class="q-pal-name">Muted &amp; soft</div>
-      </div>
-      <div class="q-pal q-opt" data-value="dark-neon">
-        <div class="q-pal-swatches"><span style="background:#050505"></span><span style="background:#12121A"></span><span style="background:#A78BFA"></span><span style="background:#F472B6"></span><span style="background:#34D399"></span></div>
-        <div class="q-pal-name">Dark &amp; neon</div>
-      </div>
-      <div class="q-pal q-opt" data-value="earthy">
-        <div class="q-pal-swatches"><span style="background:#F4E8D1"></span><span style="background:#C4553A"></span><span style="background:#2B5F83"></span><span style="background:#5E8C61"></span><span style="background:#1A1A1A"></span></div>
-        <div class="q-pal-name">Earthy &amp; organic</div>
-      </div>
-    </div>
-
-    <div class="q-field" style="margin-top: 12px;">
+    <div class="q-field" style="margin-top: 8px;">
       <div class="q-field-label">Any colors that are off-limits?</div>
       <input class="q-input" type="text" placeholder="No red (competitor owns it), nothing pastel..." data-key="colors_avoid" />
     </div>
@@ -805,8 +714,6 @@
     build: new Set(),
     stage: new Set(),
     priorities: [],
-    typeface: new Set(),
-    palette: new Set(),
     personality: new Set(),
     voice: new Set(),
     content_status: new Set(),
@@ -821,8 +728,6 @@
   // Human-readable labels for coded values (client summary)
   const LABELS = {
     build: { website: 'Website', brand: 'Brand & naming', logo: 'Logo', identity: 'Visual identity' },
-    typeface: { geometric: 'Geometric sans', grotesk: 'Neo-grotesk', editorial: 'Editorial serif', display: 'Display', mono: 'Mono / technical' },
-    palette: { 'mono-accent': 'Monochrome + accent', 'warm-neutral': 'Warm neutrals', 'cool-tech': 'Cool & technical', 'high-contrast': 'High-contrast pop', 'muted-soft': 'Muted & soft', 'dark-neon': 'Dark & neon', earthy: 'Earthy & organic' },
     voice: { plainspoken: 'Plainspoken', poetic: 'Poetic', 'bold-voice': 'Bold', 'warm-voice': 'Warm', technical: 'Technical', witty: 'Witty' },
   }
   const lab = (group, val) => (LABELS[group] && LABELS[group][val]) || String(val).replace(/-/g, ' ')
@@ -832,8 +737,8 @@
     el.addEventListener('input', () => { state.fields[el.dataset.key] = el.value })
   })
 
-  // ── Generic multi-select: checkbox items, tags, and type/palette options ──
-  document.querySelectorAll('.q-check-item, .q-tag, .q-opt').forEach(el => {
+  // ── Generic multi-select: checkbox items and tags ──
+  document.querySelectorAll('.q-check-item, .q-tag').forEach(el => {
     el.addEventListener('click', () => {
       const groupEl = el.closest('[data-group]')
       if (!groupEl) return
@@ -1085,8 +990,6 @@
       build: [...state.build],
       stage: [...state.stage],
       priorities: state.priorities,
-      typeface: [...state.typeface],
-      palette: [...state.palette],
       personality: [...state.personality],
       voice: [...state.voice],
       content_status: [...state.content_status],
@@ -1149,12 +1052,6 @@
       }).join('')
       html += section('Visual fingerprint', vis)
     }
-
-    if (state.typeface.size)
-      html += section('Type direction', tagList([...state.typeface].map(v => lab('typeface', v))))
-
-    if (state.palette.size)
-      html += section('Color mood', tagList([...state.palette].map(v => lab('palette', v))))
 
     if (state.personality.size)
       html += section('Brand personality', tagList([...state.personality]))
@@ -1267,16 +1164,7 @@
     'editorial-sharp': ['convert', 'level-up', 'consistency'],
     'playful-digital': ['standout', 'launch', 'from-zero']
   }
-  // Type-personality picks nudge scoring toward directions that share the feel
-  const typefaceMap = {
-    geometric: ['playful-digital', 'warm-organic', 'neo-minimal'],
-    grotesk: ['neo-minimal', 'midnight-premium', 'editorial-sharp'],
-    editorial: ['editorial-sharp', 'retro-craft'],
-    display: ['electric-bold', 'editorial-sharp'],
-    mono: ['glass-futurism', 'neo-minimal', 'midnight-premium']
-  }
-
-  function scoreDirection(arch, spectrums, personality, priorities, typeface) {
+  function scoreDirection(arch, spectrums, personality, priorities) {
     let score = 0
     for (const [key, [min, max]] of Object.entries(arch.conditions)) {
       const val = spectrums[key]
@@ -1293,14 +1181,13 @@
     }
     for (const p of personality) if ((personalityMap[arch.id] || []).includes(p)) score += 8
     for (const p of priorities) if ((priorityMap[arch.id] || []).includes(p)) score += 6
-    for (const t of typeface) if ((typefaceMap[t] || []).includes(arch.id)) score += 7
     return score
   }
 
   function generateDirections() {
     const scored = directionArchetypes.map(arch => ({
       ...arch,
-      score: scoreDirection(arch, state.spectrums, [...state.personality], state.priorities, [...state.typeface])
+      score: scoreDirection(arch, state.spectrums, [...state.personality], state.priorities)
     }))
     scored.sort((a, b) => b.score - a.score)
     const top4 = scored.slice(0, 4)
