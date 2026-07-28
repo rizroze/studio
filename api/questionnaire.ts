@@ -14,10 +14,18 @@ interface Direction {
 
 interface QuestionnaireData {
   fields: Record<string, string>;
-  services: string[];
-  extras: string[];
+  build: string[];
+  stage: string[];
   priorities: string[];
+  typeface: string[];
+  palette: string[];
   personality: string[];
+  voice: string[];
+  content_status: string[];
+  identity_state: string[];
+  name_status: string[];
+  brand_surfaces: string[];
+  comms: string[];
   spectrums: Record<string, number>;
   directions: Direction[];
 }
@@ -31,6 +39,38 @@ const specLabels: Record<string, [string, string]> = {
   density: ["Dense", "Spacious"],
 };
 
+// Human-readable labels for coded values
+const LABELS: Record<string, Record<string, string>> = {
+  build: { website: "Website", brand: "Brand & naming", logo: "Logo", identity: "Visual identity" },
+  stage: { idea: "Just an idea", "pre-launch": "Pre-launch", launched: "Launched", scaling: "Scaling" },
+  priorities: {
+    "from-zero": "Starting from scratch, no brand yet",
+    "level-up": "Have something but it looks amateur",
+    convert: "People aren't converting",
+    consistency: "Brand is all over the place",
+    standout: "We look like everyone else",
+    launch: "Launching soon, need to come out loud",
+  },
+  typeface: { geometric: "Geometric sans", grotesk: "Neo-grotesk", editorial: "Editorial serif", display: "Display", mono: "Mono / technical" },
+  palette: {
+    "mono-accent": "Monochrome + accent",
+    "warm-neutral": "Warm neutrals",
+    "cool-tech": "Cool & technical",
+    "high-contrast": "High-contrast pop",
+    "muted-soft": "Muted & soft",
+    "dark-neon": "Dark & neon",
+    earthy: "Earthy & organic",
+  },
+  voice: { plainspoken: "Plainspoken", poetic: "Poetic", "bold-voice": "Bold", "warm-voice": "Warm", technical: "Technical", witty: "Witty" },
+  content_status: { "copy-ready": "Copy ready", "images-ready": "Images ready", "need-copy": "Need help with copy", "need-images": "Need help with images" },
+  identity_state: { "from-scratch": "Starting from scratch", evolving: "Evolving what exists", "keep-assets": "Have assets to keep" },
+  name_status: { "name-locked": "Name is locked", "open-naming": "Open to naming help", "need-name": "Need a name" },
+  brand_surfaces: { digital: "Digital / product", social: "Social", motion: "Motion / video", print: "Print", merch: "Merch", packaging: "Packaging", signage: "Signage" },
+  comms: { email: "Email", slack: "Slack / Discord", calls: "Calls", "async-video": "Async video (Loom)", text: "WhatsApp / text" },
+};
+
+const lab = (group: string, v: string): string => LABELS[group]?.[v] || v.replace(/-/g, " ");
+
 function escapeHtml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -40,7 +80,10 @@ function escapeHtml(str: string): string {
 }
 
 function buildEmail(data: QuestionnaireData): string {
-  const { fields, services, extras, priorities, personality, spectrums } = data;
+  const {
+    fields, build, stage, priorities, typeface, palette, personality,
+    voice, content_status, identity_state, name_status, brand_surfaces, comms, spectrums,
+  } = data;
 
   const section = (label: string, content: string) => `
     <tr>
@@ -53,43 +96,35 @@ function buildEmail(data: QuestionnaireData): string {
   const tag = (text: string) =>
     `<span style="display:inline-block;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:4px 10px;margin:3px 6px 3px 0;font-size:12px;color:#fff;">${escapeHtml(text)}</span> `;
 
+  const tags = (group: string, arr: string[]) => arr.map((v) => tag(lab(group, v))).join("");
+  const field = (v?: string) => (v ? escapeHtml(v) : "");
+
   let rows = "";
 
-  // ── SCREEN 1: About You ──
+  // ── Client ──
   if (fields.name || fields.company)
     rows += section("Client", `${escapeHtml(fields.name || "")}${fields.company ? `, ${escapeHtml(fields.company)}` : ""}${fields.email ? `<br><span style="color:#888;">${escapeHtml(fields.email)}</span>` : ""}`);
 
-  if (fields.website)
-    rows += section("Website", escapeHtml(fields.website));
+  // ── Engagement ──
+  if (build.length) rows += section("Building", tags("build", build));
+  if (fields.first_priority) rows += section("Starting With", field(fields.first_priority));
+  if (fields.deadline) rows += section("Deadline", field(fields.deadline));
 
-  if (fields.oneliner)
-    rows += section("What They Do", escapeHtml(fields.oneliner));
+  // ── Business ──
+  if (fields.website) rows += section("Site / Socials", field(fields.website));
+  if (fields.oneliner) rows += section("What They Do", field(fields.oneliner));
+  if (stage.length) rows += section("Stage", tags("stage", stage));
+  if (fields.goal) rows += section("6-Month Goal", field(fields.goal));
 
-  // ── SCREEN 2: Services ──
-  if (services.length)
-    rows += section("Services", services.map((s) => tag(s.replace(/-/g, " "))).join(""));
-
-  if (extras.length)
-    rows += section("Extras", extras.map((s) => tag(s)).join(""));
-
-  // ── SCREEN 3: The Gap ──
-  if (fields.problem)
-    rows += section("The Problem", escapeHtml(fields.problem));
-
+  // ── Positioning ──
+  if (fields.audience) rows += section("Who It's For", field(fields.audience));
+  if (fields.competitors) rows += section("Up Against", field(fields.competitors));
+  if (fields.differentiator) rows += section("What Makes Them Different", field(fields.differentiator));
+  if (fields.feeling) rows += section("Wants People To Feel", field(fields.feeling));
   if (priorities.length)
-    rows += section("Top Priorities", priorities.map((p, i) => `<div style="margin:2px 0;"><span style="color:#CA2323;font-weight:600;">${i + 1}.</span> ${escapeHtml(p.replace(/-/g, " "))}</div>`).join(""));
+    rows += section("What Matters Most", priorities.map((p, i) => `<div style="margin:2px 0;"><span style="color:#CA2323;font-weight:600;">${i + 1}.</span> ${escapeHtml(lab("priorities", p))}</div>`).join(""));
 
-  // ── Audience & Competitors ──
-  if (fields.audience)
-    rows += section("Who It's For", escapeHtml(fields.audience));
-
-  if (fields.competitors)
-    rows += section("Competitors", escapeHtml(fields.competitors));
-
-  // ── Visual Direction ──
-  if (personality.length)
-    rows += section("Brand Personality", personality.map((s) => tag(s)).join(""));
-
+  // ── Visual fingerprint ──
   const specEntries = Object.entries(spectrums);
   if (specEntries.length) {
     const vis = specEntries
@@ -108,36 +143,67 @@ function buildEmail(data: QuestionnaireData): string {
       .join("");
     rows += section("Visual Fingerprint (Raw Data)", vis);
   }
+  if (typeface.length) rows += section("Type Direction", tags("typeface", typeface));
+  if (palette.length) rows += section("Color Mood", tags("palette", palette));
+  if (fields.colors_avoid) rows += section("Colors Off-Limits", field(fields.colors_avoid));
+  if (personality.length) rows += section("Brand Personality", personality.map((s) => tag(s)).join(""));
+  if (fields.visual_inspo) rows += section("Visual Inspiration", field(fields.visual_inspo));
 
-  if (fields.visual_inspo)
-    rows += section("Visual Inspiration", escapeHtml(fields.visual_inspo));
+  // ── Voice ──
+  if (fields.tagline) rows += section("Current Tagline", field(fields.tagline));
+  if (fields.headline) rows += section("Headline Seed", `&ldquo;${field(fields.headline)}&rdquo;`);
+  if (fields.not_you) rows += section("Not Them", field(fields.not_you));
+  if (voice.length) rows += section("Voice", tags("voice", voice));
 
-  // ── Wrap Up ──
-  if (fields.deadline)
-    rows += section("Deadline", escapeHtml(fields.deadline));
+  // ── Website (only if relevant) ──
+  const hasWebsite = build.includes("website") || fields.pages || fields.primary_action || fields.features || fields.ref_sites || fields.domain || content_status.length;
+  if (hasWebsite) {
+    let web = "";
+    if (fields.pages) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Pages:</strong> ${field(fields.pages)}</p>`;
+    if (fields.primary_action) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Primary action:</strong> ${field(fields.primary_action)}</p>`;
+    if (fields.features) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Features / integrations:</strong> ${field(fields.features)}</p>`;
+    if (content_status.length) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Content:</strong><br>${tags("content_status", content_status)}</p>`;
+    if (fields.content_owner) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Copy / images by:</strong> ${field(fields.content_owner)}</p>`;
+    if (fields.ref_sites) web += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Reference sites:</strong> ${field(fields.ref_sites)}</p>`;
+    if (fields.domain) web += `<p style="margin:0;"><strong style="color:#fff;">Domain / hosting:</strong> ${field(fields.domain)}</p>`;
+    if (web) rows += section("Website", web);
+  }
 
-  if (fields.budget)
-    rows += section("Budget", escapeHtml(fields.budget));
+  // ── Brand & identity (only if relevant) ──
+  const hasIdentity = build.some((b) => ["brand", "logo", "identity"].includes(b)) || identity_state.length || name_status.length || brand_surfaces.length || fields.existing_assets || fields.brand_story || fields.avoid_brands;
+  if (hasIdentity) {
+    let id = "";
+    if (identity_state.length) id += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Starting point:</strong><br>${tags("identity_state", identity_state)}</p>`;
+    if (name_status.length) id += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Name:</strong><br>${tags("name_status", name_status)}</p>`;
+    if (brand_surfaces.length) id += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Brand lives on:</strong><br>${tags("brand_surfaces", brand_surfaces)}</p>`;
+    if (fields.existing_assets) id += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Keep:</strong> ${field(fields.existing_assets)}</p>`;
+    if (fields.brand_story) id += `<p style="margin:0 0 8px;"><strong style="color:#fff;">Story / symbolism:</strong> ${field(fields.brand_story)}</p>`;
+    if (fields.avoid_brands) id += `<p style="margin:0;"><strong style="color:#fff;">Do not look like:</strong> ${field(fields.avoid_brands)}</p>`;
+    if (id) rows += section("Brand & Identity", id);
+  }
 
-  if (fields.referral)
-    rows += section("How They Found Us", escapeHtml(fields.referral));
+  // ── Logistics ──
+  if (fields.approvers) rows += section("Signs Off", field(fields.approvers));
+  if (comms.length) rows += section("Comms Preference", tags("comms", comms));
+  if (fields.budget) rows += section("Budget", field(fields.budget));
+  if (fields.assets_links) rows += section("Files / References", field(fields.assets_links));
+  if (fields.anything_else) rows += section("Anything Else", field(fields.anything_else));
 
-  if (fields.anything_else)
-    rows += section("Anything Else", escapeHtml(fields.anything_else));
-
-  // Creative Directions — compact summary, not the main event
+  // ── Auto-suggested directions (internal reference only) ──
   const { directions } = data;
   if (directions && directions.length) {
-    const dirHtml = directions.map(d => {
-      const marker = d.recommended ? " ★" : "";
-      const score = Math.round(d.score);
-      return `<div style="margin:4px 0;font-size:12px;color:#bbb;">
+    const dirHtml = directions
+      .map((d) => {
+        const marker = d.recommended ? " ★" : "";
+        const score = Math.round(d.score);
+        return `<div style="margin:4px 0;font-size:12px;color:#bbb;">
         <span style="color:#e0e0e0;font-weight:600;">${escapeHtml(d.name)}${marker}</span>
         <span style="color:#666;"> · score: ${score} · </span>
         <span style="color:#888;">${d.references.join(", ")}</span>
       </div>`;
-    }).join('');
-    rows += section("Auto-Suggested Directions (starting points)", `<div style="font-size:11px;color:#666;margin-bottom:6px;">Algorithm-generated from slider + personality data. Use as reference, not prescription.</div>${dirHtml}`);
+      })
+      .join("");
+    rows += section("Auto-Suggested Directions (internal)", `<div style="font-size:11px;color:#666;margin-bottom:6px;">Generated from slider + type + personality data. Reference for you, not shown to the client.</div>${dirHtml}`);
   }
 
   const clientName = fields.name || fields.company || "Unknown";
@@ -150,7 +216,7 @@ function buildEmail(data: QuestionnaireData): string {
   <div style="max-width:560px;margin:0 auto;padding:32px 16px;">
     <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom:16px;"><tr>
       <td style="vertical-align:middle;padding-left:0;">
-        <p style="margin:0;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#CA2323;">New Questionnaire</p>
+        <p style="margin:0;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#CA2323;">New Discovery</p>
         <p style="margin:2px 0 0;font-size:18px;font-weight:700;color:#fff;">${escapeHtml(clientName)}</p>
         <p style="margin:2px 0 0;font-size:11px;color:#666;">${date}</p>
       </td>
@@ -160,7 +226,7 @@ function buildEmail(data: QuestionnaireData): string {
       ${rows}
     </table>
 
-    <p style="margin:24px 0 0;font-size:11px;color:#444;text-align:center;">Rizzy Studio &middot; rizzy.today/discovery</p>
+    <p style="margin:24px 0 0;font-size:11px;color:#444;text-align:center;">Rizzy Today &middot; rizzy.today/discovery</p>
   </div>
 </body>
 </html>`;
@@ -185,9 +251,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const resend = new Resend(apiKey);
     await resend.emails.send({
-      from: "Rizzy Studio <studio@whatsfordinner.fit>",
+      from: "Rizzy Today <studio@whatsfordinner.fit>",
       to: notifyEmail,
-      subject: `Questionnaire: ${clientName}`,
+      subject: `Discovery: ${clientName}`,
       html: buildEmail(data),
     });
 

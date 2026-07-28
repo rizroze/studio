@@ -1,10 +1,11 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brand Questionnaire · Rizzy Today</title>
+<title>Project Discovery · Rizzy Today</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,600;0,700;1,700&family=Inter+Tight:wght@400;500;600;700&family=Fragment+Mono&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,600;0,700;1,700&family=Inter+Tight:wght@400;500;600;700&family=Fragment+Mono&family=Poppins:wght@600;700&family=Fraunces:ital,wght@0,600;1,600&family=Archivo+Black&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -125,10 +126,10 @@
   .q-check-item.selected .q-check-label { color: var(--text); }
   .q-check-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
-  /* ─── EXTRAS SECTION ─── */
+  /* ─── EXTRAS / SECTION DIVIDER LABEL ─── */
   .q-extras-label {
     font-family: 'Fragment Mono', monospace; font-size: 10px; text-transform: uppercase;
-    letter-spacing: 0.08em; color: var(--text-muted); margin: 20px 0 10px; display: flex; align-items: center; gap: 8px;
+    letter-spacing: 0.08em; color: var(--text-muted); margin: 24px 0 12px; display: flex; align-items: center; gap: 8px;
   }
   .q-extras-label::after { content: ''; flex: 1; height: 1px; background: var(--glass-border); }
 
@@ -143,6 +144,31 @@
   .q-tag.selected {
     background: rgba(202,35,35,0.12); border-color: var(--brand-red); color: var(--text);
   }
+
+  /* ─── TYPE PERSONALITY + PALETTE PICKERS ─── */
+  .q-opt { cursor: pointer; user-select: none; transition: all 0.25s var(--smooth); }
+  .q-pick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+
+  .q-type {
+    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px;
+    padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .q-type:hover { background: var(--glass-hover); transform: translateY(-1px); }
+  .q-type.selected { border-color: var(--brand-red); background: rgba(202,35,35,0.08); box-shadow: 0 0 20px rgba(202,35,35,0.1); }
+  .q-type-specimen { font-size: 28px; line-height: 1; color: var(--text); }
+  .q-type-name { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+  .q-type-desc { font-size: 10px; color: var(--text-muted); font-family: 'Fragment Mono', monospace; letter-spacing: 0.03em; }
+
+  .q-pal {
+    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 10px;
+    padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .q-pal:hover { background: var(--glass-hover); transform: translateY(-1px); }
+  .q-pal.selected { border-color: var(--brand-red); background: rgba(202,35,35,0.08); box-shadow: 0 0 20px rgba(202,35,35,0.1); }
+  .q-pal-swatches { display: flex; gap: 0; border-radius: 6px; overflow: hidden; height: 26px; border: 1px solid rgba(255,255,255,0.06); }
+  .q-pal-swatches span { flex: 1; }
+  .q-pal-name { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+  .q-type.selected .q-type-name, .q-pal.selected .q-pal-name { color: var(--text); }
 
   /* ─── SPECTRUM SLIDERS ─── */
   .q-spectrum { margin-bottom: 22px; }
@@ -211,7 +237,7 @@
     box-shadow: 0 4px 16px var(--brand-red-glow);
   }
   .q-btn-next:hover { box-shadow: 0 6px 24px var(--brand-red-glow); }
-  .q-btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .q-btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
   /* ─── SUMMARY ─── */
   .summary-section { margin-bottom: 24px; }
@@ -228,68 +254,15 @@
     padding: 5px 14px; border-radius: 100px; font-size: 12px;
     background: rgba(202,35,35,0.1); border: 1px solid rgba(202,35,35,0.2); color: var(--text-secondary);
   }
-  .summary-scope { margin-top: 8px; }
   .summary-scope-item {
     display: flex; align-items: center; gap: 8px; padding: 6px 0;
     font-size: 13px; color: var(--text-secondary);
-  }
-  .scope-included { color: var(--green); font-size: 12px; }
-  .scope-extra { color: var(--text-muted); font-size: 12px; font-style: italic; }
-
-
-  /* ─── CREATIVE DIRECTIONS ─── */
-  .directions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-  .direction-card {
-    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 14px;
-    padding: 18px; position: relative; overflow: hidden; transition: border-color 0.3s var(--smooth);
-  }
-  .direction-card:hover { border-color: rgba(255,255,255,0.2); }
-  .direction-card.recommended { border-color: var(--brand-red); }
-  .direction-card.recommended::after {
-    content: 'Best Match'; position: absolute; top: 10px; right: 10px;
-    font-family: 'Fragment Mono', monospace; font-size: 8px; text-transform: uppercase;
-    letter-spacing: 0.1em; color: var(--brand-red); background: rgba(202,35,35,0.15);
-    padding: 3px 8px; border-radius: 100px;
-  }
-  .direction-name {
-    font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: 15px;
-    margin-bottom: 6px; color: var(--text);
-  }
-  .direction-vibe {
-    font-size: 11px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;
-  }
-  .direction-palette { display: flex; gap: 4px; margin-bottom: 10px; }
-  .direction-swatch {
-    width: 20px; height: 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);
-  }
-  .direction-details { font-size: 11px; color: var(--text-secondary); line-height: 1.6; }
-  .direction-details dt {
-    font-family: 'Fragment Mono', monospace; font-size: 9px; text-transform: uppercase;
-    letter-spacing: 0.08em; color: var(--text-muted); margin-top: 8px;
-  }
-  .direction-details dt:first-child { margin-top: 0; }
-  .direction-details dd { margin: 2px 0 0 0; }
-  .direction-refs {
-    display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px;
-  }
-  .direction-ref {
-    font-size: 10px; padding: 2px 8px; border-radius: 100px;
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
-    color: var(--text-muted);
-  }
-  .directions-note {
-    font-size: 11px; color: var(--text-muted); margin-top: 12px; padding: 12px 16px;
-    background: rgba(202,35,35,0.06); border: 1px solid rgba(202,35,35,0.12);
-    border-radius: 10px; line-height: 1.5;
-  }
-  @media (max-width: 600px) {
-    .directions-grid { grid-template-columns: 1fr; }
   }
 
   /* ─── RESPONSIVE ─── */
   @media (max-width: 700px) {
     .q-checkbox-grid { grid-template-columns: 1fr; }
-    .q-lovehate-grid { grid-template-columns: 1fr; }
+    .q-pick-grid { grid-template-columns: 1fr; }
     .q-title { font-size: 24px; }
     .q-container { padding: 90px 20px 40px; }
   }
@@ -310,11 +283,51 @@
 
 <div class="q-container">
 
-  <!-- ═══ SCREEN 1: WHO ARE YOU ═══ -->
-  <div class="screen active" data-step="1">
-    <div class="q-label">Let's start</div>
-    <div class="q-title">Tell me about you.</div>
-    <div class="q-subtitle">Just the basics so I know who I'm talking to.</div>
+  <!-- ═══ SCOPE ═══ -->
+  <div class="screen active" data-screen="scope">
+    <div class="q-label">The engagement</div>
+    <div class="q-title">What are we building?</div>
+    <div class="q-subtitle">We're working together now, so this is where I get the raw material to start. The more specific you are, the sharper the first drafts land.</div>
+
+    <div class="q-checkbox-grid" data-group="build">
+      <div class="q-check-item q-opt" data-value="website">
+        <div class="q-check-box">&#10003;</div>
+        <div><div class="q-check-label">Website</div><div class="q-check-desc">Design + development, the live site</div></div>
+      </div>
+      <div class="q-check-item q-opt" data-value="brand">
+        <div class="q-check-box">&#10003;</div>
+        <div><div class="q-check-label">Brand &amp; Naming</div><div class="q-check-desc">Strategy, positioning, the name itself</div></div>
+      </div>
+      <div class="q-check-item q-opt" data-value="logo">
+        <div class="q-check-box">&#10003;</div>
+        <div><div class="q-check-label">Logo</div><div class="q-check-desc">Marks, wordmarks, the core identity object</div></div>
+      </div>
+      <div class="q-check-item q-opt" data-value="identity">
+        <div class="q-check-box">&#10003;</div>
+        <div><div class="q-check-label">Visual Identity</div><div class="q-check-desc">Color, type, the full system + guidelines</div></div>
+      </div>
+    </div>
+
+    <div class="q-field" style="margin-top: 20px;">
+      <div class="q-field-label">What do we start with, and by when?</div>
+      <input class="q-input" type="text" placeholder="Website live by April, brand can follow after" data-key="first_priority" />
+    </div>
+    <div class="q-field">
+      <div class="q-field-label">Any hard deadline?</div>
+      <input class="q-input" type="text" placeholder="Investor demo in 3 weeks, launching in April, no fixed date..." data-key="deadline" />
+    </div>
+
+    <div class="q-nav">
+      <div></div>
+      <button class="q-btn q-btn-next" data-next>Continue</button>
+    </div>
+  </div>
+
+  <!-- ═══ BUSINESS ═══ -->
+  <div class="screen" data-screen="business">
+    <div class="q-label">The business</div>
+    <div class="q-title">The basics.</div>
+    <div class="q-subtitle">The foundation everything else is built on.</div>
 
     <div class="q-field">
       <div class="q-field-label">Your name</div>
@@ -324,119 +337,62 @@
       <div class="q-field-label">Email</div>
       <input class="q-input" type="email" placeholder="steve@apple.com" data-key="email" />
     </div>
-
-    <div class="q-nav">
-      <div></div>
-      <button class="q-btn q-btn-next" onclick="next()">Continue</button>
-    </div>
-  </div>
-
-  <!-- ═══ SCREEN 2: YOUR PROJECT ═══ -->
-  <div class="screen" data-step="2">
-    <div class="q-label">Your project</div>
-    <div class="q-title">What are we working on?</div>
-    <div class="q-subtitle">Tell me about what you're building.</div>
-
     <div class="q-field">
       <div class="q-field-label">Company / project name</div>
       <input class="q-input" type="text" placeholder="Apple" data-key="company" />
     </div>
     <div class="q-field">
-      <div class="q-field-label">Current website (if any)</div>
-      <input class="q-input" type="text" placeholder="apple.com" data-key="website" />
+      <div class="q-field-label">Current site or socials (if any)</div>
+      <input class="q-input" type="text" placeholder="apple.com, @apple" data-key="website" />
     </div>
     <div class="q-field">
-      <div class="q-field-label">What does your company do? (one sentence)</div>
+      <div class="q-field-label">What do you do? (one sentence)</div>
       <input class="q-input" type="text" placeholder="We make insanely great products" data-key="oneliner" />
     </div>
 
-    <div class="q-nav">
-      <button class="q-btn q-btn-back" onclick="prev()">Back</button>
-      <button class="q-btn q-btn-next" onclick="next()">Continue</button>
-    </div>
-  </div>
-
-  <!-- ═══ SCREEN 3: SERVICES ═══ -->
-  <div class="screen" data-step="3">
-    <div class="q-label">Services</div>
-    <div class="q-title">What do you need help with?</div>
-    <div class="q-subtitle">Pick everything that applies. We'll figure out the details together.</div>
-
-    <div class="q-checkbox-grid" data-group="services">
-      <div class="q-check-item" data-value="brand">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">Brand Identity</div><div class="q-check-desc">Logo, colors, typography, guidelines</div></div>
-      </div>
-      <div class="q-check-item" data-value="web-design">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">Website Design</div><div class="q-check-desc">UI/UX, layouts, visual design</div></div>
-      </div>
-      <div class="q-check-item" data-value="web-dev">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">Website Development</div><div class="q-check-desc">Code, deploy, responsive, animations</div></div>
-      </div>
-      <div class="q-check-item" data-value="logo-animation">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">Logo Animation</div><div class="q-check-desc">Animated logo for intros, socials, loading</div></div>
-      </div>
-      <div class="q-check-item" data-value="motion">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">Motion Design</div><div class="q-check-desc">Launch videos, announcement visuals, promo</div></div>
-      </div>
-      <div class="q-check-item" data-value="content">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">Content Direction</div><div class="q-check-desc">Social kit, templates, visual language</div></div>
-      </div>
-      <div class="q-check-item" data-value="design-system">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">Design System</div><div class="q-check-desc">Component library, tokens, documentation</div></div>
-      </div>
-      <div class="q-check-item" data-value="pitch-deck">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">Pitch Deck</div><div class="q-check-desc">Investor or sales presentation design</div></div>
-      </div>
-    </div>
-
-    <div class="q-extras-label">Extras</div>
-    <div class="q-checkbox-grid" data-group="extras">
-      <div class="q-check-item" data-value="cms">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">CMS Integration</div><div class="q-check-desc">Custom admin panel you can grow with</div></div>
-      </div>
-      <div class="q-check-item" data-value="seo">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">SEO Setup</div><div class="q-check-desc">Meta, schema, sitemap, analytics</div></div>
-      </div>
-      <div class="q-check-item" data-value="ongoing">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">Ongoing Support</div><div class="q-check-desc">Monthly retainer for updates</div></div>
-      </div>
-      <div class="q-check-item" data-value="illustrations">
-        <div class="q-check-box">&#10003;</div>
-        <div><div class="q-check-label">Illustrations</div><div class="q-check-desc">Custom illustrations for brand/product</div></div>
-      </div>
-    </div>
-
-    <div class="q-nav">
-      <button class="q-btn q-btn-back" onclick="prev()">Back</button>
-      <button class="q-btn q-btn-next" onclick="next()">Continue</button>
-    </div>
-  </div>
-
-  <!-- ═══ SCREEN 4: THE PROBLEM ═══ -->
-  <div class="screen" data-step="4">
-    <div class="q-label">The problem</div>
-    <div class="q-title">What are we solving?</div>
-    <div class="q-subtitle">The more context you give, the sharper the solution.</div>
-
-    <div class="q-field">
-      <div class="q-field-label">What's the main problem you're trying to solve?</div>
-      <textarea class="q-textarea" placeholder="People love our product but our website doesn't reflect the quality. First impressions matter and ours isn't cutting it..." data-key="problem"></textarea>
+    <div class="q-field-label" style="margin-bottom: 10px;">Where are you right now?</div>
+    <div class="q-tags" data-group="stage">
+      <div class="q-tag" data-value="idea">Just an idea</div>
+      <div class="q-tag" data-value="pre-launch">Pre-launch</div>
+      <div class="q-tag" data-value="launched">Launched</div>
+      <div class="q-tag" data-value="scaling">Scaling</div>
     </div>
 
     <div class="q-field">
-      <div class="q-field-label">Pick your top 3 priorities</div>
+      <div class="q-field-label">What does success look like 6 months from now?</div>
+      <textarea class="q-textarea" placeholder="A site that finally matches the quality of the product, converts visitors, and makes us look like the category leader..." data-key="goal" style="min-height: 80px;"></textarea>
     </div>
+
+    <div class="q-nav">
+      <button class="q-btn q-btn-back" data-prev>Back</button>
+      <button class="q-btn q-btn-next" data-next>Continue</button>
+    </div>
+  </div>
+
+  <!-- ═══ AUDIENCE / POSITIONING ═══ -->
+  <div class="screen" data-screen="audience">
+    <div class="q-label">Positioning</div>
+    <div class="q-title">Who it's for.</div>
+    <div class="q-subtitle">Design is a conversation with a specific person. Tell me who.</div>
+
+    <div class="q-field">
+      <div class="q-field-label">Who is this for? (your customers, not your investors)</div>
+      <input class="q-input" type="text" placeholder="Creative professionals, 25-45, who value design and want products that just work" data-key="audience" />
+    </div>
+    <div class="q-field">
+      <div class="q-field-label">Who are you up against?</div>
+      <input class="q-input" type="text" placeholder="Stripe, Linear, or just 'every generic agency site out there'" data-key="competitors" />
+    </div>
+    <div class="q-field">
+      <div class="q-field-label">The one thing that makes you different</div>
+      <input class="q-input" type="text" placeholder="We're the only one who actually ships what we design" data-key="differentiator" />
+    </div>
+    <div class="q-field">
+      <div class="q-field-label">How do you want people to feel? (three words)</div>
+      <input class="q-input" type="text" placeholder="Confident, curious, in good hands" data-key="feeling" />
+    </div>
+
+    <div class="q-field-label" style="margin-bottom: 6px;">What matters most for this project? (rank your top 3)</div>
     <div class="q-rank-list" data-group="priorities" data-max="3">
       <div class="q-rank-item" data-value="from-zero"><div class="q-rank-num"></div><div class="q-rank-text">Starting from scratch, no brand yet</div></div>
       <div class="q-rank-item" data-value="level-up"><div class="q-rank-num"></div><div class="q-rank-text">We have something but it looks amateur</div></div>
@@ -446,27 +402,17 @@
       <div class="q-rank-item" data-value="launch"><div class="q-rank-num"></div><div class="q-rank-text">Launching soon, need to come out loud</div></div>
     </div>
 
-    <div class="q-field">
-      <div class="q-field-label">Who is this for? (your customers, not your investors)</div>
-      <input class="q-input" type="text" placeholder="Creative professionals, 25-45, who value design and want products that just work" data-key="audience" />
-    </div>
-
-    <div class="q-field">
-      <div class="q-field-label">Who are you up against?</div>
-      <input class="q-input" type="text" placeholder="Stripe, Linear, or just 'every generic agency site out there'" data-key="competitors" />
-    </div>
-
     <div class="q-nav">
-      <button class="q-btn q-btn-back" onclick="prev()">Back</button>
-      <button class="q-btn q-btn-next" onclick="next()">Continue</button>
+      <button class="q-btn q-btn-back" data-prev>Back</button>
+      <button class="q-btn q-btn-next" data-next>Continue</button>
     </div>
   </div>
 
-  <!-- ═══ SCREEN 5: VISUAL DIRECTION ═══ -->
-  <div class="screen" data-step="5">
-    <div class="q-label">Visual direction</div>
+  <!-- ═══ VISUAL FINGERPRINT ═══ -->
+  <div class="screen" data-screen="fingerprint">
+    <div class="q-label">Visual fingerprint</div>
     <div class="q-title">Show me your taste.</div>
-    <div class="q-subtitle">Drag each slider to where it feels right. This gives us your visual fingerprint.</div>
+    <div class="q-subtitle">Drag each slider to where it feels right, then pick the type and color moods that pull you. This is what I actually design from.</div>
 
     <!-- TONE -->
     <div class="q-spectrum">
@@ -567,12 +513,78 @@
       </div>
     </div>
 
-    <div class="q-field" style="margin-top: 8px;">
-      <div class="q-field-label">Any brands or websites you love the look of?</div>
-      <textarea class="q-textarea" placeholder="Linear, Notion, Apple, Vercel, anything that inspires you" data-key="visual_inspo" style="min-height: 60px;"></textarea>
+    <!-- TYPE PERSONALITY -->
+    <div class="q-extras-label">Type personality</div>
+    <div class="q-field-label" style="margin-bottom: 10px;">Which letterforms feel like you? Pick any that pull.</div>
+    <div class="q-pick-grid" data-group="typeface">
+      <div class="q-type q-opt" data-value="geometric">
+        <div class="q-type-specimen" style="font-family:'Poppins',sans-serif; font-weight:700;">Ag</div>
+        <div class="q-type-name">Geometric sans</div>
+        <div class="q-type-desc">friendly · modern</div>
+      </div>
+      <div class="q-type q-opt" data-value="grotesk">
+        <div class="q-type-specimen" style="font-family:'Inter Tight',sans-serif; font-weight:700; letter-spacing:-0.03em;">Ag</div>
+        <div class="q-type-name">Neo-grotesk</div>
+        <div class="q-type-desc">neutral · clean</div>
+      </div>
+      <div class="q-type q-opt" data-value="editorial">
+        <div class="q-type-specimen" style="font-family:'Fraunces',serif; font-weight:600;">Ag</div>
+        <div class="q-type-name">Editorial serif</div>
+        <div class="q-type-desc">trusted · timeless</div>
+      </div>
+      <div class="q-type q-opt" data-value="display">
+        <div class="q-type-specimen" style="font-family:'Archivo Black',sans-serif;">Ag</div>
+        <div class="q-type-name">Display</div>
+        <div class="q-type-desc">loud · characterful</div>
+      </div>
+      <div class="q-type q-opt" data-value="mono">
+        <div class="q-type-specimen" style="font-family:'Fragment Mono',monospace;">Ag</div>
+        <div class="q-type-name">Mono / technical</div>
+        <div class="q-type-desc">raw · precise</div>
+      </div>
     </div>
 
-    <div class="q-field" style="margin-top: 20px;">
+    <!-- PALETTE MOOD -->
+    <div class="q-extras-label">Color mood</div>
+    <div class="q-field-label" style="margin-bottom: 10px;">Which palettes feel right? Pick any, ignore the rest.</div>
+    <div class="q-pick-grid" data-group="palette">
+      <div class="q-pal q-opt" data-value="mono-accent">
+        <div class="q-pal-swatches"><span style="background:#0A0A0A"></span><span style="background:#333"></span><span style="background:#888"></span><span style="background:#E5E5E5"></span><span style="background:#CA2323"></span></div>
+        <div class="q-pal-name">Monochrome + accent</div>
+      </div>
+      <div class="q-pal q-opt" data-value="warm-neutral">
+        <div class="q-pal-swatches"><span style="background:#FFFBF5"></span><span style="background:#E8DDD0"></span><span style="background:#C17D3A"></span><span style="background:#8A5A2B"></span><span style="background:#2D2418"></span></div>
+        <div class="q-pal-name">Warm neutrals</div>
+      </div>
+      <div class="q-pal q-opt" data-value="cool-tech">
+        <div class="q-pal-swatches"><span style="background:#0A0A0F"></span><span style="background:#12203A"></span><span style="background:#1E90FF"></span><span style="background:#34D399"></span><span style="background:#E6F0FF"></span></div>
+        <div class="q-pal-name">Cool &amp; technical</div>
+      </div>
+      <div class="q-pal q-opt" data-value="high-contrast">
+        <div class="q-pal-swatches"><span style="background:#000000"></span><span style="background:#FFFFFF"></span><span style="background:#FF3366"></span><span style="background:#FFE500"></span><span style="background:#00D4FF"></span></div>
+        <div class="q-pal-name">High-contrast pop</div>
+      </div>
+      <div class="q-pal q-opt" data-value="muted-soft">
+        <div class="q-pal-swatches"><span style="background:#F3EEE9"></span><span style="background:#D9C7B8"></span><span style="background:#A9B7A0"></span><span style="background:#C9A7A0"></span><span style="background:#6E6A66"></span></div>
+        <div class="q-pal-name">Muted &amp; soft</div>
+      </div>
+      <div class="q-pal q-opt" data-value="dark-neon">
+        <div class="q-pal-swatches"><span style="background:#050505"></span><span style="background:#12121A"></span><span style="background:#A78BFA"></span><span style="background:#F472B6"></span><span style="background:#34D399"></span></div>
+        <div class="q-pal-name">Dark &amp; neon</div>
+      </div>
+      <div class="q-pal q-opt" data-value="earthy">
+        <div class="q-pal-swatches"><span style="background:#F4E8D1"></span><span style="background:#C4553A"></span><span style="background:#2B5F83"></span><span style="background:#5E8C61"></span><span style="background:#1A1A1A"></span></div>
+        <div class="q-pal-name">Earthy &amp; organic</div>
+      </div>
+    </div>
+
+    <div class="q-field" style="margin-top: 12px;">
+      <div class="q-field-label">Any colors that are off-limits?</div>
+      <input class="q-input" type="text" placeholder="No red (competitor owns it), nothing pastel..." data-key="colors_avoid" />
+    </div>
+
+    <!-- PERSONALITY WORDS -->
+    <div class="q-field" style="margin-top: 12px;">
       <div class="q-field-label">Pick a few words that feel like your brand</div>
     </div>
     <div class="q-tags" data-group="personality">
@@ -590,53 +602,198 @@
       <div class="q-tag" data-value="retro">Retro</div>
     </div>
 
+    <div class="q-field">
+      <div class="q-field-label">Any brands or sites you love the look of?</div>
+      <textarea class="q-textarea" placeholder="Linear, Notion, Apple, Vercel, anything that inspires you, and what you love about it" data-key="visual_inspo" style="min-height: 60px;"></textarea>
+    </div>
+
     <div class="q-nav">
-      <button class="q-btn q-btn-back" onclick="prev()">Back</button>
-      <button class="q-btn q-btn-next" onclick="next()">Continue</button>
+      <button class="q-btn q-btn-back" data-prev>Back</button>
+      <button class="q-btn q-btn-next" data-next>Continue</button>
     </div>
   </div>
 
-  <!-- ═══ SCREEN 6: WRAP UP ═══ -->
-  <div class="screen" data-step="6">
-    <div class="q-label">Almost done</div>
-    <div class="q-title">Last few details.</div>
-    <div class="q-subtitle">This helps me scope things out before our call.</div>
+  <!-- ═══ VOICE / MESSAGE ═══ -->
+  <div class="screen" data-screen="voice">
+    <div class="q-label">Voice &amp; message</div>
+    <div class="q-title">How it should sound.</div>
+    <div class="q-subtitle">The words carry as much weight as the visuals. Give me the language.</div>
 
     <div class="q-field">
-      <div class="q-field-label">Any hard deadlines?</div>
-      <input class="q-input" type="text" placeholder="Launching in April, investor demo in 3 weeks, no rush..." data-key="deadline" />
+      <div class="q-field-label">How do you describe yourself right now? (current tagline, if any)</div>
+      <input class="q-input" type="text" placeholder="The all-in-one workspace for modern teams" data-key="tagline" />
     </div>
     <div class="q-field">
-      <div class="q-field-label">Budget range (if you have one in mind)</div>
-      <input class="q-input" type="text" placeholder="$5k-10k, $15k+, not sure yet..." data-key="budget" />
+      <div class="q-field-label">If your homepage had one line in giant type, what would it say?</div>
+      <input class="q-input" type="text" placeholder="Rough is fine, this is a starting point for the headline" data-key="headline" />
     </div>
     <div class="q-field">
-      <div class="q-field-label">How did you find Rizzy Today?</div>
-      <input class="q-input" type="text" placeholder="Twitter, a friend, Google, saw your work on..." data-key="referral" />
+      <div class="q-field-label">Words or vibes that are NOT you</div>
+      <input class="q-input" type="text" placeholder="Corporate, cutesy, salesy, 'synergy'..." data-key="not_you" />
+    </div>
+
+    <div class="q-field-label" style="margin-bottom: 10px;">How should the voice feel?</div>
+    <div class="q-tags" data-group="voice">
+      <div class="q-tag" data-value="plainspoken">Plainspoken</div>
+      <div class="q-tag" data-value="poetic">Poetic</div>
+      <div class="q-tag" data-value="bold-voice">Bold</div>
+      <div class="q-tag" data-value="warm-voice">Warm</div>
+      <div class="q-tag" data-value="technical">Technical</div>
+      <div class="q-tag" data-value="witty">Witty</div>
+    </div>
+
+    <div class="q-nav">
+      <button class="q-btn q-btn-back" data-prev>Back</button>
+      <button class="q-btn q-btn-next" data-next>Continue</button>
+    </div>
+  </div>
+
+  <!-- ═══ WEBSITE (conditional) ═══ -->
+  <div class="screen" data-screen="website">
+    <div class="q-label">Website</div>
+    <div class="q-title">The site itself.</div>
+    <div class="q-subtitle">The specifics I need before I open a canvas.</div>
+
+    <div class="q-field">
+      <div class="q-field-label">What pages do you need?</div>
+      <textarea class="q-textarea" placeholder="Home, About, Work / Case studies, Pricing, Contact, Blog..." data-key="pages" style="min-height: 70px;"></textarea>
+    </div>
+    <div class="q-field">
+      <div class="q-field-label">The one thing a visitor should do</div>
+      <input class="q-input" type="text" placeholder="Book a call, start a trial, buy, join the waitlist..." data-key="primary_action" />
+    </div>
+    <div class="q-field">
+      <div class="q-field-label">Must-have features or integrations</div>
+      <textarea class="q-textarea" placeholder="Booking (Cal.com), payments (Stripe), CMS/blog, newsletter, auth, custom admin..." data-key="features" style="min-height: 60px;"></textarea>
+    </div>
+
+    <div class="q-field-label" style="margin-bottom: 10px;">Where does the content stand?</div>
+    <div class="q-tags" data-group="content_status">
+      <div class="q-tag" data-value="copy-ready">Copy ready</div>
+      <div class="q-tag" data-value="images-ready">Images ready</div>
+      <div class="q-tag" data-value="need-copy">Need help with copy</div>
+      <div class="q-tag" data-value="need-images">Need help with images</div>
+    </div>
+
+    <div class="q-field">
+      <div class="q-field-label">Who provides copy and images?</div>
+      <input class="q-input" type="text" placeholder="We'll write copy, you handle photography..." data-key="content_owner" />
+    </div>
+    <div class="q-field">
+      <div class="q-field-label">Sites you love, and what you love about them</div>
+      <textarea class="q-textarea" placeholder="linear.app for the calm density, stripe.com for the polish..." data-key="ref_sites" style="min-height: 60px;"></textarea>
+    </div>
+    <div class="q-field">
+      <div class="q-field-label">Domain &amp; hosting notes</div>
+      <input class="q-input" type="text" placeholder="Domain owned, on Vercel, need a fresh domain..." data-key="domain" />
+    </div>
+
+    <div class="q-nav">
+      <button class="q-btn q-btn-back" data-prev>Back</button>
+      <button class="q-btn q-btn-next" data-next>Continue</button>
+    </div>
+  </div>
+
+  <!-- ═══ BRAND & IDENTITY (conditional) ═══ -->
+  <div class="screen" data-screen="identity">
+    <div class="q-label">Brand &amp; identity</div>
+    <div class="q-title">The identity.</div>
+    <div class="q-subtitle">What the mark and system need to carry.</div>
+
+    <div class="q-field-label" style="margin-bottom: 10px;">Are we starting fresh or evolving something?</div>
+    <div class="q-tags" data-group="identity_state">
+      <div class="q-tag" data-value="from-scratch">Starting from scratch</div>
+      <div class="q-tag" data-value="evolving">Evolving what exists</div>
+      <div class="q-tag" data-value="keep-assets">Have assets to keep</div>
+    </div>
+
+    <div class="q-field-label" style="margin-bottom: 10px;">Where's the name at?</div>
+    <div class="q-tags" data-group="name_status">
+      <div class="q-tag" data-value="name-locked">Name is locked</div>
+      <div class="q-tag" data-value="open-naming">Open to naming help</div>
+      <div class="q-tag" data-value="need-name">Need a name</div>
+    </div>
+
+    <div class="q-field-label" style="margin-bottom: 10px;">Where will the brand live? (this shapes the logo system)</div>
+    <div class="q-tags" data-group="brand_surfaces">
+      <div class="q-tag" data-value="digital">Digital / product</div>
+      <div class="q-tag" data-value="social">Social</div>
+      <div class="q-tag" data-value="motion">Motion / video</div>
+      <div class="q-tag" data-value="print">Print</div>
+      <div class="q-tag" data-value="merch">Merch</div>
+      <div class="q-tag" data-value="packaging">Packaging</div>
+      <div class="q-tag" data-value="signage">Signage</div>
+    </div>
+
+    <div class="q-field">
+      <div class="q-field-label">Any existing assets to keep? (logo, colors, fonts)</div>
+      <input class="q-input" type="text" placeholder="Keep the wordmark, drop the icon; brand blue must stay..." data-key="existing_assets" />
+    </div>
+    <div class="q-field">
+      <div class="q-field-label">Any story, meaning, or symbolism to encode?</div>
+      <textarea class="q-textarea" placeholder="The name comes from..., we want the mark to hint at..." data-key="brand_story" style="min-height: 70px;"></textarea>
+    </div>
+    <div class="q-field">
+      <div class="q-field-label">Brands you do NOT want to look like</div>
+      <input class="q-input" type="text" placeholder="Every generic Web3 gradient, the big incumbent's corporate look..." data-key="avoid_brands" />
+    </div>
+
+    <div class="q-nav">
+      <button class="q-btn q-btn-back" data-prev>Back</button>
+      <button class="q-btn q-btn-next" data-next>Continue</button>
+    </div>
+  </div>
+
+  <!-- ═══ LOGISTICS ═══ -->
+  <div class="screen" data-screen="logistics">
+    <div class="q-label">Logistics</div>
+    <div class="q-title">The practical stuff.</div>
+    <div class="q-subtitle">Last bit, then I'm off to build.</div>
+
+    <div class="q-field">
+      <div class="q-field-label">Who signs off on the work?</div>
+      <input class="q-input" type="text" placeholder="Just me, me + a cofounder, a small committee..." data-key="approvers" />
+    </div>
+
+    <div class="q-field-label" style="margin-bottom: 10px;">How do you like to communicate?</div>
+    <div class="q-tags" data-group="comms">
+      <div class="q-tag" data-value="email">Email</div>
+      <div class="q-tag" data-value="slack">Slack / Discord</div>
+      <div class="q-tag" data-value="calls">Calls</div>
+      <div class="q-tag" data-value="async-video">Async video (Loom)</div>
+      <div class="q-tag" data-value="text">WhatsApp / text</div>
+    </div>
+
+    <div class="q-field">
+      <div class="q-field-label">Budget (confirm what we discussed, if you like)</div>
+      <input class="q-input" type="text" placeholder="As agreed on the call, or a range if it shifted..." data-key="budget" />
+    </div>
+    <div class="q-field">
+      <div class="q-field-label">Drop any files, moodboards, or references (links)</div>
+      <textarea class="q-textarea" placeholder="Pinterest board, Figma, Google Drive, Notion, brand assets..." data-key="assets_links" style="min-height: 60px;"></textarea>
     </div>
     <div class="q-field">
       <div class="q-field-label">Anything else I should know?</div>
-      <textarea class="q-textarea" placeholder="Existing assets, brand history, strong opinions, things you've tried before..." data-key="anything_else" style="min-height: 80px;"></textarea>
+      <textarea class="q-textarea" placeholder="Brand history, strong opinions, things you've tried that didn't work..." data-key="anything_else" style="min-height: 80px;"></textarea>
     </div>
 
     <div class="q-nav">
-      <button class="q-btn q-btn-back" onclick="prev()">Back</button>
-      <button class="q-btn q-btn-next" onclick="submit()" style="background: var(--green); color: #000; box-shadow: 0 4px 16px rgba(74,222,128,0.3);">Submit</button>
+      <button class="q-btn q-btn-back" data-prev>Back</button>
+      <button class="q-btn q-btn-next" data-submit style="background: var(--green); color: #000; box-shadow: 0 4px 16px rgba(74,222,128,0.3);">Submit</button>
     </div>
   </div>
 
-  <!-- ═══ SCREEN 7: DONE ═══ -->
-  <div class="screen" data-step="7">
-    <div class="q-label">Done</div>
-    <div class="q-title">You're all set.</div>
+  <!-- ═══ DONE ═══ -->
+  <div class="screen" data-screen="done">
+    <div class="q-label">Locked in</div>
+    <div class="q-title">That's everything I need.</div>
     <div class="q-subtitle">Here's what you told me:</div>
 
     <div id="summaryContent"></div>
 
     <div style="margin-top: 32px; padding: 20px 24px; background: rgba(202,35,35,0.06); border: 1px solid rgba(202,35,35,0.12); border-radius: 12px;">
-      <div style="font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 6px;">Got it all.</div>
-      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">I've captured every detail, from your vision to your priorities and aesthetic direction. I'm now putting together a tailored creative strategy based on everything you shared. Expect to hear from me within 24 hours.</div>
-      <a href="https://cal.com/riztoday/15min" target="_blank" style="display: inline-block; padding: 10px 24px; background: var(--brand-red); color: #fff; font-weight: 600; font-size: 13px; text-decoration: none; border-radius: 100px;">Book a kickoff call</a>
+      <div style="font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 6px;">This goes straight into your project file.</div>
+      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">I'll turn everything you shared here into the first directions and share them with you shortly. If anything changes or you think of something you left out, just send it over. Talk soon.</div>
     </div>
   </div>
 
@@ -644,44 +801,53 @@
 
 <script>
   const state = {
-    step: 1,
-    total: 6,
     fields: {},
-    services: new Set(),
-    extras: new Set(),
+    build: new Set(),
+    stage: new Set(),
     priorities: [],
+    typeface: new Set(),
+    palette: new Set(),
     personality: new Set(),
+    voice: new Set(),
+    content_status: new Set(),
+    identity_state: new Set(),
+    name_status: new Set(),
+    brand_surfaces: new Set(),
+    comms: new Set(),
     spectrums: {},
+    directions: [],
   }
 
-  // Input fields
+  // Human-readable labels for coded values (client summary)
+  const LABELS = {
+    build: { website: 'Website', brand: 'Brand & naming', logo: 'Logo', identity: 'Visual identity' },
+    typeface: { geometric: 'Geometric sans', grotesk: 'Neo-grotesk', editorial: 'Editorial serif', display: 'Display', mono: 'Mono / technical' },
+    palette: { 'mono-accent': 'Monochrome + accent', 'warm-neutral': 'Warm neutrals', 'cool-tech': 'Cool & technical', 'high-contrast': 'High-contrast pop', 'muted-soft': 'Muted & soft', 'dark-neon': 'Dark & neon', earthy: 'Earthy & organic' },
+    voice: { plainspoken: 'Plainspoken', poetic: 'Poetic', 'bold-voice': 'Bold', 'warm-voice': 'Warm', technical: 'Technical', witty: 'Witty' },
+  }
+  const lab = (group, val) => (LABELS[group] && LABELS[group][val]) || String(val).replace(/-/g, ' ')
+
+  // ── Field inputs ──
   document.querySelectorAll('.q-input, .q-textarea').forEach(el => {
     el.addEventListener('input', () => { state.fields[el.dataset.key] = el.value })
   })
 
-  // Checkbox grids
-  document.querySelectorAll('.q-check-item').forEach(el => {
+  // ── Generic multi-select: checkbox items, tags, and type/palette options ──
+  document.querySelectorAll('.q-check-item, .q-tag, .q-opt').forEach(el => {
     el.addEventListener('click', () => {
-      const group = el.closest('[data-group]').dataset.group
+      const groupEl = el.closest('[data-group]')
+      if (!groupEl) return
+      const group = groupEl.dataset.group
+      if (!(state[group] instanceof Set)) return
       const val = el.dataset.value
       el.classList.toggle('selected')
       if (el.classList.contains('selected')) state[group].add(val)
       else state[group].delete(val)
+      if (group === 'build') syncBuildGate()
     })
   })
 
-  // Tags
-  document.querySelectorAll('.q-tag').forEach(el => {
-    el.addEventListener('click', () => {
-      const group = el.closest('[data-group]').dataset.group
-      const val = el.dataset.value
-      el.classList.toggle('selected')
-      if (el.classList.contains('selected')) state[group].add(val)
-      else state[group].delete(val)
-    })
-  })
-
-  // Priority ranking (click to add/remove, ordered)
+  // ── Priority ranking (ordered, capped) ──
   document.querySelectorAll('.q-rank-item').forEach(el => {
     el.addEventListener('click', () => {
       const val = el.dataset.value
@@ -705,13 +871,21 @@
     })
   }
 
-  // Spectrum engine — each canvas morphs through 5 visual states
+  // Require at least one discipline before leaving the scope screen, and keep
+  // the step count live as disciplines toggle (each one may add a screen)
+  function syncBuildGate() {
+    if (currentId !== 'scope') return
+    const btn = document.querySelector('[data-screen="scope"] [data-next]')
+    if (btn) btn.disabled = state.build.size === 0
+    updateProgress()
+  }
+
+  // ── Spectrum engine — each canvas morphs through visual states ──
   const lerp = (a, b, t) => a + (b - a) * t
   const lerpRGB = (r1,g1,b1, r2,g2,b2, t) =>
     `rgb(${Math.round(lerp(r1,r2,t))},${Math.round(lerp(g1,g2,t))},${Math.round(lerp(b1,b2,t))})`
 
   const morphs = {
-    // TONE: full dark → dark → mid gray → light → full cream
     tone(t) {
       const cv = document.getElementById('cv-tone')
       const txt = document.getElementById('cv-tone-text')
@@ -723,50 +897,25 @@
       sub.textContent = t < 0.2 ? 'midnight' : t < 0.4 ? 'dark' : t < 0.6 ? 'balanced' : t < 0.8 ? 'light' : 'bright'
       cv.style.borderColor = t < 0.5 ? `rgba(255,255,255,${lerp(0.08,0.15,t*2)})` : `rgba(0,0,0,${lerp(0.05,0.12,(t-0.5)*2)})`
     },
-
-    // VOLUME: gradient fills canvas at 0 → colorful circle → muted circle → tiny black dot at 100
     volume(t) {
       const cv = document.getElementById('cv-volume')
       const orb = document.getElementById('cv-vol-orb')
       if (!cv) return
-
-      // Background: dark purple at loud → dark neutral at mid → white at quiet
-      if (t < 0.15) {
-        cv.style.background = lerpRGB(30,15,60, 20,20,30, t/0.15)
-      } else if (t < 0.7) {
-        cv.style.background = lerpRGB(20,20,30, 18,18,18, (t-0.15)/0.55)
-      } else {
-        cv.style.background = lerpRGB(18,18,18, 255,255,255, (t-0.7)/0.3)
-      }
-
-      // Orb size: fills canvas at 0, circle at mid, tiny at 100
+      if (t < 0.15) cv.style.background = lerpRGB(30,15,60, 20,20,30, t/0.15)
+      else if (t < 0.7) cv.style.background = lerpRGB(20,20,30, 18,18,18, (t-0.15)/0.55)
+      else cv.style.background = lerpRGB(18,18,18, 255,255,255, (t-0.7)/0.3)
       const orbSize = t < 0.1 ? lerp(100, 56, t/0.1) : lerp(56, 14, (t-0.1)/0.9)
       orb.style.width = orbSize + 'px'
       orb.style.height = orbSize + 'px'
-
-      // Border radius: square-ish at 0 (fills canvas), circle everywhere else
       orb.style.borderRadius = t < 0.08 ? lerp(16, 50, t/0.08) + 'px' : '50%'
-
-      // Orb color: vibrant gradient → desaturating → gray → black dot
       const sat = lerp(80, 0, t)
       const light = lerp(65, 8, t)
-      if (t < 0.7) {
-        orb.style.background = `linear-gradient(135deg, hsl(330,${sat}%,${light}%), hsl(45,${sat}%,${light}%))`
-      } else {
-        orb.style.background = lerpRGB(60,60,60, 0,0,0, (t-0.7)/0.3)
-      }
-
-      // Glow: strong at loud, gone by mid
+      if (t < 0.7) orb.style.background = `linear-gradient(135deg, hsl(330,${sat}%,${light}%), hsl(45,${sat}%,${light}%))`
+      else orb.style.background = lerpRGB(60,60,60, 0,0,0, (t-0.7)/0.3)
       const glow = lerp(24, 0, Math.min(t * 3, 1))
       orb.style.boxShadow = `0 0 ${glow}px rgba(244,114,182,${lerp(0.5,0,Math.min(t*3,1))})`
-
-      // Border on canvas: fade in a subtle border as bg goes white
-      cv.style.borderColor = t > 0.7
-        ? `rgba(0,0,0,${lerp(0, 0.1, (t-0.7)/0.3)})`
-        : ''
+      cv.style.borderColor = t > 0.7 ? `rgba(0,0,0,${lerp(0, 0.1, (t-0.7)/0.3)})` : ''
     },
-
-    // FINISH: glass card with gradient bars → brutalist block with monospace
     finish(t) {
       const cv = document.getElementById('cv-finish')
       const b1 = document.getElementById('cv-fin-bar1')
@@ -778,7 +927,6 @@
       cv.style.background = t < 0.5 ? lerpRGB(21,25,42, 60,60,60, t*2) : lerpRGB(60,60,60, 230,230,230, (t-0.5)*2)
       cv.style.borderColor = t > 0.6 ? `rgba(0,0,0,${lerp(0,(t-0.6)*2.5,1)})` : 'rgba(255,255,255,0.08)'
       cv.style.borderWidth = lerp(1, 3, t) + 'px'
-      // Bars morph from gradient to flat
       b1.style.background = t < 0.5 ? `linear-gradient(90deg,#3b82f6,#8b5cf6)` : lerpRGB(80,80,80, 30,30,30, (t-0.5)*2)
       b1.style.borderRadius = lerp(3, 0, t) + 'px'
       b1.style.height = lerp(5, 3, t) + 'px'
@@ -787,8 +935,6 @@
       b3.style.borderRadius = lerp(3, 0, t) + 'px'
       b3.style.background = t > 0.5 ? lerpRGB(50,50,50, 0,0,0, (t-0.5)*2) : 'rgba(255,255,255,0.05)'
     },
-
-    // ERA: modern sans → transitional → vintage serif
     era(t) {
       const cv = document.getElementById('cv-era')
       const txt = document.getElementById('cv-era-text')
@@ -802,19 +948,14 @@
       sub.textContent = t < 0.2 ? '2026' : t < 0.4 ? 'current' : t < 0.6 ? 'timeless' : t < 0.8 ? 'classic' : '1970'
       sub.style.color = t < 0.5 ? `rgba(255,255,255,${lerp(0.3,0.2,t*2)})` : lerpRGB(120,90,60, 160,120,80, (t-0.5)*2)
     },
-
-    // MOOD: colorful circles → monochrome rectangles
     mood(t) {
       const cv = document.getElementById('cv-mood')
       const shapes = [document.getElementById('cv-m1'), document.getElementById('cv-m2'), document.getElementById('cv-m3'), document.getElementById('cv-m4')]
       if (!cv) return
       cv.style.borderRadius = lerp(22, 4, t) + 'px'
-      cv.style.background = t < 0.5
-        ? lerpRGB(254,243,199, 200,210,220, t*2)
-        : lerpRGB(200,210,220, 30,41,59, (t-0.5)*2)
+      cv.style.background = t < 0.5 ? lerpRGB(254,243,199, 200,210,220, t*2) : lerpRGB(200,210,220, 30,41,59, (t-0.5)*2)
       cv.style.borderColor = t < 0.5 ? `rgba(253,230,138,${lerp(1,0,t*2)})` : `rgba(148,163,184,${lerp(0,0.2,(t-0.5)*2)})`
       const colors = [
-        // playful colors → muted → monochrome
         { r: [239,150,100,80,71], g: [68,80,110,100,85], b: [68,90,120,120,105] },
         { r: [59,100,130,120,100], g: [130,130,140,130,116], b: [246,200,170,150,137] },
         { r: [16,80,120,110,100], g: [185,160,140,130,116], b: [129,120,120,120,137] },
@@ -822,24 +963,21 @@
       ]
       const idx = Math.min(Math.floor(t * 5), 4)
       const frac = (t * 5) - idx
-      const next = Math.min(idx + 1, 4)
+      const nxt = Math.min(idx + 1, 4)
       shapes.forEach((s, i) => {
         if (!s) return
         const c = colors[i]
-        s.style.background = `rgb(${Math.round(lerp(c.r[idx],c.r[next],frac))},${Math.round(lerp(c.g[idx],c.g[next],frac))},${Math.round(lerp(c.b[idx],c.b[next],frac))})`
+        s.style.background = `rgb(${Math.round(lerp(c.r[idx],c.r[nxt],frac))},${Math.round(lerp(c.g[idx],c.g[nxt],frac))},${Math.round(lerp(c.b[idx],c.b[nxt],frac))})`
         s.style.borderRadius = lerp(50, 2, t) + '%'
         s.style.width = lerp(16, 36, t) + 'px'
         s.style.height = lerp(16, 4, t) + 'px'
       })
       document.getElementById('cv-mood-shapes').style.gap = lerp(6, 4, t) + 'px'
     },
-
-    // DENSITY: packed data terminal → single centered element
     density(t) {
       const cv = document.getElementById('cv-density')
       const lines = document.getElementById('cv-den-lines')
       if (!cv) return
-      // Dense: dark terminal with green data rows → Spacious: clean dark with single dim line
       cv.style.background = lerpRGB(13,13,13, 24,24,24, t)
       cv.style.padding = lerp(6, 20, t) + 'px'
       const rows = lines.querySelectorAll('.den-line')
@@ -861,10 +999,9 @@
 
   function updateSlider(el) {
     const val = parseInt(el.value)
-    const t = val / 100
     state.spectrums[el.dataset.spectrum] = val
     const key = el.dataset.spectrum
-    if (morphs[key]) morphs[key](t)
+    if (morphs[key]) morphs[key](val / 100)
   }
 
   document.querySelectorAll('.q-slider').forEach(el => {
@@ -873,50 +1010,92 @@
     updateSlider(el)
   })
 
-  function goTo(step) {
+  // ═══ NAVIGATION (adaptive: website/identity screens appear on demand) ═══
+  const INPUT_SCREENS = ['scope','business','audience','fingerprint','voice','website','identity','logistics']
+  let currentId = 'scope'
+
+  function steps() {
+    return INPUT_SCREENS.filter(id => {
+      if (id === 'website') return state.build.has('website')
+      if (id === 'identity') return state.build.has('brand') || state.build.has('logo') || state.build.has('identity')
+      return true
+    })
+  }
+
+  function screenEl(id) { return document.querySelector(`[data-screen="${id}"]`) }
+
+  function go(id) {
     const current = document.querySelector('.screen.active')
     if (current) {
       current.classList.add('exit')
       setTimeout(() => {
         current.classList.remove('active', 'exit')
         current.style.display = 'none'
-        showStep(step)
+        show(id)
       }, 250)
     } else {
-      showStep(step)
+      show(id)
     }
   }
 
-  function showStep(step) {
-    state.step = step
-    const screen = document.querySelector(`[data-step="${step}"]`)
-    screen.style.display = 'block'
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => screen.classList.add('active'))
-    })
-    const pct = step <= state.total ? ((step - 1) / state.total * 100) : 100
-    document.getElementById('progress').style.width = pct + '%'
-    document.getElementById('stepLabel').textContent = step <= state.total ? `${step} of ${state.total}` : 'Done'
+  function show(id) {
+    currentId = id
+    const s = screenEl(id)
+    s.style.display = 'block'
+    requestAnimationFrame(() => requestAnimationFrame(() => s.classList.add('active')))
+    updateProgress()
+    syncBuildGate()
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  function next() { if (state.step < state.total) goTo(state.step + 1) }
-  function prev() { if (state.step > 1) goTo(state.step - 1) }
+  function updateProgress() {
+    const s = steps()
+    if (currentId === 'done') {
+      document.getElementById('progress').style.width = '100%'
+      document.getElementById('stepLabel').textContent = 'Done'
+      return
+    }
+    const i = Math.max(0, s.indexOf(currentId))
+    const pct = s.length > 1 ? (i / (s.length - 1)) * 100 : 0
+    document.getElementById('progress').style.width = pct + '%'
+    document.getElementById('stepLabel').textContent = `${i + 1} of ${s.length}`
+  }
+
+  function next() {
+    const s = steps()
+    const i = s.indexOf(currentId)
+    if (i > -1 && i < s.length - 1) go(s[i + 1])
+  }
+  function prev() {
+    const s = steps()
+    const i = s.indexOf(currentId)
+    if (i > 0) go(s[i - 1])
+  }
+
+  document.querySelectorAll('[data-next]').forEach(b => b.addEventListener('click', next))
+  document.querySelectorAll('[data-prev]').forEach(b => b.addEventListener('click', prev))
+  document.querySelectorAll('[data-submit]').forEach(b => b.addEventListener('click', submit))
 
   async function submit() {
     buildSummary()
-    goTo(7)
-    document.getElementById('progress').style.width = '100%'
-    document.getElementById('stepLabel').textContent = 'Done'
+    go('done')
 
     const payload = {
       fields: state.fields,
-      services: [...state.services],
-      extras: [...state.extras],
+      build: [...state.build],
+      stage: [...state.stage],
       priorities: state.priorities,
+      typeface: [...state.typeface],
+      palette: [...state.palette],
       personality: [...state.personality],
+      voice: [...state.voice],
+      content_status: [...state.content_status],
+      identity_state: [...state.identity_state],
+      name_status: [...state.name_status],
+      brand_surfaces: [...state.brand_surfaces],
+      comms: [...state.comms],
       spectrums: state.spectrums,
-      directions: state.directions || [],
+      directions: state.directions,
     }
 
     try {
@@ -930,42 +1109,35 @@
     }
   }
 
+  function tagList(items) {
+    return `<div class="summary-tags">${items.map(t => `<span class="summary-tag">${t}</span>`).join('')}</div>`
+  }
+
   function buildSummary() {
+    const f = state.fields
     const c = document.getElementById('summaryContent')
     let html = ''
+    const section = (label, content) => `<div class="summary-section"><div class="summary-label">${label}</div><div class="summary-value">${content}</div></div>`
 
-    if (state.fields.name || state.fields.company) {
-      html += `<div class="summary-section"><div class="summary-label">Client</div><div class="summary-value">${state.fields.name || ''}, ${state.fields.company || ''}</div></div>`
-    }
+    if (f.name || f.company)
+      html += section('Client', `${f.name || ''}${f.company ? `, ${f.company}` : ''}`)
 
-    if (state.services.size) {
-      const svc = [...state.services].map(s => `<span class="summary-tag">${s.replace('-', ' ')}</span>`).join('')
-      html += `<div class="summary-section"><div class="summary-label">Services</div><div class="summary-value"><div class="summary-tags">${svc}</div></div></div>`
-    }
+    if (state.build.size)
+      html += section('Building', tagList([...state.build].map(v => lab('build', v))))
 
-    if (state.extras.size) {
-      const ext = [...state.extras].map(s => `<span class="summary-tag">${s}</span>`).join('')
-      html += `<div class="summary-section"><div class="summary-label">Extras</div><div class="summary-value"><div class="summary-tags">${ext}</div></div></div>`
-    }
+    if (f.first_priority)
+      html += section('Starting with', f.first_priority)
 
-    if (state.fields.problem) {
-      html += `<div class="summary-section"><div class="summary-label">The problem</div><div class="summary-value">${state.fields.problem}</div></div>`
-    }
+    if (f.oneliner)
+      html += section('What you do', f.oneliner)
 
-    if (state.priorities.length) {
-      const pri = state.priorities.map((p, i) => `<div class="summary-scope-item"><span style="color:var(--brand-red);font-weight:600;">${i + 1}.</span> ${p.replace(/-/g, ' ')}</div>`).join('')
-      html += `<div class="summary-section"><div class="summary-label">Top priorities</div><div class="summary-value">${pri}</div></div>`
-    }
-
-    if (state.personality.size) {
-      const pers = [...state.personality].map(s => `<span class="summary-tag">${s}</span>`).join('')
-      html += `<div class="summary-section"><div class="summary-label">Brand personality</div><div class="summary-value"><div class="summary-tags">${pers}</div></div></div>`
-    }
+    if (state.priorities.length)
+      html += section('What matters most', state.priorities.map((p, i) => `<div class="summary-scope-item"><span style="color:var(--brand-red);font-weight:600;">${i + 1}.</span> ${lab('priorities', p)}</div>`).join(''))
 
     const specLabels = { tone: ['Dark', 'Light'], volume: ['Loud', 'Quiet'], finish: ['Polished', 'Raw'], era: ['Modern', 'Nostalgic'], mood: ['Playful', 'Serious'], density: ['Dense', 'Spacious'] }
     const specEntries = Object.entries(state.spectrums)
     if (specEntries.length) {
-      let vis = specEntries.map(([key, val]) => {
+      const vis = specEntries.map(([key, val]) => {
         const [left, right] = specLabels[key] || [key, key]
         return `<div style="display:flex;align-items:center;gap:8px;margin:6px 0;">
           <span style="font-size:11px;color:var(--text-muted);width:65px;text-align:right;">${left}</span>
@@ -975,219 +1147,170 @@
           <span style="font-size:11px;color:var(--text-muted);width:65px;">${right}</span>
         </div>`
       }).join('')
-      html += `<div class="summary-section"><div class="summary-label">Visual fingerprint</div><div class="summary-value">${vis}</div></div>`
+      html += section('Visual fingerprint', vis)
     }
 
-    // Generate directions for email only (not shown to client)
-    const directions = generateDirections()
+    if (state.typeface.size)
+      html += section('Type direction', tagList([...state.typeface].map(v => lab('typeface', v))))
 
-    // Store directions for email
-    state.directions = directions.map(d => ({
-      name: d.name,
-      vibe: d.vibe,
-      palette: d.palette,
-      typography: d.typography,
-      motion: d.motion,
-      references: d.references,
-      recommended: d.recommended || false,
-      score: d.score
+    if (state.palette.size)
+      html += section('Color mood', tagList([...state.palette].map(v => lab('palette', v))))
+
+    if (state.personality.size)
+      html += section('Brand personality', tagList([...state.personality]))
+
+    if (f.headline)
+      html += section('Headline seed', `&ldquo;${f.headline}&rdquo;`)
+
+    // Directions are computed for the internal results email only — never shown here.
+    state.directions = generateDirections().map(d => ({
+      name: d.name, vibe: d.vibe, palette: d.palette, typography: d.typography,
+      motion: d.motion, references: d.references, recommended: d.recommended || false, score: d.score,
     }))
 
     c.innerHTML = html
   }
 
-  // ═══ CREATIVE DIRECTION ENGINE ═══
-  // Synthesizes all questionnaire answers into 4 visual direction concepts
-
+  // ═══ CREATIVE DIRECTION ENGINE (internal — feeds the results email only) ═══
   const directionArchetypes = [
     {
-      id: 'midnight-premium',
-      name: 'Midnight Premium',
+      id: 'midnight-premium', name: 'Midnight Premium',
       conditions: { tone: [0, 40], finish: [0, 50], mood: [40, 100] },
-      vibe: 'Dark, refined, high-end. Think luxury tech meets editorial design. Every pixel earns its place.',
+      vibe: 'Dark, refined, high-end. Luxury tech meets editorial design. Every pixel earns its place.',
       palette: ['#0A0A0A', '#1A1A2E', '#C9A96E', '#F5F5F5', '#2A2A3E'],
-      typography: 'Clean sans-serif headings with generous letter-spacing. Thin weights for body, bold for impact.',
+      typography: 'Clean sans-serif headings with generous letter-spacing. Thin body, bold for impact.',
       motion: 'Subtle fade-ins, smooth parallax, elegant hover lifts. Nothing fast or flashy.',
-      references: ['Linear', 'Vercel', 'Stripe', 'Nothing Phone'],
-      energy: 'quiet-power'
+      references: ['Linear', 'Vercel', 'Stripe', 'Nothing Phone'], energy: 'quiet-power'
     },
     {
-      id: 'electric-bold',
-      name: 'Electric Bold',
+      id: 'electric-bold', name: 'Electric Bold',
       conditions: { volume: [0, 40], mood: [0, 45], density: [0, 50] },
-      vibe: 'High energy, unapologetic, attention-grabbing. Your brand walks into a room and everyone notices.',
+      vibe: 'High energy, unapologetic, attention-grabbing. Walks into a room and everyone notices.',
       palette: ['#0D0D0D', '#FF3366', '#00D4FF', '#FFE500', '#FFFFFF'],
-      typography: 'Oversized headlines, tight letter-spacing, mixed weights. Display fonts for headers, geometric sans for body.',
-      motion: 'Snappy transitions, elastic bounces, animated gradients. Everything feels alive and responsive.',
-      references: ['Figma', 'Discord', 'Spotify', 'Cash App'],
-      energy: 'high-energy'
+      typography: 'Oversized headlines, tight letter-spacing, mixed weights. Display headers, geometric sans body.',
+      motion: 'Snappy transitions, elastic bounces, animated gradients. Everything feels alive.',
+      references: ['Figma', 'Discord', 'Spotify', 'Cash App'], energy: 'high-energy'
     },
     {
-      id: 'warm-organic',
-      name: 'Warm Organic',
+      id: 'warm-organic', name: 'Warm Organic',
       conditions: { tone: [50, 100], mood: [0, 55], era: [40, 100] },
-      vibe: 'Approachable, human, earthy. Like a well-designed coffee shop, inviting but intentional. Feels handcrafted.',
+      vibe: 'Approachable, human, earthy. A well-designed coffee shop, inviting but intentional.',
       palette: ['#FFFBF5', '#2D2418', '#C17D3A', '#5E8C61', '#E8DDD0'],
-      typography: 'Rounded or humanist sans-serif. Warm serifs for accents. Comfortable line heights, generous margins.',
-      motion: 'Gentle reveals, soft scaling, natural easing. Movements feel like breathing, not snapping.',
-      references: ['Notion', 'Calm', 'Aesop', 'Mailchimp'],
-      energy: 'grounded'
+      typography: 'Rounded or humanist sans-serif. Warm serifs for accents. Comfortable line heights.',
+      motion: 'Gentle reveals, soft scaling, natural easing. Movements feel like breathing.',
+      references: ['Notion', 'Calm', 'Aesop', 'Mailchimp'], energy: 'grounded'
     },
     {
-      id: 'neo-minimal',
-      name: 'Neo Minimal',
+      id: 'neo-minimal', name: 'Neo Minimal',
       conditions: { density: [55, 100], finish: [0, 55], volume: [50, 100] },
-      vibe: 'Stripped to the essential. Maximum clarity, zero noise. Swiss-influenced but forward-looking.',
+      vibe: 'Stripped to the essential. Maximum clarity, zero noise. Swiss-influenced, forward-looking.',
       palette: ['#FFFFFF', '#000000', '#E5E5E5', '#3B82F6', '#F8F8F8'],
       typography: 'System-level clean. One typeface family, strict hierarchy. Numbers in monospace.',
       motion: 'Micro-interactions only. Quick, functional transitions. No decoration.',
-      references: ['Apple', 'Rauno', 'Arc Browser', 'Things 3'],
-      energy: 'precise'
+      references: ['Apple', 'Rauno', 'Arc Browser', 'Things 3'], energy: 'precise'
     },
     {
-      id: 'retro-craft',
-      name: 'Retro Craft',
+      id: 'retro-craft', name: 'Retro Craft',
       conditions: { era: [60, 100], finish: [45, 100] },
-      vibe: 'Nostalgic but not outdated. Like a modern take on a vintage poster. Character over perfection.',
+      vibe: 'Nostalgic but not outdated. A modern take on a vintage poster. Character over perfection.',
       palette: ['#F4E8D1', '#1A1A1A', '#C4553A', '#2B5F83', '#E8C547'],
-      typography: 'Serif headlines with personality. Slab-serif or display type. Monospace for details. Textured, lived-in.',
-      motion: 'Page transitions with character. Slight wobble, film grain, imperfect edges. Handmade energy.',
-      references: ['Poolsuite', 'Teenage Engineering', 'Letterboxd', 'A24'],
-      energy: 'character'
+      typography: 'Serif headlines with personality. Slab-serif or display type. Monospace for details.',
+      motion: 'Page transitions with character. Slight wobble, film grain, imperfect edges.',
+      references: ['Poolsuite', 'Teenage Engineering', 'Letterboxd', 'A24'], energy: 'character'
     },
     {
-      id: 'glass-futurism',
-      name: 'Glass Futurism',
+      id: 'glass-futurism', name: 'Glass Futurism',
       conditions: { tone: [0, 45], finish: [0, 45], era: [0, 45] },
-      vibe: 'Translucent layers, depth, light play. Feels like using a device from 5 years in the future.',
+      vibe: 'Translucent layers, depth, light play. Feels like a device from five years in the future.',
       palette: ['#000000', 'rgba(255,255,255,0.08)', '#A78BFA', '#34D399', '#F472B6'],
-      typography: 'Thin to medium weight sans-serif. Frosted labels, glowing accents. Monospace for data.',
-      motion: 'Backdrop blur transitions, glassmorphism reveals, smooth depth shifts. Layered and dimensional.',
-      references: ['iOS 18', 'rizzy.today', 'Raycast', 'Arc Browser'],
-      energy: 'futuristic'
+      typography: 'Thin to medium sans-serif. Frosted labels, glowing accents. Monospace for data.',
+      motion: 'Backdrop blur transitions, glassmorphism reveals, smooth depth shifts.',
+      references: ['iOS 18', 'Raycast', 'Arc Browser', 'Vision Pro'], energy: 'futuristic'
     },
     {
-      id: 'editorial-sharp',
-      name: 'Editorial Sharp',
+      id: 'editorial-sharp', name: 'Editorial Sharp',
       conditions: { mood: [50, 100], volume: [40, 100], finish: [0, 55] },
-      vibe: 'Magazine-level polish. Strong grid, clear hierarchy, confident whitespace. Says "we know what we\'re doing."',
+      vibe: 'Magazine-level polish. Strong grid, clear hierarchy, confident whitespace.',
       palette: ['#FAFAFA', '#111111', '#1A1A1A', '#DC2626', '#F5F5F5'],
-      typography: 'High-contrast serif/sans pairing. Large display sizes. Strict baseline grid. Bold editorial feel.',
+      typography: 'High-contrast serif/sans pairing. Large display sizes. Strict baseline grid.',
       motion: 'Clip-path reveals, text masks, scroll-driven typography. Cinematic but controlled.',
-      references: ['Bloomberg', 'The Outline', 'Pitch', 'Framer'],
-      energy: 'authoritative'
+      references: ['Bloomberg', 'The Outline', 'Pitch', 'Framer'], energy: 'authoritative'
     },
     {
-      id: 'playful-digital',
-      name: 'Playful Digital',
+      id: 'playful-digital', name: 'Playful Digital',
       conditions: { mood: [0, 35], volume: [0, 50], tone: [30, 80] },
-      vibe: 'Colorful, interactive, joyful. Every click does something delightful. Users smile while using it.',
+      vibe: 'Colorful, interactive, joyful. Every click does something delightful.',
       palette: ['#FEF3C7', '#7C3AED', '#EC4899', '#10B981', '#3B82F6'],
-      typography: 'Rounded sans-serif, generous sizing. Emoji-friendly. Playful weight contrasts.',
-      motion: 'Bouncy springs, particle effects, emoji reactions, satisfying micro-interactions.',
-      references: ['Slack', 'Figma', 'Notion AI', 'Duolingo'],
-      energy: 'joyful'
+      typography: 'Rounded sans-serif, generous sizing. Playful weight contrasts.',
+      motion: 'Bouncy springs, particle effects, satisfying micro-interactions.',
+      references: ['Slack', 'Figma', 'Notion AI', 'Duolingo'], energy: 'joyful'
     }
   ]
 
-  function scoreDirection(arch, spectrums, personality, priorities) {
-    let score = 0
+  const personalityMap = {
+    'midnight-premium': ['premium', 'minimal', 'clean', 'edgy'],
+    'electric-bold': ['bold', 'rebellious', 'edgy', 'playful'],
+    'warm-organic': ['warm', 'friendly', 'retro'],
+    'neo-minimal': ['minimal', 'clean', 'techy'],
+    'retro-craft': ['retro', 'quirky', 'warm'],
+    'glass-futurism': ['techy', 'premium', 'bold', 'edgy'],
+    'editorial-sharp': ['premium', 'bold', 'clean'],
+    'playful-digital': ['playful', 'quirky', 'friendly']
+  }
+  const priorityMap = {
+    'midnight-premium': ['level-up', 'standout', 'convert'],
+    'electric-bold': ['launch', 'standout', 'from-zero'],
+    'warm-organic': ['convert', 'consistency', 'level-up'],
+    'neo-minimal': ['convert', 'consistency', 'level-up'],
+    'retro-craft': ['standout', 'from-zero', 'launch'],
+    'glass-futurism': ['standout', 'level-up', 'launch'],
+    'editorial-sharp': ['convert', 'level-up', 'consistency'],
+    'playful-digital': ['standout', 'launch', 'from-zero']
+  }
+  // Type-personality picks nudge scoring toward directions that share the feel
+  const typefaceMap = {
+    geometric: ['playful-digital', 'warm-organic', 'neo-minimal'],
+    grotesk: ['neo-minimal', 'midnight-premium', 'editorial-sharp'],
+    editorial: ['editorial-sharp', 'retro-craft'],
+    display: ['electric-bold', 'editorial-sharp'],
+    mono: ['glass-futurism', 'neo-minimal', 'midnight-premium']
+  }
 
-    // Score spectrum alignment
+  function scoreDirection(arch, spectrums, personality, priorities, typeface) {
+    let score = 0
     for (const [key, [min, max]] of Object.entries(arch.conditions)) {
       const val = spectrums[key]
       if (val !== undefined) {
         if (val >= min && val <= max) {
-          // In range — closer to center of range = higher score
           const center = (min + max) / 2
           const dist = Math.abs(val - center) / ((max - min) / 2)
           score += (1 - dist * 0.5) * 20
         } else {
-          // Out of range — penalty based on distance
           const dist = val < min ? min - val : val - max
           score -= dist * 0.15
         }
       }
     }
-
-    // Personality alignment bonuses
-    const personalityMap = {
-      'midnight-premium': ['premium', 'sophisticated', 'minimal', 'luxury', 'serious', 'calm'],
-      'electric-bold': ['bold', 'energetic', 'rebellious', 'edgy', 'fun'],
-      'warm-organic': ['warm', 'friendly', 'organic', 'trustworthy', 'calm'],
-      'neo-minimal': ['minimal', 'clean', 'calm', 'sophisticated', 'techy'],
-      'retro-craft': ['retro', 'quirky', 'warm', 'organic', 'rebellious'],
-      'glass-futurism': ['techy', 'premium', 'bold', 'sophisticated', 'edgy'],
-      'editorial-sharp': ['serious', 'premium', 'sophisticated', 'trustworthy', 'bold'],
-      'playful-digital': ['playful', 'fun', 'quirky', 'friendly', 'energetic']
-    }
-
-    const matches = personalityMap[arch.id] || []
-    for (const p of personality) {
-      if (matches.includes(p)) score += 8
-    }
-
-    // Priority alignment
-    const priorityMap = {
-      'midnight-premium': ['level-up', 'standout', 'convert'],
-      'electric-bold': ['launch', 'standout', 'from-zero'],
-      'warm-organic': ['convert', 'consistency', 'level-up'],
-      'neo-minimal': ['convert', 'consistency', 'level-up'],
-      'retro-craft': ['standout', 'from-zero', 'launch'],
-      'glass-futurism': ['standout', 'level-up', 'launch'],
-      'editorial-sharp': ['convert', 'level-up', 'consistency'],
-      'playful-digital': ['standout', 'launch', 'from-zero']
-    }
-
-    const priMatches = priorityMap[arch.id] || []
-    for (const p of priorities) {
-      if (priMatches.includes(p)) score += 6
-    }
-
+    for (const p of personality) if ((personalityMap[arch.id] || []).includes(p)) score += 8
+    for (const p of priorities) if ((priorityMap[arch.id] || []).includes(p)) score += 6
+    for (const t of typeface) if ((typefaceMap[t] || []).includes(arch.id)) score += 7
     return score
   }
 
   function generateDirections() {
-    const specs = state.spectrums
-    const pers = [...state.personality]
-    const pris = state.priorities
-
-    // Score all archetypes
     const scored = directionArchetypes.map(arch => ({
       ...arch,
-      score: scoreDirection(arch, specs, pers, pris)
+      score: scoreDirection(arch, state.spectrums, [...state.personality], state.priorities, [...state.typeface])
     }))
-
-    // Sort by score, take top 4
     scored.sort((a, b) => b.score - a.score)
     const top4 = scored.slice(0, 4)
-
-    // Mark highest as recommended
-    top4[0].recommended = true
-
+    if (top4[0]) top4[0].recommended = true
     return top4
   }
 
-  function renderDirectionCard(dir) {
-    const swatches = dir.palette.map(c => {
-      const bg = c.startsWith('rgba') ? c : c
-      return '<div class="direction-swatch" style="background:' + bg + ';"></div>'
-    }).join('')
-
-    const refs = dir.references.map(r => '<span class="direction-ref">' + r + '</span>').join('')
-
-    return '<div class="direction-card' + (dir.recommended ? ' recommended' : '') + '">' +
-      '<div class="direction-name">' + dir.name + '</div>' +
-      '<div class="direction-vibe">' + dir.vibe + '</div>' +
-      '<div class="direction-palette">' + swatches + '</div>' +
-      '<dl class="direction-details">' +
-        '<dt>Typography</dt><dd>' + dir.typography + '</dd>' +
-        '<dt>Motion</dt><dd>' + dir.motion + '</dd>' +
-        '<dt>References</dt><dd><div class="direction-refs">' + refs + '</div></dd>' +
-      '</dl>' +
-    '</div>'
-  }
-
+  // Init
+  updateProgress()
+  syncBuildGate()
 </script>
 
 </body>
