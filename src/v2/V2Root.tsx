@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { track } from '@vercel/analytics'
 import { findDiscipline } from './disciplines'
 import { V2Identity } from './V2Identity'
 import { V2RailFoot, RailQuote } from './V2RailFoot'
@@ -94,6 +95,9 @@ export function V2Root() {
   const openReferences = useCallback(() => {
     window.history.pushState(null, '', '/references')
     setReferences(true)
+    // custom event — a hard count of diligence clicks, independent of whether
+    // the /references pageview survives ad blockers or shows up in Pages
+    track('References Opened')
   }, [])
   const closeReferences = useCallback(() => {
     window.history.pushState(null, '', buildPath(state))
