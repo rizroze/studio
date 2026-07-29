@@ -55,6 +55,14 @@
   .q-avatar { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); object-fit: cover; }
   .q-name { font-family: 'Urbanist', sans-serif; font-weight: 700; font-style: italic; font-size: 16px; color: var(--text); }
   .q-step { font-family: 'Fragment Mono', monospace; font-size: 11px; color: var(--text-muted); }
+  .q-header-right { display: flex; align-items: center; gap: 14px; }
+  .q-book {
+    padding: 7px 14px; border-radius: 100px; font-family: 'Inter Tight', sans-serif;
+    font-size: 12px; font-weight: 600; text-decoration: none; white-space: nowrap; color: #fff;
+    background: rgba(202,35,35,0.15); border: 1px solid rgba(202,35,35,0.4);
+    transition: all 0.3s var(--smooth);
+  }
+  .q-book:hover { background: var(--brand-red); border-color: var(--brand-red); box-shadow: 0 2px 14px var(--brand-red-glow); transform: translateY(-1px); }
 
   /* ─── CONTAINER ─── */
   .q-container {
@@ -222,6 +230,11 @@
     .q-checkbox-grid { grid-template-columns: 1fr; }
     .q-title { font-size: 24px; }
     .q-container { padding: 90px 20px 40px; }
+    .q-header { padding: 16px 18px; }
+    .q-name { font-size: 14px; }
+  }
+  @media (max-width: 460px) {
+    .q-step { display: none; }
   }
 </style>
 </head>
@@ -235,7 +248,10 @@
     <img src="/studio-rose.webp" alt="Rizzy Today" class="q-avatar" />
     <span class="q-name">Rizzy Today</span>
   </div>
-  <span class="q-step" id="stepLabel">1 of 6</span>
+  <div class="q-header-right">
+    <a class="q-book" href="https://cal.com/riztoday/discovery" target="_blank" rel="noopener noreferrer">Book a call</a>
+    <span class="q-step" id="stepLabel">1 of 6</span>
+  </div>
 </div>
 
 <div class="q-container">
