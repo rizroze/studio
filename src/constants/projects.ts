@@ -95,7 +95,6 @@ export const CASE_STUDIES: CaseStudyData[] = [
         title: 'Brand Art',
         description: 'Original illustrations, photo treatments, and brand pieces that define the Radiants visual identity.',
         layout: 'deck',
-        wideIndices: [9],
         gallery: [
           // square
           '/content/radiants/brand-art/132.webp',
@@ -105,18 +104,13 @@ export const CASE_STUDIES: CaseStudyData[] = [
           '/content/radiants/brand-art/frame-2085660600.webp',
           '/content/radiants/brand-art/radintern.webp',
           '/content/radiants/brand-art/radpep.webp',
-          '/content/radiants/brand-art/radsss.webp',
           '/content/radiants/brand-art/radzcominnggez.gif',
           // landscape
-          '/content/radiants/brand-art/radfam2024-dinga.webp',
           '/content/radiants/brand-art/sprite-00021.gif',
           '/content/radiants/brand-art/image-2.webp',
           '/content/radiants/brand-art/rad1.webp',
           '/content/radiants/brand-art/radgangz.webp',
-          '/content/radiants/brand-art/frame-2085660589.webp',
           '/content/radiants/brand-art/5daysleft.webp',
-          '/content/radiants/brand-art/frame_2085660586.webp',
-          '/content/radiants/brand-art/gameboi-rad.webp',
           '/content/radiants/brand-art/screenshot-2024-09-14-at-02.55.19.webp',
           '/content/radiants/brand-art/rad_missing.webp',
           '/content/radiants/brand-art/rad-desertfunk.webp',
