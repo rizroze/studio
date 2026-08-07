@@ -2,11 +2,17 @@ import type { Discipline, DisciplineVideo } from './disciplines'
 import { V2Collection } from './V2Collection'
 import { V2VideoTile } from './V2VideoTile'
 import { projectLogo } from './clientLogos'
+import { IMAGE_DIMS, WIDE_VIDEO_RATIO } from './imageDims'
 
+// Square social cuts (1:1) pair up two-across; 16:9 takes the whole row.
+// Passing dims down also fixes the tile's box before the video loads, so the
+// grid doesn't reflow when metadata lands.
 function VideoFigure({ v }: { v: DisciplineVideo }) {
+  const dims = IMAGE_DIMS[v.src]
+  const wide = !dims || dims[0] / dims[1] >= WIDE_VIDEO_RATIO
   return (
-    <figure className="v2-video">
-      <V2VideoTile src={v.src} />
+    <figure className={`v2-video${wide ? ' is-wide' : ''}`}>
+      <V2VideoTile src={v.src} dims={dims} />
       <figcaption>
         {v.project} · {v.label}
         {v.note && <span className="v2-video-note">{v.note}</span>}
@@ -79,13 +85,7 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
           </div>
           <div className="v2-video-stack">
             {discipline.videos.map(v => (
-              <figure key={v.src} className="v2-video">
-                <V2VideoTile src={v.src} />
-                <figcaption>
-                  {v.project} · {v.label}
-                  {v.note && <span className="v2-video-note">{v.note}</span>}
-                </figcaption>
-              </figure>
+              <VideoFigure key={v.src} v={v} />
             ))}
           </div>
         </section>

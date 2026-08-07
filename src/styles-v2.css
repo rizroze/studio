@@ -707,16 +707,23 @@
   opacity: 0.7;
 }
 
-/* big autoplay motion */
+/* big autoplay motion — two-up on desktop so the 1:1 social cuts sit side by
+   side instead of each towering at full column width (a square at 1290px wide
+   is a 1290px-tall block). Wide cuts opt out via .is-wide and take the row. */
 .v2-video-stack {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: clamp(32px, 4vw, 56px);
 }
+@media (min-width: 900px) {
+  .v2-video-stack { grid-template-columns: repeat(2, 1fr); }
+  .v2-video.is-wide { grid-column: 1 / -1; }
+}
+/* a lone video under a collection has no partner to pair with */
+.v2-video-inline { grid-template-columns: 1fr; }
 .v2-video { margin: 0; }
 .v2-video video {
   width: 100%;
-  max-height: 86vh;
   display: block;
   background: #000;
 }
@@ -751,7 +758,14 @@
   overflow: hidden;
 }
 .v2-videotile video { width: 100%; display: block; }
-.v2-video .v2-videotile video { max-height: 86vh; }
+/* the tile carries the clip's own aspect-ratio, so filling it crops nothing —
+   and the old `max-height` on the video is gone: it squeezed a 1:1 cut inside
+   a full-width box, which is what pillarboxed the square ones in black */
+.v2-video .v2-videotile video { height: 100%; object-fit: cover; }
+/* .v2-main has no max-width, so an unchecked full-row 16:9 grows with the
+   monitor. Cap it where its height lands in the same band as the paired
+   squares beside it (1100 / 1.78 ≈ 620), and centre what's left over. */
+.v2-video.is-wide .v2-videotile { max-width: 1100px; margin-inline: auto; }
 /* in the masonry bento the video breaks out of the columns as a full-width
    band — it leads the gallery, so nothing balances awkwardly above it.
    max-height keeps a 16:9 band from eating the screen on ultrawide monitors
