@@ -250,12 +250,10 @@ export const DISCIPLINES: Discipline[] = [
     description: 'Daily reps, no client brief. Some become ads. The rest just keep the hand sharp.',
     collections: [{
       ...standalone('Experiments', EXPERIMENTS_BENTO, 'ratio'),
-      // the "world." piece leads the feed as a band; the Wikipedia teaser is a
-      // full page of body copy, illegible at column width
-      spansRow: [
-        '/content/experiments/motion-01.mp4',
-        '/content/experiments/wikipedia.mp4',
-      ],
+      // Only the piece that LEADS the feed can span the row: `column-span: all`
+      // forces a column break, so anything further down leaves the columns above
+      // it stopped short and a band of white across the grid.
+      spansRow: ['/content/experiments/motion-01.mp4'],
     }],
     videos: [],
     // hand-picked teaser: the full daily wall clusters the WeSplit campaign, so

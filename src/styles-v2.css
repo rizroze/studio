@@ -771,10 +771,10 @@
   margin-bottom: clamp(8px, 1vw, 16px);
 }
 /* ...unless a piece is named in `spansRow`, which breaks it out of the columns
-   as a full-width band. Named per piece rather than by position: it's for the
-   ones a column-width tile genuinely can't carry (a page of screen type, dense
-   UI), and a page of ten motion pieces set full-width would be ten stacked
-   bands. max-height stops a band eating the screen on ultrawide monitors. */
+   as a full-width band. Only usable on the piece that LEADS a grid: this is a
+   multi-column layout, so `column-span: all` forces a column break, and any
+   band further down leaves the columns above it cut short with a gap of white
+   across the grid. max-height stops a band eating the screen on ultrawides. */
 .v2-grid-ratio > .spans-row {
   column-span: all;
   max-height: 70vh;
