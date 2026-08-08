@@ -329,8 +329,9 @@ const VIDEO_DIMS: Record<string, [number, number]> = {
   '/content/experiments/liquid-glass-nav.mp4': [1600, 652],
   '/content/experiments/liquid-glass-opensource.mp4': [1600, 890],
   '/content/experiments/radish-node.mp4': [1600, 1038],
-  '/content/experiments/wikipedia.mp4': [1600, 1032],
   '/content/experiments/workspace.mp4': [1600, 1166],
+  // Product — the Wikipedia concept, its own section
+  '/content/wikipedia/wikipedia.mp4': [1600, 1032],
 }
 
 // Design page stills — the pieces that open the Design grid alongside the

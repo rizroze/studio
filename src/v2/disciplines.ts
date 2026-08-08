@@ -114,7 +114,6 @@ const DESIGN_OPENING: string[] = [
 // they're declared here; the stills come from EXPERIMENTS_GALLERY.
 const EXPERIMENTS_MOTION = [
   '/content/experiments/liquid-glass-opensource.mp4',
-  '/content/experiments/wikipedia.mp4',
   '/content/experiments/radish-node.mp4',
   '/content/experiments/dimension-fm.mp4',
   '/content/experiments/gorilla.mp4',
@@ -233,6 +232,20 @@ export const DISCIPLINES: Discipline[] = [
         stats: 'Human-verified publishing · founding edition live',
         liveUrl: CASE_STUDIES.find(p => p.slug === 'corner')?.liveUrl,
       },
+      // Its own section rather than a tile in the Experiments feed: it's a
+      // screen of body copy, illegible at column width, and leading a grid of
+      // one is the only place a full-width band costs no gap.
+      {
+        project: '',
+        label: 'Wikipedia, reimagined',
+        section: {
+          title: 'Wikipedia, reimagined',
+          description: 'A concept, not a shipped product: the encyclopedia rebuilt around asking rather than searching. Text and image from Wikipedia (CC BY-SA).',
+          gallery: ['/content/wikipedia/wikipedia.mp4'],
+        },
+        grid: 'ratio',
+        spansRow: ['/content/wikipedia/wikipedia.mp4'],
+      },
     ],
     // product walkthroughs, not motion-design work — Design keeps 'Motion'
     videosLabel: 'Walkthroughs',
@@ -267,7 +280,7 @@ export const DISCIPLINES: Discipline[] = [
       '/content/experiments/Frame 2085660639.webp', // Zcash Phoenix +771% — orange
       '/content/experiments/Frame 7 1.webp',        // WeSplit — last supper (green)
       '/content/experiments/Frame 2085660660.webp', // BREAKPOINT — purple
-      '/content/experiments/wikipedia.mp4',         // Wikipedia globe (poster still)
+      '/content/experiments/liquid-glass-opensource.mp4', // liquid glass (poster still)
       '/content/experiments/Frame 2085660694.webp', // coinbase — Everything (blue)
       '/content/experiments/Frame 2085660667.webp', // Palantir — b&w
       '/content/experiments/Frame 2085660633.webp', // Phantom — trading tools (purple)
