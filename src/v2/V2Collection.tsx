@@ -11,19 +11,20 @@ interface V2CollectionProps {
   section: ProjectSection
   grid?: 'dense' | 'ratio'
   cols?: number
-  // masonry only: let a leading video break out as a full-width band
-  leadVideo?: boolean
+  // masonry only: gallery srcs that break out of the columns as a full-width
+  // band, for pieces a column-width tile can't carry (dense UI, small type)
+  spansRow?: string[]
   onOpenImage: (images: string[], index: number) => void
 }
 
-export function V2Collection({ section, grid = 'ratio', cols, leadVideo, onOpenImage }: V2CollectionProps) {
+export function V2Collection({ section, grid = 'ratio', cols, spansRow, onOpenImage }: V2CollectionProps) {
   if (section.display === 'index') {
     return <IndexView section={section} onOpenImage={onOpenImage} />
   }
   if (grid === 'dense') {
     return <V2Bento gallery={section.gallery} cols={cols ?? 4} onOpenImage={onOpenImage} />
   }
-  return <RatioGrid section={section} leadVideo={leadVideo} onOpenImage={onOpenImage} />
+  return <RatioGrid section={section} spansRow={spansRow} onOpenImage={onOpenImage} />
 }
 
 const markIn = (e: React.SyntheticEvent<HTMLImageElement>) => e.currentTarget.classList.add('in')
@@ -33,22 +34,24 @@ const refIn = (img: HTMLImageElement | null) => {
 
 const isVideo = (s: string) => /\.mp4$/i.test(s)
 
-function RatioGrid({ section, leadVideo, onOpenImage }: V2CollectionProps) {
+function RatioGrid({ section, spansRow, onOpenImage }: V2CollectionProps) {
   // videos are their own control-free tiles (own fullscreen overlay); keep them
   // out of the image lightbox so image nav indices stay correct
   const images = lightboxGallery(section, 'ratio')
+  const wide = new Set(spansRow ?? [])
+  const cls = (src: string) => `v2-grid-item${wide.has(src) ? ' spans-row' : ''}`
   return (
-    <div className={`v2-grid v2-grid-ratio${leadVideo ? ' has-lead' : ''}`}>
+    <div className="v2-grid v2-grid-ratio">
       {section.gallery.map((src) => {
         if (isVideo(src)) {
-          return <V2VideoTile key={src} src={src} dims={IMAGE_DIMS[src]} className="v2-grid-item" />
+          return <V2VideoTile key={src} src={src} dims={IMAGE_DIMS[src]} className={cls(src)} />
         }
         const d = IMAGE_DIMS[src]
         const j = images.indexOf(src)
         return (
           <button
             key={src}
-            className="v2-grid-item"
+            className={cls(src)}
             data-lbsrc={src}
             onClick={() => onOpenImage(images, j)}
           >

@@ -12,7 +12,7 @@ export interface DisciplineCollection {
   previewImages?: string[]        // homepage-mosaic picks for this collection (else section.gallery)
   video?: DisciplineVideo         // plays directly under this collection, instead of the trailing block
   liveUrl?: string                // the shipped thing, reachable — rendered as a "Live" link
-  leadVideo?: boolean             // masonry only: a leading video breaks out as a full-width band
+  spansRow?: string[]             // masonry only: srcs that break out as a full-width band
 }
 
 export interface DisciplineVideo {
@@ -248,8 +248,15 @@ export const DISCIPLINES: Discipline[] = [
     label: 'Experiments',
     blurb: 'Self-initiated · Daily · Studies',
     description: 'Daily reps, no client brief. Some become ads. The rest just keep the hand sharp.',
-    // the "world." motion piece leads this feed as a full-width band
-    collections: [{ ...standalone('Experiments', EXPERIMENTS_BENTO, 'ratio'), leadVideo: true }],
+    collections: [{
+      ...standalone('Experiments', EXPERIMENTS_BENTO, 'ratio'),
+      // the "world." piece leads the feed as a band; the Wikipedia teaser is a
+      // full page of body copy, illegible at column width
+      spansRow: [
+        '/content/experiments/motion-01.mp4',
+        '/content/experiments/wikipedia.mp4',
+      ],
+    }],
     videos: [],
     // hand-picked teaser: the full daily wall clusters the WeSplit campaign, so
     // the homepage mosaic spreads subjects/colors and keeps WeSplit to a few.
