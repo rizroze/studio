@@ -12,6 +12,7 @@ export interface DisciplineCollection {
   previewImages?: string[]        // homepage-mosaic picks for this collection (else section.gallery)
   video?: DisciplineVideo         // plays directly under this collection, instead of the trailing block
   liveUrl?: string                // the shipped thing, reachable — rendered as a "Live" link
+  leadVideo?: boolean             // masonry only: a leading video breaks out as a full-width band
 }
 
 export interface DisciplineVideo {
@@ -74,12 +75,65 @@ function merge(slug: string, titles: string[], label: string, description: strin
   return { project: project.title, section: { title: label, description, gallery }, grid }
 }
 
+// Drop one `extra` in after every `every` items of `base`, so a handful of
+// videos punctuate a long wall of stills instead of clustering. Anything left
+// over once the stills run out is appended, so nothing is ever silently lost.
+function weave(base: string[], extras: string[], every: number): string[] {
+  const out: string[] = []
+  let e = 0
+  base.forEach((item, i) => {
+    out.push(item)
+    if ((i + 1) % every === 0 && e < extras.length) out.push(extras[e++])
+  })
+  return [...out, ...extras.slice(e)]
+}
+
+// The Design page opens with the work, not a client. My own pieces lead —
+// Shaderweb, Maestro, Slickback, the pet UI — then the Radiants brand art
+// follows in the same grid, uncredited here (it keeps its own section on the
+// Radiants side). Masonry rather than the square bento: this set runs from
+// 16:9 slides to a 4:5 poster to square art, and the motion sits inline at
+// its own ratio instead of being cropped to a cell.
+const DESIGN_OPENING: string[] = [
+  '/content/design/shaderweb.mp4',
+  '/content/design/maestro-one-place.webp',
+  '/content/design/maestro-agent-queue.webp',
+  '/content/design/shader-grid.mp4',
+  '/content/design/maestro-agentic-orchestration.webp',
+  '/content/design/maestro-mark.webp',
+  '/content/design/shader-studio-post-processing.webp',
+  '/content/design/perp-trading.mp4',
+  '/content/design/slickback-menswear.webp',
+  '/content/design/library.mp4',
+  '/content/design/riz-jr-pet.webp',
+  ...(CASE_STUDIES.find(p => p.slug === 'radiants')
+    ?.sections?.find(s => s.title === 'Brand Art')?.gallery ?? []),
+]
+
+// The rest of the motion in Experiments. Videos aren't pipeline-handled, so
+// they're declared here; the stills come from EXPERIMENTS_GALLERY.
+const EXPERIMENTS_MOTION = [
+  '/content/experiments/liquid-glass-opensource.mp4',
+  '/content/experiments/wikipedia.mp4',
+  '/content/experiments/radish-node.mp4',
+  '/content/experiments/dimension-fm.mp4',
+  '/content/experiments/gorilla.mp4',
+  '/content/experiments/liquid-glass-nav.mp4',
+  '/content/experiments/dot-spiral.mp4',
+  '/content/experiments/arc.mp4',
+  '/content/experiments/workspace.mp4',
+]
+
 // Experiments bento: the "world." motion piece leads as a full-width band
 // (column-span: all breaks it out of the masonry columns — it has to come
 // first or the cover would balance alone above it), then the "world." cover
 // pinned by the pipeline, then the rest of the daily output.
+//
+// The remaining motion is woven through the stills rather than stacked behind
+// them: ten videos in a row reads as a showreel, and the feed is meant to read
+// as daily output with motion recurring as you scroll.
 const EXPERIMENTS_BENTO = EXPERIMENTS_GALLERY.length
-  ? ['/content/experiments/motion-01.mp4', ...EXPERIMENTS_GALLERY]
+  ? ['/content/experiments/motion-01.mp4', ...weave(EXPERIMENTS_GALLERY, EXPERIMENTS_MOTION, 3)]
   : []
 
 // Taxonomy — reuses existing CASE_STUDIES sections, no new content.
@@ -100,7 +154,16 @@ export const DISCIPLINES: Discipline[] = [
     label: 'Design',
     blurb: 'Brand · Illustration · Decks',
     collections: [
-      { ...sec('radiants', 'Brand Art', 'dense', 4), stats: '2+ years · hundreds of pieces across every format' },
+      {
+        project: '',             // no client label — this grid spans all of them
+        label: 'Brand Art',
+        section: {
+          title: 'Brand Art',
+          description: 'Illustration, photo treatment, product and identity work, across client brands and my own.',
+          gallery: DESIGN_OPENING,
+        },
+        grid: 'ratio',
+      },
       { ...sec('radiants', 'PFP Art', 'dense', 8), stats: '16 hand-drawn pixel portraits' },
       // mosaic leads with the "How Hydex Works" 3-layer architecture slide
       // (deck-06) instead of the bridge cover — the deck page order is untouched
@@ -185,7 +248,8 @@ export const DISCIPLINES: Discipline[] = [
     label: 'Experiments',
     blurb: 'Self-initiated · Daily · Studies',
     description: 'Daily reps, no client brief. Some become ads. The rest just keep the hand sharp.',
-    collections: [standalone('Experiments', EXPERIMENTS_BENTO, 'ratio')],
+    // the "world." motion piece leads this feed as a full-width band
+    collections: [{ ...standalone('Experiments', EXPERIMENTS_BENTO, 'ratio'), leadVideo: true }],
     videos: [],
     // hand-picked teaser: the full daily wall clusters the WeSplit campaign, so
     // the homepage mosaic spreads subjects/colors and keeps WeSplit to a few.
@@ -198,16 +262,16 @@ export const DISCIPLINES: Discipline[] = [
       '/content/experiments/Frame 2085660639.webp', // Zcash Phoenix +771% — orange
       '/content/experiments/Frame 7 1.webp',        // WeSplit — last supper (green)
       '/content/experiments/Frame 2085660660.webp', // BREAKPOINT — purple
-      '/content/experiments/Frame 2085660648.webp', // Early is a state of mind — sunset
+      '/content/experiments/wikipedia.mp4',         // Wikipedia globe (poster still)
       '/content/experiments/Frame 2085660694.webp', // coinbase — Everything (blue)
       '/content/experiments/Frame 2085660667.webp', // Palantir — b&w
       '/content/experiments/Frame 2085660633.webp', // Phantom — trading tools (purple)
       '/content/experiments/Frame 2085660627.webp', // Breakpoint London — crowd
       '/content/experiments/Frame 4 1.webp',        // WeSplit — collage (b&w)
-      '/content/experiments/Frame 2085660642.webp', // sunrise — phone cases (color)
+      '/content/experiments/sunrise-phone-cases.anim.webp', // sunrise — phone cases (color)
       '/content/experiments/Frame 2085660631.webp', // TIME / Helius — b&w
       '/content/experiments/Frame 2085660656.webp', // Breakpoint pass — red
-      '/content/experiments/Frame 2085660646.webp', // sunrise — keychain (pink)
+      '/content/experiments/radish-node.mp4',       // radish — NODE (poster still)
       '/content/experiments/Frame 2085660659.webp', // I ♥ London VIP — purple
     ],
   } satisfies Discipline] : []),

@@ -102,8 +102,6 @@ export const CASE_STUDIES: CaseStudyData[] = [
           '/content/radiants/brand-art/be-rad.webp',
           '/content/radiants/brand-art/breakpointrad.webp',
           '/content/radiants/brand-art/frame-2085660600.webp',
-          '/content/radiants/brand-art/radintern.webp',
-          '/content/radiants/brand-art/radpep.webp',
           '/content/radiants/brand-art/radzcominnggez.gif',
           // landscape
           '/content/radiants/brand-art/sprite-00021.gif',
@@ -112,7 +110,6 @@ export const CASE_STUDIES: CaseStudyData[] = [
           '/content/radiants/brand-art/radgangz.webp',
           '/content/radiants/brand-art/5daysleft.webp',
           '/content/radiants/brand-art/screenshot-2024-09-14-at-02.55.19.webp',
-          '/content/radiants/brand-art/rad_missing.webp',
           '/content/radiants/brand-art/rad-desertfunk.webp',
           '/content/radiants/brand-art/radskellu.webp',
           // portrait

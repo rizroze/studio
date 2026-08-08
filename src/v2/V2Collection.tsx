@@ -11,17 +11,19 @@ interface V2CollectionProps {
   section: ProjectSection
   grid?: 'dense' | 'ratio'
   cols?: number
+  // masonry only: let a leading video break out as a full-width band
+  leadVideo?: boolean
   onOpenImage: (images: string[], index: number) => void
 }
 
-export function V2Collection({ section, grid = 'ratio', cols, onOpenImage }: V2CollectionProps) {
+export function V2Collection({ section, grid = 'ratio', cols, leadVideo, onOpenImage }: V2CollectionProps) {
   if (section.display === 'index') {
     return <IndexView section={section} onOpenImage={onOpenImage} />
   }
   if (grid === 'dense') {
     return <V2Bento gallery={section.gallery} cols={cols ?? 4} onOpenImage={onOpenImage} />
   }
-  return <RatioGrid section={section} onOpenImage={onOpenImage} />
+  return <RatioGrid section={section} leadVideo={leadVideo} onOpenImage={onOpenImage} />
 }
 
 const markIn = (e: React.SyntheticEvent<HTMLImageElement>) => e.currentTarget.classList.add('in')
@@ -31,12 +33,12 @@ const refIn = (img: HTMLImageElement | null) => {
 
 const isVideo = (s: string) => /\.mp4$/i.test(s)
 
-function RatioGrid({ section, onOpenImage }: V2CollectionProps) {
+function RatioGrid({ section, leadVideo, onOpenImage }: V2CollectionProps) {
   // videos are their own control-free tiles (own fullscreen overlay); keep them
   // out of the image lightbox so image nav indices stay correct
   const images = lightboxGallery(section, 'ratio')
   return (
-    <div className="v2-grid v2-grid-ratio">
+    <div className={`v2-grid v2-grid-ratio${leadVideo ? ' has-lead' : ''}`}>
       {section.gallery.map((src) => {
         if (isVideo(src)) {
           return <V2VideoTile key={src} src={src} dims={IMAGE_DIMS[src]} className="v2-grid-item" />

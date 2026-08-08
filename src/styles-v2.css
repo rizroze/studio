@@ -765,15 +765,20 @@
    monitor. Cap it where its height lands in the same band as the paired
    squares beside it (1100 / 1.78 ≈ 620), and centre what's left over. */
 .v2-video.is-wide .v2-videotile { max-width: 1100px; margin-inline: auto; }
-/* in the masonry bento the video breaks out of the columns as a full-width
-   band — it leads the gallery, so nothing balances awkwardly above it.
-   max-height keeps a 16:9 band from eating the screen on ultrawide monitors
-   (cover crops instead of growing) */
+/* in the masonry bento a video flows inline in its column like any tile */
 .v2-grid-ratio .v2-videotile {
   break-inside: avoid;
+  margin-bottom: clamp(8px, 1vw, 16px);
+}
+/* ...except in a grid that opts into a lead band (the Experiments feed), where
+   the first tile breaks out full-width so nothing balances awkwardly above it.
+   Opt-in rather than positional: every other grid just wants its video sized
+   like the tiles around it, and a page of ten motion pieces would otherwise be
+   ten full-width bands. max-height keeps the band from eating the screen on
+   ultrawide monitors (cover crops instead of growing). */
+.v2-grid-ratio.has-lead > .v2-videotile:first-child {
   column-span: all;
   max-height: 70vh;
-  margin-bottom: clamp(8px, 1vw, 16px);
 }
 .v2-grid-ratio .v2-videotile video { height: 100%; object-fit: cover; }
 .v2-videotile:hover video { opacity: 0.9; }

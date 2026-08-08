@@ -29,8 +29,11 @@ const sips = (...args) => execFileSync('sips', args, { stdio: ['ignore', 'pipe',
 // sips on macOS can READ webp but not WRITE it — use cwebp for the conversion.
 const toWebp = (src, out) => execFileSync('cwebp', ['-q', '82', src, '-o', out], { stdio: ['ignore', 'ignore', 'pipe'] })
 
-// source images we know how to process (exclude the generated variants)
-const isVariant = (f) => /\.(med|thumb)\.jpg$/i.test(f)
+// source images we know how to process (exclude the generated variants).
+// A `-poster.webp` is a frame grabbed off a video, not a piece in its own
+// right — without this every video in the folder would also show up as a
+// still tile of its own poster, duplicating itself in the grid.
+const isVariant = (f) => /\.(med|thumb)\.jpg$/i.test(f) || /-poster\.webp$/i.test(f)
 const isSource = (f) => /\.(webp|png|jpe?g|heic)$/i.test(f) && !isVariant(f)
 
 function dims(file) {

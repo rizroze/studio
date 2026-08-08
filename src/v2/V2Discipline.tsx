@@ -59,11 +59,14 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
         {discipline.description && <p className="v2-head-note">{discipline.description}</p>}
       </div>
 
-      {discipline.collections.map(({ project, section, grid, cols, label, stats, video, liveUrl }, i) => {
+      {discipline.collections.map(({ project, section, grid, cols, label, stats, video, liveUrl, leadVideo }, i) => {
         const logo = projectLogo(project)
         return (
         <section key={`${project}-${section.title}`} id={`block-${i}`} className="v2-disc-block">
-          {project && (
+          {/* A collection spanning several clients has no project to credit, so
+              it opts into the heading with `label` alone and prints just the
+              title. A standalone with neither (Experiments) stays headless. */}
+          {(project || label) && (
             <div className="v2-disc-label">
               {logo && (
                 <img
@@ -73,8 +76,12 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
                   loading="lazy"
                 />
               )}
-              <span className="v2-disc-project">{project}</span>
-              <span className="v2-disc-sep">·</span>
+              {project && (
+                <>
+                  <span className="v2-disc-project">{project}</span>
+                  <span className="v2-disc-sep">·</span>
+                </>
+              )}
               <span className="v2-disc-title">{label ?? section.title}</span>
               {liveUrl && (
                 <a className="v2-disc-live" href={liveUrl} target="_blank" rel="noopener noreferrer">
@@ -89,6 +96,7 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
             section={section}
             grid={grid}
             cols={cols}
+            leadVideo={leadVideo}
             onOpenImage={(_local, j) => onOpenImage(pageImages, offsets[i] + j)}
           />
           {video && (
