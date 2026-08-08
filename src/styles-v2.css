@@ -81,16 +81,15 @@
   gap: 14px;
 }
 
+/* square and in colour, with the corners just knocked off — no grayscale
+   left for a hover to reveal */
 .v2-avatar {
   width: 46px;
   height: 46px;
-  border-radius: 50%;
+  border-radius: 2px;
   object-fit: cover;
   flex-shrink: 0;
-  filter: grayscale(1);
-  transition: filter 0.4s ease;
 }
-.v2-rail-id:hover .v2-avatar { filter: grayscale(0); }
 
 .v2-rail-name {
   display: inline-flex;
