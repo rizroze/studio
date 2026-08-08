@@ -34,7 +34,7 @@ const isVideo = (s: string) => /\.mp4$/i.test(s)
 function RatioGrid({ section, onOpenImage }: V2CollectionProps) {
   // videos are their own control-free tiles (own fullscreen overlay); keep them
   // out of the image lightbox so image nav indices stay correct
-  const images = section.gallery.filter((s) => !isVideo(s))
+  const images = lightboxGallery(section, 'ratio')
   return (
     <div className="v2-grid v2-grid-ratio">
       {section.gallery.map((src) => {
@@ -76,6 +76,25 @@ function shapeGroup(src: string): number {
   if (!d) return 1
   const r = d[0] / d[1]
   return r > 1.3 ? 0 : r < 0.77 ? 2 : 1
+}
+
+// The exact list a collection hands the lightbox, in the order its tiles are
+// rendered. Exported so V2Discipline can lay the collections end to end and let
+// the lightbox walk off the end of one section into the next instead of looping
+// back to that section's first image. Every renderer below resolves through
+// this, so a page-wide offset can never drift out of step with what's on screen.
+export function lightboxGallery(
+  section: ProjectSection,
+  grid: 'dense' | 'ratio' = 'ratio',
+): string[] {
+  if (section.display === 'index') {
+    return section.keepOrder
+      ? section.gallery
+      : [...section.gallery].sort((a, b) => shapeGroup(a) - shapeGroup(b))
+  }
+  if (grid === 'dense') return section.gallery
+  // videos own their fullscreen player, so they aren't lightbox stops
+  return section.gallery.filter((s) => !isVideo(s))
 }
 
 // layered preview: each src gets its own opaque white-backed layer, the new
@@ -136,9 +155,8 @@ function IndexView({ section, onOpenImage }: V2CollectionProps) {
   // a curated section is already in the order it should be read in; shape
   // grouping would override that (one odd ratio can hop the whole list)
   const gallery = useMemo(
-    () => section.keepOrder
-      ? section.gallery
-      : [...section.gallery].sort((a, b) => shapeGroup(a) - shapeGroup(b)),
+    () => lightboxGallery(section),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [section.gallery, section.keepOrder],
   )
   // hover wins when you point at a row; otherwise the preview tracks the scroll

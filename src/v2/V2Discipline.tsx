@@ -1,5 +1,6 @@
+import { useMemo } from 'react'
 import type { Discipline, DisciplineVideo } from './disciplines'
-import { V2Collection } from './V2Collection'
+import { V2Collection, lightboxGallery } from './V2Collection'
 import { V2VideoTile } from './V2VideoTile'
 import { projectLogo } from './clientLogos'
 import { IMAGE_DIMS, WIDE_VIDEO_RATIO } from './imageDims'
@@ -28,6 +29,22 @@ interface V2DisciplineProps {
 }
 
 export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplineProps) {
+  // Every image on the page in render order, plus where each collection starts
+  // in it. Opening a tile hands the lightbox this whole list, so paging past the
+  // last image of a section continues into the next one rather than looping back
+  // to that section's first. Only the very end of the page wraps to the very
+  // beginning. The lightbox finds tiles by [data-lbsrc] across the document, so
+  // scroll-tracking and the close flight follow it across a boundary for free.
+  const { pageImages, offsets } = useMemo(() => {
+    const offsets: number[] = []
+    const pageImages: string[] = []
+    discipline.collections.forEach(({ section, grid }) => {
+      offsets.push(pageImages.length)
+      pageImages.push(...lightboxGallery(section, grid))
+    })
+    return { pageImages, offsets }
+  }, [discipline])
+
   return (
     <div>
       <div className="v2-crumb">
@@ -68,7 +85,12 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
           )}
           {section.description && <p className="v2-disc-desc">{section.description}</p>}
           {stats && <p className="v2-disc-stats">{stats}</p>}
-          <V2Collection section={section} grid={grid} cols={cols} onOpenImage={onOpenImage} />
+          <V2Collection
+            section={section}
+            grid={grid}
+            cols={cols}
+            onOpenImage={(_local, j) => onOpenImage(pageImages, offsets[i] + j)}
+          />
           {video && (
             <div className="v2-video-stack v2-video-inline">
               <VideoFigure v={video} />
