@@ -135,17 +135,6 @@ const EXPERIMENTS_BENTO = EXPERIMENTS_GALLERY.length
 // Taxonomy — reuses existing CASE_STUDIES sections, no new content.
 export const DISCIPLINES: Discipline[] = [
   {
-    id: 'direction',
-    label: 'Direction',
-    blurb: 'Content · Campaigns · Social',
-    collections: [
-      { ...sec('radiants', 'Community & Events'), stats: '2024–2026 · weekly cadence · one cohesive brand' },
-      { ...sec('radiants', 'Monolith 2026'), stats: 'Solana Mobile flagship event · $125K+ prize pool · +70 pieces end-to-end' },
-      { ...sec('radiants', 'Seeker Hackathon'), stats: '+500 signups · +110 pieces, launch to end' },
-    ],
-    videos: [],
-  },
-  {
     id: 'design',
     label: 'Design',
     blurb: 'Brand · Illustration · Decks',
@@ -243,6 +232,17 @@ export const DISCIPLINES: Discipline[] = [
     videos: [
       vid('fullport', 'Solana portfolio tracker for the Seeker phone, built solo in React Native and Expo. Balances, metadata and prices arrive in a single Helius DAS call. Working APK shipped inside the Monolith hackathon deadline.'),
     ],
+  },
+  {
+    id: 'direction',
+    label: 'Direction',
+    blurb: 'Content · Campaigns · Social',
+    collections: [
+      { ...sec('radiants', 'Community & Events'), stats: '2024–2026 · weekly cadence · one cohesive brand' },
+      { ...sec('radiants', 'Monolith 2026'), stats: 'Solana Mobile flagship event · $125K+ prize pool · +70 pieces end-to-end' },
+      { ...sec('radiants', 'Seeker Hackathon'), stats: '+500 signups · +110 pieces, launch to end' },
+    ],
+    videos: [],
   },
   // Experiments — daily creative output. Self-gating: the tile only appears
   // once images exist (drop them in public/content/experiments/ + `npm run

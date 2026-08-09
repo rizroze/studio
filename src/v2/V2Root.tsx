@@ -93,8 +93,10 @@ export function V2Root() {
     return () => window.removeEventListener('popstate', onPop)
   }, [scrollTop])
 
-  const navigate = useCallback((next: V2View) => {
-    window.history.pushState(null, '', buildPath(next))
+  // `replace` is for navigation the visitor didn't ask for — the works tab
+  // rotation. Pushing those would bury the page they arrived from.
+  const navigate = useCallback((next: V2View, replace = false) => {
+    window.history[replace ? 'replaceState' : 'pushState'](null, '', buildPath(next))
     setState(next)
     setLab(false)
     setReferences(false)
@@ -199,7 +201,7 @@ export function V2Root() {
         {state.view === 'works' && discipline && (
           <V2Works
             activeId={discipline.id}
-            onSelect={(id) => navigate({ view: 'works', id })}
+            onSelect={(id, replace) => navigate({ view: 'works', id }, replace)}
             onHome={goHome}
             onOpenImage={openImage}
           />

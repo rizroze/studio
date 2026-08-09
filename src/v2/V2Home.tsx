@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react'
 import { FEATURED_WORKS } from './featured'
 import type { FeaturedWork } from './featured'
 import { findDiscipline, med, videoPoster } from './disciplines'
+import { projectLogo } from './clientLogos'
 import { HOMEPAGE_CLIENTS } from './clientLogos'
 
 // An autoplaying still — same contract as V2VideoTile (muted, IntersectionObserver,
@@ -27,6 +28,7 @@ function FeatureTile({ work, n, onOpen }: { work: FeaturedWork; n: number; onOpe
   const isVideo = /\.mp4$/i.test(work.src)
   const ratio = work.ratio ?? (work.wide ? 16 / 9 : 4 / 3)
   const label = findDiscipline(work.discipline)?.label ?? work.discipline
+  const logo = work.client ? projectLogo(work.client) : undefined
   return (
     <button className={`v2-feature${work.wide ? ' wide' : ''}`} onClick={onOpen}>
       {/* one shape across the grid so rows line up and nothing reflows as
@@ -36,12 +38,24 @@ function FeatureTile({ work, n, onOpen }: { work: FeaturedWork; n: number; onOpe
           ? <FeatureVideo src={work.src} />
           : <img src={med(work.src)} alt="" loading={n <= 2 ? 'eager' : 'lazy'} decoding="async" draggable={false} />}
       </div>
+      {/* same quiet mono caption as a discipline block header — logo, client,
+          title. The display face is for the work itself, not for labelling it */}
       <div className="v2-feature-meta">
-        <span className="v2-feature-num">{String(n).padStart(2, '0')}</span>
-        <span className="v2-feature-title">
-          {work.client && <span className="v2-feature-client">{work.client}</span>}
-          {work.title}
-        </span>
+        {logo && (
+          <img
+            className={`v2-disc-logo${logo.invert ? ' invert' : ''}`}
+            src={logo.src}
+            alt={logo.alt}
+            loading="lazy"
+          />
+        )}
+        {work.client && (
+          <>
+            <span className="v2-feature-client">{work.client}</span>
+            <span className="v2-feature-sep">·</span>
+          </>
+        )}
+        <span className="v2-feature-name">{work.title}</span>
         <span className="v2-feature-disc">{label}</span>
         <span className="v2-arrow">→</span>
       </div>

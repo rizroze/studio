@@ -12,7 +12,9 @@ export interface FeaturedWork {
   src: string
   /** what the piece is */
   title: string
-  /** who it was for; omit for self-initiated work */
+  /** who it was for; omit for self-initiated work. Spell it exactly as the
+      project title in CASE_STUDIES — that string is the key its logomark is
+      looked up under. */
   client?: string
   /** discipline id the tile opens — must exist in DISCIPLINES */
   discipline: string
@@ -56,7 +58,7 @@ export const FEATURED_WORKS: FeaturedWork[] = [
   {
     src: '/content/whatsfordinner/home-1.webp',
     title: 'Website & App',
-    client: "What's For Dinner",
+    client: "What's for Dinner",
     discipline: 'product',
     note: 'A live meal-planning SaaS, designed, built and run solo across eleven languages.',
   },

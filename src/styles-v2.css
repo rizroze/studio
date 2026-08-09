@@ -391,33 +391,30 @@
 .v2-feature:hover .v2-feature-frame img,
 .v2-feature:hover .v2-feature-frame video { transform: scale(1.035); }
 
+/* the same quiet mono row as .v2-disc-label — logo, client, title. Nothing
+   here competes with the piece above it */
 .v2-feature-meta {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  align-items: center;
+  gap: 9px;
   margin-top: 14px;
   font-family: var(--v2-mono);
   font-size: 11px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: var(--v2-muted);
 }
-.v2-feature-num { color: var(--v2-faint); }
-.v2-feature-title {
+.v2-feature-client { color: var(--v2-ink); }
+.v2-feature-sep { color: var(--v2-faint); }
+.v2-feature-name {
   flex: 1;
   min-width: 0;
-  font-family: var(--v2-display);
-  font-weight: 700;
-  font-size: clamp(16px, 1.6vw, 21px);
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  text-transform: none;
-  color: var(--v2-ink);
+  color: var(--v2-muted);
 }
-.v2-feature-client { color: var(--v2-faint); }
-.v2-feature-client::after { content: '\00a0\00b7\00a0'; }
-.v2-feature-disc { white-space: nowrap; }
+.v2-feature-disc { color: var(--v2-faint); white-space: nowrap; }
 .v2-feature:hover .v2-arrow { opacity: 1; transform: translateX(0); }
+/* the mark colorizes with the piece, the way it does on a discipline block */
+.v2-feature:hover .v2-disc-logo { filter: grayscale(0) opacity(1); }
+.v2-feature:hover .v2-disc-logo.invert { filter: invert(1) opacity(1); }
 
 .v2-feature-note {
   margin-top: 7px;
@@ -533,6 +530,21 @@
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .v2-tab.active::after { transform: scaleX(1); }
+
+/* While the tab row is cycling, the active rule fills across its tab over the
+   seven seconds it has left — the switch is announced before it happens
+   instead of just happening. The rule is a progress bar and an affordance at
+   once: it's what tells you these tabs move at all. */
+.v2-tabbar.rotating .v2-tab.active::after {
+  animation: v2-tab-fill 7s linear forwards;
+}
+@keyframes v2-tab-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-tabbar.rotating .v2-tab.active::after { animation: none; }
+}
 
 /* homepage "worked with" strip — label left, client logos right (split row) */
 .v2-clients {
