@@ -236,16 +236,21 @@
   height: 100%;
   object-fit: cover;
 }
+/* The piece you're on goes solid red — the same red as the mark at the top of
+   this rail. A stroke had to compete with 110 pieces of artwork for attention;
+   a filled block doesn't compete with anything, it just moves down the wall as
+   you scroll. Losing sight of the one tile you're on costs nothing: it's the
+   thing filling the pane next to it. */
 .v2-rail-map-cell::after {
   content: '';
   position: absolute;
   inset: 0;
-  border: 2px solid transparent;
-  transition: border-color 0.25s ease;
+  background: var(--v2-red);
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
-/* hover previews the same stroke at half strength, so pointing at a tile says
-   what clicking it will do */
-.v2-rail-map-cell:hover::after { border-color: rgba(255, 0, 0, 0.45); }
+/* hover washes the same red on, so pointing at a tile previews what it becomes */
+.v2-rail-map-cell:hover::after { opacity: 0.4; }
 
 /* hover preview — a 45px tile can't say what it is, so hovering shows the
    piece at a readable size beside the rail */
@@ -263,13 +268,7 @@
   to { opacity: 1; transform: translateX(0); }
 }
 @media (max-width: 820px) { .v2-rail-peek { display: none; } }
-.v2-rail-map-cell.active::after { border-color: var(--v2-red); }
-/* bleeds 1px into the 3px gap so the stroke still reads when the tile beside
-   it happens to be red too */
-.v2-rail-map-cell.active {
-  z-index: 1;
-  box-shadow: 0 0 0 1px var(--v2-red);
-}
+.v2-rail-map-cell.active::after { opacity: 1; }
 
 /* the tile a homepage click landed on — arriving mid-wall otherwise reads as
    a mis-scroll rather than as an arrival */
