@@ -1,14 +1,59 @@
 {
   "redirects": [
-    { "source": "/work", "destination": "/", "permanent": true },
-    { "source": "/work/:slug*", "destination": "/", "permanent": true },
-    { "source": "/v2", "destination": "/", "permanent": true },
-    { "source": "/v2/:path*", "destination": "/", "permanent": true }
+    {
+      "source": "/direction",
+      "destination": "/works/direction",
+      "permanent": false
+    },
+    {
+      "source": "/design",
+      "destination": "/works/design",
+      "permanent": false
+    },
+    {
+      "source": "/product",
+      "destination": "/works/product",
+      "permanent": false
+    },
+    {
+      "source": "/experiments",
+      "destination": "/works/experiments",
+      "permanent": false
+    },
+    {
+      "source": "/work",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/work/:slug*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/v2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/v2/:path*",
+      "destination": "/",
+      "permanent": true
+    }
   ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/discovery", "destination": "/discovery/index.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/discovery",
+      "destination": "/discovery/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {

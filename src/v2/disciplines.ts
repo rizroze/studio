@@ -9,7 +9,6 @@ export interface DisciplineCollection {
   cols?: number                   // dense grids: columns across (default 4)
   label?: string                  // override the displayed collection title
   stats?: string                  // outcome line — verifiable numbers only, ' · ' separated
-  previewImages?: string[]        // homepage-mosaic picks for this collection (else section.gallery)
   video?: DisciplineVideo         // plays directly under this collection, instead of the trailing block
   liveUrl?: string                // the shipped thing, reachable — rendered as a "Live" link
   spansRow?: string[]             // masonry only: srcs that break out as a full-width band
@@ -30,8 +29,6 @@ export interface Discipline {
   collections: DisciplineCollection[]
   videos: DisciplineVideo[]
   videosLabel?: string     // heading for the video block (default 'Motion')
-  previewCols?: number     // homepage mosaic density (default 6)
-  previewImages?: string[] // hand-picked homepage mosaic (overrides the auto per-collection spread)
 }
 
 // Pull a section out of a project by title
@@ -164,13 +161,7 @@ export const DISCIPLINES: Discipline[] = [
         grid: 'ratio',
       },
       { ...sec('radiants', 'PFP Art', 'dense', 8), stats: '16 hand-drawn pixel portraits' },
-      // mosaic leads with the "How Hydex Works" 3-layer architecture slide
-      // (deck-06) instead of the bridge cover — the deck page order is untouched
-      { ...sec('hydex', 'Hydex'), label: 'Pitch Deck', previewImages: [
-        '/content/hydex-brand/deck-06.webp',
-        '/content/hydex-brand/deck-02.webp',
-        '/content/hydex-brand/deck-03.webp',
-      ] },
+      { ...sec('hydex', 'Hydex'), label: 'Pitch Deck' },
       { ...sec('hydex', 'Hydex Router'), label: 'Pitch Deck', project: 'Hydex Router' },
       sec('wayy', 'Pitch Deck'),
       sec('fullport', 'Pitch Deck'),
@@ -269,29 +260,6 @@ export const DISCIPLINES: Discipline[] = [
       spansRow: ['/content/experiments/motion-01.mp4'],
     }],
     videos: [],
-    // hand-picked teaser: the full daily wall clusters the WeSplit campaign, so
-    // the homepage mosaic spreads subjects/colors and keeps WeSplit to a few.
-    // The two coinbase pieces (laptop mockup + "Everything") sit up top as the
-    // blue anchors; capped at 15 desktop / 16 mobile, so both always land inside.
-    previewImages: [
-      '/content/experiments/Frame 2085660679.webp', // world. — teal globe cover
-      '/content/experiments/motion-01.mp4',         // world. motion companion (poster still)
-      '/content/experiments/Frame 2085660700.webp', // coinbase — laptop mockup (blue)
-      '/content/experiments/Frame 2085660639.webp', // Zcash Phoenix +771% — orange
-      '/content/experiments/Frame 7 1.webp',        // WeSplit — last supper (green)
-      '/content/experiments/Frame 2085660660.webp', // BREAKPOINT — purple
-      '/content/experiments/liquid-glass-opensource.mp4', // liquid glass (poster still)
-      '/content/experiments/Frame 2085660694.webp', // coinbase — Everything (blue)
-      '/content/experiments/Frame 2085660667.webp', // Palantir — b&w
-      '/content/experiments/Frame 2085660633.webp', // Phantom — trading tools (purple)
-      '/content/experiments/Frame 2085660627.webp', // Breakpoint London — crowd
-      '/content/experiments/Frame 4 1.webp',        // WeSplit — collage (b&w)
-      '/content/experiments/sunrise-phone-cases.anim.webp', // sunrise — phone cases (color)
-      '/content/experiments/Frame 2085660631.webp', // TIME / Helius — b&w
-      '/content/experiments/Frame 2085660656.webp', // Breakpoint pass — red
-      '/content/experiments/radish-node.mp4',       // radish — NODE (poster still)
-      '/content/experiments/Frame 2085660659.webp', // I ♥ London VIP — purple
-    ],
   } satisfies Discipline] : []),
 ]
 
@@ -315,22 +283,4 @@ export function med(src: string): string {
 // appear in the image-only previews.
 export function videoPoster(src: string): string {
   return src.replace(/\.mp4$/i, '-poster.webp')
-}
-
-// Spread of images across a discipline's collections — for the homepage hover
-// mosaic. Includes motion via poster stills so the videos show up too.
-export function disciplineMosaic(d: Discipline, max = 12): string[] {
-  // hand-curated override (kept separate from the deck/gallery narrative order)
-  if (d.previewImages?.length) {
-    return d.previewImages.slice(0, max).map(s => (/\.mp4$/i.test(s) ? videoPoster(s) : s))
-  }
-  const perCollection = Math.max(1, Math.ceil(max / d.collections.length))
-  const picked: string[] = []
-  d.collections.forEach(c => {
-    // a gallery may hold a video (Experiments) — show its poster still, not the mp4
-    const src = c.previewImages ?? c.section.gallery
-    picked.push(...src.slice(0, perCollection).map(s => (/\.mp4$/i.test(s) ? videoPoster(s) : s)))
-  })
-  d.videos.forEach(v => picked.push(videoPoster(v.src)))
-  return picked.slice(0, max)
 }

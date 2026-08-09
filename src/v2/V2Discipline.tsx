@@ -24,11 +24,13 @@ function VideoFigure({ v }: { v: DisciplineVideo }) {
 
 interface V2DisciplineProps {
   discipline: Discipline
-  onHome: () => void
   onOpenImage: (images: string[], index: number) => void
 }
 
-export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplineProps) {
+// The body of one discipline. It no longer renders its own breadcrumb — V2Works
+// puts the tab row above it, and a "Work / Design" crumb under a lit "Design"
+// tab was saying the same thing twice.
+export function V2Discipline({ discipline, onOpenImage }: V2DisciplineProps) {
   // Every image on the page in render order, plus where each collection starts
   // in it. Opening a tile hands the lightbox this whole list, so paging past the
   // last image of a section continues into the next one rather than looping back
@@ -46,13 +48,7 @@ export function V2Discipline({ discipline, onHome, onOpenImage }: V2DisciplinePr
   }, [discipline])
 
   return (
-    <div>
-      <div className="v2-crumb">
-        <button onClick={onHome}>Work</button>
-        <span className="v2-crumb-sep">/</span>
-        <span>{discipline.label}</span>
-      </div>
-
+    <div className="v2-fade">
       <div className="v2-head">
         <h1 className="v2-head-title">{discipline.label}</h1>
         <p className="v2-head-desc">{discipline.blurb}</p>

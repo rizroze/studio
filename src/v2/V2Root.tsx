@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
 import { track } from '@vercel/analytics'
-import { findDiscipline } from './disciplines'
+import { DISCIPLINES, findDiscipline } from './disciplines'
 import { V2Identity } from './V2Identity'
 import { V2RailFoot, RailQuote } from './V2RailFoot'
 import { V2RailNav } from './V2RailNav'
 import { useIsMobile } from './useMobile'
-import { V2Work } from './V2Work'
-import { V2Discipline } from './V2Discipline'
+import { V2Home } from './V2Home'
+import { V2Works } from './V2Works'
 import { V2Lightbox } from './V2Lightbox'
 import { V2References } from './V2References'
 import { V2Lab } from './V2Lab'
@@ -19,20 +19,34 @@ type Toy = 'ipod' | 'glass' | 'pet'
 
 type V2View =
   | { view: 'home' }
-  | { view: 'discipline'; id: string }
+  | { view: 'works'; id: string }
 
 type Lightbox = { images: string[]; index: number } | null
 
-// / → home, /<branchId> → discipline
+// / → home, /works/<disciplineId> → the works page with that tab open.
+// /works alone opens the first discipline; the bare /<disciplineId> form is the
+// old scheme and still resolves, then gets rewritten to the canonical path.
 function parsePath(): V2View {
-  const parts = window.location.pathname.split('/').filter(Boolean) // [id?]
-  const id = parts[0]
-  if (id && findDiscipline(id)) return { view: 'discipline', id }
+  const parts = window.location.pathname.split('/').filter(Boolean) // ['works', id?] | [id?]
+  if (parts[0] === 'works') {
+    const id = parts[1]
+    return { view: 'works', id: id && findDiscipline(id) ? id : DISCIPLINES[0].id }
+  }
+  if (parts[0] && findDiscipline(parts[0])) return { view: 'works', id: parts[0] }
   return { view: 'home' }
 }
 
 function buildPath(v: V2View): string {
-  return v.view === 'discipline' ? `/${v.id}` : '/'
+  return v.view === 'works' ? `/works/${v.id}` : '/'
+}
+
+// A legacy /<disciplineId> link (shared before the tabs existed, or followed
+// out of a search index) renders the right thing but under the wrong URL.
+// Rewrite it in place — replaceState, not pushState, so Back still leaves the
+// site instead of bouncing between the two spellings of the same page.
+function isLegacyDisciplinePath(): boolean {
+  const parts = window.location.pathname.split('/').filter(Boolean)
+  return parts.length === 1 && !!findDiscipline(parts[0])
 }
 
 // the Lab is its own URL: /lab (and legacy /?lab from older links)
@@ -55,10 +69,12 @@ export function V2Root() {
   const [labToy, setLabToy] = useState<Toy | null>(null)
   const [activeBlock, setActiveBlock] = useState(0)
 
-  // canonicalize the legacy /?lab to /lab
+  // canonicalize the legacy URLs: /?lab → /lab, /<disciplineId> → /works/<id>
   useEffect(() => {
     if (new URLSearchParams(window.location.search).has('lab')) {
       window.history.replaceState(null, '', '/lab')
+    } else if (isLegacyDisciplinePath()) {
+      window.history.replaceState(null, '', buildPath(parsePath()))
     }
   }, [])
 
@@ -106,7 +122,7 @@ export function V2Root() {
 
   // scroll-spy: highlight the block currently under the top of the content pane
   useEffect(() => {
-    if (state.view !== 'discipline') return
+    if (state.view !== 'works') return
     const main = document.querySelector('.v2-main') as HTMLElement | null
     if (!main) return
     let ticking = false
@@ -140,7 +156,7 @@ export function V2Root() {
 
   const goHome = useCallback(() => navigate({ view: 'home' }), [navigate])
 
-  const discipline = state.view === 'discipline' ? findDiscipline(state.id) : undefined
+  const discipline = state.view === 'works' ? findDiscipline(state.id) : undefined
   const isMobile = useIsMobile()
 
   const openImage = useCallback((images: string[], index: number) => {
@@ -174,11 +190,19 @@ export function V2Root() {
 
       <main className="v2-main">
         {state.view === 'home' && (
-          <V2Work onOpenDiscipline={(id) => navigate({ view: 'discipline', id })} />
+          <V2Home
+            onOpenWorks={() => navigate({ view: 'works', id: DISCIPLINES[0].id })}
+            onOpenDiscipline={(id) => navigate({ view: 'works', id })}
+          />
         )}
 
-        {state.view === 'discipline' && discipline && (
-          <V2Discipline discipline={discipline} onHome={goHome} onOpenImage={openImage} />
+        {state.view === 'works' && discipline && (
+          <V2Works
+            activeId={discipline.id}
+            onSelect={(id) => navigate({ view: 'works', id })}
+            onHome={goHome}
+            onOpenImage={openImage}
+          />
         )}
       </main>
 
@@ -187,7 +211,7 @@ export function V2Root() {
           home; References/Lab live up in the rail on home only) */}
       {isMobile && (
         <>
-          {state.view === 'discipline' && nav && (
+          {state.view === 'works' && nav && (
             <V2RailNav nav={nav} navTitle={discipline?.label} activeNav={activeBlock} onJump={jumpTo} />
           )}
           <V2RailFoot>
