@@ -40,13 +40,19 @@ function buildPath(v: V2View): string {
   return v.view === 'works' ? `/works/${v.id}` : '/'
 }
 
-// A legacy /<disciplineId> link (shared before the tabs existed, or followed
-// out of a search index) renders the right thing but under the wrong URL.
-// Rewrite it in place — replaceState, not pushState, so Back still leaves the
-// site instead of bouncing between the two spellings of the same page.
-function isLegacyDisciplinePath(): boolean {
+// A URL that resolves to a page but isn't that page's address: the old bare
+// /<disciplineId> links, and /works/<typo>. Both render correctly and both
+// leave a second address for the same content. Rewrite in place —
+// replaceState, not pushState, so Back still leaves the site instead of
+// bouncing between two spellings of one page.
+function needsCanonicalPath(): boolean {
   const parts = window.location.pathname.split('/').filter(Boolean)
-  return parts.length === 1 && !!findDiscipline(parts[0])
+  // the old bare /<disciplineId> scheme
+  if (parts.length === 1 && findDiscipline(parts[0])) return true
+  // /works/<something that isn't a discipline> — it renders the first tab, so
+  // the URL has to say so rather than leaving a second address for that page
+  if (parts[0] === 'works' && parts[1] && !findDiscipline(parts[1])) return true
+  return false
 }
 
 // Did the visitor name a discipline, rather than landing on the works page in
@@ -88,7 +94,7 @@ export function V2Root() {
   useEffect(() => {
     if (new URLSearchParams(window.location.search).has('lab')) {
       window.history.replaceState(null, '', '/lab')
-    } else if (isLegacyDisciplinePath()) {
+    } else if (needsCanonicalPath()) {
       window.history.replaceState(null, '', buildPath(parsePath()))
     }
   }, [])
