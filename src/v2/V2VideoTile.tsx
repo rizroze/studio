@@ -57,6 +57,10 @@ export function V2VideoTile({ src, dims, className }: { src: string; dims?: [num
     <>
       <button
         className={`v2-videotile${className ? ` ${className}` : ''}`}
+        // same handle every image tile carries, so the homepage and the rail
+        // minimap can scroll to a video the same way they scroll to a still.
+        // Video srcs are never in a lightbox image list, so this can't collide.
+        data-lbsrc={src}
         style={dims ? { aspectRatio: `${dims[0]} / ${dims[1]}` } : undefined}
         onClick={openBig}
         aria-label="Play video fullscreen"

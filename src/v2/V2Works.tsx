@@ -19,13 +19,18 @@ interface V2WorksProps {
   onSelect: (id: string, replace?: boolean) => void
   onHome: () => void
   onOpenImage: (images: string[], index: number) => void
+  /** false when the visitor named a discipline in the URL — see V2Root */
+  canRotate?: boolean
+  /** a piece to land on, set when the visitor clicked it on the homepage */
+  focusSrc?: string | null
+  onFocused?: () => void
 }
 
 // Every discipline on one page, switched by the tab row rather than by leaving
 // for a separate URL each time. Each tab is still a real route (/works/<id>) so
 // a single discipline stays linkable and shows up in analytics — the tabs
 // changed the navigation, not the addressing.
-export function V2Works({ activeId, onSelect, onHome, onOpenImage }: V2WorksProps) {
+export function V2Works({ activeId, onSelect, onHome, onOpenImage, canRotate = true, focusSrc, onFocused }: V2WorksProps) {
   const discipline = findDiscipline(activeId) ?? DISCIPLINES[0]
 
   // The tab row cycles on its own so an arriving visitor sees that there are
@@ -33,7 +38,11 @@ export function V2Works({ activeId, onSelect, onHome, onOpenImage }: V2WorksProp
   // real input ends it for good, because nothing is worse than being yanked to
   // another discipline mid-scroll.
   const [rotating, setRotating] = useState(
-    () => !userTookOver && !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    // arriving on a named discipline or a specific piece is the strongest
+    // signal there is that this visitor came for something — rotating away
+    // from it would be a bug, not a flourish
+    () => canRotate && !focusSrc && !userTookOver
+      && !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   )
 
   const takeOver = () => {
@@ -70,6 +79,27 @@ export function V2Works({ activeId, onSelect, onHome, onOpenImage }: V2WorksProp
       window.removeEventListener('keydown', stop)
     }
   }, [rotating])
+
+  // land on the piece that was clicked. Two frames of grace: the discipline
+  // remounts on every tab change, and the tile has to exist and have its
+  // aspect-ratio box before scrollIntoView can find the right offset.
+  useEffect(() => {
+    if (!focusSrc) return
+    let raf2 = 0
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        const el = document.querySelector(`[data-lbsrc="${CSS.escape(focusSrc)}"]`)
+        if (el) {
+          el.scrollIntoView({ block: 'center' })
+          // a beat of emphasis, or arriving mid-wall looks like a mis-scroll
+          el.classList.add('landed')
+          window.setTimeout(() => el.classList.remove('landed'), 1400)
+        }
+        onFocused?.()
+      })
+    })
+    return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2) }
+  }, [focusSrc, discipline.id, onFocused])
 
   return (
     <div className="v2-works">

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { V2RailFoot, RailLinks, RailQuote } from './V2RailFoot'
 import { V2RailNav, type V2NavItem } from './V2RailNav'
+import { V2RailMap } from './V2RailMap'
+import type { Discipline } from './disciplines'
 
 const EMAIL = 'rizzy2day@gmail.com'
 
@@ -38,10 +40,15 @@ interface V2IdentityProps {
   navTitle?: string
   activeNav?: number
   onJump?: (index: number) => void
+  // desktop shows the minimap instead of the section list; mobile keeps the
+  // list (rendered at the page bottom by V2Root), because a hundred-odd
+  // thumbnails parked below the fold is weight nobody scrolls to
+  discipline?: Discipline
+  onJumpPiece?: (src: string) => void
   isMobile?: boolean   // on mobile the rail foot moves to the page bottom (V2Root)
 }
 
-export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle, activeNav = 0, onJump, isMobile = false }: V2IdentityProps) {
+export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle, activeNav = 0, onJump, discipline, onJumpPiece, isMobile = false }: V2IdentityProps) {
   const [copied, setCopied] = useState(false)
   const resetTimer = useRef<number | undefined>(undefined)
 
@@ -76,7 +83,11 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
 
         {nav && nav.length > 0 ? (
           // mobile moves this jump list to the page bottom (rendered in V2Root)
-          isMobile ? null : <V2RailNav nav={nav} navTitle={navTitle} activeNav={activeNav} onJump={onJump} />
+          isMobile ? null : discipline && onJumpPiece ? (
+            <V2RailMap discipline={discipline} onJump={onJumpPiece} />
+          ) : (
+            <V2RailNav nav={nav} navTitle={navTitle} activeNav={activeNav} onJump={onJump} />
+          )
         ) : (
           <>
             <p className="v2-rail-statement">

@@ -284,3 +284,24 @@ export function med(src: string): string {
 export function videoPoster(src: string): string {
   return src.replace(/\.mp4$/i, '-poster.webp')
 }
+
+// Every piece on a discipline page, in render order: collection galleries, any
+// video pinned under a collection, then the trailing motion block. This is the
+// list the rail minimap draws and the homepage resolves clicks against, so it
+// has to match what V2Discipline actually renders.
+export function disciplinePieces(d: Discipline): string[] {
+  const out: string[] = []
+  d.collections.forEach(c => {
+    out.push(...c.section.gallery)
+    if (c.video) out.push(c.video.src)
+  })
+  d.videos.forEach(v => out.push(v.src))
+  return out
+}
+
+// Where a given piece lives. The homepage stores only a src per featured work
+// and looks the discipline up here, so a tile can never advertise one wall and
+// open another.
+export function findPieceDiscipline(src: string): Discipline | undefined {
+  return DISCIPLINES.find(d => disciplinePieces(d).includes(src))
+}

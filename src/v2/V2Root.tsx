@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { track } from '@vercel/analytics'
-import { DISCIPLINES, findDiscipline } from './disciplines'
+import { DISCIPLINES, findDiscipline, findPieceDiscipline } from './disciplines'
 import { V2Identity } from './V2Identity'
 import { V2RailFoot, RailQuote } from './V2RailFoot'
 import { V2RailNav } from './V2RailNav'
@@ -49,6 +49,17 @@ function isLegacyDisciplinePath(): boolean {
   return parts.length === 1 && !!findDiscipline(parts[0])
 }
 
+// Did the visitor name a discipline, rather than landing on the works page in
+// general? A URL with a discipline in it — shared, bookmarked, or clicked
+// through from a piece — is intent, and the tab rotation must not move away
+// from it. Only a bare /works or the homepage's WORKS link gets the attract
+// loop.
+function pathNamesDiscipline(): boolean {
+  const parts = window.location.pathname.split('/').filter(Boolean)
+  if (parts[0] === 'works') return !!(parts[1] && findDiscipline(parts[1]))
+  return !!(parts[0] && findDiscipline(parts[0]))
+}
+
 // the Lab is its own URL: /lab (and legacy /?lab from older links)
 function isLabPath(): boolean {
   return window.location.pathname === '/lab' || new URLSearchParams(window.location.search).has('lab')
@@ -68,6 +79,10 @@ export function V2Root() {
   const [lab, setLab] = useState(() => isLabPath())
   const [labToy, setLabToy] = useState<Toy | null>(null)
   const [activeBlock, setActiveBlock] = useState(0)
+  // a specific piece the works page should scroll to on arrival — set when a
+  // homepage tile is clicked, cleared once V2Works has landed on it
+  const [focusSrc, setFocusSrc] = useState<string | null>(null)
+  const [pinned, setPinned] = useState(() => pathNamesDiscipline())
 
   // canonicalize the legacy URLs: /?lab → /lab, /<disciplineId> → /works/<id>
   useEffect(() => {
@@ -88,7 +103,7 @@ export function V2Root() {
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
-    const onPop = () => { setState(parsePath()); setLab(isLabPath()); setReferences(isRefsPath()); setActiveBlock(0); scrollTop() }
+    const onPop = () => { setState(parsePath()); setPinned(pathNamesDiscipline()); setLab(isLabPath()); setReferences(isRefsPath()); setActiveBlock(0); scrollTop() }
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [scrollTop])
@@ -158,6 +173,16 @@ export function V2Root() {
 
   const goHome = useCallback(() => navigate({ view: 'home' }), [navigate])
 
+  // A homepage tile opens the wall its piece lives on, at that piece — landing
+  // at the top of a 110-image grid would make the click feel like it missed.
+  const openPiece = useCallback((src: string) => {
+    const d = findPieceDiscipline(src)
+    if (!d) return
+    setFocusSrc(src)
+    setPinned(true)
+    navigate({ view: 'works', id: d.id })
+  }, [navigate])
+
   const discipline = state.view === 'works' ? findDiscipline(state.id) : undefined
   const isMobile = useIsMobile()
 
@@ -169,6 +194,14 @@ export function V2Root() {
     const id = discipline && i >= discipline.collections.length ? 'block-motion' : `block-${i}`
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [discipline])
+
+  // the rail minimap and the homepage's click-through both land on a piece the
+  // same way: find its tile by the handle every tile carries
+  const jumpToPiece = useCallback((src: string) => {
+    document
+      .querySelector(`[data-lbsrc="${CSS.escape(src)}"]`)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [])
 
   const nav = discipline
     ? [
@@ -187,14 +220,16 @@ export function V2Root() {
         navTitle={discipline?.label}
         activeNav={activeBlock}
         onJump={jumpTo}
+        discipline={discipline}
+        onJumpPiece={jumpToPiece}
         isMobile={isMobile}
       />
 
       <main className="v2-main">
         {state.view === 'home' && (
           <V2Home
-            onOpenWorks={() => navigate({ view: 'works', id: DISCIPLINES[0].id })}
-            onOpenDiscipline={(id) => navigate({ view: 'works', id })}
+            onOpenWorks={() => { setPinned(false); navigate({ view: 'works', id: DISCIPLINES[0].id }) }}
+            onOpenPiece={openPiece}
           />
         )}
 
@@ -203,6 +238,9 @@ export function V2Root() {
             activeId={discipline.id}
             onSelect={(id, replace) => navigate({ view: 'works', id }, replace)}
             onHome={goHome}
+            canRotate={!pinned}
+            focusSrc={focusSrc}
+            onFocused={() => setFocusSrc(null)}
             onOpenImage={openImage}
           />
         )}

@@ -1,7 +1,8 @@
 import { useRef, useEffect } from 'react'
 import { FEATURED_WORKS } from './featured'
 import type { FeaturedWork } from './featured'
-import { findDiscipline, med, videoPoster } from './disciplines'
+import { findPieceDiscipline, med, videoPoster } from './disciplines'
+import { IMAGE_DIMS } from './imageDims'
 import { projectLogo } from './clientLogos'
 import { HOMEPAGE_CLIENTS } from './clientLogos'
 
@@ -26,13 +27,15 @@ function FeatureVideo({ src }: { src: string }) {
 
 function FeatureTile({ work, n, onOpen }: { work: FeaturedWork; n: number; onOpen: () => void }) {
   const isVideo = /\.mp4$/i.test(work.src)
-  const ratio = work.ratio ?? (work.wide ? 16 / 9 : 4 / 3)
-  const label = findDiscipline(work.discipline)?.label ?? work.discipline
+  // the piece's own shape by default — a screen looks like a screen and a
+  // social cut looks like a social cut. 4:3 only when dims are unknown.
+  const dims = IMAGE_DIMS[work.src]
+  const ratio = work.ratio ?? (dims ? dims[0] / dims[1] : 4 / 3)
+  const label = findPieceDiscipline(work.src)?.label ?? ''
   const logo = work.client ? projectLogo(work.client) : undefined
   return (
     <button className={`v2-feature${work.wide ? ' wide' : ''}`} onClick={onOpen}>
-      {/* one shape across the grid so rows line up and nothing reflows as
-          images decode — a piece that genuinely needs its own can set `ratio` */}
+      {/* fixed before the media loads so the grid never reflows mid-decode */}
       <div className="v2-feature-frame" style={{ aspectRatio: ratio }}>
         {isVideo
           ? <FeatureVideo src={work.src} />
@@ -66,10 +69,10 @@ function FeatureTile({ work, n, onOpen }: { work: FeaturedWork; n: number; onOpe
 
 interface V2HomeProps {
   onOpenWorks: () => void
-  onOpenDiscipline: (id: string) => void
+  onOpenPiece: (src: string) => void
 }
 
-export function V2Home({ onOpenWorks, onOpenDiscipline }: V2HomeProps) {
+export function V2Home({ onOpenWorks, onOpenPiece }: V2HomeProps) {
   return (
     <div className="v2-home v2-fade">
       <div className="v2-home-top">
@@ -87,7 +90,7 @@ export function V2Home({ onOpenWorks, onOpenDiscipline }: V2HomeProps) {
 
       <div className="v2-featured">
         {FEATURED_WORKS.map((w, i) => (
-          <FeatureTile key={w.src} work={w} n={i + 1} onOpen={() => onOpenDiscipline(w.discipline)} />
+          <FeatureTile key={w.src} work={w} n={i + 1} onOpen={() => onOpenPiece(w.src)} />
         ))}
       </div>
 
