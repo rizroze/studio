@@ -9,7 +9,6 @@ export interface DisciplineCollection {
   cols?: number                   // dense grids: columns across (default 4)
   label?: string                  // override the displayed collection title
   stats?: string                  // outcome line — verifiable numbers only, ' · ' separated
-  previewImages?: string[]        // homepage-mosaic picks for this collection (else section.gallery)
   video?: DisciplineVideo         // plays directly under this collection, instead of the trailing block
   liveUrl?: string                // the shipped thing, reachable — rendered as a "Live" link
   spansRow?: string[]             // masonry only: srcs that break out as a full-width band
@@ -30,8 +29,6 @@ export interface Discipline {
   collections: DisciplineCollection[]
   videos: DisciplineVideo[]
   videosLabel?: string     // heading for the video block (default 'Motion')
-  previewCols?: number     // homepage mosaic density (default 6)
-  previewImages?: string[] // hand-picked homepage mosaic (overrides the auto per-collection spread)
 }
 
 // Pull a section out of a project by title
@@ -138,17 +135,6 @@ const EXPERIMENTS_BENTO = EXPERIMENTS_GALLERY.length
 // Taxonomy — reuses existing CASE_STUDIES sections, no new content.
 export const DISCIPLINES: Discipline[] = [
   {
-    id: 'direction',
-    label: 'Direction',
-    blurb: 'Content · Campaigns · Social',
-    collections: [
-      { ...sec('radiants', 'Community & Events'), stats: '2024–2026 · weekly cadence · one cohesive brand' },
-      { ...sec('radiants', 'Monolith 2026'), stats: 'Solana Mobile flagship event · $125K+ prize pool · +70 pieces end-to-end' },
-      { ...sec('radiants', 'Seeker Hackathon'), stats: '+500 signups · +110 pieces, launch to end' },
-    ],
-    videos: [],
-  },
-  {
     id: 'design',
     label: 'Design',
     blurb: 'Brand · Illustration · Decks',
@@ -164,13 +150,7 @@ export const DISCIPLINES: Discipline[] = [
         grid: 'ratio',
       },
       { ...sec('radiants', 'PFP Art', 'dense', 8), stats: '16 hand-drawn pixel portraits' },
-      // mosaic leads with the "How Hydex Works" 3-layer architecture slide
-      // (deck-06) instead of the bridge cover — the deck page order is untouched
-      { ...sec('hydex', 'Hydex'), label: 'Pitch Deck', previewImages: [
-        '/content/hydex-brand/deck-06.webp',
-        '/content/hydex-brand/deck-02.webp',
-        '/content/hydex-brand/deck-03.webp',
-      ] },
+      { ...sec('hydex', 'Hydex'), label: 'Pitch Deck' },
       { ...sec('hydex', 'Hydex Router'), label: 'Pitch Deck', project: 'Hydex Router' },
       sec('wayy', 'Pitch Deck'),
       sec('fullport', 'Pitch Deck'),
@@ -253,6 +233,17 @@ export const DISCIPLINES: Discipline[] = [
       vid('fullport', 'Solana portfolio tracker for the Seeker phone, built solo in React Native and Expo. Balances, metadata and prices arrive in a single Helius DAS call. Working APK shipped inside the Monolith hackathon deadline.'),
     ],
   },
+  {
+    id: 'direction',
+    label: 'Direction',
+    blurb: 'Content · Campaigns · Social',
+    collections: [
+      { ...sec('radiants', 'Community & Events'), stats: '2024–2026 · weekly cadence · one cohesive brand' },
+      { ...sec('radiants', 'Monolith 2026'), stats: 'Solana Mobile flagship event · $125K+ prize pool · +70 pieces end-to-end' },
+      { ...sec('radiants', 'Seeker Hackathon'), stats: '+500 signups · +110 pieces, launch to end' },
+    ],
+    videos: [],
+  },
   // Experiments — daily creative output. Self-gating: the tile only appears
   // once images exist (drop them in public/content/experiments/ + `npm run
   // experiments`). Justified bento keeps every native ratio, fits them all.
@@ -269,29 +260,6 @@ export const DISCIPLINES: Discipline[] = [
       spansRow: ['/content/experiments/motion-01.mp4'],
     }],
     videos: [],
-    // hand-picked teaser: the full daily wall clusters the WeSplit campaign, so
-    // the homepage mosaic spreads subjects/colors and keeps WeSplit to a few.
-    // The two coinbase pieces (laptop mockup + "Everything") sit up top as the
-    // blue anchors; capped at 15 desktop / 16 mobile, so both always land inside.
-    previewImages: [
-      '/content/experiments/Frame 2085660679.webp', // world. — teal globe cover
-      '/content/experiments/motion-01.mp4',         // world. motion companion (poster still)
-      '/content/experiments/Frame 2085660700.webp', // coinbase — laptop mockup (blue)
-      '/content/experiments/Frame 2085660639.webp', // Zcash Phoenix +771% — orange
-      '/content/experiments/Frame 7 1.webp',        // WeSplit — last supper (green)
-      '/content/experiments/Frame 2085660660.webp', // BREAKPOINT — purple
-      '/content/experiments/liquid-glass-opensource.mp4', // liquid glass (poster still)
-      '/content/experiments/Frame 2085660694.webp', // coinbase — Everything (blue)
-      '/content/experiments/Frame 2085660667.webp', // Palantir — b&w
-      '/content/experiments/Frame 2085660633.webp', // Phantom — trading tools (purple)
-      '/content/experiments/Frame 2085660627.webp', // Breakpoint London — crowd
-      '/content/experiments/Frame 4 1.webp',        // WeSplit — collage (b&w)
-      '/content/experiments/sunrise-phone-cases.anim.webp', // sunrise — phone cases (color)
-      '/content/experiments/Frame 2085660631.webp', // TIME / Helius — b&w
-      '/content/experiments/Frame 2085660656.webp', // Breakpoint pass — red
-      '/content/experiments/radish-node.mp4',       // radish — NODE (poster still)
-      '/content/experiments/Frame 2085660659.webp', // I ♥ London VIP — purple
-    ],
   } satisfies Discipline] : []),
 ]
 
@@ -317,20 +285,23 @@ export function videoPoster(src: string): string {
   return src.replace(/\.mp4$/i, '-poster.webp')
 }
 
-// Spread of images across a discipline's collections — for the homepage hover
-// mosaic. Includes motion via poster stills so the videos show up too.
-export function disciplineMosaic(d: Discipline, max = 12): string[] {
-  // hand-curated override (kept separate from the deck/gallery narrative order)
-  if (d.previewImages?.length) {
-    return d.previewImages.slice(0, max).map(s => (/\.mp4$/i.test(s) ? videoPoster(s) : s))
-  }
-  const perCollection = Math.max(1, Math.ceil(max / d.collections.length))
-  const picked: string[] = []
+// Every piece on a discipline page, in render order: collection galleries, any
+// video pinned under a collection, then the trailing motion block. This is the
+// list the rail minimap draws and the homepage resolves clicks against, so it
+// has to match what V2Discipline actually renders.
+export function disciplinePieces(d: Discipline): string[] {
+  const out: string[] = []
   d.collections.forEach(c => {
-    // a gallery may hold a video (Experiments) — show its poster still, not the mp4
-    const src = c.previewImages ?? c.section.gallery
-    picked.push(...src.slice(0, perCollection).map(s => (/\.mp4$/i.test(s) ? videoPoster(s) : s)))
+    out.push(...c.section.gallery)
+    if (c.video) out.push(c.video.src)
   })
-  d.videos.forEach(v => picked.push(videoPoster(v.src)))
-  return picked.slice(0, max)
+  d.videos.forEach(v => out.push(v.src))
+  return out
+}
+
+// Where a given piece lives. The homepage stores only a src per featured work
+// and looks the discipline up here, so a tile can never advertise one wall and
+// open another.
+export function findPieceDiscipline(src: string): Discipline | undefined {
+  return DISCIPLINES.find(d => disciplinePieces(d).includes(src))
 }

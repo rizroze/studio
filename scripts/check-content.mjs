@@ -20,13 +20,19 @@ const contentPaths = (src) =>
 
 const projects = read('src/constants/projects.ts')
 const disciplines = read('src/v2/disciplines.ts')
+// the homepage picks live in their own file; unchecked, a typo'd featured src
+// is a broken tile in the first thing a visitor sees
+const featured = read('src/v2/featured.ts')
+// the generated experiments gallery was never scanned: it only reached this
+// check through the handful of paths the old homepage mosaic happened to name
+const experiments = read('src/v2/experiments.ts')
 const labelsSrc = read('src/v2/indexLabels.ts')
 // Dims live in two files: the hand-maintained maps in imageDims.ts and the
 // generated one in experiments.ts, which imageDims spreads in. Read both, or
 // every generated entry looks absent and the warning list turns to noise.
 const dimsSrc = read('src/v2/imageDims.ts') + read('src/v2/experiments.ts')
 
-const referenced = [...new Set([...contentPaths(projects), ...contentPaths(disciplines)])]
+const referenced = [...new Set([...contentPaths(projects), ...contentPaths(disciplines), ...contentPaths(featured), ...contentPaths(experiments)])]
 // keys are written with either quote style across those files
 const dimKeys = new Set(
   [...dimsSrc.matchAll(/['"](\/content\/[^'"]+)['"]\s*:\s*\[/g)].map((m) => m[1]),

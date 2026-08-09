@@ -13,6 +13,8 @@
   --v2-muted: #5e5e5e;
   --v2-faint: #767676;
   --v2-line: #e3e3e3;
+  /* the mark's red, doubling as the position colour in the rail minimap */
+  --v2-red: #ff0000;
   --v2-hover: #f5f5f3;
 
   --v2-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -176,6 +178,111 @@
   padding-left: 12px;
 }
 .v2-rail-nav-item.active::before { transform: scaleY(1); }
+/* ============================================
+   RAIL MINIMAP — every piece in the discipline, ~50px
+   ============================================ */
+/* A list of three section names told you a discipline's shape but hid its
+   size, and at 110 pieces the size is the story. These tiles are far too small
+   to browse; that isn't the job. They answer "how much is here" and "where am
+   I", and clicking one jumps to the piece. */
+.v2-rail-map {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.v2-rail-map .v2-rail-nav-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--v2-ink);
+}
+.v2-rail-map-pos { color: var(--v2-faint); }
+
+.v2-rail-map-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 3px;
+  /* its own scroll, so a long wall can't push the rail foot off the screen */
+  max-height: max(200px, calc(100svh - 360px));
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.v2-rail-map-grid::-webkit-scrollbar { display: none; }
+
+.v2-rail-map-cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--v2-hover);
+  opacity: 0;
+  animation: v2-map-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes v2-map-in {
+  from { opacity: 0; transform: scale(0.65); }
+  to { opacity: 1; transform: scale(1); }
+}
+/* every piece in its own colour — the wall is the work, not a wireframe of it.
+   Position is carried by the stroke instead, in the mark's red, which is the
+   one hue nothing else in this palette uses. */
+/* absolutely positioned so the cell's height comes from its aspect-ratio and
+   nothing else: as a normal flow child with height:100%, the image resolved to
+   its own intrinsic height and stretched the whole grid row, which is why tall
+   pieces like the PFP art made every cell in their row a portrait */
+.v2-rail-map-cell img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* The piece you're on goes solid red — the same red as the mark at the top of
+   this rail. A stroke had to compete with 110 pieces of artwork for attention;
+   a filled block doesn't compete with anything, it just moves down the wall as
+   you scroll. Losing sight of the one tile you're on costs nothing: it's the
+   thing filling the pane next to it. */
+.v2-rail-map-cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--v2-red);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+/* hover washes the same red on, so pointing at a tile previews what it becomes */
+.v2-rail-map-cell:hover::after { opacity: 0.4; }
+
+/* hover preview — a 45px tile can't say what it is, so hovering shows the
+   piece at a readable size beside the rail */
+.v2-rail-peek {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  background: var(--v2-bg);
+  box-shadow: 0 18px 50px rgba(10, 10, 10, 0.18), 0 0 0 1px var(--v2-line);
+  animation: v2-peek-in 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v2-rail-peek img { width: 100%; height: auto; object-fit: cover; }
+@keyframes v2-peek-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@media (max-width: 820px) { .v2-rail-peek { display: none; } }
+.v2-rail-map-cell.active::after { opacity: 1; }
+
+/* the tile a homepage click landed on — arriving mid-wall otherwise reads as
+   a mis-scroll rather than as an arrival */
+[data-lbsrc].landed { animation: v2-landed 1.4s ease-out; }
+@keyframes v2-landed {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+  12%, 58% { box-shadow: 0 0 0 3px var(--v2-red); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-rail-map-cell { animation: none; opacity: 1; }
+  [data-lbsrc].landed { animation: none; box-shadow: 0 0 0 3px var(--v2-red); }
+}
+
 .v2-rail-nav-title {
   font-size: 15px;
   font-weight: 600;
@@ -282,9 +389,11 @@
   height: 100vh;
   height: 100svh;
   overflow-y: auto;
-  /* trimmed vertical rhythm so the home teaser (5 rows + button) clears one
-     screen at laptop heights; horizontal padding unchanged */
-  padding: clamp(34px, 3.6vw, 72px) clamp(44px, 5vw, 96px);
+  /* held as tokens, not literals: the sticky tab bar cancels this padding with
+     negative margins to reach the pane edges, and the two must move together */
+  --v2-pad-y: clamp(34px, 3.6vw, 72px);
+  --v2-pad-x: clamp(44px, 5vw, 96px);
+  padding: var(--v2-pad-y) var(--v2-pad-x);
 }
 
 .v2-fade { animation: v2-fade-in 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
@@ -335,103 +444,217 @@
 }
 
 /* ============================================
-   HOME — split: big names (left) + live preview (right)
+   HOME — six named pieces, then the exit to /works
    ============================================ */
-.v2-home-split {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: clamp(32px, 4vw, 72px);
-  align-items: start;
-  min-height: 100%;
-}
-
-.v2-work { border-top: 1px solid var(--v2-line); }
-
-.v2-work-row {
-  width: 100%;
+.v2-home-top {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 24px;
-  padding: clamp(14px, 1.6vw, 24px) 0;
-  border-bottom: 1px solid var(--v2-line);
-  transition: padding-left 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+  margin-bottom: clamp(22px, 2.6vw, 38px);
 }
-.v2-work-row:hover { padding-left: clamp(10px, 1.2vw, 20px); }
-.v2-work .v2-work-row:not(.active) { opacity: 0.3; }
+/* the crumb carries a big bottom margin for page heads; inside this row the
+   flex gap already does that job */
+.v2-home-top .v2-crumb { margin-bottom: 0; }
 
-.v2-work-name {
+/* the homepage's only exit, so it's sized as a destination, not a link */
+.v2-works-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-weight: 700;
-  font-size: clamp(34px, 4.6vw, 64px);
-  letter-spacing: -0.05em;
-  line-height: 0.92;
+  font-size: clamp(20px, 2.2vw, 30px);
+  letter-spacing: -0.045em;
+  line-height: 1;
+  white-space: nowrap;
+  transition: gap 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+.v2-works-link:hover { gap: 18px; }
 
-/* live preview pane — yeezy mosaic, FLIP big→dense on hover */
-.v2-home-preview {
-  position: sticky;
-  top: 0;
-}
-.v2-home-mosaic-clip {
-  overflow: hidden;
-}
-.v2-home-mosaic {
+.v2-featured {
   display: grid;
-  grid-template-columns: repeat(var(--mcols, 6), 1fr);
-  gap: 5px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(30px, 3.4vw, 60px) clamp(20px, 2.4vw, 40px);
 }
-/* transient big layout measured by the FLIP (V2Mosaic) — start state */
-.v2-home-mosaic.mosaic-big {
-  grid-template-columns: repeat(var(--mcols-big, 3), 1fr);
-}
-.v2-mosaic-item {
-  aspect-ratio: 1 / 1;
+.v2-feature.wide { grid-column: 1 / -1; }
+
+.v2-feature { width: 100%; }
+
+/* the frame is sized by the piece's own ratio (inline aspect-ratio from
+   IMAGE_DIMS) so nothing reflows as images decode; 4:3 is the fallback for a
+   piece with no measured dims */
+.v2-feature-frame {
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--v2-hover);
-  cursor: pointer;
-  padding: 0;
-  will-change: transform;
 }
-.v2-mosaic-item img {
+/* --zoom crops padding baked into a source export (see FeaturedWork.zoom);
+   the hover lift multiplies it rather than replacing it */
+.v2-feature-frame img,
+.v2-feature-frame video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.3s ease;
+  transform: scale(var(--zoom, 1));
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.v2-mosaic-item:hover img { opacity: 0.82; }
+.v2-feature:hover .v2-feature-frame img,
+.v2-feature:hover .v2-feature-frame video { transform: scale(calc(var(--zoom, 1) * 1.035)); }
 
-.v2-home-caption {
+/* the same quiet mono row as .v2-disc-label — logo, client, title. Nothing
+   here competes with the piece above it */
+.v2-feature-meta {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 14px;
+  align-items: center;
+  gap: 9px;
+  margin-top: 14px;
   font-family: var(--v2-mono);
   font-size: 11px;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+}
+.v2-feature-client { color: var(--v2-ink); }
+.v2-feature-sep { color: var(--v2-faint); }
+.v2-feature-name {
+  flex: 1;
+  min-width: 0;
   color: var(--v2-muted);
 }
+.v2-feature-disc { color: var(--v2-faint); white-space: nowrap; }
+.v2-feature:hover .v2-arrow { opacity: 1; transform: translateX(0); }
+/* the mark colorizes with the piece, the way it does on a discipline block */
+.v2-feature:hover .v2-disc-logo { filter: grayscale(0) opacity(1); }
+.v2-feature:hover .v2-disc-logo.invert { filter: invert(1) opacity(1); }
 
-/* work-list hover arrow */
-.v2-arrow { opacity: 0; transform: translateX(-6px); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-.v2-work-row:hover .v2-arrow { opacity: 1; transform: translateX(0); }
+.v2-feature-note {
+  margin-top: 7px;
+  font-size: clamp(13px, 1.1vw, 15px);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  color: var(--v2-faint);
+  max-width: 54ch;
+}
 
-/* mobile mosaic teaser → the full wall lives on the discipline page */
-.v2-mosaic-more {
-  display: block;
-  width: 100%;
-  margin-top: 12px;
-  padding: 12px 16px;
-  border: 1px solid var(--v2-line);
-  background: none;
+/* hover arrow — hidden until the row it belongs to is pointed at */
+.v2-arrow {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* the WORKS exit keeps its arrow at rest: it is the affordance, not a flourish */
+.v2-works-link .v2-arrow { opacity: 1; transform: none; }
+
+/* ============================================
+   WORKS — sticky tab row + the active discipline
+   ============================================ */
+.v2-tabbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--v2-bg);
+  /* bleed across the pane's horizontal padding so nothing shows past the ends
+     while content scrolls underneath */
+  margin: 0 calc(-1 * var(--v2-pad-x)) clamp(26px, 3vw, 44px);
+  /* no bottom padding here: the gap down to the rule belongs to each tab, so
+     the active underline sits inside the tab's own box (see .v2-tab::after) */
+  padding: 0 var(--v2-pad-x);
+  border-bottom: 1px solid var(--v2-line);
+  display: flex;
+  align-items: baseline;
+  gap: clamp(14px, 2vw, 30px);
+}
+/* covers the pane's top padding once the bar is pinned — sticky resolves
+   against the scrollport's padding box, so without this the tiles would be
+   visible in the gap above the bar */
+.v2-tabbar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: var(--v2-pad-y);
+  background: var(--v2-bg);
+}
+
+.v2-tabs-home {
+  flex-shrink: 0;
   font-family: var(--v2-mono);
   font-size: 11px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--v2-muted);
-  cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: color 0.2s ease;
 }
-.v2-mosaic-more:hover { color: var(--v2-ink); border-color: var(--v2-faint); }
+.v2-tabs-home:hover { color: var(--v2-ink); }
+
+.v2-tabs {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(14px, 2vw, 30px);
+  flex: 1;
+  min-width: 0;
+  /* four tabs at display size overflow a phone — scroll them rather than
+     wrapping into a second row that would double the pinned bar's height */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.v2-tabs::-webkit-scrollbar { display: none; }
+
+.v2-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  white-space: nowrap;
+  padding-bottom: 14px;
+  color: var(--v2-faint);
+  transition: color 0.2s ease;
+}
+.v2-tab:hover { color: var(--v2-ink); }
+.v2-tab.active { color: var(--v2-ink); }
+.v2-tab-label {
+  font-weight: 700;
+  font-size: clamp(21px, 2.4vw, 34px);
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+.v2-tab-count {
+  font-family: var(--v2-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  opacity: 0.65;
+}
+/* the folder tab: a rule sitting on the bar's own bottom border. It has to
+   live inside the tab's box — .v2-tabs scrolls horizontally, and an overflow
+   container clips on both axes, so an underline hung below the tab vanished */
+.v2-tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--v2-ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v2-tab.active::after { transform: scaleX(1); }
+
+/* While the tab row is cycling, the active rule fills across its tab over the
+   seven seconds it has left — the switch is announced before it happens
+   instead of just happening. The rule is a progress bar and an affordance at
+   once: it's what tells you these tabs move at all. */
+.v2-tabbar.rotating .v2-tab.active::after {
+  animation: v2-tab-fill 7s linear forwards;
+}
+@keyframes v2-tab-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-tabbar.rotating .v2-tab.active::after { animation: none; }
+}
 
 /* homepage "worked with" strip — label left, client logos right (split row) */
 .v2-clients {
@@ -1291,9 +1514,17 @@ button.v2-lab-row { background: none; border: none; font: inherit; text-align: l
     border-bottom: 1px solid var(--v2-line);
     gap: 24px; padding: 36px 28px 22px;
   }
-  .v2-main { height: auto; padding: 22px 28px 24px; }
-  /* tighter than desktop so all four disciplines are visible without scrolling
-     past a big empty band under "Selected Work" */
+  /* overflow must go back to visible, not just height to auto: an overflow-y
+     scroll container is still the nearest scrollport for a sticky child, and a
+     scrollport that never scrolls (height: auto) can never pin anything — the
+     tab bar just rode the page up */
+  .v2-main {
+    height: auto;
+    overflow: visible;
+    --v2-pad-y: 22px;
+    --v2-pad-x: 28px;
+    padding: 22px 28px 24px;
+  }
   .v2-crumb { margin-bottom: 18px; }
 
   /* arrows would crowd the image on narrow screens — tap outside / close instead */
@@ -1303,12 +1534,14 @@ button.v2-lab-row { background: none; border: none; font: inherit; text-align: l
 
   .v2-grid-ratio { --v2-cell: 150px !important; }
 
-  /* home: stack names then preview. tap a discipline to shift the preview
-     (active row stays lit, others dim), tap again to open it. */
-  .v2-home-split { grid-template-columns: 1fr; gap: 32px; }
-  .v2-home-preview { position: static; }
-  /* mosaic column count is set by V2Work (--mcols) — overriding it here left
-     the FLIP sizing its big state against a dense count that no longer existed */
+  /* home: one piece per row, full width — the whole point of the featured list
+     is that a piece is legible at a glance, which a half-width tile isn't here */
+  .v2-featured { grid-template-columns: 1fr; }
+
+  /* the rail scrolls away on mobile, so the pinned tab bar is the only nav left
+     on screen — keep the Home escape in it and let the tabs scroll under it */
+  .v2-tabbar { gap: 14px; }
+  .v2-tab { padding-bottom: 12px; }
 
   /* mobile: the in-page jump list and the rail foot (loader + Sound + links)
      sit at the very bottom of the page instead of up in the rail */
