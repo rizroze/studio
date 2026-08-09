@@ -13,6 +13,8 @@
   --v2-muted: #5e5e5e;
   --v2-faint: #767676;
   --v2-line: #e3e3e3;
+  /* the mark's red, doubling as the position colour in the rail minimap */
+  --v2-red: #ff0000;
   --v2-hover: #f5f5f3;
 
   --v2-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -220,35 +222,43 @@
   from { opacity: 0; transform: scale(0.65); }
   to { opacity: 1; transform: scale(1); }
 }
-/* grey by default, colour on the one you're looking at — the only way a
-   position reads instantly in a wall of 50px tiles */
+/* every piece in its own colour — the wall is the work, not a wireframe of it.
+   Position is carried by the stroke instead, in the mark's red, which is the
+   one hue nothing else in this palette uses. */
 .v2-rail-map-cell img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(1) opacity(0.4);
-  transition: filter 0.3s ease;
 }
-.v2-rail-map-cell:hover img,
-.v2-rail-map-cell.active img { filter: grayscale(0) opacity(1); }
-.v2-rail-map-cell.active::after {
+.v2-rail-map-cell::after {
   content: '';
   position: absolute;
   inset: 0;
-  border: 1.5px solid var(--v2-ink);
+  border: 2px solid transparent;
+  transition: border-color 0.25s ease;
+}
+/* hover previews the same stroke at half strength, so pointing at a tile says
+   what clicking it will do */
+.v2-rail-map-cell:hover::after { border-color: rgba(255, 0, 0, 0.45); }
+.v2-rail-map-cell.active::after { border-color: var(--v2-red); }
+/* bleeds 1px into the 3px gap so the stroke still reads when the tile beside
+   it happens to be red too */
+.v2-rail-map-cell.active {
+  z-index: 1;
+  box-shadow: 0 0 0 1px var(--v2-red);
 }
 
 /* the tile a homepage click landed on — arriving mid-wall otherwise reads as
    a mis-scroll rather than as an arrival */
 [data-lbsrc].landed { animation: v2-landed 1.4s ease-out; }
 @keyframes v2-landed {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(10, 10, 10, 0); }
-  12%, 58% { box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.85); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+  12%, 58% { box-shadow: 0 0 0 3px var(--v2-red); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .v2-rail-map-cell { animation: none; opacity: 1; }
-  [data-lbsrc].landed { animation: none; box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.85); }
+  [data-lbsrc].landed { animation: none; box-shadow: 0 0 0 3px var(--v2-red); }
 }
 
 .v2-rail-nav-title {
