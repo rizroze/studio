@@ -24,30 +24,19 @@ export interface FeaturedWork {
   wide?: boolean
   /** override the frame's shape. Default is the piece's own aspect ratio. */
   ratio?: number
+  /** scale the media inside its frame, to eat padding baked into the source.
+      Screen mockups often export with a backdrop and a drop shadow around the
+      artwork; on a white page that reads as a border on the tile rather than
+      as part of the piece. Display only — the file itself is untouched, and
+      the discipline page still shows it whole. */
+  zoom?: number
 }
 
 export const FEATURED_WORKS: FeaturedWork[] = [
   {
     src: '/content/design/shaderweb.mp4',
-    title: 'Shader Studio',
-    note: 'A wall of live shaders, each one liftable as an embed.',
-  },
-  {
-    src: '/content/monolith/announcement-1.webp',
-    title: 'Monolith 2026',
-    client: 'Radiants',
-    note: "Solana Mobile's flagship event, $125K+ in prizes, 70+ pieces run end to end.",
-  },
-  {
-    src: '/content/experiments/motion-01.mp4',
-    title: 'world.',
-    note: 'Drag to spin, type to drop a pin. A globe that collects what one word means to people.',
-  },
-  {
-    src: '/content/whatsfordinner/home-1.webp',
-    title: 'Website & App',
-    client: "What's for Dinner",
-    note: 'A live meal-planning SaaS, designed, built and run solo across eleven languages.',
+    title: 'Brand Design',
+    note: 'An interactive card: shaders running live in the page, each one liftable as an embed.',
   },
   {
     src: '/content/hydex/hydex-social.mp4',
@@ -56,9 +45,28 @@ export const FEATURED_WORKS: FeaturedWork[] = [
     note: 'Logo animation for the Hydex mark, built to open decks and social posts.',
   },
   {
+    src: '/content/experiments/motion-01.mp4',
+    title: 'world.',
+    note: 'Drag to spin, type to drop a pin. A globe that collects what one word means to people.',
+  },
+  {
     src: '/content/experiments/Frame 2085660697.webp',
-    title: 'Coinbase, restaged',
-    note: 'An unsolicited redraw from the daily reps. No brief, no client.',
+    title: 'Coinbase, redesigned',
+    note: 'A redesign nobody asked for. It just felt like it should look this way.',
+  },
+  {
+    src: '/content/monolith/announcement-1.webp',
+    title: 'Solana Mobile Monolith 2026',
+    client: 'Radiants',
+    note: "Solana Mobile's flagship event, $125K+ in prizes, 70+ pieces run end to end.",
+  },
+  {
+    src: '/content/whatsfordinner/home-1.webp',
+    title: 'Website & App',
+    client: "What's for Dinner",
+    note: 'A live meal-planning SaaS, designed, built and run solo across eleven languages.',
+    // the export carries ~66px of backdrop and shadow on every side
+    zoom: 1.07,
   },
 ]
 

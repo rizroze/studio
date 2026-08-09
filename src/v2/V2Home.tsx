@@ -36,10 +36,26 @@ function FeatureTile({ work, n, onOpen }: { work: FeaturedWork; n: number; onOpe
   return (
     <button className={`v2-feature${work.wide ? ' wide' : ''}`} onClick={onOpen}>
       {/* fixed before the media loads so the grid never reflows mid-decode */}
-      <div className="v2-feature-frame" style={{ aspectRatio: ratio }}>
+      <div
+        className="v2-feature-frame"
+        style={{ aspectRatio: ratio, ['--zoom' as string]: work.zoom ?? 1 }}
+      >
         {isVideo
           ? <FeatureVideo src={work.src} />
-          : <img src={med(work.src)} alt="" loading={n <= 2 ? 'eager' : 'lazy'} decoding="async" draggable={false} />}
+          : (
+            <img
+              src={med(work.src)}
+              // the 640px medium is fine for a grid thumbnail and far too soft
+              // for the homepage's biggest images on a 2x screen — offer both
+              // and let the browser pick against the real rendered width
+              srcSet={dims ? `${med(work.src)} 640w, ${work.src} ${dims[0]}w` : undefined}
+              sizes="(max-width: 820px) 100vw, 46vw"
+              alt=""
+              loading={n <= 2 ? 'eager' : 'lazy'}
+              decoding="async"
+              draggable={false}
+            />
+          )}
       </div>
       {/* same quiet mono caption as a discipline block header — logo, client,
           title. The display face is for the work itself, not for labelling it */}

@@ -107,9 +107,6 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
               and the $125K+{' '}
               <a href="https://solanamobile.radiant.nexus/" target="_blank" rel="noopener noreferrer">Monolith</a>.
             </p>
-            <p className="v2-rail-statement">
-              I make brands look like they meant it. Crypto or not.
-            </p>
             <p className="v2-rail-find">
               Find me on{' '}
               <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer">X</a>,{' '}
