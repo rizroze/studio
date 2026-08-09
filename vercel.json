@@ -3,22 +3,22 @@
     {
       "source": "/direction",
       "destination": "/works/direction",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/design",
       "destination": "/works/design",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/product",
       "destination": "/works/product",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/experiments",
       "destination": "/works/experiments",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/work",
