@@ -56,7 +56,7 @@ export const FEATURED_WORKS: FeaturedWork[] = [
   },
   {
     src: '/content/monolith/announcement-1.webp',
-    title: 'Solana Mobile Monolith 2026',
+    title: 'Solana Mobile',
     client: 'Radiants',
     note: "Solana Mobile's flagship event, $125K+ in prizes, 70+ pieces run end to end.",
   },
