@@ -21,6 +21,11 @@
       "permanent": true
     },
     {
+      "source": "/motion",
+      "destination": "/works/motion",
+      "permanent": true
+    },
+    {
       "source": "/work",
       "destination": "/",
       "permanent": true

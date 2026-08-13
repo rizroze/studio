@@ -155,7 +155,22 @@ export const DISCIPLINES: Discipline[] = [
       sec('wayy', 'Pitch Deck'),
       sec('fullport', 'Pitch Deck'),
     ],
-    videosLabel: 'Motion Design',
+    videos: [],
+  },
+  // Motion was a video block at the foot of Design, which filed the launch work
+  // as an afterthought to the stills. It's a discipline, so it gets a wall.
+  // Second rather than first on purpose: DISCIPLINES[0] is the default works
+  // tab and where /works and any unrecognized /works/<typo> land, and this is
+  // the shortest page here — it shouldn't be the one a stray URL opens.
+  {
+    id: 'motion',
+    label: 'Motion',
+    blurb: 'Launch films · Logo animation · Titles',
+    collections: [],
+    // The page has one block, so its heading would otherwise repeat the h1.
+    // 'Brand Motion' names the category instead, and it's what the rail minimap
+    // captions these tiles with.
+    videosLabel: 'Brand Motion',
     videos: [
       {
         project: 'Radiants',
@@ -227,7 +242,7 @@ export const DISCIPLINES: Discipline[] = [
         spansRow: ['/content/wikipedia/wikipedia.mp4'],
       },
     ],
-    // product walkthroughs, not motion-design work — Design keeps 'Motion'
+    // product walkthroughs, not motion-design work — that lives on /works/motion
     videosLabel: 'Walkthroughs',
     videos: [
       vid('fullport', 'Solana portfolio tracker for the Seeker phone, built solo in React Native and Expo. Balances, metadata and prices arrive in a single Helius DAS call. Working APK shipped inside the Monolith hackathon deadline.'),
