@@ -129,6 +129,15 @@
   user-select: none;
 }
 
+/* The bio is one thought in four paragraphs, so it sets its own spacing. At the
+   rail's 28px they read as four separate announcements, and four of those is
+   the whole column. */
+.v2-rail-bio {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .v2-rail-statement {
   font-size: clamp(13px, 0.9vw, 14px);
   line-height: 1.5;
@@ -330,13 +339,13 @@
 .v2-rail-statement a {
   color: var(--v2-ink);
   text-decoration: underline;
-  text-decoration-color: rgba(10, 10, 10, 0.45);
+  text-decoration-color: rgba(10, 10, 10, 0.4);
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
   transition: text-decoration-color 0.2s ease;
 }
 .v2-rail-find a:hover,
-.v2-rail-statement a:hover { text-decoration-color: rgba(10, 10, 10, 0.7); }
+.v2-rail-statement a:hover { text-decoration-color: rgba(10, 10, 10, 1); }
 
 /* email copies to the clipboard instead of opening a mail client, so it's a
    button wearing the inline-link look */
@@ -351,12 +360,12 @@
 /* underline hugs the word only, so the sentence-ending period stays clean */
 .v2-copy-u {
   text-decoration: underline;
-  text-decoration-color: rgba(10, 10, 10, 0.45);
+  text-decoration-color: rgba(10, 10, 10, 0.4);
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
   transition: text-decoration-color 0.2s ease;
 }
-.v2-rail-find .v2-copy:hover .v2-copy-u { text-decoration-color: rgba(10, 10, 10, 0.7); }
+.v2-rail-find .v2-copy:hover .v2-copy-u { text-decoration-color: rgba(10, 10, 10, 1); }
 
 /* slot-machine swap: both words stack in a reel that rolls up exactly one line
    on copy. The slot clips to a single line and sizes to the wider word, so the
@@ -885,13 +894,13 @@
   margin-left: auto;
   color: var(--v2-ink);
   text-decoration: underline;
-  text-decoration-color: rgba(10, 10, 10, 0.45);
+  text-decoration-color: rgba(10, 10, 10, 0.4);
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
   white-space: nowrap;
   transition: text-decoration-color 0.2s ease;
 }
-.v2-disc-live:hover { text-decoration-color: rgba(10, 10, 10, 0.9); }
+.v2-disc-live:hover { text-decoration-color: rgba(10, 10, 10, 1); }
 .v2-disc-logo {
   height: 16px;
   width: auto;

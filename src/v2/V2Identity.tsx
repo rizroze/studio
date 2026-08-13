@@ -90,23 +90,37 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
           )
         ) : (
           <>
-            <p className="v2-rail-statement">
-              Started in guerrilla marketing for underground rock bands.
-              Tattooed a few straight lines, studied engineering and film, then
-              unlearned most of it. Ten years following the work wherever it
-              went. Runway shows, fashion design, illustration, motion design,
-              content, product design, brand systems. The last four leading
-              creative in Solana.
-            </p>
-            <p className="v2-rail-statement">
-              Two years running creative for a Solana-native DAO, including its
-              campaigns for two hackathons run by{' '}
-              <a href="https://solanamobile.com/" target="_blank" rel="noopener noreferrer">Solana Mobile</a>,
-              {' '}the team building Solana's phone:{' '}
-              <a href="https://x.com/RadiantsDAO/status/1967983306047393960" target="_blank" rel="noopener noreferrer">Seeker</a>{' '}
-              and the $125K+{' '}
-              <a href="https://solanamobile.radiant.nexus/" target="_blank" rel="noopener noreferrer">Monolith</a>.
-            </p>
+            {/* Four beats, and they only work in this order: what the job has
+                always been, the receipts, what I do now, and who is accountable
+                for it. Grouped in their own box because the rail's 28px rhythm
+                separates parts of the page, not paragraphs of one thought. */}
+            <div className="v2-rail-bio">
+              <p className="v2-rail-statement">
+                Started in guerrilla marketing for rock bands. The job was
+                making people look. It still is.
+              </p>
+              <p className="v2-rail-statement">
+                Studied engineering and film, tattooed straight lines, made
+                clothes and walked runways. Ten years following the work
+                wherever it went.
+                Four of those in crypto, two as creative lead, including the
+                campaigns for two hackathons run by{' '}
+                <a href="https://solanamobile.com/" target="_blank" rel="noopener noreferrer">Solana Mobile</a>,
+                {' '}the team building Solana's phone:{' '}
+                <a href="https://x.com/RadiantsDAO/status/1967983306047393960" target="_blank" rel="noopener noreferrer">Seeker</a>{' '}
+                and the $125K+{' '}
+                <a href="https://solanamobile.radiant.nexus/" target="_blank" rel="noopener noreferrer">Monolith</a>.
+              </p>
+              <p className="v2-rail-statement">
+                Now I take a brand from the first mark to launch day. The
+                identity, the film that introduces it, and the site or app it
+                lives in. Usually solo, usually fast.
+              </p>
+              <p className="v2-rail-statement">
+                Everything here was designed, animated and built by me. One
+                person to ask, one hand on all of it.
+              </p>
+            </div>
             <p className="v2-rail-find">
               Find me on{' '}
               <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer">X</a>,{' '}
