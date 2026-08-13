@@ -60,8 +60,9 @@
 .v2-rail {
   /* min is 340, not 320: the padding below grows with vw while this width is
      still pinned at its minimum, so between ~1100-1290px the text column got
-     squeezed until "Brand & Creative Direction" wrapped. 340 keeps the label
-     on one line across every desktop width. */
+     squeezed until the role label under the name wrapped. 340 keeps it on one
+     line across every desktop width, up to the 26 characters the old "Brand &
+     Creative Direction" ran to — that's the budget for any replacement. */
   width: clamp(340px, 26vw, 420px);
   flex-shrink: 0;
   height: 100vh;
