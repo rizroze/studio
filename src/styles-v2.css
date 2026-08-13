@@ -829,7 +829,11 @@
    blocks below (the old content-driven height reflowed the page on hover) */
 .v2-index-preview-col {
   position: sticky;
-  top: 0;
+  /* clears the tab bar, which pins at top:0 with an opaque background and would
+     otherwise slice the top off this image. The height is published by V2Works
+     because the tab type is a vw clamp; the fallback keeps this sane if the
+     preview is ever rendered outside the works pane. */
+  top: calc(var(--v2-tabbar-h, 0px) + 20px);
 }
 .v2-index-preview {
   position: relative;

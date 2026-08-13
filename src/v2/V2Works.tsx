@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { DISCIPLINES, findDiscipline } from './disciplines'
 import type { Discipline } from './disciplines'
 import { V2Discipline } from './V2Discipline'
@@ -32,6 +32,8 @@ interface V2WorksProps {
 // changed the navigation, not the addressing.
 export function V2Works({ activeId, onSelect, onHome, onOpenImage, canRotate = true, focusSrc, onFocused }: V2WorksProps) {
   const discipline = findDiscipline(activeId) ?? DISCIPLINES[0]
+  const worksRef = useRef<HTMLDivElement>(null)
+  const tabbarRef = useRef<HTMLDivElement>(null)
 
   // The tab row cycles on its own so an arriving visitor sees that there are
   // four walls here, not one. It is an attract loop, not a carousel: the first
@@ -80,6 +82,23 @@ export function V2Works({ activeId, onSelect, onHome, onOpenImage, canRotate = t
     }
   }, [rotating])
 
+  // The tab bar pins at top:0 with an opaque background, so anything else that
+  // pins in this pane parks underneath it and loses its top edge — which is
+  // exactly what happened to the index view's preview column. Publish the bar's
+  // measured height so those elements can pin below it instead. It has to be
+  // measured: the tab type is a vw clamp, so the bar is a different height at
+  // every window width.
+  useEffect(() => {
+    const bar = tabbarRef.current
+    const root = worksRef.current
+    if (!bar || !root) return
+    const ro = new ResizeObserver(() => {
+      root.style.setProperty('--v2-tabbar-h', `${Math.round(bar.getBoundingClientRect().height)}px`)
+    })
+    ro.observe(bar)
+    return () => ro.disconnect()
+  }, [])
+
   // land on the piece that was clicked. Two frames of grace: the discipline
   // remounts on every tab change, and the tile has to exist and have its
   // aspect-ratio box before scrollIntoView can find the right offset.
@@ -102,10 +121,10 @@ export function V2Works({ activeId, onSelect, onHome, onOpenImage, canRotate = t
   }, [focusSrc, discipline.id, onFocused])
 
   return (
-    <div className="v2-works">
+    <div className="v2-works" ref={worksRef}>
       {/* sticky: a discipline is a long scroll, and tabs you have to scroll back
           up to reach are just links with extra steps */}
-      <div className={`v2-tabbar${rotating ? ' rotating' : ''}`}>
+      <div className={`v2-tabbar${rotating ? ' rotating' : ''}`} ref={tabbarRef}>
         <button className="v2-tabs-home" onClick={onHome}>← Home</button>
         <div className="v2-tabs" role="tablist" aria-label="Disciplines">
           {DISCIPLINES.map((d) => {
