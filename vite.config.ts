@@ -81,9 +81,13 @@ function routeMeta(): Plugin {
     closeBundle() {
       const dir = resolve(root, outDir)
       const index = readFileSync(resolve(dir, 'index.html'), 'utf8')
-      // whatever the homepage currently calls itself — this follows a retitle
-      // instead of pinning a second copy of the site name here
-      const siteTitle = index.match(/<title>([^<]*)<\/title>/)?.[1] ?? 'Rizzy Today'
+      // Whatever the homepage currently calls itself, so this follows a retitle
+      // instead of pinning a second copy of the site name here. Only the first
+      // segment: the homepage title is 'Riz · I make brands move', and a route
+      // built on the whole thing reads 'Motion · Riz · I make brands move',
+      // three dot-separated clauses where two carry the meaning. The pitch is
+      // in each route's description instead.
+      const siteTitle = (index.match(/<title>([^<]*)<\/title>/)?.[1] ?? 'Riz').split(' · ')[0]
 
       for (const page of routePages()) {
         const url = `${SITE}/${page.path}`
