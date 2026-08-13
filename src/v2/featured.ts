@@ -35,8 +35,10 @@ export interface FeaturedWork {
 export const FEATURED_WORKS: FeaturedWork[] = [
   {
     src: '/content/design/shaderweb.mp4',
-    title: 'Brand Design',
-    note: 'An interactive card: shaders running live in the page, each one liftable as an embed.',
+    // the piece's name, not its category — the discipline tag on the right of
+    // the same row already says Design, and "Brand Design · Design" said it twice
+    title: 'Shaderweb',
+    note: 'Brand assets that run instead of sitting in a folder. Live shaders, liftable as embeds.',
   },
   {
     src: '/content/hydex/hydex-social.mp4',
@@ -47,7 +49,9 @@ export const FEATURED_WORKS: FeaturedWork[] = [
   {
     src: '/content/experiments/motion-01.mp4',
     title: 'world.',
-    note: 'Drag to spin, type to drop a pin. A globe that collects what one word means to people.',
+    // the idea leads; the controls follow. The tile can't be played from here,
+    // so opening on "drag to spin" was an instruction for a thing you can't do yet
+    note: 'A globe that collects what one word means to people. Spin it, type, drop a pin.',
   },
   {
     src: '/content/experiments/Frame 2085660697.webp',
