@@ -12,8 +12,10 @@ export interface FeaturedWork {
       Which discipline, and where in it, is looked up from this string, so a
       tile can never advertise one wall and open another. */
   src: string
-  /** what the piece is */
-  title: string
+  /** what the piece is. Omit when the discipline tag at the end of the row
+      already says it — the caption is a one-liner and "What's for Dinner ·
+      Website & App · Product" is three labels for two facts. */
+  title?: string
   /** who it was for; omit for self-initiated work. Spell it exactly as the
       project title in CASE_STUDIES — that string is the key its logomark is
       looked up under. */
@@ -66,7 +68,8 @@ export const FEATURED_WORKS: FeaturedWork[] = [
   },
   {
     src: '/content/whatsfordinner/home-1.webp',
-    title: 'Website & App',
+    // no title: the row ends in the Product tag, which is what "Website & App"
+    // was saying
     client: "What's for Dinner",
     note: 'A live meal-planning SaaS, designed, built and run solo across eleven languages.',
     // the export carries ~66px of backdrop and shadow on every side
@@ -80,6 +83,6 @@ export const FEATURED_WORKS: FeaturedWork[] = [
 // someone clicks it.
 for (const w of FEATURED_WORKS) {
   if (!findPieceDiscipline(w.src)) {
-    throw new Error(`featured: "${w.title}" (${w.src}) is not on any discipline page`)
+    throw new Error(`featured: "${w.title ?? w.client ?? w.src}" (${w.src}) is not on any discipline page`)
   }
 }

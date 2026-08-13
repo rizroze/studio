@@ -71,10 +71,10 @@ function FeatureTile({ work, n, onOpen }: { work: FeaturedWork; n: number; onOpe
         {work.client && (
           <>
             <span className="v2-feature-client">{work.client}</span>
-            <span className="v2-feature-sep">·</span>
+            {work.title && <span className="v2-feature-sep">·</span>}
           </>
         )}
-        <span className="v2-feature-name">{work.title}</span>
+        {work.title && <span className="v2-feature-name">{work.title}</span>}
         <span className="v2-feature-disc">{label}</span>
         <span className="v2-arrow">→</span>
       </div>
