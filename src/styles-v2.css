@@ -609,6 +609,21 @@
   scrollbar-width: none;
 }
 .v2-tabs::-webkit-scrollbar { display: none; }
+/* The scrolled-past edge fades out, so a tab cut in half reads as "there's
+   more" instead of as clipped text. Classes come from V2Works, which knows
+   which side still has something past it — CSS can't see scroll position. */
+.v2-tabs.fade-right {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 38px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 38px), transparent);
+}
+.v2-tabs.fade-left {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 38px);
+  mask-image: linear-gradient(to right, transparent, #000 38px);
+}
+.v2-tabs.fade-left.fade-right {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 38px, #000 calc(100% - 38px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 38px, #000 calc(100% - 38px), transparent);
+}
 
 .v2-tab {
   position: relative;

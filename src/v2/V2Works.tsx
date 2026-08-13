@@ -8,6 +8,23 @@ const ROTATE_MS = 7000
 const pieceCount = (d: Discipline) =>
   d.collections.reduce((n, c) => n + c.section.gallery.length, 0) + d.videos.length
 
+// Bring the active tab into view inside the horizontally scrolling row.
+// Centred where there's room, clamped to the ends: centring the last tab asks
+// for more scroll than exists, and overshooting by a hair cut the digits off
+// its count. A no-op on any screen wide enough to show the whole row.
+function centerActive(tabs: HTMLElement) {
+  const el = tabs.querySelector<HTMLElement>('.v2-tab.active')
+  if (!el) return
+  const t = tabs.getBoundingClientRect()
+  const e = el.getBoundingClientRect()
+  const centered = tabs.scrollLeft + (e.left - t.left) - (t.width - e.width) / 2
+  const max = tabs.scrollWidth - tabs.clientWidth
+  tabs.scrollTo({
+    left: Math.min(max, Math.max(0, centered)),
+    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+  })
+}
+
 // Session-scoped, not component state: once someone has taken over, leaving for
 // the homepage and coming back shouldn't start the carousel up again in their
 // face. Resets on reload, which is the right granularity — a new visit is a new
@@ -34,6 +51,7 @@ export function V2Works({ activeId, onSelect, onHome, onOpenImage, canRotate = t
   const discipline = findDiscipline(activeId) ?? DISCIPLINES[0]
   const worksRef = useRef<HTMLDivElement>(null)
   const tabbarRef = useRef<HTMLDivElement>(null)
+  const tabsRef = useRef<HTMLDivElement>(null)
 
   // The tab row cycles on its own so an arriving visitor sees that there are
   // four walls here, not one. It is an attract loop, not a carousel: the first
@@ -99,6 +117,41 @@ export function V2Works({ activeId, onSelect, onHome, onOpenImage, canRotate = t
     return () => ro.disconnect()
   }, [])
 
+  // At 390px the tab strip is 562px wide inside a 277px window, so more than
+  // half of it is off screen. A hard cut at that edge reads as truncated text
+  // rather than as more tabs, so fade whichever edge still has something past
+  // it. Class toggling rather than state: this fires on every scroll frame.
+  useEffect(() => {
+    const tabs = tabsRef.current
+    if (!tabs) return
+    const update = () => {
+      const max = tabs.scrollWidth - tabs.clientWidth
+      tabs.classList.toggle('fade-left', tabs.scrollLeft > 4)
+      tabs.classList.toggle('fade-right', tabs.scrollLeft < max - 4)
+    }
+    update()
+    tabs.addEventListener('scroll', update, { passive: true })
+    // observe the tabs themselves, not just the strip: the strip's own box
+    // never changes when the web fonts land, but every tab in it gets wider,
+    // which is what moves the end of the scroll
+    const ro = new ResizeObserver(() => { update(); centerActive(tabs) })
+    ro.observe(tabs)
+    tabs.querySelectorAll('.v2-tab').forEach((t) => ro.observe(t))
+    return () => {
+      tabs.removeEventListener('scroll', update)
+      ro.disconnect()
+    }
+  }, [discipline.id])
+
+  // Arriving on /works/experiments, or letting the rotation walk past Product,
+  // left the active tab entirely off screen with scrollLeft still at 0: three
+  // tabs and no underline anywhere, which reads as broken rather than as
+  // scrollable. Keep the active one in view. On any screen wide enough for the
+  // whole row this is a no-op, since there is nothing to scroll.
+  useEffect(() => {
+    if (tabsRef.current) centerActive(tabsRef.current)
+  }, [discipline.id])
+
   // land on the piece that was clicked. Two frames of grace: the discipline
   // remounts on every tab change, and the tile has to exist and have its
   // aspect-ratio box before scrollIntoView can find the right offset.
@@ -126,7 +179,7 @@ export function V2Works({ activeId, onSelect, onHome, onOpenImage, canRotate = t
           up to reach are just links with extra steps */}
       <div className={`v2-tabbar${rotating ? ' rotating' : ''}`} ref={tabbarRef}>
         <button className="v2-tabs-home" onClick={onHome}>← Home</button>
-        <div className="v2-tabs" role="tablist" aria-label="Disciplines">
+        <div className="v2-tabs" role="tablist" aria-label="Disciplines" ref={tabsRef}>
           {DISCIPLINES.map((d) => {
             const active = d.id === discipline.id
             return (
