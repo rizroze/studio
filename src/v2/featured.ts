@@ -73,15 +73,6 @@ export const FEATURED_WORKS: FeaturedWork[] = [
     client: 'Radiants',
     note: "Solana Mobile's flagship event, $125K+ in prizes, 70+ pieces run end to end.",
   },
-  {
-    src: '/content/whatsfordinner/home-1.webp',
-    // no title: the row ends in the Product tag, which is what "Website & App"
-    // was saying
-    client: "What's for Dinner",
-    note: 'A live meal-planning SaaS, designed, built and run solo across eleven languages.',
-    // the export carries ~66px of backdrop and shadow on every side
-    zoom: 1.07,
-  },
 ]
 
 // Fail loudly at import rather than rendering a tile whose click goes nowhere.
