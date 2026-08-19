@@ -41,9 +41,6 @@ export const FEATURED_WORKS: FeaturedWork[] = [
     // was a third label for the same fact
     client: 'Flash Trade',
     note: 'A 28-second cut for social: halftone footage running into the live interface, landing on the mark.',
-    // full-width band. Seven tiles leave an orphan in a two-up grid, and the
-    // newest piece is the one worth opening the page with
-    wide: true,
   },
   {
     src: '/content/design/shaderweb.mp4',
