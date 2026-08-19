@@ -526,11 +526,18 @@
 .v2-feature-client { color: var(--v2-ink); }
 .v2-feature-sep { color: var(--v2-faint); }
 .v2-feature-name {
-  flex: 1;
   min-width: 0;
   color: var(--v2-muted);
 }
-.v2-feature-disc { color: var(--v2-faint); white-space: nowrap; }
+/* the discipline tag holds the right end of the row. It used to get there by
+   being shoved: .v2-feature-name grew to fill, which worked until a card
+   dropped its title (the tag says the same thing) and the row collapsed to the
+   left. Pushing from the tag itself doesn't care what's in front of it. */
+.v2-feature-disc {
+  margin-left: auto;
+  color: var(--v2-faint);
+  white-space: nowrap;
+}
 .v2-feature:hover .v2-arrow { opacity: 1; transform: translateX(0); }
 /* the mark colorizes with the piece, the way it does on a discipline block */
 .v2-feature:hover .v2-disc-logo { filter: grayscale(0) opacity(1); }
