@@ -312,6 +312,7 @@ const VIDEO_DIMS: Record<string, [number, number]> = {
   '/content/fullport/fullport-demo.mp4': [1280, 720],
   '/content/hydex/hydex-social.mp4': [1920, 1080],
   '/content/motion/cloak-socials.mp4': [1280, 720],
+  '/content/motion/flash-trade-social.mp4': [1280, 720],
   '/content/motion/radiants-twitter.mp4': [1280, 1280],
   '/content/motion/we-split.mp4': [1280, 1280],
   '/content/wayy/wayy-social.mp4': [1920, 1080],

@@ -173,6 +173,12 @@ export const DISCIPLINES: Discipline[] = [
     videosLabel: 'Brand Motion',
     videos: [
       {
+        project: 'Flash Trade',
+        src: '/content/motion/flash-trade-social.mp4',
+        label: 'Launch Film',
+        note: 'Halftone-treated footage running into the product\'s own interface, landing on the mark. Cut for social.',
+      },
+      {
         project: 'Radiants',
         src: '/content/motion/radiants-twitter.mp4',
         label: 'Brand Introduction',

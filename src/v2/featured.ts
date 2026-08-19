@@ -36,6 +36,16 @@ export interface FeaturedWork {
 
 export const FEATURED_WORKS: FeaturedWork[] = [
   {
+    src: '/content/motion/flash-trade-social.mp4',
+    // no title: the row ends in the Motion tag, and "Launch Film" next to it
+    // was a third label for the same fact
+    client: 'Flash Trade',
+    note: 'A 28-second cut for social: halftone footage running into the live interface, landing on the mark.',
+    // full-width band. Seven tiles leave an orphan in a two-up grid, and the
+    // newest piece is the one worth opening the page with
+    wide: true,
+  },
+  {
     src: '/content/design/shaderweb.mp4',
     // the piece's name, not its category — the discipline tag on the right of
     // the same row already says Design, and "Brand Design · Design" said it twice
