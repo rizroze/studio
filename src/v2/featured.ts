@@ -40,9 +40,8 @@ export const FEATURED_WORKS: FeaturedWork[] = [
     // no title: the row ends in the Motion tag, and "Launch Film" next to it
     // was a third label for the same fact
     client: 'Flash Trade',
-    // says what kind of motion, which this row's tag doesn't — it ends in
-    // MOTION, not LAUNCH FILM. On the Motion wall the caption already says it,
-    // so the note there is the one word this row can't carry.
+    // one string per piece, same on the Motion wall — the homepage row ends in
+    // MOTION and needs to say what kind of film it is
     note: 'A self-initiated product launch film.',
   },
   {

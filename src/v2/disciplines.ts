@@ -179,7 +179,7 @@ export const DISCIPLINES: Discipline[] = [
         // uncommissioned, and it says so: the client slot on this wall is how a
         // paid credit looks, and a reference check that finds no engagement
         // costs more than the disclosure ever could
-        note: 'Self-initiated.',
+        note: 'A self-initiated product launch film.',
       },
       {
         project: 'Radiants',
