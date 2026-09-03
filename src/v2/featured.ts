@@ -40,9 +40,10 @@ export const FEATURED_WORKS: FeaturedWork[] = [
     // no title: the row ends in the Motion tag, and "Launch Film" next to it
     // was a third label for the same fact
     client: 'Flash Trade',
-    // the only fact the film doesn't show is that nobody paid for it. Anything
-    // about the cut restates what is playing directly above this line.
-    note: 'Self-initiated.',
+    // says what kind of motion, which this row's tag doesn't — it ends in
+    // MOTION, not LAUNCH FILM. On the Motion wall the caption already says it,
+    // so the note there is the one word this row can't carry.
+    note: 'A self-initiated product launch film.',
   },
   {
     src: '/content/design/shaderweb.mp4',
