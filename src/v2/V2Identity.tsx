@@ -97,7 +97,7 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
             <div className="v2-rail-bio">
               <p className="v2-rail-statement">
                 Started in guerrilla marketing for rock bands. The job was
-                making people look. It still is.
+                leaving a mark. It still is.
               </p>
               <p className="v2-rail-statement">
                 Studied engineering and film, tattooed, made clothes and walked
