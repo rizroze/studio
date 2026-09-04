@@ -733,6 +733,51 @@
   text-transform: uppercase;
   color: var(--v2-muted);
 }
+
+/* two citations on a slow rotator. A dissolve rather than a slide: the words
+   swap while opacity is 0, so there is no cut and no travel to catch the eye.
+   Duration is deliberately past the 200-300ms hover band — this is a change of
+   content, not a state change, and it should read as considered. */
+.v2-rail-quote-slide {
+  opacity: 1;
+  transition: opacity 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.v2-rail-quote-slide.is-out { opacity: 0; }
+.v2-rail-quote-nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.v2-rail-quote:hover .v2-rail-quote-nav,
+.v2-rail-quote:focus-within .v2-rail-quote-nav { opacity: 1; }
+.v2-rail-quote-nav button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--v2-mono);
+  font-size: 11px;
+  line-height: 1;
+  color: var(--v2-faint);
+  transition: color 0.2s ease;
+}
+.v2-rail-quote-nav button:hover { color: var(--v2-ink); }
+
+/* the arrows are the only way through when motion is reduced, so they stay up */
+@media (prefers-reduced-motion: reduce) {
+  .v2-rail-quote-slide { animation: none; }
+  .v2-rail-quote-nav { opacity: 1; }
+}
+
+/* lab: one line framing the toys as build proof rather than as spare time */
+.v2-lab-intro {
+  margin: 16px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #8a8a8a;
+}
 .v2-clients-row {
   display: flex;
   align-items: center;

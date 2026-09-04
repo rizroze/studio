@@ -38,6 +38,12 @@ export function V2Lab({ onClose, onSpawn }: { onClose: () => void; onSpawn: (toy
           <button className="v2-lab-close" onClick={onClose} aria-label="Close">Close</button>
         </div>
 
+        {/* the toys are the proof that the client work is built and not mocked,
+            but only if that is said out loud — unlabelled they read as spare time */}
+        <p className="v2-lab-intro">
+          These are running builds, not mockups. Same hands as the client work.
+        </p>
+
         <div className="v2-lab-list">
           {LAB.map((it, i) => {
             const showYear = i === 0 || LAB[i - 1].year !== it.year

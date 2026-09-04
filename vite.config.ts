@@ -100,6 +100,10 @@ function routeMeta(): Plugin {
         html = setMeta(html, 'name', 'twitter:description', page.description)
         html = setMeta(html, 'name', 'twitter:url', url)
         html = setCanonical(html, url)
+        // the <noscript id="seo-copy"> block is the homepage's own copy — a
+        // route page cloned from index.html would otherwise repeat the bio and
+        // the featured list on all eleven URLs
+        html = html.replace(/<noscript id="seo-copy">[\s\S]*?<\/noscript>/, '')
 
         const target = resolve(dir, page.path)
         mkdirSync(target, { recursive: true })

@@ -19,3 +19,9 @@ Frame *.svg
 
 # Experiments source images (converted to .webp by npm run experiments; keep local, ship webp)
 public/content/experiments/*.png
+
+# Private working notes live in ~/outreach/, outside this repo. These lines are
+# belt-and-braces in case a copy ever lands here again.
+OUTREACH-LOG.md
+COLD-REACH.md
+SITE-AUDIT.md

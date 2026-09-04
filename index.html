@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riz Roze</title>
+    <title>Riz Roze · End-to-End Creative Partner</title>
     <meta name="description" content="I take a brand from the first mark to launch day. The identity, the film that introduces it, and the site or app it lives in. Usually solo, usually fast.">
 
     <meta name="theme-color" content="#ffffff">
@@ -17,7 +17,7 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Rizzy Today">
     <meta property="og:url" content="https://rizzy.today/">
-    <meta property="og:title" content="Riz Roze">
+    <meta property="og:title" content="Riz Roze · End-to-End Creative Partner">
     <meta property="og:description" content="I take a brand from the first mark to launch day. The identity, the film that introduces it, and the site or app it lives in. Usually solo, usually fast.">
     <!-- One 1000x1000 card for every surface (the benji.org approach).
          Chats show the full square. X crops it to 2:1, keeping y 250-750, so
@@ -34,7 +34,7 @@
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://rizzy.today/">
-    <meta name="twitter:title" content="Riz Roze">
+    <meta name="twitter:title" content="Riz Roze · End-to-End Creative Partner">
     <meta name="twitter:description" content="I take a brand from the first mark to launch day. The identity, the film that introduces it, and the site or app it lives in. Usually solo, usually fast.">
     <meta name="twitter:image" content="https://rizzy.today/share-card-red-1000.png">
     <meta name="twitter:image:type" content="image/png">
@@ -58,18 +58,51 @@
       "@type": "Person",
       "name": "Riz Roze",
       "alternateName": "Riz",
-      "jobTitle": "Creative Director",
+      "jobTitle": "End-to-End Creative Partner",
       "description": "Takes a brand from the first mark to launch day: the identity, the film that introduces it, and the site or app it lives in. Usually solo, usually fast.",
       "url": "https://rizzy.today",
       "image": "https://rizzy.today/riz-mark.webp",
+      "knowsAbout": [
+        "Brand identity",
+        "Creative direction",
+        "Motion design",
+        "Launch films",
+        "Product design",
+        "Content direction"
+      ],
       "sameAs": [
-        "https://x.com/rizzytoday"
+        "https://x.com/rizzytoday",
+        "https://cal.com/rizzytoday"
       ]
     }
     </script>
 </head>
 <body>
     <div id="root"></div>
+
+    <!-- The site renders client-side, so every word below is invisible to any
+         crawler that does not execute the bundle — including the models people
+         now ask for recommendations. This block carries the same copy the rail
+         and the homepage render. It is never shown to a user with JS, costs
+         nothing at runtime, and must be updated alongside V2Identity.tsx and
+         featured.ts. -->
+    <noscript id="seo-copy">
+      <h1>Riz Roze — End-to-End Creative Partner</h1>
+      <p>Started in guerrilla marketing for rock bands. The job was leaving a mark. It still is.</p>
+      <p>Studied engineering and film, tattooed, made clothes and walked runways. Ten years following the work wherever it went. Four of those in crypto, two as creative lead, including the campaigns for two hackathons run by Solana Mobile, the team building Solana's phone: Seeker and the $125K+ Monolith.</p>
+      <p>Most teams build the product and forget the thing that makes anyone remember it. Now I take a brand from the first mark to launch day: the identity, the film that introduces it, and the site or app it lives in. Sometimes one launch, sometimes ongoing. Usually solo, usually fast.</p>
+      <p>Everything here was designed, animated and built by me. One person to ask, one hand on all of it.</p>
+      <h2>Selected work</h2>
+      <ul>
+        <li>Flash Trade — a self-initiated product launch film.</li>
+        <li>Shaderweb — brand assets that run instead of sitting in a folder. Live shaders, liftable as embeds.</li>
+        <li>Hydex, Logo Animation — logo animation for the Hydex mark, built to open decks and social posts.</li>
+        <li>world. — a globe that collects what one word means to people. Spin it, type, drop a pin.</li>
+        <li>Coinbase, redesigned — a redesign nobody asked for. It just felt like it should look this way.</li>
+        <li>Solana Mobile, for Radiants — Solana Mobile's flagship event, $125K+ in prizes, 70+ pieces run end to end.</li>
+      </ul>
+      <p><a href="https://cal.com/rizzytoday/15min">Book 15 minutes</a></p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>

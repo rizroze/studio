@@ -111,9 +111,11 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
                 <a href="https://solanamobile.radiant.nexus/" target="_blank" rel="noopener noreferrer">Monolith</a>.
               </p>
               <p className="v2-rail-statement">
-                Now I take a brand from the first mark to launch day. The
-                identity, the film that introduces it, and the site or app it
-                lives in. Usually solo, usually fast.
+                Most teams build the product and forget the thing that makes
+                anyone remember it. Now I take a brand from the first mark to
+                launch day: the identity, the film that introduces it, and the
+                site or app it lives in. Sometimes one launch, sometimes
+                ongoing. Usually solo, usually fast.
               </p>
               <p className="v2-rail-statement">
                 Everything here was designed, animated and built by me. One
@@ -121,9 +123,9 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
               </p>
             </div>
             <p className="v2-rail-find">
-              Find me on{' '}
-              <a href="https://x.com/rizzytoday" target="_blank" rel="noopener noreferrer">X</a>,{' '}
-              <a href="https://cal.com/rizzytoday/15min" target="_blank" rel="noopener noreferrer">book a call</a>,
+              {/* one primary action, not three equal options: X moved down to
+                  the rail links, where References and Lab already live */}
+              <a href="https://cal.com/rizzytoday/15min" target="_blank" rel="noopener noreferrer">Book 15 minutes</a>,
               {' '}or reach me by{' '}
               <button type="button" className="v2-copy" onClick={onCopyEmail} title={`Copy ${EMAIL}`}>
                 <span className={`v2-copy-slot${copied ? ' is-copied' : ''}`} aria-live="polite">
