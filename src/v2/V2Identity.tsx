@@ -108,7 +108,7 @@ export function V2Identity({ onHome, onOpenReferences, onOpenLab, nav, navTitle,
                 {' '}the team building Solana's phone:{' '}
                 <a href="https://x.com/RadiantsDAO/status/1967983306047393960" target="_blank" rel="noopener noreferrer">Seeker</a>{' '}
                 and the $125K+{' '}
-                <a href="https://solanamobile.radiant.nexus/" target="_blank" rel="noopener noreferrer">Monolith</a>.
+                <a href="https://x.com/solanamobile/status/2018381131914084654" target="_blank" rel="noopener noreferrer">Monolith</a>.
               </p>
               <p className="v2-rail-statement">
                 Most teams build the product and forget the thing that makes
